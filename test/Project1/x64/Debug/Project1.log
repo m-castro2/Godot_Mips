@@ -1,0 +1,12 @@
+﻿  cpu_flex.cpp
+C:\Users\mcast\Desktop\Godot_Mips\src\cpu_flex.h(7,10): fatal error C1083: Cannot open include file: 'godot_cpp/godot.hpp': No such file or directory
+  EX.cpp
+  ID.cpp
+  IF.cpp
+  main.cpp
+C:\Users\mcast\Desktop\Godot_Mips\src\cpu_flex.h(7,10): fatal error C1083: Cannot open include file: 'godot_cpp/godot.hpp': No such file or directory
+  MEM.cpp
+  register_types.cpp
+C:\Users\mcast\Desktop\Godot_Mips\src\cpu_flex.h(7,10): fatal error C1083: Cannot open include file: 'godot_cpp/godot.hpp': No such file or directory
+  WB.cpp
+  Generating Code...

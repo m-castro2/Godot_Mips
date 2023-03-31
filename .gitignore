@@ -1,0 +1,13 @@
+*.os
+*.dll
+*.pdb
+*.ilk
+*.lib
+*.exp
+*.obj
+*.dblite
+*.Identifier
+
+.vscode/
+.idea/
+godot-cpp/

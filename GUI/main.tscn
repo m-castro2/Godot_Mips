@@ -13,11 +13,23 @@ script = ExtResource("1_vjp27")
 
 [node name="GodotWrapper" type="GodotWrapper" parent="."]
 
-[node name="Button" type="Button" parent="."]
+[node name="PipelinedWrapper" type="PipelinedWrapper" parent="."]
+
+[node name="LoadProgram" type="Button" parent="."]
 layout_mode = 0
 offset_left = 274.0
 offset_top = 104.0
 offset_right = 443.0
 offset_bottom = 216.0
+text = "Load program"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[node name="NextCycle" type="Button" parent="."]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 106.0
+offset_right = 681.0
+offset_bottom = 218.0
+text = "Next cycle"
+
+[connection signal="pressed" from="LoadProgram" to="." method="_on_load_program_pressed"]
+[connection signal="pressed" from="NextCycle" to="." method="_on_next_cycle_pressed"]

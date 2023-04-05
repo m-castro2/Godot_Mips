@@ -71,8 +71,10 @@ void GodotWrapper::_set_cpu_stages() {
 }
 
 godot::String GodotWrapper::load_program(godot::String filename) {
-    mips_sim::assemble_file(filename.ascii().get_data(), cpu->memory);
-    cpu->memory->print_memory(0, 2);
+    if (mips_sim::assemble_file(filename.ascii().get_data(), cpu->memory) != 0) {
+        return "Error parsing file";
+    }
+    //cpu->memory->print_memory(0x00400000, 0x00100000);
     return "program loaded\n";
 }
 

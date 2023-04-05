@@ -110,7 +110,7 @@
     }
   }
 
-  struct Label
+  struct CodeLabel
   {
     std::string name;
     uint32_t line;
@@ -136,7 +136,7 @@
   };
 
   static vector<string> values;
-  static vector<Label> labels;
+  static vector<CodeLabel> labels;
   static vector<Instruction> instructions;
   static vector<Memsection> memsections;
 
@@ -2136,7 +2136,7 @@ int assemble_file(const char filename[], shared_ptr<Memory> memory)
     if (instruction.has_branch_label)
     {
       bool label_found = false;
-      for (Label label : labels)
+      for (CodeLabel label : labels)
       {
         if (!instruction.label.compare(label.name))
         {

@@ -7,6 +7,9 @@
 *.obj
 *.dblite
 *.Identifier
+*.so
+*.gd
+.sconsign.dblite
 
 .vscode/
 .idea/

@@ -1,8 +1,6 @@
 #ifndef MIPS_SIM_ASSEMBLER_H
 #define MIPS_SIM_ASSEMBLER_H
 
-
-#include <string>
 #include <memory>
 #include "mem.h"
 

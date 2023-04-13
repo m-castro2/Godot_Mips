@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d0al4th2j6glm"]
+[gd_scene load_steps=3 format=3 uid="uid://d0al4th2j6glm"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_vjp27"]
+[ext_resource type="Script" path="res://FileMenuButton.gd" id="2_1lfc7"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -11,25 +12,80 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vjp27")
 
-[node name="GodotWrapper" type="GodotWrapper" parent="."]
-
 [node name="PipelinedWrapper" type="PipelinedWrapper" parent="."]
 
-[node name="LoadProgram" type="Button" parent="."]
-layout_mode = 0
-offset_left = 274.0
-offset_top = 104.0
-offset_right = 443.0
-offset_bottom = 216.0
-text = "Load program"
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="NextCycle" type="Button" parent="."]
-layout_mode = 0
-offset_left = 512.0
-offset_top = 106.0
-offset_right = 681.0
-offset_bottom = 218.0
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 20
+
+[node name="ToolbarMenu" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="FileMenuButton" type="MenuButton" parent="VBoxContainer/MarginContainer/ToolbarMenu"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "File"
+flat = false
+script = ExtResource("2_1lfc7")
+
+[node name="CpuInfoScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CpuInfoScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SpecialRegistersVBoxContainer" type="VBoxContainer" parent="VBoxContainer/CpuInfoScrollContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="IntegerRegistersVBoxContainer" type="VBoxContainer" parent="VBoxContainer/CpuInfoScrollContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FloatRegistersVBoxContainer" type="VBoxContainer" parent="VBoxContainer/CpuInfoScrollContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DoubleRegistersVBoxContainer" type="VBoxContainer" parent="VBoxContainer/CpuInfoScrollContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="NextCycle" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+disabled = true
 text = "Next cycle"
 
-[connection signal="pressed" from="LoadProgram" to="." method="_on_load_program_pressed"]
-[connection signal="pressed" from="NextCycle" to="." method="_on_next_cycle_pressed"]
+[node name="RunProgram" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+disabled = true
+text = "Run program"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/NextCycle" to="." method="_on_next_cycle_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/RunProgram" to="." method="_on_run_program_pressed"]

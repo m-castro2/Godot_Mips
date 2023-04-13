@@ -8,9 +8,9 @@
 *.dblite
 *.Identifier
 *.so
-*.gd
 .sconsign.dblite
 
 .vscode/
 .idea/
 godot-cpp/
+src/.vscode/

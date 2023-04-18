@@ -14,14 +14,27 @@ env = SConscript("godot-cpp/SConstruct")
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 env.Append(CPPPATH=["src/"])
-env.Append(CPPPATH=["src/assembler/"])
-env.Append(CPPPATH=["src/pipelined/"])
+env.Append(CPPPATH=["mips_sim/src/"])
+env.Append(CPPPATH=["mips_sim/src/assembler/"])
+env.Append(CPPPATH=["mips_sim/src/cpu/"])
+env.Append(CPPPATH=["mips_sim/src/cpu/component/"])
+env.Append(CPPPATH=["mips_sim/src/interface/"])
+env.Append(CPPPATH=["mips_sim/src/interface/cli/"])
+env.Append(CPPPATH=["mips_sim/src/interface/cli/detail/"])
+env.Append(CPPPATH=["mips_sim/src/interface/qt/"])
+
 env.Append(CFLAGS=["-g -O0"])
 
 
 sources = Glob("src/*.cpp")
-sources = sources + Glob("src/assembler/*.cpp")
-sources = sources + Glob("src/pipelined/*.cpp")
+sources = sources + Glob("mips_sim/src/*.cpp")
+sources = sources + Glob("mips_sim/src/assembler/*.cpp")
+sources = sources + Glob("mips_sim/src/cpu/*.cpp")
+sources = sources + Glob("mips_sim/src/cpu/component/*.cpp")
+sources = sources + Glob("mips_sim/src/interface/*.cpp")
+sources = sources + Glob("mips_sim/src/cpu/interface/cli/*.cpp")
+sources = sources + Glob("mips_sim/src/cpu/interface/cli/detail/*.cpp")
+sources = sources + Glob("mips_sim/src/cpu/interface/qt/*.cpp")
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(

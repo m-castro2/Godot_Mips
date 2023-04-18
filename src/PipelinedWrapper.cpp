@@ -10,8 +10,6 @@
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
-#include "mips_assembler.h"
-#include "utils.h"
 
 using namespace godot;
 using namespace mips_sim;
@@ -167,7 +165,7 @@ bool PipelinedWrapper::is_ready() {
 }
 
 bool PipelinedWrapper::load_program(godot::String filename) {
-    if (mips_sim::assemble_file(filename.ascii().get_data(), cpu->get_memory()) != 0) {
+    if (mips_sim::assemble_file(filename.ascii().get_data(), mem) != 0) {
         return false;
     }
     mem->snapshot(0);

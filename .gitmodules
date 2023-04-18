@@ -2,3 +2,6 @@
 	path = godot-cpp
 	url = https://github.com/godotengine/godot-cpp
 	branch = master
+[submodule "mips_sim"]
+	path = mips_sim
+	url = https://github.com/m-castro2/mips_sim.git

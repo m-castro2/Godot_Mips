@@ -5,7 +5,11 @@
 #include <string>
 #include <memory>
 
-#include "pipelined/cpu_pipelined.h"
+#include "../mips_sim/src/cpu/cpu_pipelined.h"
+#include "../mips_sim/src/assembler/mips_assembler.h"
+#include "../mips_sim/src/utils.h"
+
+
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/classes/node.hpp>
 namespace godot {

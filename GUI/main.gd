@@ -66,7 +66,7 @@ func _on_load_program_pressed():
 	pipelinedWrapper = PipelinedWrapper.new()
 	pipelinedWrapper.name = "PipelinedWrapper"
 	self.add_child(pipelinedWrapper)
-	program_loaded = pipelinedWrapper.load_program("/home/mike/Desktop/SharedFolder/TFG/mips_sim/testdata/asm1.s")
+	program_loaded = pipelinedWrapper.load_program("res://testdata/asm1.s")
 	if program_loaded and pipelinedWrapper.is_ready():
 		%NextCycle.disabled = false
 		%RunProgram.disabled = false

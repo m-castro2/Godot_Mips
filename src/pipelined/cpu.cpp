@@ -549,4 +549,8 @@ const vector<uint32_t> & Cpu::get_loaded_instructions()
   return loaded_instructions;
 }
 
+std::shared_ptr<Memory> Cpu::get_memory(){
+  return memory;
+}
+
 } /* namespace */

@@ -66,20 +66,36 @@ func _on_load_program_pressed():
 	pipelinedWrapper = PipelinedWrapper.new()
 	pipelinedWrapper.name = "PipelinedWrapper"
 	self.add_child(pipelinedWrapper)
-	program_loaded = $PipelinedWrapper.load_program("/home/mike/Desktop/SharedFolder/TFG/mips_sim/testdata/asm1.s")
-	if program_loaded and $PipelinedWrapper.is_ready():
+	program_loaded = pipelinedWrapper.load_program("/home/mike/Desktop/SharedFolder/TFG/mips_sim/testdata/asm1.s")
+	if program_loaded and pipelinedWrapper.is_ready():
 		%NextCycle.disabled = false
 		%RunProgram.disabled = false
+		%PreviousCycle.disabled = false
+		%ShowMemory.disabled = false
+		%Reset.disabled = false
+	update_cpu_info()
 
 
 func _on_next_cycle_pressed():
-	if program_loaded and $PipelinedWrapper.is_ready():
-		$PipelinedWrapper.next_cycle()
-		update_cpu_info()
+	pipelinedWrapper.next_cycle()
+	update_cpu_info()
 
 
 func _on_run_program_pressed():
-	if program_loaded and $PipelinedWrapper.is_ready():
-		while $PipelinedWrapper.is_ready():
-			$PipelinedWrapper.next_cycle()
-		update_cpu_info()
+	while pipelinedWrapper.is_ready():
+		pipelinedWrapper.next_cycle()
+	update_cpu_info()
+
+
+func _on_reset_pressed():
+	pipelinedWrapper.reset_cpu()
+	update_cpu_info()
+
+
+func _on_previous_cycle_pressed():
+	pipelinedWrapper.previous_cycle()
+	update_cpu_info()
+
+
+func _on_show_memory_pressed():
+	pipelinedWrapper.show_memory()

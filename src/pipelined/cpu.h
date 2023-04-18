@@ -59,6 +59,8 @@ public:
   uint32_t read_special_register(int id) const;
 
   const std::vector<uint32_t> & get_loaded_instructions();
+
+  std::shared_ptr<Memory> get_memory();
   
 protected:
 

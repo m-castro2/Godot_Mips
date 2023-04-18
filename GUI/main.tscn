@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0al4th2j6glm"]
+[gd_scene load_steps=4 format=3 uid="uid://d0al4th2j6glm"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_vjp27"]
 [ext_resource type="Script" path="res://FileMenuButton.gd" id="2_1lfc7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cexda"]
+bg_color = Color(0.227451, 0.227451, 0.227451, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -22,17 +25,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cexda")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 20
 
-[node name="ToolbarMenu" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+[node name="ToolbarMenu" type="HBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="FileMenuButton" type="MenuButton" parent="VBoxContainer/MarginContainer/ToolbarMenu"]
+[node name="FileMenuButton" type="MenuButton" parent="VBoxContainer/PanelContainer/MarginContainer/ToolbarMenu"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 text = "File"
@@ -71,6 +78,22 @@ size_flags_horizontal = 3
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
+[node name="Reset" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+disabled = true
+text = "Reset"
+
+[node name="PreviousCycle" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+disabled = true
+text = "Previous cycle"
+
 [node name="NextCycle" type="Button" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 100)
@@ -87,5 +110,16 @@ size_flags_horizontal = 6
 disabled = true
 text = "Run program"
 
+[node name="ShowMemory" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+disabled = true
+text = "Show memory"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/PreviousCycle" to="." method="_on_previous_cycle_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/NextCycle" to="." method="_on_next_cycle_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/RunProgram" to="." method="_on_run_program_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ShowMemory" to="." method="_on_show_memory_pressed"]

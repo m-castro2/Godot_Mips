@@ -18,24 +18,32 @@ typedef struct {
 
 } cpu_info_t;
 
+
 class PipelinedWrapper : public Node{
     GDCLASS(PipelinedWrapper, Node);
 protected:
     static void _bind_methods();
 public:
+    PipelinedWrapper();
+    ~PipelinedWrapper();
+
     godot::Dictionary* cpu_info;
     std::unique_ptr<mips_sim::Cpu> cpu;
     std::shared_ptr<mips_sim::Memory> mem;
-    PipelinedWrapper();
-    ~PipelinedWrapper();
+    godot::Array instructions;
+
+    godot::String reset_cpu();
     godot::String next_cycle();
+    godot::String previous_cycle();
     godot::String init();
-    
+    godot::String show_memory();
     bool is_ready();
     bool load_program(godot::String filename);
 
-    void set_cpu_info(godot::Dictionary p_cpu_info);
     godot::Dictionary get_cpu_info();
+    void set_cpu_info(godot::Dictionary p_cpu_info);
+    godot::Array get_instructions();
+    void set_instructions(godot::Array p_instructions);
 
     void _update_cpu_info();
 };

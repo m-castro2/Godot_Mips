@@ -1,0 +1,69 @@
+[gd_scene load_steps=2 format=3 uid="uid://blyqhw0mqx437"]
+
+[ext_resource type="Script" path="res://cpu_info_scroll_container.gd" id="1_p4jip"]
+
+[node name="CpuInfoScrollContainer" type="ScrollContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_p4jip")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpecialRegistersVBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="HBoxContainer/PanelContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="IntegerRegistersVBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer2/ScrollContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer3" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer3" type="ScrollContainer" parent="HBoxContainer/PanelContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FloatRegistersVBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer3/ScrollContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer4" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer4" type="ScrollContainer" parent="HBoxContainer/PanelContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DoubleRegistersVBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer4/ScrollContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3

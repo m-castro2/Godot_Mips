@@ -6,6 +6,10 @@
 #include <ostream>
 #include <sstream>
 
+
+#include "../mips_sim/src/assembler/mips_assembler.h"
+#include "../mips_sim/src/utils.h"
+
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
@@ -99,10 +103,6 @@ godot::String PipelinedWrapper::reset_cpu(){
 }
 
 godot::String PipelinedWrapper::previous_cycle(){
-    if (!cpu->is_ready()) {
-        return "Program done";
-    }
-
     if (cpu->get_cycle() == 0)
     {
       return "Already at first cycle";

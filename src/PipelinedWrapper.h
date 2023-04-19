@@ -6,13 +6,10 @@
 #include <memory>
 
 #include "../mips_sim/src/cpu/cpu_pipelined.h"
-#include "../mips_sim/src/assembler/mips_assembler.h"
-#include "../mips_sim/src/utils.h"
 
 
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/classes/node.hpp>
-namespace godot {
 
 typedef struct {
     godot::String PCValue;
@@ -23,7 +20,7 @@ typedef struct {
 } cpu_info_t;
 
 
-class PipelinedWrapper : public Node{
+class PipelinedWrapper : public godot::Node {
     GDCLASS(PipelinedWrapper, Node);
 protected:
     static void _bind_methods();
@@ -51,5 +48,4 @@ public:
 
     void _update_cpu_info();
 };
-}
 #endif //TFG_PIPELINED_WRAPPER_H

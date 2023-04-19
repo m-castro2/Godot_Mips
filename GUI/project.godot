@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 Globals="*res://globals.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/explore-editor-theme/plugin.cfg")
+
 [filesystem]
 
 import/blender/enabled=false
@@ -27,3 +31,4 @@ import/blender/enabled=false
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.113725, 0.133333, 0.160784, 1)

@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_gn6x2"]
 [ext_resource type="Script" path="res://main.gd" id="1_vjp27"]
 [ext_resource type="Script" path="res://FileMenuButton.gd" id="2_1lfc7"]
-[ext_resource type="PackedScene" uid="uid://blyqhw0mqx437" path="res://cpu_info_scroll_container.tscn" id="3_sjcdd"]
+[ext_resource type="PackedScene" uid="uid://2p7a1aqmjtea" path="res://menu.tscn" id="4_mvihx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0tx4h"]
 
@@ -37,17 +37,11 @@ layout_mode = 2
 theme = ExtResource("1_gn6x2")
 theme_type_variation = &"BackgroundPanelContainer"
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
-
-[node name="ToolbarMenu" type="HBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer"]
+[node name="ToolbarMenu" type="HBoxContainer" parent="VBoxContainer/PanelContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="FileMenuButton" type="MenuButton" parent="VBoxContainer/PanelContainer/MarginContainer/ToolbarMenu"]
+[node name="FileMenuButton" type="MenuButton" parent="VBoxContainer/PanelContainer/ToolbarMenu"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_0tx4h")
@@ -57,8 +51,10 @@ text = "File"
 flat = false
 script = ExtResource("2_1lfc7")
 
-[node name="CpuInfoScrollContainer" parent="VBoxContainer" instance=ExtResource("3_sjcdd")]
+[node name="MenuButton" type="Button" parent="VBoxContainer/PanelContainer/ToolbarMenu"]
 layout_mode = 2
+text = "- - -
+"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -103,10 +99,16 @@ size_flags_horizontal = 6
 disabled = true
 text = "Show memory"
 
+[node name="Menu" parent="." instance=ExtResource("4_mvihx")]
+visible = false
+layout_mode = 1
+offset_left = -145.0
+offset_right = -1152.0
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/ToolbarMenu/MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/PreviousCycle" to="." method="_on_previous_cycle_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/NextCycle" to="." method="_on_next_cycle_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/RunProgram" to="." method="_on_run_program_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ShowMemory" to="." method="_on_show_memory_pressed"]
-
-[editable path="VBoxContainer/CpuInfoScrollContainer"]

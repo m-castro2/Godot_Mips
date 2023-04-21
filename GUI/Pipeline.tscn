@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwi3t3sl6r5nb"]
+
+[ext_resource type="Script" path="res://pipeline.gd" id="1_lb30k"]
+[ext_resource type="PackedScene" uid="uid://r3i6snfx5v5k" path="res://InstructionsPanel.tscn" id="1_mi6q1"]
+
+[node name="Pipeline" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lb30k")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InstructionsPanel" parent="HBoxContainer" instance=ExtResource("1_mi6q1")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ReferenceRect" type="ReferenceRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+editor_only = false
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+editor_only = false
+
+[node name="ReferenceRect3" type="ReferenceRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+editor_only = false
+
+[node name="ReferenceRect4" type="ReferenceRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+editor_only = false
+
+[node name="ReferenceRect5" type="ReferenceRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+editor_only = false

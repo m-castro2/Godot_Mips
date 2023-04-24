@@ -3,7 +3,7 @@ extends Control
 @onready var codeEdit: CodeEdit = %CodeEdit
 @onready var labelContainer: VBoxContainer = %LabelVBoxContainer
 
-func add_instructions(p_instructions: Array):
+func add_instructions(p_instructions: Array) -> void:
 	clear_instructions()
 	codeEdit.visible = false
 	for instruction in p_instructions:
@@ -12,7 +12,7 @@ func add_instructions(p_instructions: Array):
 		label.fit_content = true
 		labelContainer.add_child(label)
 
-func clear_instructions():
+func clear_instructions() -> void:
 	codeEdit.text = ""
 	for child in %LabelVBoxContainer.get_children():
 		if child is RichTextLabel:

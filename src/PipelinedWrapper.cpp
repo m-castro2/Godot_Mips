@@ -38,6 +38,14 @@ void PipelinedWrapper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_instructions"), &PipelinedWrapper::set_instructions);
     ClassDB::bind_method(D_METHOD("get_instructions"), &PipelinedWrapper::get_instructions);
     ClassDB::add_property("PipelinedWrapper", PropertyInfo(Variant::ARRAY, "instructions"), "set_instructions", "get_instructions");
+
+    ClassDB::bind_method(D_METHOD("set_loaded_instructions"), &PipelinedWrapper::set_loaded_instructions);
+    ClassDB::bind_method(D_METHOD("get_loaded_instructions"), &PipelinedWrapper::get_loaded_instructions);
+    ClassDB::add_property("PipelinedWrapper", PropertyInfo(Variant::ARRAY, "loaded_instructions"), "set_loaded_instructions", "get_loaded_instructions");
+
+    ClassDB::bind_method(D_METHOD("set_diagram"), &PipelinedWrapper::set_diagram);
+    ClassDB::bind_method(D_METHOD("get_diagram"), &PipelinedWrapper::get_diagram);
+    ClassDB::add_property("PipelinedWrapper", PropertyInfo(Variant::ARRAY, "diagram"), "set_diagram", "get_diagram");
 }
 
 
@@ -119,6 +127,8 @@ godot::String PipelinedWrapper::previous_cycle(){
     godot::UtilityFunctions::print(str);
 
     _update_cpu_info();
+    _update_loaded_instructions();
+
     return godot::String(std::to_string(retval).c_str());
 }
 
@@ -138,6 +148,8 @@ godot::String PipelinedWrapper::next_cycle() {
     godot::UtilityFunctions::print(str);
 
     _update_cpu_info();
+    _update_loaded_instructions();
+    _update_diagram();
 
     return godot::String(std::to_string(retval).c_str());
 }
@@ -205,6 +217,73 @@ godot::Array PipelinedWrapper::get_instructions() {
 
 void PipelinedWrapper::set_instructions(godot::Array p_instructions) {
     instructions = p_instructions;
+}
+
+godot::Array PipelinedWrapper::get_loaded_instructions() {
+    return loaded_instructions;
+}
+
+void PipelinedWrapper::set_loaded_instructions(godot::Array p_loaded_instructions) {
+    loaded_instructions = p_loaded_instructions;
+}
+
+void PipelinedWrapper::_update_loaded_instructions() {
+    loaded_instructions.clear();
+    for (uint32_t inst: cpu->get_loaded_instructions()) {
+        loaded_instructions.push_back(godot::String(std::to_string(inst).c_str()));
+    }
+}
+
+godot::Array PipelinedWrapper::get_diagram() {
+    return diagram;
+}
+
+void PipelinedWrapper::set_diagram(godot::Array p_diagram) {
+    diagram = p_diagram;
+}
+
+void PipelinedWrapper::_update_diagram() {
+    CpuPipelined & cpuPipe = dynamic_cast<CpuPipelined &>(*cpu);
+    const uint32_t * const * l_diagram = cpuPipe.get_diagram();
+    uint32_t current_cycle = cpu->get_cycle();
+    uint32_t min_cycle = current_cycle;
+    uint32_t instr_ids[20];
+    size_t instr_count = 0;
+    godot::Array result = {};
+
+    for (int i = 0; i < loaded_instructions.size(); i++) {
+        if (l_diagram[i][current_cycle] > 0) {
+            instr_ids[instr_count] = i;
+            instr_count++;
+            uint32_t lmin_cycle = current_cycle;
+
+            for (size_t j=current_cycle; l_diagram[i][j] > 0 && j > 0; j--) {
+                lmin_cycle--;
+            }
+            if (lmin_cycle < min_cycle) {
+                min_cycle = lmin_cycle;
+            }
+        }
+    }
+
+    for (size_t i=1; i<instr_count; i++) {
+        godot::Array arr = {};
+        for (size_t j=current_cycle; j>min_cycle; j--) {
+            if (l_diagram[instr_ids[i]][j] > 0) {
+                if (l_diagram[instr_ids[i]][j] == l_diagram[instr_ids[i]][j-1]) {
+                    //stall
+                    arr.push_front("stall");
+                }
+                else {
+                    uint32_t inst_value = instr_ids[i];
+                    uint32_t ldiagram_i_j_value = l_diagram[instr_ids[i]][j];
+                    arr.push_front(stage_names[l_diagram[instr_ids[i]][j] - 1].c_str());
+                }
+            }
+        }
+        result.push_back(arr);
+    }
+    set_diagram(result);
 }
 
 

@@ -32,6 +32,8 @@ public:
     std::unique_ptr<mips_sim::Cpu> cpu;
     std::shared_ptr<mips_sim::Memory> mem;
     godot::Array instructions;
+    godot::Array loaded_instructions;
+    godot::Array diagram; //diagram[instruction_index][at_cycle] = "stage_name"
 
     godot::String reset_cpu();
     godot::String next_cycle();
@@ -45,7 +47,13 @@ public:
     void set_cpu_info(godot::Dictionary p_cpu_info);
     godot::Array get_instructions();
     void set_instructions(godot::Array p_instructions);
+    godot::Array get_loaded_instructions();
+    void set_loaded_instructions(godot::Array p_loaded_instructions);
+    void set_diagram(godot::Array p_diagram);
+    godot::Array get_diagram();
 
     void _update_cpu_info();
+    void _update_loaded_instructions();
+    void _update_diagram();
 };
 #endif //TFG_PIPELINED_WRAPPER_H

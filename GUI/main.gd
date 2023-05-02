@@ -32,6 +32,7 @@ func _on_load_program_pressed(file_path: String) -> void:
 		
 		update_cpu_info()
 		pipeline.add_instructions(pipelinedWrapper.instructions)
+		StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
 	
 	else:
 		print("Error loading program")
@@ -39,12 +40,16 @@ func _on_load_program_pressed(file_path: String) -> void:
 func _on_next_cycle_pressed() -> void:
 	pipelinedWrapper.next_cycle()
 	update_cpu_info()
+	Globals.current_cycle += 1
+	StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
 
 
 func _on_run_program_pressed() -> void:
 	while pipelinedWrapper.is_ready():
 		pipelinedWrapper.next_cycle()
 	update_cpu_info()
+	Globals.current_cycle = pipelinedWrapper.cpu_info["Cycles"]
+	StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
 
 
 func _on_reset_pressed() -> void:
@@ -56,6 +61,8 @@ func _on_reset_pressed() -> void:
 func _on_previous_cycle_pressed() -> void:
 	pipelinedWrapper.previous_cycle()
 	update_cpu_info()
+	Globals.current_cycle -= 1
+	StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
 
 
 func _on_show_memory_pressed() -> void:
@@ -64,6 +71,7 @@ func _on_show_memory_pressed() -> void:
 
 func _on_menu_button_pressed() -> void:
 	menu.show_menu()
+
 
 func _input(_event: InputEvent) -> void:
 	if menu.visible and Input.is_action_just_pressed("Click") \

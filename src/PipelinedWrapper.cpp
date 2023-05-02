@@ -128,6 +128,7 @@ godot::String PipelinedWrapper::previous_cycle(){
 
     _update_cpu_info();
     _update_loaded_instructions();
+    _update_diagram();
 
     return godot::String(std::to_string(retval).c_str());
 }
@@ -198,8 +199,6 @@ bool PipelinedWrapper::load_program(godot::String filename) {
         }
         catch (int e) {}
     }
-    godot::UtilityFunctions::print(cont);
-    godot::UtilityFunctions::print(instructions);
     return true;
 }
 
@@ -251,7 +250,7 @@ void PipelinedWrapper::_update_diagram() {
     size_t instr_count = 0;
     godot::Array result = {};
 
-    for (int i = 0; i < loaded_instructions.size(); i++) {
+    for (int i = 1; i < loaded_instructions.size(); i++) {
         if (l_diagram[i][current_cycle] > 0) {
             instr_ids[instr_count] = i;
             instr_count++;
@@ -266,7 +265,7 @@ void PipelinedWrapper::_update_diagram() {
         }
     }
 
-    for (size_t i=1; i<instr_count; i++) {
+    for (size_t i=0; i<instr_count; i++) {
         godot::Array arr = {};
         for (size_t j=current_cycle; j>min_cycle; j--) {
             if (l_diagram[instr_ids[i]][j] > 0) {
@@ -275,8 +274,6 @@ void PipelinedWrapper::_update_diagram() {
                     arr.push_front("stall");
                 }
                 else {
-                    uint32_t inst_value = instr_ids[i];
-                    uint32_t ldiagram_i_j_value = l_diagram[instr_ids[i]][j];
                     arr.push_front(stage_names[l_diagram[instr_ids[i]][j] - 1].c_str());
                 }
             }

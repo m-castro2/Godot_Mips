@@ -7,3 +7,5 @@ enum component_type { InstructionsMemory }
 signal show_instructions_memory
 
 var can_instantiate_load_menu: bool = true
+
+var current_cycle: int = 0

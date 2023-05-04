@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_vouo0"]
 
 [node name="Menu" type="Control"]
+custom_minimum_size = Vector2(145, 648)
 layout_mode = 3
 anchor_right = 0.126
 anchor_bottom = 1.0

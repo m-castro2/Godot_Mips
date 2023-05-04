@@ -12,6 +12,7 @@ func _ready() -> void:
 	Globals.show_load_program_menu.connect(_on_show_load_program_menu)
 	Globals.load_program_pressed.connect(_on_load_program_pressed)
 	Globals.show_instructions_memory.connect(_on_show_instructions_memory)
+	DisplayServer.window_set_min_size(Vector2(1152, 648))
 
 
 func update_cpu_info() -> void:

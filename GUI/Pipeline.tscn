@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://3t3j8srx7a16" path="res://stages/if_stage.tscn" id="3_hdhxw"]
 
 [node name="Pipeline" type="Control"]
+custom_minimum_size = Vector2(189, 509)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +15,7 @@ grow_vertical = 2
 script = ExtResource("1_lb30k")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(189, 509)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

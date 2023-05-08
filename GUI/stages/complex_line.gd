@@ -5,19 +5,23 @@ class_name ComplexLine2D
 @export var origin: Line2D
 @export var target: Marker2D
 @export var intersect_point: float
-
-var custom_points: Array[Vector2] = []
+@export var flag: bool
+@export var offset: int
 
 
 func add_points():
 	global_position = Vector2(0, 0)
-	custom_points.clear()
+	clear_points()
 	var start: Vector2
 	var end: Vector2
 	start = origin.get_point_position(0)
 	end = origin.get_point_position(1)
 	var first_point = Vector2(start.x + (end.x - start.x)*intersect_point, start.y)
-	custom_points.push_back(first_point)
-	custom_points.push_back(Vector2(first_point.x, target.global_position.y))
-	custom_points.push_back(target.global_position)
-	points = custom_points
+	add_point(first_point)
+	if flag:
+		add_point(Vector2(first_point.x, start.y - offset))
+		add_point(Vector2(target.global_position.x - offset, start.y - offset))
+		add_point(Vector2(target.global_position.x - offset, target.global_position.y))
+	else:
+		add_point(Vector2(first_point.x, target.global_position.y))
+	add_point(target.global_position)

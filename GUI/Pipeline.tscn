@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://pipeline.gd" id="1_lb30k"]
 [ext_resource type="PackedScene" uid="uid://r3i6snfx5v5k" path="res://InstructionsPanel.tscn" id="1_mi6q1"]
-[ext_resource type="PackedScene" uid="uid://3t3j8srx7a16" path="res://stages/if_stage.tscn" id="3_hdhxw"]
+[ext_resource type="PackedScene" uid="uid://ruc77ommolrx" path="res://stages/if_stage.tscn" id="3_hdhxw"]
 
 [node name="Pipeline" type="Control"]
 custom_minimum_size = Vector2(189, 509)
@@ -22,6 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
 [node name="InstructionsPanel" parent="HBoxContainer" instance=ExtResource("1_mi6q1")]
 unique_name_in_owner = true
@@ -29,29 +30,86 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="IFStage" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
+custom_minimum_size = Vector2(0, 509)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ReferenceRect" type="ReferenceRect" parent="HBoxContainer"]
-visible = false
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-editor_only = false
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_bottom = 40
 
-[node name="ReferenceRect2" type="ReferenceRect" parent="HBoxContainer"]
+[node name="Button" type="Button" parent="HBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
-size_flags_horizontal = 3
-editor_only = false
+text = "I
+F
+/
+I
+D"
 
 [node name="ReferenceRect3" type="ReferenceRect" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 editor_only = false
 
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_bottom = 40
+
+[node name="Button" type="Button" parent="HBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+text = "I
+D
+/
+E
+X"
+
+[node name="ReferenceRect6" type="ReferenceRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+editor_only = false
+
+[node name="MarginContainer3" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_bottom = 40
+
+[node name="Button" type="Button" parent="HBoxContainer/MarginContainer3"]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+text = "E
+X
+/
+M
+E
+M"
+
 [node name="ReferenceRect4" type="ReferenceRect" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 editor_only = false
+
+[node name="MarginContainer4" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_bottom = 40
+
+[node name="Button" type="Button" parent="HBoxContainer/MarginContainer4"]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+text = "M
+E
+M
+/
+W
+B"
 
 [node name="ReferenceRect5" type="ReferenceRect" parent="HBoxContainer"]
 layout_mode = 2

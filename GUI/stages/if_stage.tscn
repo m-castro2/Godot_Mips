@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://3t3j8srx7a16"]
+[gd_scene load_steps=5 format=3 uid="uid://ruc77ommolrx"]
 
 [ext_resource type="Script" path="res://stages/if_stage.gd" id="1_s50na"]
+[ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="2_6udrb"]
 [ext_resource type="Script" path="res://stages/complex_line.gd" id="2_p3qkl"]
+[ext_resource type="Script" path="res://stages/component.gd" id="2_q11yd"]
 
 [node name="IFStage" type="Control"]
 custom_minimum_size = Vector2(189, 509)
@@ -20,20 +22,42 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 31)
 layout_mode = 2
 
 [node name="StageButton" type="Button" parent="VBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(0, 31)
 layout_mode = 2
 text = "IF"
 
-[node name="Control" type="Control" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/StageButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="+" type="Button" parent="VBoxContainer/PanelContainer/StageButton/HBoxContainer"]
+layout_mode = 2
+text = "+"
+
+[node name="-" type="Button" parent="VBoxContainer/PanelContainer/StageButton/HBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="Control" type="Panel" parent="VBoxContainer"]
+clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("2_6udrb")
 
 [node name="InstructionsMemoryButton" type="Button" parent="VBoxContainer/Control"]
-custom_minimum_size = Vector2(120, 300)
+custom_minimum_size = Vector2(120, 250)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -41,21 +65,28 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -60.0
-offset_top = -150.0
+offset_top = -125.0
 offset_right = 60.0
-offset_bottom = 150.0
+offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "Instructions
 Memory"
+script = ExtResource("2_q11yd")
+position_percent = Vector2(0.9, 0.5)
+
+[node name="Output" type="Marker2D" parent="VBoxContainer/Control/InstructionsMemoryButton" groups=["InstMem_IFID"]]
+position = Vector2(120, 125)
 
 [node name="Input" type="Marker2D" parent="VBoxContainer/Control/InstructionsMemoryButton" groups=["PC_InstMem"]]
-position = Vector2(0, 150)
+position = Vector2(0, 125)
 
 [node name="DetailedControl" type="Control" parent="VBoxContainer/Control"]
 visible = false
-layout_mode = 1
-anchors_preset = 15
+layout_mode = 2
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -65,10 +96,8 @@ mouse_filter = 2
 [node name="Add" type="Button" parent="VBoxContainer/Control/DetailedControl"]
 custom_minimum_size = Vector2(50, 70)
 layout_mode = 2
-offset_left = 553.0
-offset_top = 40.0
-offset_right = 603.0
-offset_bottom = 110.0
+offset_right = 50.0
+offset_bottom = 70.0
 mouse_filter = 1
 text = "Add"
 
@@ -89,13 +118,29 @@ antialiased = true
 [node name="LowerInput" type="Marker2D" parent="VBoxContainer/Control/DetailedControl/Add"]
 position = Vector2(0, 44)
 
+[node name="Add_IFID" type="Line2D" parent="VBoxContainer/Control/DetailedControl/Add" groups=["Add_IFID"]]
+width = 1.0
+
+[node name="Add_Mux" type="Line2D" parent="VBoxContainer/Control/DetailedControl/Add/Add_IFID" node_paths=PackedStringArray("origin", "target") groups=["Add_Mux"]]
+width = 1.0
+script = ExtResource("2_p3qkl")
+origin = NodePath("..")
+target = NodePath("../../../Mux/Input1")
+intersect_point = 0.5
+flag = true
+offset = 50
+
+[node name="Output" type="Marker2D" parent="VBoxContainer/Control/DetailedControl/Add" groups=["Add_IFID"]]
+position = Vector2(50, 35)
+
+[node name="IFID_UpperInput" type="Marker2D" parent="VBoxContainer/Control/DetailedControl/Add" groups=["Add_IFID"]]
+unique_name_in_owner = true
+
 [node name="Mux" type="Button" parent="VBoxContainer/Control/DetailedControl"]
 custom_minimum_size = Vector2(25, 100)
 layout_mode = 2
-offset_left = 256.0
-offset_top = 272.0
-offset_right = 281.0
-offset_bottom = 372.0
+offset_right = 25.0
+offset_bottom = 100.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 1
@@ -109,13 +154,22 @@ width = 1.0
 [node name="Output" type="Marker2D" parent="VBoxContainer/Control/DetailedControl/Mux" groups=["Mux_PC"]]
 position = Vector2(25, 50)
 
+[node name="Input1" type="Marker2D" parent="VBoxContainer/Control/DetailedControl/Mux"]
+position = Vector2(0, 20)
+
+[node name="Label" type="Label" parent="VBoxContainer/Control/DetailedControl/Mux/Input1"]
+offset_left = -37.0
+offset_top = -17.0
+offset_right = -7.0
+theme_override_font_sizes/font_size = 10
+text = "PC + 4"
+vertical_alignment = 1
+
 [node name="PC" type="Button" parent="VBoxContainer/Control/DetailedControl"]
 custom_minimum_size = Vector2(50, 70)
 layout_mode = 2
-offset_left = 318.0
-offset_top = 272.0
-offset_right = 368.0
-offset_bottom = 342.0
+offset_right = 50.0
+offset_bottom = 70.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 1
@@ -138,6 +192,18 @@ origin = NodePath("../PC_InstMem")
 target = NodePath("../../Add/LowerInput")
 intersect_point = 0.5
 
+[node name="InstructionsMemoryDetail" type="Control" parent="VBoxContainer/Control/DetailedControl"]
+layout_mode = 2
+anchors_preset = 0
+
+[node name="InstMem_IFID" type="Line2D" parent="VBoxContainer/Control/DetailedControl/InstructionsMemoryDetail" groups=["InstMem_IFID"]]
+width = 1.0
+
+[node name="IFID_MiddleInput" type="Marker2D" parent="VBoxContainer/Control/DetailedControl/InstructionsMemoryDetail" groups=["InstMem_IFID"]]
+unique_name_in_owner = true
+
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/StageButton" to="." method="_on_stage_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/StageButton/HBoxContainer/+" to="." method="_on_plus_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/StageButton/HBoxContainer/-" to="." method="_on_minus_pressed"]
 [connection signal="pressed" from="VBoxContainer/Control/InstructionsMemoryButton" to="." method="_on_instructions_memory_button_pressed"]

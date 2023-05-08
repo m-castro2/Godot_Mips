@@ -39,10 +39,11 @@ func _on_load_program_pressed(file_path: String) -> void:
 		print("Error loading program")
 
 func _on_next_cycle_pressed() -> void:
-	pipelinedWrapper.next_cycle()
-	update_cpu_info()
-	Globals.current_cycle += 1
-	StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+	if pipelinedWrapper.is_ready():
+		pipelinedWrapper.next_cycle()
+		update_cpu_info()
+		Globals.current_cycle = pipelinedWrapper.cpu_info["Cycles"]
+		StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
 
 
 func _on_run_program_pressed() -> void:
@@ -60,10 +61,11 @@ func _on_reset_pressed() -> void:
 
 
 func _on_previous_cycle_pressed() -> void:
-	pipelinedWrapper.previous_cycle()
-	update_cpu_info()
-	Globals.current_cycle -= 1
-	StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+	if Globals.current_cycle > 0:
+		pipelinedWrapper.previous_cycle()
+		update_cpu_info()
+		Globals.current_cycle = pipelinedWrapper.cpu_info["Cycles"]
+		StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
 
 
 func _on_show_memory_pressed() -> void:

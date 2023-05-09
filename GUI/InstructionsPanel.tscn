@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://instructionsPanel.gd" id="2_jlblq"]
 
 [node name="InstructionsPanel" type="Control"]
-custom_minimum_size = Vector2(189, 509)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

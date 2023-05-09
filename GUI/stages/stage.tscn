@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://bj24rvg7rbt8q"]
+
+[ext_resource type="Script" path="res://stages/stage.gd" id="1_cstg3"]
+[ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_g5vbs"]
+
+[node name="Stage" type="Control"]
+custom_minimum_size = Vector2(189, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_g5vbs")
+script = ExtResource("1_cstg3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 41)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="StageButton" type="Button" parent="VBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+text = "IF"
+
+[connection signal="resized" from="." to="." method="_on_resized"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/StageButton" to="." method="_on_stage_button_pressed"]

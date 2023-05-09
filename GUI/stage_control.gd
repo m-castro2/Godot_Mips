@@ -7,7 +7,6 @@ var colors_map: Dictionary = {}
 var used_colors: Array = []
 
 var instruction_map: Array = [] # map[stage] = instruction_idx
-var first_active_instruction_index: int = 0
 
 signal update_stage_colors(colors_map, instructions)
 
@@ -17,7 +16,7 @@ func update_instruction_map(instructions, loaded_instructions: Array, diagram: A
 		return
 	
 	instruction_map.clear()
-	for i in range(loaded_instructions.size()-1, first_active_instruction_index, -1):
+	for i in range(loaded_instructions.size()-1, -1, -1):
 		instruction_map.push_back(get_instruction_from_address(instructions, loaded_instructions[i]))
 	while instruction_map.size() > 5:
 		instruction_map.pop_back() # remove finished instructions
@@ -42,3 +41,8 @@ func get_instruction_from_address(instructions, address):
 	for i in range(0, instructions.size()):
 		if str(instructions[i][0]) == address:
 			return i
+
+func reset():
+	colors_map.clear()
+	used_colors.clear()
+	update_stage_colors.emit(colors_map, instruction_map)

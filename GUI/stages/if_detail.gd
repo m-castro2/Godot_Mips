@@ -1,0 +1,71 @@
+extends Panel
+
+var expanded: bool = false
+@onready var detailed_control = $DetailedControl
+@onready var add = $DetailedControl/Add
+@onready var mux = $DetailedControl/Mux
+@onready var pc = $DetailedControl/PC
+@onready var instructions_memory_button = $InstructionsMemoryButton
+
+var lines_groups: Array[String] = ["PC_InstMem", "Mux_PC", "PC_Add", "Add_IFID", "InstMem_IFID", "Add_Mux"]
+
+func show_detail(value: bool) -> void:
+	detailed_control.visible = value
+
+
+func calculate_positions():
+	var control_size: Vector2 = detailed_control.size
+	
+	if add: #if one is ready all are ready
+		
+		add.global_position = Vector2((instructions_memory_button.global_position.x + instructions_memory_button.size.x/2) - add.size.x/2, \
+		(control_size.y/2 - instructions_memory_button.size.y/2)/2-add.size.y/2 + detailed_control.global_position.y )
+		
+		pc.position = Vector2(instructions_memory_button.position.x/2 - pc.size.x/2 + detailed_control.size.x*.05, \
+		control_size.y/2 - pc.size.y/2 )
+		
+		mux.position = Vector2(instructions_memory_button.position.x/2 - mux.size.x/2 - detailed_control.size.x*.1, \
+		control_size.y/2 - mux.size.y/2 )
+		
+		%IFID_UpperInput.global_position = Vector2(global_position.x + size.x, add.global_position.y + add.size.y/2)
+		%IFID_MiddleInput.global_position = Vector2(global_position.x + size.x, instructions_memory_button.global_position.y + instructions_memory_button.size.y/2)
+
+
+func draw_lines():
+	await get_tree().process_frame
+	var line: Line2D = null
+	var points: Array[Vector2] = []
+	for group in lines_groups:
+		for node in get_tree().get_nodes_in_group(group):
+			if node is ComplexLine2D:
+				node.add_points()
+			elif node is Line2D:
+				node.clear_points()
+				line = node
+				line.global_position = Vector2(0,0)
+			else:
+				points.push_back(node.global_position)
+		for point in points:
+			line.add_point(point)
+		points.clear()
+
+
+func _on_instructions_memory_button_pressed():
+	Globals.show_component_info.emit(instructions_memory_button.global_position + instructions_memory_button.size/2, instructions_memory_button.get_info())
+
+
+func _get_all_children(node: Node, zoom_value: bool):
+	for child in node.get_children():
+		if child is Line2D or child is Marker2D:
+			continue
+		if child.get_child_count() > 0:
+			_get_all_children(child, zoom_value)
+		child.size = child.size / .9 if zoom_value else child.size * .9
+
+
+func _on_pc_pressed():
+	Globals.show_component_info.emit(pc.global_position + pc.size/2, pc.get_info())
+
+
+func _on_add_pressed():
+	Globals.show_component_info.emit(add.global_position + add.size/2, add.get_info())

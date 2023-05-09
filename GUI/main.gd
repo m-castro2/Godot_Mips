@@ -11,7 +11,7 @@ const component_info_window: PackedScene = preload("res://component_info_window.
 func _ready() -> void:
 	Globals.show_load_program_menu.connect(_on_show_load_program_menu)
 	Globals.load_program_pressed.connect(_on_load_program_pressed)
-	Globals.show_instructions_memory.connect(_on_show_instructions_memory)
+	Globals.show_component_info.connect(_on_show_component_info)
 	DisplayServer.window_set_min_size(Vector2(1152, 648))
 
 
@@ -58,6 +58,7 @@ func _on_reset_pressed() -> void:
 	pipelinedWrapper.reset_cpu()
 	pipeline.clear_instructions()
 	update_cpu_info()
+	StageControl.reset()
 
 
 func _on_previous_cycle_pressed() -> void:
@@ -95,7 +96,10 @@ func _on_show_load_program_menu() -> void:
 		add_child(load_program_menu.instantiate())
 
 
-func _on_show_instructions_memory() -> void:
+func _on_show_component_info(center: Vector2, type) -> void:
 	var window = component_info_window.instantiate()
+	window.position = center - Vector2(window.size.x/2, window.size.y/2)
+	if window.position.y < 0:
+		window.position.y = 40
 	add_child(window)
-	window.add_info(pipelinedWrapper.instructions, Globals.component_type.InstructionsMemory)
+	window.add_info(type)

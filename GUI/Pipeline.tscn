@@ -1,11 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bunxlle6s33pd"]
+[gd_scene load_steps=4 format=3 uid="uid://bq87ftt0kkfav"]
 
 [ext_resource type="Script" path="res://pipeline.gd" id="1_lb30k"]
 [ext_resource type="PackedScene" uid="uid://r3i6snfx5v5k" path="res://InstructionsPanel.tscn" id="1_mi6q1"]
-[ext_resource type="PackedScene" uid="uid://ruc77ommolrx" path="res://stages/if_stage.tscn" id="3_hdhxw"]
+[ext_resource type="PackedScene" uid="uid://bj24rvg7rbt8q" path="res://stages/stage.tscn" id="3_hdhxw"]
 
 [node name="Pipeline" type="Control"]
-custom_minimum_size = Vector2(189, 509)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +14,6 @@ grow_vertical = 2
 script = ExtResource("1_lb30k")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(189, 509)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,36 +27,35 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="IFStage" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
-custom_minimum_size = Vector2(0, 509)
+[node name="Stage1" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+stage_name = "IF"
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 80
-theme_override_constants/margin_bottom = 40
 
 [node name="Button" type="Button" parent="HBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
+size_flags_vertical = 4
 text = "I
 F
 /
 I
 D"
 
-[node name="ReferenceRect3" type="ReferenceRect" parent="HBoxContainer"]
+[node name="Stage2" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-editor_only = false
+stage_name = "ID"
+stage_number = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 80
-theme_override_constants/margin_bottom = 40
+size_flags_vertical = 4
 
 [node name="Button" type="Button" parent="HBoxContainer/MarginContainer2"]
 custom_minimum_size = Vector2(0, 350)
@@ -69,16 +66,16 @@ D
 E
 X"
 
-[node name="ReferenceRect6" type="ReferenceRect" parent="HBoxContainer"]
+[node name="Stage3" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-editor_only = false
+stage_name = "EX"
+stage_number = 2
 
 [node name="MarginContainer3" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 80
-theme_override_constants/margin_bottom = 40
+size_flags_vertical = 4
 
 [node name="Button" type="Button" parent="HBoxContainer/MarginContainer3"]
 custom_minimum_size = Vector2(0, 350)
@@ -90,20 +87,20 @@ M
 E
 M"
 
-[node name="ReferenceRect4" type="ReferenceRect" parent="HBoxContainer"]
+[node name="Stage4" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-editor_only = false
+stage_name = "MEM"
+stage_number = 3
 
 [node name="MarginContainer4" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 80
-theme_override_constants/margin_bottom = 40
 
 [node name="Button" type="Button" parent="HBoxContainer/MarginContainer4"]
 custom_minimum_size = Vector2(0, 350)
 layout_mode = 2
+size_flags_vertical = 4
 text = "M
 E
 M
@@ -111,7 +108,13 @@ M
 W
 B"
 
-[node name="ReferenceRect5" type="ReferenceRect" parent="HBoxContainer"]
+[node name="Stage5" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-editor_only = false
+stage_name = "WB"
+stage_number = 4
+
+[connection signal="resized" from="." to="." method="_on_resized"]
+
+[editable path="HBoxContainer/Stage1"]

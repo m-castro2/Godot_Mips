@@ -7,7 +7,6 @@ func _ready() -> void:
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 
 func add_instructions(p_instructions: Array) -> void:
-	print(p_instructions)
 	clear_instructions()
 	codeEdit.visible = false
 	for instruction in p_instructions:

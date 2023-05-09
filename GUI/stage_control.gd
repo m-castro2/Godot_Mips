@@ -16,6 +16,8 @@ func update_instruction_map(instructions, loaded_instructions: Array, diagram: A
 		return
 	
 	instruction_map.clear()
+	if loaded_instructions[0] == "0": # 0 as first instruction
+		loaded_instructions.remove_at(0)
 	for i in range(loaded_instructions.size()-1, -1, -1):
 		instruction_map.push_back(get_instruction_from_address(instructions, loaded_instructions[i]))
 	while instruction_map.size() > 5:

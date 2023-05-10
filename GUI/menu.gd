@@ -5,13 +5,19 @@ var has_mouse: bool = false
 const ANIMATION_SPEED = 0.15
 
 
+func _ready():
+	Globals.load_program_pressed.connect(_on_load_program_pressed)
+
+
 func show_menu():
+	Globals.show_menu.emit(true)
 	visible = true
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(self, "position", Vector2(0, 0), ANIMATION_SPEED)
 
 
 func hide_menu():
+	Globals.show_menu.emit(false)
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(self, "position", Vector2(-size.x,0), ANIMATION_SPEED)
 	await tween.finished
@@ -30,5 +36,9 @@ func _on_mouse_exited():
 	has_mouse = false
 
 
-func _on_load_program_pressed():
+func _on_load_program_pressed(_path: String): 
+	hide_menu()
+
+
+func _on_load_program_menu_pressed(): #signal from scene button
 	Globals.show_load_program_menu.emit()

@@ -2,10 +2,10 @@ extends Node
 
 signal load_program_pressed(path: String)
 signal show_load_program_menu
+signal program_loaded
 
 signal cycle_changed
-
-signal show_component_info(center, info)
+signal show_menu(value: bool)
 
 var can_instantiate_load_menu: bool = true
 

@@ -50,10 +50,6 @@ func draw_lines():
 		points.clear()
 
 
-func _on_instructions_memory_button_pressed():
-	Globals.show_component_info.emit(instructions_memory_button.global_position + instructions_memory_button.size/2, instructions_memory_button.get_info())
-
-
 func _get_all_children(node: Node, zoom_value: bool):
 	for child in node.get_children():
 		if child is Line2D or child is Marker2D:
@@ -63,9 +59,13 @@ func _get_all_children(node: Node, zoom_value: bool):
 		child.size = child.size / .9 if zoom_value else child.size * .9
 
 
+func _on_instructions_memory_button_pressed():
+	instructions_memory_button.show_info_window()
+
+
 func _on_pc_pressed():
-	Globals.show_component_info.emit(pc.global_position + pc.size/2, pc.get_info())
+	pc.show_info_window()
 
 
 func _on_add_pressed():
-	Globals.show_component_info.emit(add.global_position + add.size/2, add.get_info())
+	add.show_info_window()

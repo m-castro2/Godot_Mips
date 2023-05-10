@@ -1,4 +1,4 @@
-extends Button
+extends ClickableComponent
 
 @export var inputs_number: int
 @export var sources: Array[NodePath]
@@ -14,3 +14,10 @@ func get_info():
 		else:
 			sources_info.append("Input " + str(i) +": " + node.info)
 	return sources_info
+
+func show_info_window():
+	if is_window_active:
+		return
+	var window = WINDOW.instantiate()
+	add_child(window)
+	window.show_info()

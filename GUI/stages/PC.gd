@@ -1,4 +1,4 @@
-extends Button
+extends ClickableComponent
 
 var info
 
@@ -15,3 +15,11 @@ func _on_cycle_changed():
 
 func get_info():
 	return ["PC: " + info]
+
+
+func show_info_window():
+	if is_window_active:
+		return
+	var window = WINDOW.instantiate()
+	add_child(window)
+	window.show_info()

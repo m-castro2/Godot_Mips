@@ -1,4 +1,4 @@
-extends Button
+extends ClickableComponent
 class_name MainComponent
 
 @export var reference_node: Node

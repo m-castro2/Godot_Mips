@@ -7,3 +7,10 @@ func get_info():
 	for instruction in pipelinedWrapper.instructions:
 				info.push_back(instruction[1])
 	return info
+
+func show_info_window():
+	if is_window_active:
+		return
+	var window = WINDOW.instantiate()
+	add_child(window)
+	window.show_info()

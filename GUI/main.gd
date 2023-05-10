@@ -11,7 +11,6 @@ const component_info_window: PackedScene = preload("res://component_info_window.
 func _ready() -> void:
 	Globals.show_load_program_menu.connect(_on_show_load_program_menu)
 	Globals.load_program_pressed.connect(_on_load_program_pressed)
-	Globals.show_component_info.connect(_on_show_component_info)
 	DisplayServer.window_set_min_size(Vector2(1152, 648))
 
 
@@ -34,6 +33,7 @@ func _on_load_program_pressed(file_path: String) -> void:
 		update_cpu_info()
 		pipeline.add_instructions(pipelinedWrapper.instructions)
 		StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+		Globals.program_loaded.emit()
 	
 	else:
 		print("Error loading program")
@@ -94,12 +94,3 @@ func is_mouse_in_node(p_position:Vector2, p_size:Vector2) -> bool:
 func _on_show_load_program_menu() -> void:
 	if Globals.can_instantiate_load_menu:
 		add_child(load_program_menu.instantiate())
-
-
-func _on_show_component_info(center: Vector2, type) -> void:
-	var window = component_info_window.instantiate()
-	window.position = center - Vector2(window.size.x/2, window.size.y/2)
-	if window.position.y < 0:
-		window.position.y = 40
-	add_child(window)
-	window.add_info(type)

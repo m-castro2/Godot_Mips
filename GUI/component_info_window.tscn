@@ -6,7 +6,6 @@
 disable_3d = true
 position = Vector2i(100, 100)
 size = Vector2i(300, 400)
-mode = 3
 script = ExtResource("1_ssxok")
 
 [node name="TextEdit" type="TextEdit" parent="."]

@@ -1,23 +1,29 @@
 extends Control
+class_name Stage
 
 
 var expanded = false
 var detail: Panel = null
 @export var stage_name: String
 @export var stage_number: int
+@onready var expand_stage_signal: Signal = get_parent().get_parent().expand_stage
 
 var lines_groups: Array[String] = ["PC_InstMem", "Mux_PC", "PC_Add", "Add_IFID", "InstMem_IFID", "Add_Mux"]
 
 func _ready() -> void:
 	$VBoxContainer/PanelContainer/StageButton.text = stage_name
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
-	get_tree().get_root().size_changed.connect(_on_resized)
+	get_tree().root.size_changed.connect(_on_resized)
 	if stage_name == "IF":
 		$VBoxContainer.add_child(load("res://stages/" + stage_name.to_lower() + "_detail.tscn").instantiate())
 		detail = $VBoxContainer.get_child(1)
 
 
 func _on_stage_button_pressed():
+	expand_stage_signal.emit(stage_number)
+
+
+func tween_size():
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(self, "size_flags_stretch_ratio", 1 if expanded else 3, 0.15)
 	expanded = !expanded

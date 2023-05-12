@@ -7,6 +7,7 @@ const ANIMATION_SPEED = 0.15
 
 func _ready():
 	Globals.load_program_pressed.connect(_on_load_program_pressed)
+	Globals.close_menu.connect(_on_close_menu)
 
 
 func show_menu():
@@ -42,3 +43,7 @@ func _on_load_program_pressed(_path: String):
 
 func _on_load_program_menu_pressed(): #signal from scene button
 	Globals.show_load_program_menu.emit()
+
+
+func _on_close_menu() -> void:
+	hide_menu()

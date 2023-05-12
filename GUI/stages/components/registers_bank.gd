@@ -2,11 +2,14 @@ extends MainComponent
 
 @onready var pipelinedWrapper: PipelinedWrapper = get_tree().root.get_child(2).get_child(0)
 
+
 func get_info():
 	var info: Array
-	for instruction in pipelinedWrapper.instructions:
-		info.push_back(instruction[1])
+	for register in pipelinedWrapper.cpu_info["Registers"]["iRegisters"]:
+		#TODO register name
+		info.push_back(register)
 	return info
+
 
 func show_info_window():
 	if is_window_active:

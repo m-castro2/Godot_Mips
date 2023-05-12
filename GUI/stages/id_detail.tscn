@@ -1,0 +1,109 @@
+[gd_scene load_steps=5 format=3 uid="uid://6fdooui4ml0w"]
+
+[ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_2edk6"]
+[ext_resource type="Script" path="res://stages/id_detail.gd" id="2_5718r"]
+[ext_resource type="Script" path="res://stages/components/registers_bank.gd" id="3_303vi"]
+[ext_resource type="Script" path="res://stages/components/FP_registers_bank.gd" id="4_5n302"]
+
+[node name="IDDetail" type="Panel"]
+clip_children = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_2edk6")
+script = ExtResource("2_5718r")
+
+[node name="RegistersBank" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -75.0
+offset_right = 50.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Registers
+Bank"
+script = ExtResource("3_303vi")
+reference_node = NodePath("..")
+position_percent = Vector2(0.5, 0.35)
+expanded_position_percent = Vector2(0.5, 0.35)
+stage_number = 1
+alignment_mode = 1
+window_title = "Registers Bank"
+
+[node name="FPRegistersBank" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -75.0
+offset_right = 50.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "FP
+Registers
+Bank"
+script = ExtResource("4_5n302")
+reference_node = NodePath("..")
+position_percent = Vector2(0.5, 0.8)
+expanded_position_percent = Vector2(0.5, 0.8)
+stage_number = 1
+alignment_mode = 1
+window_title = "FP Registers Bank"
+
+[node name="DetailedControl" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Add" type="Button" parent="DetailedControl"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Add"
+
+[node name="MuxControl" type="Button" parent="DetailedControl"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "M
+U
+X"
+
+[node name="MuxRtData" type="Button" parent="DetailedControl"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "M
+U
+X"
+
+[node name="MuxRegDst" type="Button" parent="DetailedControl"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "M
+U
+X"
+
+[connection signal="pressed" from="RegistersBank" to="." method="_on_registers_bank_pressed"]
+[connection signal="pressed" from="FPRegistersBank" to="." method="_on_fp_registers_bank_pressed"]

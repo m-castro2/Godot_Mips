@@ -4,8 +4,6 @@ extends MainComponent
 
 func get_info():
 	var info: Array
-	for instruction in pipelinedWrapper.instructions:
-		info.push_back(instruction[1])
 	return info
 
 func show_info_window():

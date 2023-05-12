@@ -48,5 +48,11 @@ func _on_load_pressed():
 	Globals.load_program_pressed.emit(file_path)
 	queue_free()
 
+
 func _exit_tree() -> void:
 	Globals.can_instantiate_load_menu = true
+
+
+func _on_close_pressed():
+	Globals.close_menu.emit()
+	queue_free()

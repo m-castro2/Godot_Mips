@@ -6,7 +6,6 @@ var expanded = false
 var detail: Panel = null
 @export var stage_name: String
 @export var stage_number: int
-@onready var expand_stage_signal: Signal = get_parent().get_parent().expand_stage
 
 var lines_groups: Array[String] = ["PC_InstMem", "Mux_PC", "PC_Add", "Add_IFID", "InstMem_IFID", "Add_Mux"]
 
@@ -14,13 +13,13 @@ func _ready() -> void:
 	$VBoxContainer/PanelContainer/StageButton.text = stage_name
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 	get_tree().root.size_changed.connect(_on_resized)
-	if stage_name == "IF":
-		$VBoxContainer.add_child(load("res://stages/" + stage_name.to_lower() + "_detail.tscn").instantiate())
-		detail = $VBoxContainer.get_child(1)
+	
+	$VBoxContainer.add_child(load("res://stages/" + stage_name.to_lower() + "_detail.tscn").instantiate())
+	detail = $VBoxContainer.get_child(1)
 
 
 func _on_stage_button_pressed():
-	expand_stage_signal.emit(stage_number)
+	Globals.expand_stage.emit(stage_number)
 
 
 func tween_size():
@@ -48,6 +47,6 @@ func _on_update_stage_colors(colors_map: Dictionary, instructions):
 
 func _on_resized():
 	if expanded and detail:
-		await get_tree().process_frame #wait a frame for nodes position to be updated 
+		await get_tree().process_frame #wait a frame for nodes position to be updated
 		detail.calculate_positions()
 		detail.draw_lines()

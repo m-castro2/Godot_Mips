@@ -6,6 +6,9 @@ signal program_loaded
 
 signal cycle_changed
 signal show_menu(value: bool)
+signal close_menu
+
+signal expand_stage(stage_number: int)
 
 var can_instantiate_load_menu: bool = true
 

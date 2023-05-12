@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://3v4liyplwii8"]
+[gd_scene load_steps=6 format=3 uid="uid://3v4liyplwii8"]
 
-[ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_bjjm5"]
 [ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
 [ext_resource type="Script" path="res://stages/complex_line.gd" id="3_c2asi"]
 [ext_resource type="Script" path="res://stages/components/InstructionsMemory.gd" id="3_klmf8"]
@@ -16,7 +15,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("1_bjjm5")
 script = ExtResource("2_varat")
 
 [node name="InstructionsMemoryButton" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
@@ -39,7 +37,8 @@ text = "Instructions
 Memory"
 script = ExtResource("3_klmf8")
 reference_node = NodePath("..")
-position_percent = Vector2(0.9, 0.5)
+position_percent = Vector2(0.5, 0.5)
+expanded_position_percent = Vector2(0.9, 0.5)
 window_title = "Instructions Memory"
 
 [node name="Output" type="Marker2D" parent="InstructionsMemoryButton" groups=["InstMem_IFID"]]

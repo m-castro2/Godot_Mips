@@ -3,11 +3,9 @@ extends Control
 @export var stages: Array[NodePath]
 var expanded_stage = -1
 
-signal expand_stage(stage_number: int)
-
 
 func _ready():
-	expand_stage.connect(_on_expand_stage)
+	Globals.expand_stage.connect(_on_expand_stage)
 
 
 func clear_instructions():

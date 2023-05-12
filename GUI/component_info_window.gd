@@ -10,8 +10,8 @@ func _ready():
 	Globals.show_menu.connect(_on_show_menu)
 	parent = get_parent()
 	parent.is_window_active = true
-	position.x = clamp(parent.global_position.x + parent.size.x/2 - size.x/2, 0, DisplayServer.window_get_size().x - size.x)
-	position.y = clamp(parent.global_position.y + parent.size.y/2 - size.y/2, 40, DisplayServer.window_get_size().y - size.y)
+	position.x = clamp(parent.global_position.x + parent.size.x/2 - size.x/2, 0, DisplayServer.window_get_size().x - size.x -10) # -10 window border default theme
+	position.y = clamp(parent.global_position.y + parent.size.y/2 - size.y/2, 40, DisplayServer.window_get_size().y - size.y -10)
 	title = parent.window_title
 
 

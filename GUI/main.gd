@@ -20,7 +20,7 @@ func update_cpu_info() -> void:
 
 func _on_load_program_pressed(file_path: String) -> void:
 	if program_loaded:
-		pipelinedWrapper.reset_cpu()
+		_on_reset_pressed()	
 	
 	program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path))
 	if program_loaded and pipelinedWrapper.is_ready():
@@ -58,6 +58,7 @@ func _on_reset_pressed() -> void:
 	pipelinedWrapper.reset_cpu()
 	pipeline.clear_instructions()
 	update_cpu_info()
+	Globals.current_cycle = 0
 	StageControl.reset()
 
 

@@ -11,7 +11,7 @@ var instruction_map: Array = [] # map[stage] = instruction_idx
 signal update_stage_colors(colors_map, instructions)
 
 
-func update_instruction_map(instructions, loaded_instructions: Array, diagram: Array):
+func update_instruction_map(instructions, loaded_instructions: Array, _diagram: Array):
 	if !Globals.current_cycle:
 		return
 	
@@ -25,12 +25,12 @@ func update_instruction_map(instructions, loaded_instructions: Array, diagram: A
 	calculate_stage_color(instruction_map)
 	update_stage_colors.emit(colors_map, instruction_map)
 
-func calculate_stage_color(instruction_map):
+func calculate_stage_color(p_instruction_map):
 	for color_key in colors_map.keys():
-		if !(color_key in instruction_map):
+		if !(color_key in p_instruction_map):
 			used_colors.erase(colors_map[color_key])
 			colors_map.erase(color_key)
-	for instruction in instruction_map:
+	for instruction in p_instruction_map:
 		if !(instruction in colors_map.keys()):
 			for color in colors:
 				if !(color in used_colors):
@@ -47,4 +47,5 @@ func get_instruction_from_address(instructions, address):
 func reset():
 	colors_map.clear()
 	used_colors.clear()
+	instruction_map.clear()
 	update_stage_colors.emit(colors_map, instruction_map)

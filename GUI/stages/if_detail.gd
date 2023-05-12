@@ -1,11 +1,11 @@
 extends Panel
 
 var expanded: bool = false
-@onready var detailed_control = $DetailedControl
-@onready var add = $DetailedControl/Add
+@onready var detailed_control: Control = $DetailedControl
+@onready var add: ClickableComponent = $DetailedControl/Add
 @onready var mux = $DetailedControl/Mux
-@onready var pc = $DetailedControl/PC
-@onready var instructions_memory_button = $InstructionsMemoryButton
+@onready var pc: ClickableComponent = $DetailedControl/PC
+@onready var instructions_memory_button: MainComponent = $InstructionsMemoryButton
 
 var lines_groups: Array[String] = ["PC_InstMem", "Mux_PC", "PC_Add", "Add_IFID", "InstMem_IFID", "Add_Mux"]
 

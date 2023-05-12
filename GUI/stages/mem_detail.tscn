@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://vgxi6py0m6kt"]
+
+[ext_resource type="Script" path="res://stages/mem_detail.gd" id="1_cnata"]
+[ext_resource type="Script" path="res://stages/DataMemory.gd" id="2_u200c"]
+
+[node name="MEMDetail" type="Panel"]
+clip_children = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_cnata")
+
+[node name="DataMemory" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+custom_minimum_size = Vector2(50, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Data
+Memory"
+script = ExtResource("2_u200c")
+reference_node = NodePath("..")
+position_percent = Vector2(0.5, 0.5)
+expanded_position_percent = Vector2(0.5, 0.5)
+stage_number = 3
+alignment_mode = 1
+window_title = "Data Memory"
+
+[node name="DetailedControl" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="pressed" from="DataMemory" to="." method="_on_data_memory_pressed"]

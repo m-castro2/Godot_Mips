@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://diyb60ko4q5a3"]
+
+[ext_resource type="Script" path="res://stages/ex_detail.gd" id="1_qp051"]
+[ext_resource type="Script" path="res://stages/ALU.gd" id="2_qvpnf"]
+
+[node name="EXDetail" type="Panel"]
+clip_children = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_qp051")
+
+[node name="ALU" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "ALU"
+script = ExtResource("2_qvpnf")
+reference_node = NodePath("..")
+position_percent = Vector2(0.5, 0.5)
+expanded_position_percent = Vector2(0.5, 0.5)
+stage_number = 2
+alignment_mode = 1
+window_title = "ALU"
+
+[node name="DetailedControl" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="pressed" from="ALU" to="." method="_on_alu_pressed"]

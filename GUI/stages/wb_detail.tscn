@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqqsns53ftp6y"]
+
+[ext_resource type="Script" path="res://stages/wb_detail.gd" id="1_2fahh"]
+[ext_resource type="Script" path="res://stages/components/mux.gd" id="2_0tqhl"]
+
+[node name="WBDetail" type="Panel"]
+clip_children = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_2fahh")
+
+[node name="Mux" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+custom_minimum_size = Vector2(30, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -50.0
+offset_right = 15.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "M
+U
+X"
+script = ExtResource("2_0tqhl")
+reference_node = NodePath("..")
+position_percent = Vector2(0.5, 0.5)
+expanded_position_percent = Vector2(0.5, 0.5)
+stage_number = 4
+alignment_mode = 1
+window_title = "Mux"
+
+[node name="DetailedControl" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="pressed" from="Mux" to="." method="_on_mux_pressed"]

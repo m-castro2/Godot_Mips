@@ -18,10 +18,10 @@ env.Append(CPPPATH=["mips_sim/src/"])
 env.Append(CPPPATH=["mips_sim/src/assembler/"])
 env.Append(CPPPATH=["mips_sim/src/cpu/"])
 env.Append(CPPPATH=["mips_sim/src/cpu/component/"])
-env.Append(CPPPATH=["mips_sim/src/interface/"])
-env.Append(CPPPATH=["mips_sim/src/interface/cli/"])
-env.Append(CPPPATH=["mips_sim/src/interface/cli/detail/"])
-env.Append(CPPPATH=["mips_sim/src/interface/qt/"])
+#env.Append(CPPPATH=["mips_sim/src/interface/"])
+#env.Append(CPPPATH=["mips_sim/src/interface/cli/"])
+#env.Append(CPPPATH=["mips_sim/src/interface/cli/detail/"])
+#env.Append(CPPPATH=["mips_sim/src/interface/qt/"])
 
 env.Append(CFLAGS=["-g -O0"])
 
@@ -31,10 +31,13 @@ sources = sources + Glob("mips_sim/src/*.cpp")
 sources = sources + Glob("mips_sim/src/assembler/*.cpp")
 sources = sources + Glob("mips_sim/src/cpu/*.cpp")
 sources = sources + Glob("mips_sim/src/cpu/component/*.cpp")
-sources = sources + Glob("mips_sim/src/interface/*.cpp")
-sources = sources + Glob("mips_sim/src/cpu/interface/cli/*.cpp")
-sources = sources + Glob("mips_sim/src/cpu/interface/cli/detail/*.cpp")
-sources = sources + Glob("mips_sim/src/cpu/interface/qt/*.cpp")
+#sources = sources + Glob("mips_sim/src/interface/*.cpp")
+#sources = sources + Glob("mips_sim/src/cpu/interface/cli/*.cpp")
+#sources = sources + Glob("mips_sim/src/cpu/interface/cli/detail/*.cpp")
+#sources = sources + Glob("mips_sim/src/cpu/interface/qt/*.cpp")
+
+excluded_files = ['mips_sim/src/mips_sim.cpp']
+sources = [x for x in sources if str(x) not in excluded_files]
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(

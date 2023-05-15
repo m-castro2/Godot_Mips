@@ -17,7 +17,7 @@ func add_instructions(p_instructions: Array):
 
 
 func _on_resized():
-	var height = size.y * .75
+	var height = size.y * .75 #stage registers size is 75% of space available
 	for child in get_child(0).get_children():
 		if child is MarginContainer:
 			var child2 = child.get_child(0)

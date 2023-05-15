@@ -30,8 +30,10 @@ func tween_size():
 		if !expanded:
 			detail.show_detail(expanded)
 			await tween.finished
+			Globals.stage_tween_finished.emit()
 		else:
 			await tween.finished
+			Globals.stage_tween_finished.emit()
 			detail.show_detail(expanded)
 
 

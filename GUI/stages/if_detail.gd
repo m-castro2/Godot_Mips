@@ -19,7 +19,7 @@ func calculate_positions():
 	if add: #if one is ready all are ready
 		
 		add.global_position = Vector2((instructions_memory_button.global_position.x + instructions_memory_button.size.x/2) - add.size.x/2, \
-		(control_size.y/2 - instructions_memory_button.size.y/2)/2-add.size.y/2 + detailed_control.global_position.y )
+		(control_size.y/2 - instructions_memory_button.size.y/2)/2-add.size.y/2 + detailed_control.global_position.y + 10)
 		
 		pc.position = Vector2(instructions_memory_button.position.x/2 - pc.size.x/2 + detailed_control.size.x*.05, \
 		control_size.y/2 - pc.size.y/2 )

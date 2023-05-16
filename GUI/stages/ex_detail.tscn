@@ -15,7 +15,7 @@ size_flags_vertical = 3
 script = ExtResource("1_qp051")
 
 [node name="ALU" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
-custom_minimum_size = Vector2(50, 100)
+custom_minimum_size = Vector2(80, 150)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,8 +38,53 @@ alignment_mode = 1
 window_title = "ALU"
 
 [node name="DetailedControl" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MuxRs" type="Button" parent="DetailedControl"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 10
+text = "M
+U
+X"
+
+[node name="MuxRt" type="Button" parent="DetailedControl"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 10
+text = "M
+U
+X"
+
+[node name="MuxImm" type="Button" parent="DetailedControl"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 10
+text = "M
+U
+X"
+
+[node name="AluControl" type="Button" parent="DetailedControl"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "ALU
+Control"
+
+[node name="ForwardingUnit" type="Button" parent="DetailedControl"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Forwarding
+Unit"
 
 [connection signal="pressed" from="ALU" to="." method="_on_alu_pressed"]

@@ -69,15 +69,26 @@ func _get_all_children(node: Node, shrink: bool):
 				child.add_theme_font_size_override("font_size", child.get_theme_font_size("font_size") - 8)
 			else:
 				child.add_theme_font_size_override("font_size", child.get_theme_font_size("font_size") + 8)
-		child.custom_minimum_size = child.custom_minimum_size * .66 if shrink else child.custom_minimum_size / .66
-		child.size = child.custom_minimum_size
+			child.custom_minimum_size = child.custom_minimum_size * .66 if shrink else child.custom_minimum_size / .66
+			child.size = child.custom_minimum_size
 
 
 func _on_stage_tween_finished():
 	var shrink = (DisplayServer.window_get_size().y < 960)
-	if shrink and !is_shrunk:
+	if shrink and detailed_control.visible:
 		_get_all_children(self, true)
 		is_shrunk = true
 	elif is_shrunk:
 		_get_all_children(self, false)
 		is_shrunk = false
+
+
+func _on_resized():
+	if detailed_control:
+		var shrink = (DisplayServer.window_get_size().y < 960)
+		if !shrink and is_shrunk:
+			_get_all_children(self, false)
+			is_shrunk = false
+		elif shrink and !is_shrunk and detailed_control.visible:
+			_get_all_children(self, true)
+			is_shrunk = true

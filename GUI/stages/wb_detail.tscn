@@ -34,14 +34,25 @@ X"
 script = ExtResource("2_0tqhl")
 reference_node = NodePath("..")
 position_percent = Vector2(0.5, 0.5)
-expanded_position_percent = Vector2(0.5, 0.5)
+expanded_position_percent = Vector2(0.35, 0.5)
 stage_number = 4
-alignment_mode = 1
 window_title = "Mux"
+
+[node name="Input0" type="Marker2D" parent="Mux"]
+
+[node name="Input1" type="Marker2D" parent="Mux"]
+
+[node name="Input2" type="Marker2D" parent="Mux"]
 
 [node name="DetailedControl" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="PC_Mux" type="Line2D" parent="DetailedControl"]
+
+[node name="MemOut_Mux" type="Line2D" parent="DetailedControl"]
+
+[node name="ALUOut_Mux" type="Line2D" parent="DetailedControl"]
 
 [connection signal="pressed" from="Mux" to="." method="_on_mux_pressed"]

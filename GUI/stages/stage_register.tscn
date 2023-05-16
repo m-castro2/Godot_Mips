@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://btd652x2vip8"]
+
+[ext_resource type="Script" path="res://stages/stage_register.gd" id="1_72d7w"]
+
+[node name="StageRegister" type="MarginContainer"]
+size_flags_vertical = 4
+script = ExtResource("1_72d7w")
+has_block = Array[bool]([true, true, true])
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="WB" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "WB"
+
+[node name="M" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "M"
+
+[node name="EX" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "EX"
+
+[node name="Register" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "ID
+/
+EX"

@@ -39,4 +39,5 @@ func _on_show_menu(value: bool):
 
 
 func _on_focus_exited():
+	Globals.close_window_handled = true
 	_on_close_requested()

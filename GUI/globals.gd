@@ -11,6 +11,9 @@ signal close_menu
 signal expand_stage(stage_number: int)
 signal stage_tween_finished
 
+## true if a window was closed on click outside it to prevent that same click expanding a stage
+var close_window_handled: bool = false
+
 
 var can_instantiate_load_menu: bool = true
 

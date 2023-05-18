@@ -73,4 +73,7 @@ func _on_add_pressed():
 
 func _on_gui_input(_event):
 	if Input.is_action_just_pressed("Click"):
-		Globals.expand_stage.emit(0)
+		if Globals.close_window_handled:
+			Globals.close_window_handled = false
+		else:
+			Globals.expand_stage.emit(0)

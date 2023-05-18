@@ -81,6 +81,9 @@ func _on_stage_tween_finished():
 	elif is_shrunk:
 		_get_all_children(self, false)
 		is_shrunk = false
+	
+	await get_tree().process_frame
+	Globals.recenter_window.emit()
 
 
 func _on_resized():
@@ -92,6 +95,9 @@ func _on_resized():
 		elif shrink and !is_shrunk and detailed_control.visible:
 			_get_all_children(self, true)
 			is_shrunk = true
+		
+		await get_tree().process_frame
+		Globals.recenter_window.emit()
 
 
 func _on_gui_input(_event):

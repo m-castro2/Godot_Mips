@@ -132,6 +132,7 @@ offset_bottom = 8.0
 text = "Sign
 Extend"
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="pressed" from="RegistersBank" to="." method="_on_registers_bank_pressed"]
 [connection signal="pressed" from="FPRegistersBank" to="." method="_on_fp_registers_bank_pressed"]

@@ -55,4 +55,5 @@ offset_bottom = 40.0
 
 [node name="ALUOut_Mux" type="Line2D" parent="DetailedControl"]
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="Mux" to="." method="_on_mux_pressed"]

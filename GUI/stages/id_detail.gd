@@ -92,3 +92,8 @@ func _on_resized():
 		elif shrink and !is_shrunk and detailed_control.visible:
 			_get_all_children(self, true)
 			is_shrunk = true
+
+
+func _on_gui_input(_event):
+	if Input.is_action_just_pressed("Click"):
+		Globals.expand_stage.emit(1)

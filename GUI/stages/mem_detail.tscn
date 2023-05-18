@@ -43,4 +43,5 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="DataMemory" to="." method="_on_data_memory_pressed"]

@@ -45,6 +45,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="MuxRs" type="Button" parent="DetailedControl"]
 layout_mode = 0
@@ -87,4 +88,5 @@ offset_bottom = 8.0
 text = "Forwarding
 Unit"
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="ALU" to="." method="_on_alu_pressed"]

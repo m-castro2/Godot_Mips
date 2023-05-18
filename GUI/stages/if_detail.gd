@@ -69,3 +69,8 @@ func _on_pc_pressed():
 
 func _on_add_pressed():
 	add.show_info_window()
+
+
+func _on_gui_input(_event):
+	if Input.is_action_just_pressed("Click"):
+		Globals.expand_stage.emit(0)

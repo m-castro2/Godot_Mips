@@ -22,7 +22,6 @@ func _on_resized():
 		if child is StageRegister:
 			child.custom_minimum_size.y = height
 			child.add_theme_constant_override("margin_top", 41) #41 height of stage button with concept theme
-			print(child.get_data())
 
 
 func _on_expand_stage(stage_number: int) -> void:
@@ -40,4 +39,4 @@ func _on_expand_stage(stage_number: int) -> void:
 	await Globals.stage_tween_finished #
 	for child in $HBoxContainer.get_children():
 		if child is StageRegister:
-			print(child.get_data())
+			pass

@@ -20,7 +20,7 @@ func update_cpu_info() -> void:
 
 func _on_load_program_pressed(file_path: String) -> void:
 	if program_loaded:
-		_on_reset_pressed()	
+		_on_reset_pressed()
 	
 	program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path))
 	if program_loaded and pipelinedWrapper.is_ready():

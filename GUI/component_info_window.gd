@@ -19,7 +19,6 @@ func _on_close_requested() -> void:
 	get_parent().is_window_active = false
 	queue_free()
 
-
 func show_info():
 	add_info(parent.get_info())
 
@@ -37,3 +36,7 @@ func update_info():
 
 func _on_show_menu(value: bool):
 	visible = !value
+
+
+func _on_focus_exited():
+	_on_close_requested()

@@ -12,6 +12,26 @@ func _ready() -> void:
 	Globals.show_load_program_menu.connect(_on_show_load_program_menu)
 	Globals.load_program_pressed.connect(_on_load_program_pressed)
 	DisplayServer.window_set_min_size(Vector2(1152, 648))
+	copy_test_files()
+
+
+func copy_test_files():
+	var path: String = OS.get_user_data_dir() + "testdata"
+	var target: DirAccess = DirAccess.open(path)
+	if target: # remove existing files in case theres been changes
+		target.list_dir_begin()
+		var filename: String = target.get_next()
+		while filename != "":
+			target.remove(filename)
+			filename = target.get_next()
+	DirAccess.open("user://").make_dir("user://testdata")
+	
+	var source: DirAccess = DirAccess.open("res://testdata")
+	source.list_dir_begin()
+	var filename: String = source.get_next()
+	while filename != "":
+		source.copy("res://testdata/" + filename, "user://testdata/" + filename)
+		filename = source.get_next()
 
 
 func update_cpu_info() -> void:

@@ -44,7 +44,7 @@ func check_files() -> void:
 
 func _on_program_name_pressed(file_name: String) -> void:
 	file_path = "testdata/" + file_name
-	var file: FileAccess = FileAccess.open("res://" + file_path, FileAccess.READ)
+	var file: FileAccess = FileAccess.open("user://" + file_path, FileAccess.READ)
 	var content: String = file.get_as_text()
 	(code_container.get_node("DescriptionLabel") as Label).text = content.left(content.find("\n")) #update files to have description on first line?
 	(code_container.get_node("CodeEdit") as CodeEdit).text = content

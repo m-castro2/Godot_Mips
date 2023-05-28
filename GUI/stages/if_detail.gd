@@ -7,10 +7,22 @@ var expanded: bool = false
 @onready var pc: ClickableComponent = $DetailedControl/PC
 @onready var instructions_memory_button: MainComponent = $InstructionsMemoryButton
 
-var lines_groups: Array[String] = ["PC_InstMem", "Mux_PC", "PC_Add", "Add_IFID", "InstMem_IFID", "Add_Mux"]
+@onready var lines: Array[Node] = [ $DetailedControl/Add/Add_Mux, 
+	$DetailedControl/Add/Add_IFID,
+	$DetailedControl/Mux/Mux_PC,
+	$DetailedControl/PC/PC_InstMem,
+	$DetailedControl/PC/PC_Add,
+	$DetailedControl/InstructionsMemoryDetail/InstMem_IFID]
+
+
+func _ready():
+	LineManager.if_line_active.connect(_on_LineManager_if_line_active)
+
 
 func show_detail(value: bool) -> void:
 	detailed_control.visible = value
+	#LineManager.if_line_active.emit(LineManager.if_lines.ADD_IFID)
+	LineManager.if_line_active.emit(LineManager.if_lines.PC_ADD)
 
 
 func calculate_positions():
@@ -32,22 +44,8 @@ func calculate_positions():
 
 
 func draw_lines():
-	await get_tree().process_frame
-	var line: Line2D = null
-	var points: Array[Vector2] = []
-	for group in lines_groups:
-		for node in get_tree().get_nodes_in_group(group):
-			if node is ComplexLine2D:
-				node.add_points()
-			elif node is Line2D:
-				node.clear_points()
-				line = node
-				line.global_position = Vector2(0,0)
-			else:
-				points.push_back(node.global_position)
-		for point in points:
-			line.add_point(point)
-		points.clear()
+	for line in lines:
+		line.add_points()
 
 
 func _get_all_children(node: Node, zoom_value: bool):
@@ -77,3 +75,13 @@ func _on_gui_input(_event):
 			Globals.close_window_handled = false
 		else:
 			Globals.expand_stage.emit(0)
+
+
+func _on_LineManager_if_line_active(line: LineManager.if_lines):
+	match  line:
+		LineManager.if_lines.ADD_IFID:
+			$DetailedControl/Add/Add_IFID.active = true
+		LineManager.if_lines.ADD_MUX:
+			$DetailedControl/Add/Add_Mux.active = true
+		LineManager.if_lines.PC_INSTMEM:
+			$DetailedControl/PC/PC_Add.active = true

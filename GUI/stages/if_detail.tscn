@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://3v4liyplwii8"]
+[gd_scene load_steps=7 format=3 uid="uid://3v4liyplwii8"]
 
 [ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
 [ext_resource type="Script" path="res://stages/complex_line.gd" id="3_c2asi"]
 [ext_resource type="Script" path="res://stages/components/InstructionsMemory.gd" id="3_klmf8"]
 [ext_resource type="Script" path="res://stages/components/adder.gd" id="4_y1by5"]
+[ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_4gygt"]
 [ext_resource type="Script" path="res://stages/PC.gd" id="6_k6uw2"]
 
 [node name="IFDetail" type="Panel"]
@@ -41,10 +42,10 @@ position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.95, 0.5)
 window_title = "Instructions Memory"
 
-[node name="Output" type="Marker2D" parent="InstructionsMemoryButton" groups=["InstMem_IFID"]]
+[node name="Output" type="Marker2D" parent="InstructionsMemoryButton"]
 position = Vector2(120, 125)
 
-[node name="Input" type="Marker2D" parent="InstructionsMemoryButton" groups=["PC_InstMem"]]
+[node name="Input" type="Marker2D" parent="InstructionsMemoryButton"]
 position = Vector2(0, 125)
 
 [node name="DetailedControl" type="Control" parent="."]
@@ -83,22 +84,25 @@ antialiased = true
 [node name="LowerInput" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(0, 44)
 
-[node name="Add_IFID" type="Line2D" parent="DetailedControl/Add" groups=["Add_IFID"]]
-width = 1.0
-
-[node name="Add_Mux" type="Line2D" parent="DetailedControl/Add/Add_IFID" node_paths=PackedStringArray("origin", "target") groups=["Add_Mux"]]
+[node name="Add_Mux" type="Line2D" parent="DetailedControl/Add" node_paths=PackedStringArray("origin", "target")]
 width = 1.0
 script = ExtResource("3_c2asi")
-origin = NodePath("..")
-target = NodePath("../../../Mux/Input1")
+origin = NodePath("../Add_IFID")
+target = NodePath("../../Mux/Input1")
 intersect_point = 0.5
 flag = true
 offset = 50
 
-[node name="Output" type="Marker2D" parent="DetailedControl/Add" groups=["Add_IFID"]]
+[node name="Add_IFID" type="Line2D" parent="DetailedControl/Add" node_paths=PackedStringArray("origin", "target")]
+width = 1.0
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../IFID_UpperInput")
+
+[node name="Output" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(50, 35)
 
-[node name="IFID_UpperInput" type="Marker2D" parent="DetailedControl/Add" groups=["Add_IFID"]]
+[node name="IFID_UpperInput" type="Marker2D" parent="DetailedControl/Add"]
 unique_name_in_owner = true
 
 [node name="Mux" type="Button" parent="DetailedControl"]
@@ -112,10 +116,13 @@ text = "M
 U
 X"
 
-[node name="Mux_PC" type="Line2D" parent="DetailedControl/Mux" groups=["Mux_PC"]]
+[node name="Mux_PC" type="Line2D" parent="DetailedControl/Mux" node_paths=PackedStringArray("origin", "target")]
 width = 1.0
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../../PC/Input")
 
-[node name="Output" type="Marker2D" parent="DetailedControl/Mux" groups=["Mux_PC"]]
+[node name="Output" type="Marker2D" parent="DetailedControl/Mux"]
 position = Vector2(25, 50)
 
 [node name="Input1" type="Marker2D" parent="DetailedControl/Mux"]
@@ -140,31 +147,38 @@ text = "PC"
 script = ExtResource("6_k6uw2")
 window_title = "PC"
 
-[node name="Output" type="Marker2D" parent="DetailedControl/PC" groups=["PC_InstMem"]]
+[node name="Output" type="Marker2D" parent="DetailedControl/PC"]
 position = Vector2(50, 35)
 
-[node name="PC_InstMem" type="Line2D" parent="DetailedControl/PC" groups=["PC_InstMem"]]
+[node name="PC_InstMem" type="Line2D" parent="DetailedControl/PC" node_paths=PackedStringArray("origin", "target")]
 width = 1.0
 antialiased = true
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../../../InstructionsMemoryButton/Input")
 
-[node name="Input" type="Marker2D" parent="DetailedControl/PC" groups=["Mux_PC"]]
+[node name="Input" type="Marker2D" parent="DetailedControl/PC"]
 position = Vector2(0, 35)
 
-[node name="PC_Add" type="Line2D" parent="DetailedControl/PC" node_paths=PackedStringArray("origin", "target") groups=["PC_Add"]]
+[node name="PC_Add" type="Line2D" parent="DetailedControl/PC" node_paths=PackedStringArray("origin", "target")]
 width = 1.0
 script = ExtResource("3_c2asi")
 origin = NodePath("../PC_InstMem")
 target = NodePath("../../Add/LowerInput")
 intersect_point = 0.5
+line_type = 4
 
 [node name="InstructionsMemoryDetail" type="Control" parent="DetailedControl"]
 layout_mode = 2
 anchors_preset = 0
 
-[node name="InstMem_IFID" type="Line2D" parent="DetailedControl/InstructionsMemoryDetail" groups=["InstMem_IFID"]]
+[node name="InstMem_IFID" type="Line2D" parent="DetailedControl/InstructionsMemoryDetail" node_paths=PackedStringArray("origin", "target")]
 width = 1.0
+script = ExtResource("6_4gygt")
+origin = NodePath("../../../InstructionsMemoryButton/Output")
+target = NodePath("../IFID_MiddleInput")
 
-[node name="IFID_MiddleInput" type="Marker2D" parent="DetailedControl/InstructionsMemoryDetail" groups=["InstMem_IFID"]]
+[node name="IFID_MiddleInput" type="Marker2D" parent="DetailedControl/InstructionsMemoryDetail"]
 unique_name_in_owner = true
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

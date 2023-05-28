@@ -24,5 +24,5 @@ func get_data():
 	pass
 
 
-func _on_expand_stage(stage: int) -> void:
+func _on_expand_stage(_stage: int) -> void:
 	pass #needed to be overriden

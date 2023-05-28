@@ -2,7 +2,7 @@ extends ClickableComponent
 
 var info
 
-@onready var pipelinedWrapper = get_tree().root.get_child(2).get_child(0)
+@onready var pipelinedWrapper = get_tree().root.get_child(3).get_child(0) ## adding singletons breaks this
 
 func _ready():
 	Globals.cycle_changed.connect(_on_cycle_changed)

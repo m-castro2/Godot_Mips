@@ -1,6 +1,6 @@
 extends MainComponent
 
-@onready var pipelinedWrapper: PipelinedWrapper = get_tree().root.get_child(2).get_child(0)
+@onready var pipelinedWrapper: PipelinedWrapper = get_tree().root.get_child(3).get_child(0)
 
 func get_info():
 	var info: Array

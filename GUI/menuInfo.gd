@@ -7,6 +7,7 @@ var file_path: String = ""
 
 func _ready() -> void:
 	Globals.can_instantiate_load_menu = false
+	Globals.active_menu = "load_program"
 	check_files()
 
 
@@ -56,6 +57,7 @@ func _on_load_pressed():
 
 
 func _exit_tree() -> void:
+	Globals.active_menu = ""
 	Globals.can_instantiate_load_menu = true
 
 

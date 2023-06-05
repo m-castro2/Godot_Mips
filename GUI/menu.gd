@@ -47,3 +47,7 @@ func _on_load_program_menu_pressed(): #signal from scene button
 
 func _on_close_menu() -> void:
 	hide_menu()
+
+
+func _on_settings_pressed():
+	Globals.show_settings_menu.emit()

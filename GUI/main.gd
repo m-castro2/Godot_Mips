@@ -6,10 +6,12 @@ extends Control
 var program_loaded: bool = false
 
 const load_program_menu: PackedScene = preload("res://MenuInfo.tscn")
+const settings_menu: PackedScene = preload("res://settings.tscn")
 const component_info_window: PackedScene = preload("res://component_info_window.tscn")
 
 func _ready() -> void:
 	Globals.show_load_program_menu.connect(_on_show_load_program_menu)
+	Globals.show_settings_menu.connect(_on_show_settings_menu)
 	Globals.load_program_pressed.connect(_on_load_program_pressed)
 	DisplayServer.window_set_min_size(Vector2(1152, 648))
 	copy_test_files()
@@ -113,5 +115,16 @@ func is_mouse_in_node(p_position:Vector2, p_size:Vector2) -> bool:
 
 
 func _on_show_load_program_menu() -> void:
-	if Globals.can_instantiate_load_menu:
+	if Globals.active_menu != "load_program":
 		add_child(load_program_menu.instantiate())
+		var settings = get_node_or_null("/root/Control/Settings")
+		if settings:
+			remove_child(settings)
+
+func _on_show_settings_menu() -> void:
+	if Globals.active_menu != "settings":
+		add_child(settings_menu.instantiate())
+		var load_program = get_node_or_null("/root/Control/MenuInfo")
+		if load_program:
+			remove_child(load_program)
+

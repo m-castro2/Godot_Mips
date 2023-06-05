@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://ufr5dpljrcun"]
+
+[node name="Control2" type="HBoxContainer"]
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Color mode: "
+
+[node name="OptionButton" type="ColorPickerButton" parent="."]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+edit_alpha = false

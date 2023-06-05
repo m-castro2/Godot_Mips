@@ -1,15 +1,13 @@
 extends Line2D
 
-class_name ComplexLine2D
+class_name OutsideLine2D
 
-@export var origin: Line2D
+@export var origin: Marker2D
 @export var target: Marker2D
 @export var intersect_point: float
-
 ## true if the line goes from right to left
 @export var flag: bool
 @export var offset: int
-@export var width_percent: float
 @export var line_type: LineManager.if_lines
 
 var active: bool :
@@ -22,19 +20,16 @@ var active: bool :
 func add_points():
 	global_position = Vector2(0, 0)
 	clear_points()
-	if !origin.get_point_count():
-		return
-	
 	var start: Vector2
 	var end: Vector2
-	start = origin.get_point_position(0)
+	start = origin.global_position
 	add_point(start)
-	end = origin.get_point_position(1)
+	end = origin.global_position
 	var first_point = Vector2(start.x + (end.x - start.x)*intersect_point, start.y)
 	add_point(first_point)
 	if flag:
-		add_point(Vector2(first_point.x, start.y - offset))
-		add_point(Vector2(target.global_position.x - offset, start.y - offset))
+		add_point(Vector2(first_point.x, start.y))
+		add_point(Vector2(target.global_position.x - offset, start.y))
 		add_point(Vector2(target.global_position.x - offset, target.global_position.y))
 	else:
 		add_point(Vector2(first_point.x, target.global_position.y))

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://3v4liyplwii8"]
+[gd_scene load_steps=8 format=3 uid="uid://3v4liyplwii8"]
 
 [ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
 [ext_resource type="Script" path="res://stages/complex_line.gd" id="3_c2asi"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://stages/components/adder.gd" id="4_y1by5"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_4gygt"]
 [ext_resource type="Script" path="res://stages/PC.gd" id="6_k6uw2"]
+[ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="7_7lyo2"]
 
 [node name="IFDetail" type="Panel"]
 clip_children = 1
@@ -27,9 +28,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -60.0
-offset_top = -125.0
+offset_top = -100.0
 offset_right = 60.0
-offset_bottom = 125.0
+offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -43,15 +44,15 @@ expanded_position_percent = Vector2(0.95, 0.5)
 window_title = "Instructions Memory"
 
 [node name="Output" type="Marker2D" parent="InstructionsMemoryButton"]
-position = Vector2(120, 125)
+position = Vector2(120, 100)
 
 [node name="Input" type="Marker2D" parent="InstructionsMemoryButton"]
-position = Vector2(0, 125)
+position = Vector2(0, 100)
 
 [node name="DetailedControl" type="Control" parent="."]
 visible = false
-layout_mode = 2
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -84,6 +85,12 @@ antialiased = true
 [node name="LowerInput" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(0, 44)
 
+[node name="Add_IFID" type="Line2D" parent="DetailedControl/Add" node_paths=PackedStringArray("origin", "target")]
+width = 1.0
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../IFID_UpperInput")
+
 [node name="Add_Mux" type="Line2D" parent="DetailedControl/Add" node_paths=PackedStringArray("origin", "target")]
 width = 1.0
 script = ExtResource("3_c2asi")
@@ -92,12 +99,7 @@ target = NodePath("../../Mux/Input1")
 intersect_point = 0.5
 flag = true
 offset = 50
-
-[node name="Add_IFID" type="Line2D" parent="DetailedControl/Add" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("6_4gygt")
-origin = NodePath("../Output")
-target = NodePath("../IFID_UpperInput")
+width_percent = 0.05
 
 [node name="Output" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(50, 35)
@@ -136,6 +138,44 @@ theme_override_font_sizes/font_size = 10
 text = "PC + 4"
 vertical_alignment = 1
 
+[node name="Input2" type="Marker2D" parent="DetailedControl/Mux"]
+position = Vector2(0, 40)
+
+[node name="Label" type="Label" parent="DetailedControl/Mux/Input2"]
+offset_left = -53.0
+offset_top = -21.0
+offset_right = 2.0
+offset_bottom = 9.0
+theme_override_font_sizes/font_size = 6
+text = "conditional branch"
+vertical_alignment = 1
+
+[node name="Input3" type="Marker2D" parent="DetailedControl/Mux"]
+position = Vector2(0, 60)
+
+[node name="Label" type="Label" parent="DetailedControl/Mux/Input3"]
+offset_left = -55.0
+offset_top = -17.0
+offset_right = -3.0
+theme_override_font_sizes/font_size = 10
+text = "register Rs"
+vertical_alignment = 1
+
+[node name="Input4" type="Marker2D" parent="DetailedControl/Mux"]
+position = Vector2(0, 80)
+
+[node name="Label" type="Label" parent="DetailedControl/Mux/Input4"]
+offset_left = -34.0
+offset_top = -17.0
+offset_right = -3.0
+theme_override_font_sizes/font_size = 10
+text = "J jump"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="UpperInput" type="Marker2D" parent="DetailedControl/Mux"]
+position = Vector2(12.5, 0)
+
 [node name="PC" type="Button" parent="DetailedControl"]
 custom_minimum_size = Vector2(50, 70)
 layout_mode = 2
@@ -168,6 +208,9 @@ target = NodePath("../../Add/LowerInput")
 intersect_point = 0.5
 line_type = 4
 
+[node name="UpperInput" type="Marker2D" parent="DetailedControl/PC"]
+position = Vector2(25, 0)
+
 [node name="InstructionsMemoryDetail" type="Control" parent="DetailedControl"]
 layout_mode = 2
 anchors_preset = 0
@@ -179,6 +222,84 @@ origin = NodePath("../../../InstructionsMemoryButton/Output")
 target = NodePath("../IFID_MiddleInput")
 
 [node name="IFID_MiddleInput" type="Marker2D" parent="DetailedControl/InstructionsMemoryDetail"]
+unique_name_in_owner = true
+
+[node name="OutsideLines" type="Control" parent="DetailedControl"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MuxBranch" type="Line2D" parent="DetailedControl/OutsideLines" node_paths=PackedStringArray("origin", "target")]
+width = 1.0
+script = ExtResource("7_7lyo2")
+origin = NodePath("MuxBranchOrigin")
+target = NodePath("../../Mux/Input2")
+flag = true
+offset = 60
+
+[node name="MuxBranchOrigin" type="Marker2D" parent="DetailedControl/OutsideLines/MuxBranch"]
+unique_name_in_owner = true
+
+[node name="MuxRs" type="Line2D" parent="DetailedControl/OutsideLines" node_paths=PackedStringArray("origin", "target")]
+width = 1.0
+script = ExtResource("7_7lyo2")
+origin = NodePath("MuxRsOrigin")
+target = NodePath("../../Mux/Input3")
+flag = true
+offset = 60
+
+[node name="MuxRsOrigin" type="Marker2D" parent="DetailedControl/OutsideLines/MuxRs"]
+unique_name_in_owner = true
+
+[node name="MuxJump" type="Line2D" parent="DetailedControl/OutsideLines" node_paths=PackedStringArray("origin", "target")]
+width = 1.0
+script = ExtResource("7_7lyo2")
+origin = NodePath("MuxJumpOrigin")
+target = NodePath("../../Mux/Input4")
+flag = true
+offset = 40
+
+[node name="MuxJumpOrigin" type="Marker2D" parent="DetailedControl/OutsideLines/MuxJump"]
+unique_name_in_owner = true
+
+[node name="PCSrc" type="Line2D" parent="DetailedControl/OutsideLines" node_paths=PackedStringArray("origin", "target")]
+width = 1.0
+script = ExtResource("7_7lyo2")
+origin = NodePath("PCSrcOrigin")
+target = NodePath("../../Mux/UpperInput")
+flag = true
+
+[node name="PCSrcOrigin" type="Marker2D" parent="DetailedControl/OutsideLines/PCSrc"]
+unique_name_in_owner = true
+
+[node name="PCWrite" type="Line2D" parent="DetailedControl/OutsideLines" node_paths=PackedStringArray("origin", "target")]
+width = 1.0
+script = ExtResource("7_7lyo2")
+origin = NodePath("PCWriteOrigin")
+target = NodePath("../../PC/UpperInput")
+flag = true
+
+[node name="PCWriteOrigin" type="Marker2D" parent="DetailedControl/OutsideLines/PCWrite"]
+unique_name_in_owner = true
+
+[node name="IF_Flush" type="Label" parent="DetailedControl"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "IF_flush"
+
+[node name="IFflush_IFID" type="Line2D" parent="DetailedControl/IF_Flush" node_paths=PackedStringArray("origin", "target")]
+width = 1.0
+default_color = Color(1, 0, 0, 1)
+script = ExtResource("6_4gygt")
+origin = NodePath("../Origin")
+target = NodePath("../IFID_IFflushInput")
+
+[node name="Origin" type="Marker2D" parent="DetailedControl/IF_Flush"]
+position = Vector2(69, 13)
+
+[node name="IFID_IFflushInput" type="Marker2D" parent="DetailedControl/IF_Flush"]
 unique_name_in_owner = true
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

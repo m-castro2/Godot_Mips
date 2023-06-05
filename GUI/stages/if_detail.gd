@@ -6,13 +6,20 @@ var expanded: bool = false
 @onready var mux = $DetailedControl/Mux
 @onready var pc: ClickableComponent = $DetailedControl/PC
 @onready var instructions_memory_button: MainComponent = $InstructionsMemoryButton
+@onready var if_flush = $DetailedControl/IF_Flush
 
 @onready var lines: Array[Node] = [ $DetailedControl/Add/Add_Mux, 
 	$DetailedControl/Add/Add_IFID,
 	$DetailedControl/Mux/Mux_PC,
 	$DetailedControl/PC/PC_InstMem,
 	$DetailedControl/PC/PC_Add,
-	$DetailedControl/InstructionsMemoryDetail/InstMem_IFID]
+	$DetailedControl/InstructionsMemoryDetail/InstMem_IFID,
+	$DetailedControl/OutsideLines/MuxBranch, 
+	$DetailedControl/OutsideLines/MuxRs, 
+	$DetailedControl/OutsideLines/MuxJump,
+	$DetailedControl/IF_Flush/IFflush_IFID,
+	$DetailedControl/OutsideLines/PCSrc, 
+	$DetailedControl/OutsideLines/PCWrite]
 
 
 func _ready():
@@ -41,7 +48,15 @@ func calculate_positions():
 		
 		%IFID_UpperInput.global_position = Vector2(global_position.x + size.x, add.global_position.y + add.size.y/2)
 		%IFID_MiddleInput.global_position = Vector2(global_position.x + size.x, instructions_memory_button.global_position.y + instructions_memory_button.size.y/2)
-
+		
+		%MuxBranchOrigin.global_position = Vector2(global_position.x + size.x, global_position.y + size.y * .01)
+		%MuxRsOrigin.global_position = Vector2(global_position.x + size.x, global_position.y + size.y * .97)
+		%MuxJumpOrigin.global_position = Vector2(global_position.x + size.x, global_position.y + size.y * .95)
+		%PCSrcOrigin.global_position = Vector2(global_position.x + size.x, global_position.y + size.y * .001)
+		%PCWriteOrigin.global_position = Vector2(global_position.x + size.x, global_position.y + size.y * .005)
+		
+		if_flush.position = Vector2(pc.position.x, size.y * .8)
+		%IFID_IFflushInput.global_position = Vector2(global_position.x + size.x, if_flush.global_position.y + if_flush.size.y/2)
 
 func draw_lines():
 	for line in lines:

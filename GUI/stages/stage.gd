@@ -50,5 +50,6 @@ func _on_update_stage_colors(colors_map: Dictionary, instructions):
 func _on_resized():
 	if expanded and detail:
 		await get_tree().process_frame #wait a frame for nodes position to be updated
+		await get_tree().process_frame #twice?
 		detail.calculate_positions()
 		detail.draw_lines()

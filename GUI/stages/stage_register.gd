@@ -7,6 +7,10 @@ class_name StageRegister
 @onready var outputs: Dictionary
 var ready_finished: bool
 
+var input_markers: Array[Marker2D]
+var output_markers: Array[Marker2D]
+var markers_resolution: Vector2i
+
 func _ready():
 	Globals.expand_stage.connect(_on_expand_stage)
 	for i in range(0, $VBoxContainer.get_child_count() -1):
@@ -26,3 +30,7 @@ func get_data():
 
 func _on_expand_stage(_stage: int) -> void:
 	pass #needed to be overriden
+
+
+func update_input_output_markers() -> void:
+	pass

@@ -7,7 +7,7 @@ class_name Line
 var active: bool :
 	set(value):
 		active = value
-		top_level = value
+		z_index = 1 if value else 0
 		default_color = Color.GREEN if value else Color.WHITE
 
 

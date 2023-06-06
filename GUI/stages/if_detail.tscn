@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://3v4liyplwii8"]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
-[ext_resource type="Script" path="res://stages/complex_line.gd" id="3_c2asi"]
+[ext_resource type="Script" path="res://stages/components/complex_line.gd" id="3_c2asi"]
 [ext_resource type="Script" path="res://stages/components/InstructionsMemory.gd" id="3_klmf8"]
 [ext_resource type="Script" path="res://stages/components/adder.gd" id="4_y1by5"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_4gygt"]

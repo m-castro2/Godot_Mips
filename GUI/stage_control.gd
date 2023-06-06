@@ -39,6 +39,8 @@ func _on_stage_color_changed(p_color: Color, index: int) -> void:
 
 func _on_stage_color_mode_changed(mode: int) -> void:
 	color_system = mode
+	calculate_stage_color(instruction_map)
+	update_stage_colors.emit(colors_map, instruction_map)
 
 
 func update_instruction_map(instructions, loaded_instructions: Array, _diagram: Array):
@@ -72,8 +74,10 @@ func calculate_stage_color(p_instruction_map):
 	
 	else:
 		colors_map.clear()
+		used_colors.clear()
 		for i in range(0, instruction_map.size()):
 			colors_map[instruction_map[i]] = colors[i]
+			used_colors.push_back(colors[i])
 
 
 func get_instruction_from_address(instructions, address):

@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://diyb60ko4q5a3"]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://stages/ex_detail.gd" id="1_qp051"]
-[ext_resource type="Script" path="res://stages/ALU.gd" id="2_qvpnf"]
+[ext_resource type="Script" path="res://stages/components/ALU.gd" id="2_qvpnf"]
 
 [node name="EXDetail" type="Panel"]
 clip_children = 1

@@ -12,10 +12,12 @@ var lines_groups: Array[String] = ["PC_InstMem", "Mux_PC", "PC_Add", "Add_IFID",
 func _ready() -> void:
 	$VBoxContainer/PanelContainer/StageButton.text = stage_name
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
+	Globals.stage_color_mode_changed.connect(_on_stage_color_mode_changed)
 	get_tree().root.size_changed.connect(_on_resized)
 	
 	$VBoxContainer.add_child(load("res://stages/" + stage_name.to_lower() + "_detail.tscn").instantiate())
 	detail = $VBoxContainer.get_child(1)
+	add_fixed_stage_color()
 
 
 func _on_stage_button_pressed():
@@ -37,14 +39,26 @@ func tween_size():
 			detail.show_detail(expanded)
 
 
-func _on_update_stage_colors(colors_map: Dictionary, instructions):
-	if colors_map.size() > stage_number:
+func add_fixed_stage_color():
+	if !StageControl.color_system: # fixed stage color
 		var styleBox: StyleBoxFlat = StyleBoxFlat.new()
-		styleBox.bg_color = colors_map[instructions[stage_number]]
+		styleBox.bg_color = StageControl.colors[stage_number]
 		$VBoxContainer/PanelContainer/StageButton.add_theme_stylebox_override("normal", styleBox)
 		return
-	elif colors_map.size() == 0:
-		$VBoxContainer/PanelContainer/StageButton.remove_theme_stylebox_override("normal")
+
+
+func _on_update_stage_colors(colors_map: Dictionary, instructions):
+	if StageControl.color_system:
+		# fixed instruction color
+		if colors_map.size() > stage_number:
+			var styleBox: StyleBoxFlat = StyleBoxFlat.new()
+			styleBox.bg_color = colors_map[instructions[stage_number]]
+			$VBoxContainer/PanelContainer/StageButton.add_theme_stylebox_override("normal", styleBox)
+			return
+		else:#if colors_map.size() == 0:
+			$VBoxContainer/PanelContainer/StageButton.remove_theme_stylebox_override("normal")
+	else:
+		add_fixed_stage_color()
 
 
 func _on_resized():
@@ -53,3 +67,7 @@ func _on_resized():
 		await get_tree().process_frame #twice?
 		detail.calculate_positions()
 		detail.draw_lines()
+
+
+func _on_stage_color_mode_changed(mode: int) -> void:
+	pass

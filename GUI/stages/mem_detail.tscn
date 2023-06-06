@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://vgxi6py0m6kt"]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://stages/mem_detail.gd" id="1_cnata"]
-[ext_resource type="Script" path="res://stages/DataMemory.gd" id="2_u200c"]
+[ext_resource type="Script" path="res://stages/components/DataMemory.gd" id="2_u200c"]
 
 [node name="MEMDetail" type="Panel"]
 clip_children = 1

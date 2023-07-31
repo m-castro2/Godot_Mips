@@ -6,6 +6,7 @@ func get_info():
 	var info: Array
 	return info
 
+
 func show_info_window():
 	if is_window_active:
 		return

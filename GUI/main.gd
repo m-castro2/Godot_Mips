@@ -60,6 +60,7 @@ func _on_load_program_pressed(file_path: String) -> void:
 	else:
 		print("Error loading program")
 
+
 func _on_next_cycle_pressed() -> void:
 	if pipelinedWrapper.is_ready():
 		pipelinedWrapper.next_cycle()
@@ -120,6 +121,7 @@ func _on_show_load_program_menu() -> void:
 		var settings = get_node_or_null("/root/Control/Settings")
 		if settings:
 			remove_child(settings)
+
 
 func _on_show_settings_menu() -> void:
 	if Globals.active_menu != "settings":

@@ -10,7 +10,7 @@ const STAGES_COUNT = 5
 	ConfigManager.get_value("Settings/UI", "color_mode_4"),
 	]
 
-enum coloring_type { STAGE_COLOR, INSTRUCTION_COLOR}
+enum coloring_type {STAGE_COLOR, INSTRUCTION_COLOR}
 @onready var color_system: coloring_type = ConfigManager.get_value("Settings/UI", "color_mode_idx")
 
 var colors_map: Dictionary = {}

@@ -2,65 +2,58 @@ extends Panel
 
 var expanded: bool = false
 @onready var detailed_control: Control = $DetailedControl
-@onready var add: ClickableComponent = $DetailedControl/Add
-@onready var mux = $DetailedControl/Mux
-@onready var pc: ClickableComponent = $DetailedControl/PC
+@onready var add: ClickableComponent = $Add
+@onready var pc: ClickableComponent = $PC
 @onready var instructions_memory_button: MainComponent = $InstructionsMemoryButton
-@onready var if_flush = $DetailedControl/IF_Flush
 
-@onready var lines: Array[Node] = [ $DetailedControl/Add/Add_Mux, 
-	$DetailedControl/Add/Add_IFID,
-	$DetailedControl/Mux/Mux_PC,
-	$DetailedControl/PC/PC_InstMem,
-	$DetailedControl/PC/PC_Add,
-	$DetailedControl/InstructionsMemoryDetail/InstMem_IFID,
-	$DetailedControl/OutsideLines/MuxBranch, 
-	$DetailedControl/OutsideLines/MuxRs, 
-	$DetailedControl/OutsideLines/MuxJump,
-	$DetailedControl/IF_Flush/IFflush_IFID,
-	$DetailedControl/OutsideLines/PCSrc, 
-	$DetailedControl/OutsideLines/PCWrite]
+@onready var stage_color: Color = get_parent().get_parent().stage_color
+var stage: Globals.STAGES = Globals.STAGES.IF
+
+@onready var lines: Array[Node] = [
+	$Add/Add_IFID,
+	$PC/PC_InstMem,
+	$PC/PC_Add,
+	$Add/Add_PC,
+	$InstructionsMemoryButton/InstMem_IFID,
+	]
 
 
-func _ready():
+func _ready() -> void:
 	LineManager.if_line_active.connect(_on_LineManager_if_line_active)
+	show_detail(true)
 
 
 func show_detail(value: bool) -> void:
-	detailed_control.visible = value
-	#LineManager.if_line_active.emit(LineManager.if_lines.ADD_IFID)
+	LineManager.if_line_active.emit(LineManager.if_lines.ADD_IFID)
+	LineManager.if_line_active.emit(LineManager.if_lines.PC_INSTMEM)
+	LineManager.if_line_active.emit(LineManager.if_lines.ADD_IFID)
 	LineManager.if_line_active.emit(LineManager.if_lines.PC_ADD)
-
-
-func calculate_positions():
-	var control_size: Vector2 = detailed_control.size
+	LineManager.if_line_active.emit(LineManager.if_lines.INSTMEM_IFID)
 	
-	if add: #if one is ready all are ready
-		
-		add.global_position = Vector2((instructions_memory_button.global_position.x + instructions_memory_button.size.x/2) - add.size.x/2, \
-		(control_size.y/2 - instructions_memory_button.size.y/2)/2-add.size.y/2 + detailed_control.global_position.y + 10)
-		
-		pc.position = Vector2(instructions_memory_button.position.x/2 - pc.size.x/2 + detailed_control.size.x*.05, \
-		control_size.y/2 - pc.size.y/2 )
-		
-		mux.position = Vector2(instructions_memory_button.position.x/2 - mux.size.x/2 - detailed_control.size.x*.1, \
-		control_size.y/2 - mux.size.y/2 )
-		
-		%IFID_UpperInput.global_position = Vector2(global_position.x + size.x, add.global_position.y + add.size.y/2)
-		%IFID_MiddleInput.global_position = Vector2(global_position.x + size.x, instructions_memory_button.global_position.y + instructions_memory_button.size.y/2)
-		
-		%MuxBranchOrigin.global_position = Vector2(global_position.x + size.x, global_position.y + size.y * .01)
-		%MuxRsOrigin.global_position = Vector2(global_position.x + size.x, global_position.y + size.y * .97)
-		%MuxJumpOrigin.global_position = Vector2(global_position.x + size.x, global_position.y + size.y * .95)
-		%PCSrcOrigin.global_position = Vector2(global_position.x + size.x, global_position.y + size.y * .001)
-		%PCWriteOrigin.global_position = Vector2(global_position.x + size.x, global_position.y + size.y * .005)
-		
-		if_flush.position = Vector2(pc.position.x, size.y * .8)
-		%IFID_IFflushInput.global_position = Vector2(global_position.x + size.x, if_flush.global_position.y + if_flush.size.y/2)
+	detailed_control.visible = true
+	for child in detailed_control.get_children():
+		if child is Button:
+			child.visible = value or child.requested
+		elif child is Line2D:
+			child.draw_requested = value and child.active and get_parent().get_parent().expanded
+	
+	#lines[0].animate_line(stage_color) # lines share ShaderMaterial so animating one animates them all
 
-func draw_lines():
+
+func calculate_positions() -> void:
+	%IFID_UpperInput.global_position = Vector2(global_position.x + size.x, add.global_position.y + add.size.y/2)
+	%IFID_MiddleInput.global_position = Vector2(global_position.x + size.x, instructions_memory_button.global_position.y + instructions_memory_button.size.y/2)
+	
+	#Globals.stage_component_requested.emit(1, "hazard_detection_unit", $DetailedControl/OutsideLines/PCWrite.get_path())
+	#await Globals.stage_tween_finished
+	LineManager.if_stage_updated.emit()
+
+
+func draw_lines() -> void:
 	for line in lines:
-		line.add_points()
+		if line.active:
+			line.add_points()
+	lines[0].animate_line(stage_color)
 
 
 func _get_all_children(node: Node, zoom_value: bool):
@@ -72,19 +65,19 @@ func _get_all_children(node: Node, zoom_value: bool):
 		child.size = child.size / .9 if zoom_value else child.size * .9
 
 
-func _on_instructions_memory_button_pressed():
+func _on_instructions_memory_button_pressed() -> void:
 	instructions_memory_button.show_info_window()
 
 
-func _on_pc_pressed():
+func _on_pc_pressed() -> void:
 	pc.show_info_window()
 
 
-func _on_add_pressed():
+func _on_add_pressed() -> void:
 	add.show_info_window()
 
 
-func _on_gui_input(_event):
+func _on_gui_input(_event) -> void:
 	if Input.is_action_just_pressed("Click"):
 		if Globals.close_window_handled:
 			Globals.close_window_handled = false
@@ -92,11 +85,13 @@ func _on_gui_input(_event):
 			Globals.expand_stage.emit(0)
 
 
-func _on_LineManager_if_line_active(line: LineManager.if_lines):
+func _on_LineManager_if_line_active(line: LineManager.if_lines) -> void:
 	match  line:
 		LineManager.if_lines.ADD_IFID:
-			$DetailedControl/Add/Add_IFID.active = true
-		LineManager.if_lines.ADD_MUX:
-			$DetailedControl/Add/Add_Mux.active = true
+			$Add/Add_IFID.active = true
 		LineManager.if_lines.PC_INSTMEM:
-			$DetailedControl/PC/PC_Add.active = true
+			$PC/PC_InstMem.active = true
+		LineManager.if_lines.PC_ADD:
+			$PC/PC_Add.active = true
+		LineManager.if_lines.INSTMEM_IFID:
+			$InstructionsMemoryButton/InstMem_IFID.active = true

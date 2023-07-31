@@ -3,6 +3,9 @@ extends Window
 @onready var text_edit = $TextEdit
 var parent: ClickableComponent = null
 
+# if 0, window was closed pressing X (prevents cycling calling of closing functions)
+var close_type: int = -1
+
 
 func _ready():
 	Globals.cycle_changed.connect(update_info)
@@ -17,8 +20,11 @@ func _ready():
 
 
 func _on_close_requested() -> void:
+	if close_type == -1:
+		close_type = 0
 	get_parent().is_window_active = false
 	queue_free()
+
 
 func show_info():
 	add_info(parent.get_info())
@@ -40,6 +46,8 @@ func _on_show_menu(value: bool):
 
 
 func _on_focus_exited():
+	if close_type == 0:
+		return
 	Globals.close_window_handled = true
 	_on_close_requested()
 

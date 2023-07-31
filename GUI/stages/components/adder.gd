@@ -1,4 +1,4 @@
-extends ClickableComponent
+class_name Adder extends MainComponent
 
 @export var inputs_number: int
 @export var sources: Array[NodePath]

@@ -1,10 +1,31 @@
-[gd_scene load_steps=6 format=3 uid="uid://6fdooui4ml0w"]
+[gd_scene load_steps=13 format=3 uid="uid://6fdooui4ml0w"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_2edk6"]
 [ext_resource type="Script" path="res://stages/id_detail.gd" id="2_5718r"]
 [ext_resource type="Script" path="res://stages/components/registers_bank.gd" id="3_303vi"]
-[ext_resource type="Script" path="res://stages/components/FP_registers_bank.gd" id="4_5n302"]
+[ext_resource type="Script" path="res://stages/components/main_component.gd" id="5_dp4n3"]
 [ext_resource type="Script" path="res://stages/components/adder.gd" id="5_w7qfm"]
+[ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_21ql4"]
+[ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="6_a6ygu"]
+[ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="6_vaybo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7kgwv"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_ugj5p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2fc84"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = Color(0, 1, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_sqqqc"]
 
 [node name="IDDetail" type="Panel"]
 clip_children = 1
@@ -19,16 +40,16 @@ theme = ExtResource("1_2edk6")
 script = ExtResource("2_5718r")
 
 [node name="RegistersBank" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
-custom_minimum_size = Vector2(100, 150)
+custom_minimum_size = Vector2(90, 150)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -50.0
+offset_left = -45.0
 offset_top = -75.0
-offset_right = 50.0
+offset_right = 45.0
 offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -36,36 +57,40 @@ text = "Registers
 Bank"
 script = ExtResource("3_303vi")
 reference_node = NodePath("..")
-position_percent = Vector2(0.5, 0.35)
-expanded_position_percent = Vector2(0.5, 0.35)
+position_percent = Vector2(0.5, 0.75)
+expanded_position_percent = Vector2(0.5, 0.75)
 stage_number = 1
 alignment_mode = 1
 window_title = "Registers Bank"
 
-[node name="FPRegistersBank" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
-custom_minimum_size = Vector2(100, 150)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -75.0
-offset_right = 50.0
-offset_bottom = 75.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "FP
-Registers
-Bank"
-script = ExtResource("4_5n302")
+[node name="Input1" type="Marker2D" parent="RegistersBank"]
+
+[node name="Input2" type="Marker2D" parent="RegistersBank"]
+
+[node name="Input3" type="Marker2D" parent="RegistersBank"]
+position = Vector2(0, 110)
+
+[node name="Input4" type="Marker2D" parent="RegistersBank"]
+position = Vector2(0, 135)
+
+[node name="HazardDetectionUnit" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+visible = false
+layout_mode = 0
+offset_right = 73.0
+offset_bottom = 68.0
+text = "Hazard
+detection
+unit"
+script = ExtResource("5_dp4n3")
 reference_node = NodePath("..")
-position_percent = Vector2(0.5, 0.8)
-expanded_position_percent = Vector2(0.5, 0.8)
+position_percent = Vector2(0.5, 0.1)
+expanded_position_percent = Vector2(0.4, 0.1)
 stage_number = 1
 alignment_mode = 1
-window_title = "FP Registers Bank"
+visibility = 1
+
+[node name="HDU_PC" type="Marker2D" parent="HazardDetectionUnit"]
+position = Vector2(0, 15)
 
 [node name="DetailedControl" type="Control" parent="."]
 visible = false
@@ -78,61 +103,83 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Add" type="Button" parent="DetailedControl"]
+[node name="Add" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Add"
 script = ExtResource("5_w7qfm")
+reference_node = NodePath("../..")
+expanded_position_percent = Vector2(0.5, 0.5)
+stage_number = 1
+alignment_mode = 1
+visibility = 1
 window_title = "Add"
 
-[node name="MuxControl" type="Button" parent="DetailedControl"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-text = "M
-U
-X"
-
-[node name="MuxRtData" type="Button" parent="DetailedControl"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-text = "M
-U
-X"
-
-[node name="MuxRegDst" type="Button" parent="DetailedControl"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-text = "M
-U
-X"
-
-[node name="Control" type="Button" parent="DetailedControl"]
+[node name="Control" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Control
 "
+script = ExtResource("5_dp4n3")
+reference_node = NodePath("../..")
+expanded_position_percent = Vector2(0.4, 0.3)
+stage_number = 1
+alignment_mode = 1
+visibility = 1
 
-[node name="HazardDetectionUnit" type="Button" parent="DetailedControl"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-text = "Hazard
-detection
-unit"
+[node name="PC" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_7kgwv")
+width = 1.0
+gradient = SubResource("Gradient_ugj5p")
+script = ExtResource("6_21ql4")
+visibility = 1
 
-[node name="SignExtend" type="Button" parent="DetailedControl"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-text = "Sign
-Extend"
+[node name="RsData" type="Line2D" parent="DetailedControl"]
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="RtData" type="Line2D" parent="DetailedControl"]
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="ImmValue" type="Line2D" parent="DetailedControl"]
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="Rs" type="Line2D" parent="DetailedControl"]
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="Rt" type="Line2D" parent="DetailedControl"]
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="RegDst" type="Line2D" parent="DetailedControl"]
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="OutsideLines" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HDU_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
+visible = false
+material = SubResource("ShaderMaterial_2fc84")
+width = 1.0
+gradient = SubResource("Gradient_sqqqc")
+script = ExtResource("6_a6ygu")
+origin_component = NodePath("../../HazardDetectionUnit")
+origin = NodePath("../../HazardDetectionUnit/HDU_PC")
+flag = true
+origin_stage = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="pressed" from="RegistersBank" to="." method="_on_registers_bank_pressed"]
-[connection signal="pressed" from="FPRegistersBank" to="." method="_on_fp_registers_bank_pressed"]

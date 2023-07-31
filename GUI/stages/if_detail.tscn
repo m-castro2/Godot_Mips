@@ -1,12 +1,21 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=13 format=3 uid="uid://ca820xflmqb5b"]
 
+[ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_0r720"]
 [ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
 [ext_resource type="Script" path="res://stages/components/complex_line.gd" id="3_c2asi"]
 [ext_resource type="Script" path="res://stages/components/InstructionsMemory.gd" id="3_klmf8"]
 [ext_resource type="Script" path="res://stages/components/adder.gd" id="4_y1by5"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_4gygt"]
 [ext_resource type="Script" path="res://stages/PC.gd" id="6_k6uw2"]
-[ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="7_7lyo2"]
+[ext_resource type="Material" uid="uid://dwffi7w6tda4c" path="res://stages/shaders/line_shader_material.tres" id="8_j6ecf"]
+
+[sub_resource type="Gradient" id="Gradient_dmccv"]
+
+[sub_resource type="Gradient" id="Gradient_bg0dw"]
+
+[sub_resource type="Gradient" id="Gradient_0074m"]
+
+[sub_resource type="Gradient" id="Gradient_183sx"]
 
 [node name="IFDetail" type="Panel"]
 clip_children = 1
@@ -17,40 +26,156 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("1_0r720")
 script = ExtResource("2_varat")
 
 [node name="InstructionsMemoryButton" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
-custom_minimum_size = Vector2(90, 187)
+custom_minimum_size = Vector2(90, 150)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -60.0
-offset_top = -100.0
-offset_right = 60.0
-offset_bottom = 100.0
+offset_left = -45.0
+offset_top = -75.0
+offset_right = 45.0
+offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-text = "Instructions
+text = "Instruction
 Memory"
 script = ExtResource("3_klmf8")
 reference_node = NodePath("..")
-position_percent = Vector2(0.5, 0.5)
-expanded_position_percent = Vector2(0.95, 0.5)
+position_percent = Vector2(0.5, 0.75)
+expanded_position_percent = Vector2(0.825, 0.75)
 window_title = "Instructions Memory"
+inputs = Array[Marker2D]([null])
+outputs = Array[Marker2D]([null])
 
 [node name="Output" type="Marker2D" parent="InstructionsMemoryButton"]
-position = Vector2(120, 100)
+position = Vector2(90, 75)
 
 [node name="Input" type="Marker2D" parent="InstructionsMemoryButton"]
-position = Vector2(0, 100)
+position = Vector2(0, 75)
+
+[node name="InstMem_IFID" type="Line2D" parent="InstructionsMemoryButton" node_paths=PackedStringArray("origin", "target")]
+material = ExtResource("8_j6ecf")
+position = Vector2(-531, -249)
+width = 1.0
+gradient = SubResource("Gradient_dmccv")
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../../DetailedControl/IFID_MiddleInput")
+
+[node name="Add" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+layout_mode = 2
+offset_left = 545.0
+offset_top = 31.0
+offset_right = 595.0
+offset_bottom = 101.0
+text = "Add"
+script = ExtResource("4_y1by5")
+sources = Array[NodePath]([NodePath("4"), NodePath("../PC")])
+reference_node = NodePath("../DetailedControl")
+position_percent = Vector2(0.7, 0.25)
+expanded_position_percent = Vector2(0.75, 0.25)
+window_title = "Add"
+inputs = Array[Marker2D]([null])
+outputs = Array[Marker2D]([null])
+
+[node name="4" type="Label" parent="Add"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = 10.0
+offset_right = -30.0
+offset_bottom = 36.0
+text = "4"
+
+[node name="4_Add" type="Line2D" parent="Add"]
+position = Vector2(-24, 23)
+points = PackedVector2Array(-5, 0, 24, 0)
+width = 1.0
+antialiased = true
+
+[node name="LowerInput" type="Marker2D" parent="Add"]
+position = Vector2(0, 44)
+
+[node name="Add_IFID" type="Line2D" parent="Add" node_paths=PackedStringArray("origin", "target")]
+material = ExtResource("8_j6ecf")
+width = 1.0
+gradient = SubResource("Gradient_bg0dw")
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../IFID_UpperInput")
+
+[node name="Add_PC" type="Line2D" parent="Add" node_paths=PackedStringArray("origin", "target")]
+material = ExtResource("8_j6ecf")
+width = 1.0
+gradient = SubResource("Gradient_0074m")
+script = ExtResource("3_c2asi")
+origin = NodePath("../Add_IFID")
+target = NodePath("../../PC/Input")
+intersect_point = 0.5
+flag = true
+offset = Vector2(20, 50)
+width_percent = 0.05
+
+[node name="Output" type="Marker2D" parent="Add"]
+position = Vector2(50, 35)
+
+[node name="IFID_UpperInput" type="Marker2D" parent="Add"]
+unique_name_in_owner = true
+
+[node name="PC" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+custom_minimum_size = Vector2(50, 70)
+layout_mode = 2
+offset_left = 469.0
+offset_top = 124.0
+offset_right = 519.0
+offset_bottom = 194.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "PC"
+script = ExtResource("6_k6uw2")
+reference_node = NodePath("../DetailedControl")
+position_percent = Vector2(0.4, 0.45)
+expanded_position_percent = Vector2(0.4, 0.45)
+window_title = "PC"
+inputs = Array[Marker2D]([null, null])
+outputs = Array[Marker2D]([null])
+
+[node name="Output" type="Marker2D" parent="PC"]
+position = Vector2(50, 35)
+
+[node name="Input" type="Marker2D" parent="PC"]
+position = Vector2(0, 35)
+
+[node name="PC_Add" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target")]
+material = ExtResource("8_j6ecf")
+width = 1.0
+gradient = SubResource("Gradient_183sx")
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../../Add/LowerInput")
+steps = 4
+
+[node name="UpperInput" type="Marker2D" parent="PC"]
+position = Vector2(25, 0)
+
+[node name="PC_InstMem" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target")]
+material = ExtResource("8_j6ecf")
+width = 1.0
+gradient = SubResource("Gradient_183sx")
+antialiased = true
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../../InstructionsMemoryButton/Input")
+steps = 4
 
 [node name="DetailedControl" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,250 +184,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Add" type="Button" parent="DetailedControl"]
-layout_mode = 2
-offset_right = 50.0
-offset_bottom = 70.0
-text = "Add"
-script = ExtResource("4_y1by5")
-sources = Array[NodePath]([NodePath("4"), NodePath("../PC")])
-window_title = "Add"
-
-[node name="4" type="Label" parent="DetailedControl/Add"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = 10.0
-offset_right = -30.0
-offset_bottom = 36.0
-text = "4"
-
-[node name="4_Add" type="Line2D" parent="DetailedControl/Add"]
-position = Vector2(-24, 23)
-points = PackedVector2Array(-5, 0, 24, 0)
-width = 1.0
-antialiased = true
-
-[node name="LowerInput" type="Marker2D" parent="DetailedControl/Add"]
-position = Vector2(0, 44)
-
-[node name="Add_IFID" type="Line2D" parent="DetailedControl/Add" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("6_4gygt")
-origin = NodePath("../Output")
-target = NodePath("../IFID_UpperInput")
-
-[node name="Add_Mux" type="Line2D" parent="DetailedControl/Add" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("3_c2asi")
-origin = NodePath("../Add_IFID")
-target = NodePath("../../Mux/Input1")
-intersect_point = 0.5
-flag = true
-offset = 50
-width_percent = 0.05
-
-[node name="Output" type="Marker2D" parent="DetailedControl/Add"]
-position = Vector2(50, 35)
-
-[node name="IFID_UpperInput" type="Marker2D" parent="DetailedControl/Add"]
+[node name="IFID_MiddleInput" type="Marker2D" parent="DetailedControl"]
 unique_name_in_owner = true
-
-[node name="Mux" type="Button" parent="DetailedControl"]
-custom_minimum_size = Vector2(25, 100)
-layout_mode = 2
-offset_right = 25.0
-offset_bottom = 100.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "M
-U
-X"
-
-[node name="Mux_PC" type="Line2D" parent="DetailedControl/Mux" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("6_4gygt")
-origin = NodePath("../Output")
-target = NodePath("../../PC/Input")
-
-[node name="Output" type="Marker2D" parent="DetailedControl/Mux"]
-position = Vector2(25, 50)
-
-[node name="Input1" type="Marker2D" parent="DetailedControl/Mux"]
-position = Vector2(0, 20)
-
-[node name="Label" type="Label" parent="DetailedControl/Mux/Input1"]
-offset_left = -37.0
-offset_top = -17.0
-offset_right = -7.0
-theme_override_font_sizes/font_size = 10
-text = "PC + 4"
-vertical_alignment = 1
-
-[node name="Input2" type="Marker2D" parent="DetailedControl/Mux"]
-position = Vector2(0, 40)
-
-[node name="Label" type="Label" parent="DetailedControl/Mux/Input2"]
-offset_left = -53.0
-offset_top = -21.0
-offset_right = 2.0
-offset_bottom = 9.0
-theme_override_font_sizes/font_size = 6
-text = "conditional branch"
-vertical_alignment = 1
-
-[node name="Input3" type="Marker2D" parent="DetailedControl/Mux"]
-position = Vector2(0, 60)
-
-[node name="Label" type="Label" parent="DetailedControl/Mux/Input3"]
-offset_left = -55.0
-offset_top = -17.0
-offset_right = -3.0
-theme_override_font_sizes/font_size = 10
-text = "register Rs"
-vertical_alignment = 1
-
-[node name="Input4" type="Marker2D" parent="DetailedControl/Mux"]
-position = Vector2(0, 80)
-
-[node name="Label" type="Label" parent="DetailedControl/Mux/Input4"]
-offset_left = -34.0
-offset_top = -17.0
-offset_right = -3.0
-theme_override_font_sizes/font_size = 10
-text = "J jump"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="UpperInput" type="Marker2D" parent="DetailedControl/Mux"]
-position = Vector2(12.5, 0)
-
-[node name="PC" type="Button" parent="DetailedControl"]
-custom_minimum_size = Vector2(50, 70)
-layout_mode = 2
-offset_right = 50.0
-offset_bottom = 70.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "PC"
-script = ExtResource("6_k6uw2")
-window_title = "PC"
-
-[node name="Output" type="Marker2D" parent="DetailedControl/PC"]
-position = Vector2(50, 35)
-
-[node name="PC_InstMem" type="Line2D" parent="DetailedControl/PC" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-antialiased = true
-script = ExtResource("6_4gygt")
-origin = NodePath("../Output")
-target = NodePath("../../../InstructionsMemoryButton/Input")
-
-[node name="Input" type="Marker2D" parent="DetailedControl/PC"]
-position = Vector2(0, 35)
-
-[node name="PC_Add" type="Line2D" parent="DetailedControl/PC" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("3_c2asi")
-origin = NodePath("../PC_InstMem")
-target = NodePath("../../Add/LowerInput")
-intersect_point = 0.5
-line_type = 4
-
-[node name="UpperInput" type="Marker2D" parent="DetailedControl/PC"]
-position = Vector2(25, 0)
 
 [node name="InstructionsMemoryDetail" type="Control" parent="DetailedControl"]
 layout_mode = 2
 anchors_preset = 0
 
-[node name="InstMem_IFID" type="Line2D" parent="DetailedControl/InstructionsMemoryDetail" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("6_4gygt")
-origin = NodePath("../../../InstructionsMemoryButton/Output")
-target = NodePath("../IFID_MiddleInput")
-
-[node name="IFID_MiddleInput" type="Marker2D" parent="DetailedControl/InstructionsMemoryDetail"]
-unique_name_in_owner = true
-
-[node name="OutsideLines" type="Control" parent="DetailedControl"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="MuxBranch" type="Line2D" parent="DetailedControl/OutsideLines" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("7_7lyo2")
-origin = NodePath("MuxBranchOrigin")
-target = NodePath("../../Mux/Input2")
-flag = true
-offset = 60
-
-[node name="MuxBranchOrigin" type="Marker2D" parent="DetailedControl/OutsideLines/MuxBranch"]
-unique_name_in_owner = true
-
-[node name="MuxRs" type="Line2D" parent="DetailedControl/OutsideLines" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("7_7lyo2")
-origin = NodePath("MuxRsOrigin")
-target = NodePath("../../Mux/Input3")
-flag = true
-offset = 60
-
-[node name="MuxRsOrigin" type="Marker2D" parent="DetailedControl/OutsideLines/MuxRs"]
-unique_name_in_owner = true
-
-[node name="MuxJump" type="Line2D" parent="DetailedControl/OutsideLines" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("7_7lyo2")
-origin = NodePath("MuxJumpOrigin")
-target = NodePath("../../Mux/Input4")
-flag = true
-offset = 40
-
-[node name="MuxJumpOrigin" type="Marker2D" parent="DetailedControl/OutsideLines/MuxJump"]
-unique_name_in_owner = true
-
-[node name="PCSrc" type="Line2D" parent="DetailedControl/OutsideLines" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("7_7lyo2")
-origin = NodePath("PCSrcOrigin")
-target = NodePath("../../Mux/UpperInput")
-flag = true
-
-[node name="PCSrcOrigin" type="Marker2D" parent="DetailedControl/OutsideLines/PCSrc"]
-unique_name_in_owner = true
-
-[node name="PCWrite" type="Line2D" parent="DetailedControl/OutsideLines" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-script = ExtResource("7_7lyo2")
-origin = NodePath("PCWriteOrigin")
-target = NodePath("../../PC/UpperInput")
-flag = true
-
-[node name="PCWriteOrigin" type="Marker2D" parent="DetailedControl/OutsideLines/PCWrite"]
-unique_name_in_owner = true
-
-[node name="IF_Flush" type="Label" parent="DetailedControl"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-text = "IF_flush"
-
-[node name="IFflush_IFID" type="Line2D" parent="DetailedControl/IF_Flush" node_paths=PackedStringArray("origin", "target")]
-width = 1.0
-default_color = Color(1, 0, 0, 1)
-script = ExtResource("6_4gygt")
-origin = NodePath("../Origin")
-target = NodePath("../IFID_IFflushInput")
-
-[node name="Origin" type="Marker2D" parent="DetailedControl/IF_Flush"]
-position = Vector2(69, 13)
-
-[node name="IFID_IFflushInput" type="Marker2D" parent="DetailedControl/IF_Flush"]
-unique_name_in_owner = true
-
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="InstructionsMemoryButton" to="." method="_on_instructions_memory_button_pressed"]
-[connection signal="pressed" from="DetailedControl/Add" to="." method="_on_add_pressed"]
-[connection signal="pressed" from="DetailedControl/PC" to="." method="_on_pc_pressed"]
+[connection signal="pressed" from="Add" to="." method="_on_add_pressed"]
+[connection signal="pressed" from="PC" to="." method="_on_pc_pressed"]

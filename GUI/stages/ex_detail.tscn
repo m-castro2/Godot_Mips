@@ -1,7 +1,88 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=23 format=3 uid="uid://cyfy0tcp481of"]
 
 [ext_resource type="Script" path="res://stages/ex_detail.gd" id="1_qp051"]
 [ext_resource type="Script" path="res://stages/components/ALU.gd" id="2_qvpnf"]
+[ext_resource type="Script" path="res://stages/components/main_component.gd" id="3_tibhf"]
+[ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="4_2lcnv"]
+[ext_resource type="Script" path="res://stages/components/line2d.gd" id="4_q4wkr"]
+[ext_resource type="Script" path="res://stages/components/complex_line.gd" id="6_bibc7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j11ls"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_b1okb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jax4n"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_xbjb4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k52rn"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = Color(1, 0.34902, 0.780392, 1)
+
+[sub_resource type="Gradient" id="Gradient_j6wyl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3gas1"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = Color(0, 0.870588, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ko70b"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = Color(0.909804, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_khtn1"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_p3ikc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mo4ou"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_aeuyd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l2snw"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = Color(0.909804, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_sqt3y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dg7f1"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_fgwxc"]
 
 [node name="EXDetail" type="Panel"]
 clip_children = 1
@@ -37,8 +118,30 @@ stage_number = 2
 alignment_mode = 1
 window_title = "ALU"
 
+[node name="UpperInput" type="Marker2D" parent="ALU"]
+position = Vector2(0, 40)
+
+[node name="LowerInput" type="Marker2D" parent="ALU"]
+position = Vector2(0, 110)
+
+[node name="Output" type="Marker2D" parent="ALU"]
+position = Vector2(80, 75)
+
+[node name="ALUExMem" type="Line2D" parent="ALU" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_j11ls")
+width = 1.0
+gradient = SubResource("Gradient_b1okb")
+script = ExtResource("4_q4wkr")
+origin = NodePath("../Output")
+target = NodePath("../ALUOut")
+
+[node name="ALUOut" type="Marker2D" parent="ALU"]
+unique_name_in_owner = true
+
+[node name="UpInput" type="Marker2D" parent="ALU"]
+position = Vector2(40, 0)
+
 [node name="DetailedControl" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,46 +150,136 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="MuxRs" type="Button" parent="DetailedControl"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-theme_override_font_sizes/font_size = 10
-text = "M
-U
-X"
-
-[node name="MuxRt" type="Button" parent="DetailedControl"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-theme_override_font_sizes/font_size = 10
-text = "M
-U
-X"
-
-[node name="MuxImm" type="Button" parent="DetailedControl"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-theme_override_font_sizes/font_size = 10
-text = "M
-U
-X"
-
 [node name="AluControl" type="Button" parent="DetailedControl"]
+visible = false
+custom_minimum_size = Vector2(66, 54)
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 text = "ALU
 Control"
+script = ExtResource("3_tibhf")
+expanded_position_percent = Vector2(0.33, 0.15)
+stage_number = 2
+alignment_mode = 1
+visibility = 1
+
+[node name="Output" type="Marker2D" parent="DetailedControl/AluControl"]
+position = Vector2(66, 27)
 
 [node name="ForwardingUnit" type="Button" parent="DetailedControl"]
+visible = false
+custom_minimum_size = Vector2(96, 0)
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Forwarding
 Unit"
+script = ExtResource("3_tibhf")
+position_percent = Vector2(0.5, 0.85)
+expanded_position_percent = Vector2(0.5, 0.85)
+stage_number = 2
+alignment_mode = 1
+visibility = 1
+
+[node name="UpperInput" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
+position = Vector2(0, 18)
+
+[node name="LowerInput" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
+position = Vector2(0, 36)
+
+[node name="UpperRightInput" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
+position = Vector2(96, 18)
+
+[node name="LowerRightInput" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
+position = Vector2(96, 36)
+
+[node name="PC" type="Line2D" parent="DetailedControl"]
+visible = false
+material = SubResource("ShaderMaterial_jax4n")
+width = 1.0
+gradient = SubResource("Gradient_xbjb4")
+script = ExtResource("4_q4wkr")
+visibility = 1
+
+[node name="RegDst" type="Line2D" parent="DetailedControl"]
+visible = false
+material = SubResource("ShaderMaterial_jax4n")
+width = 1.0
+gradient = SubResource("Gradient_xbjb4")
+script = ExtResource("4_q4wkr")
+visibility = 1
+
+[node name="RtData" type="Marker2D" parent="DetailedControl"]
+unique_name_in_owner = true
+visible = false
+
+[node name="RsData_ALU" type="Line2D" parent="DetailedControl"]
+visible = false
+material = SubResource("ShaderMaterial_k52rn")
+width = 1.0
+gradient = SubResource("Gradient_j6wyl")
+script = ExtResource("4_q4wkr")
+steps = 4
+visibility = 1
+
+[node name="RtData_ALU2" type="Line2D" parent="DetailedControl"]
+visible = false
+material = SubResource("ShaderMaterial_3gas1")
+width = 1.0
+gradient = SubResource("Gradient_j6wyl")
+script = ExtResource("4_q4wkr")
+steps = 4
+visibility = 1
+
+[node name="ImmVal_ALU2" type="Line2D" parent="DetailedControl"]
+visible = false
+material = SubResource("ShaderMaterial_ko70b")
+width = 1.0
+gradient = SubResource("Gradient_j6wyl")
+script = ExtResource("4_q4wkr")
+steps = 4
+visibility = 1
+
+[node name="Rs_HDU" type="Line2D" parent="DetailedControl"]
+visible = false
+material = SubResource("ShaderMaterial_khtn1")
+width = 1.0
+gradient = SubResource("Gradient_p3ikc")
+script = ExtResource("4_q4wkr")
+steps = 4
+visibility = 1
+
+[node name="Rt_HDU" type="Line2D" parent="DetailedControl"]
+visible = false
+material = SubResource("ShaderMaterial_mo4ou")
+width = 1.0
+gradient = SubResource("Gradient_aeuyd")
+script = ExtResource("4_q4wkr")
+steps = 4
+middle_offset = 18
+visibility = 1
+
+[node name="Rt_Data_EXMEM" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin")]
+visible = false
+material = SubResource("ShaderMaterial_l2snw")
+width = 1.0
+gradient = SubResource("Gradient_sqt3y")
+script = ExtResource("6_bibc7")
+origin = NodePath("../RtData_ALU2")
+intersect_point = 1.1
+visibility = 1
+
+[node name="ALUControl_ALU" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+visible = false
+material = SubResource("ShaderMaterial_dg7f1")
+width = 1.0
+gradient = SubResource("Gradient_fgwxc")
+script = ExtResource("4_q4wkr")
+origin = NodePath("../AluControl/Output")
+target = NodePath("../../ALU/UpInput")
+steps = 3
+visibility = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="ALU" to="." method="_on_alu_pressed"]

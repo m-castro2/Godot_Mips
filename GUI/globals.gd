@@ -1,7 +1,10 @@
 extends Node
 
-# avoids breaking nodepath to cpu_pipeline when singleton number is modified
+
+# avoids breaking nodepath to cpu_pipeline when singleton number is modified: TURN INTO SINGLETON
 var singleton_number: int = 4
+
+enum STAGES {IF, ID, EX, MEM, WB}
 
 signal load_program_pressed(path: String)
 signal show_load_program_menu
@@ -14,7 +17,13 @@ signal show_menu(value: bool)
 signal close_menu
 
 signal expand_stage(stage_number: int)
-signal stage_tween_finished
+var current_expanded_stage: STAGES = -1
+var is_stage_tweening: bool
+signal stage_tween_finished(stage: STAGES)
+signal components_tween_finished
+
+## used by stages to get coords to other stages components
+signal stage_component_requested(stage_number: int, component_name: String, caller_ref: NodePath)
 
 ## true if a window was closed on click outside it to prevent that same click expanding a stage
 var close_window_handled: bool = false

@@ -40,7 +40,6 @@ stage_name = "IF"
 [node name="IFID" parent="HBoxContainer" instance=ExtResource("4_p2imv")]
 layout_mode = 2
 script = ExtResource("5_a5bg2")
-has_block = Array[bool]([false, false, false])
 text = "IF\\n/\\nID"
 
 [node name="Stage2" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
@@ -51,6 +50,8 @@ stage_number = 1
 
 [node name="IDEX" parent="HBoxContainer" instance=ExtResource("4_p2imv")]
 layout_mode = 2
+register_type = 1
+has_block = Array[bool]([true, true, true])
 text = "ID\\n/\\nEX"
 
 [node name="Stage3" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
@@ -61,6 +62,7 @@ stage_number = 2
 
 [node name="EXMEM" parent="HBoxContainer" instance=ExtResource("4_p2imv")]
 layout_mode = 2
+register_type = 2
 has_block = Array[bool]([true, true, false])
 text = "EX\\n/\\nM\\nE\\nM"
 
@@ -72,6 +74,7 @@ stage_number = 3
 
 [node name="MEMWB" parent="HBoxContainer" instance=ExtResource("4_p2imv")]
 layout_mode = 2
+register_type = 3
 has_block = Array[bool]([true, false, false])
 text = "M\\nE\\nM\\n/\\nWB"
 

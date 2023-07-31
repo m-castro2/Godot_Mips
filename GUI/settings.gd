@@ -48,6 +48,5 @@ func _on_color_mode_option_button_item_selected(index):
 
 
 func _on_color_picker_color_changed(color, i):
-	print(i)
 	ConfigManager.update_value("Settings/UI", "color_mode_" + str(i), color)
 	Globals.stage_color_changed.emit(color, i)

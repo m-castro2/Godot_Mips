@@ -29,5 +29,6 @@ anti_aliasing = false
 [resource]
 BackgroundPanelContainer/base_type = &"PanelContainer"
 BackgroundPanelContainer/styles/panel = SubResource("StyleBoxFlat_ta6wk")
+Button/font_sizes/font_size = 14
 Panel/styles/panel = SubResource("StyleBoxFlat_ht4eq")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_ewnuu")

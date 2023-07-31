@@ -1,4 +1,4 @@
-extends ClickableComponent
+class_name PC extends MainComponent
 
 var info
 
@@ -7,6 +7,7 @@ var info
 func _ready():
 	Globals.cycle_changed.connect(_on_cycle_changed)
 	info = pipelinedWrapper.cpu_info["PCValue"]
+	super._ready()
 
 
 func _on_cycle_changed():

@@ -18,6 +18,7 @@ signal close_menu
 
 signal expand_stage(stage_number: int)
 var current_expanded_stage: STAGES = -1
+signal current_expanded_stage_updated
 var is_stage_tweening: bool
 signal stage_tween_finished(stage: STAGES)
 signal components_tween_finished

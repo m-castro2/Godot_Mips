@@ -29,7 +29,6 @@ var active: bool :
 		active = value
 		z_index = 1 if value else 0
 		animate_line(get_parent().get_parent().stage_color)
-		target.get_parent().requested = value
 
 
 func add_points():
@@ -60,8 +59,11 @@ func _ready():
 
 func _on_Globals_expand_stage(_stage_number: int):
 	visible = false
+	await Globals.current_expanded_stage_updated
+	
 	if Globals.current_expanded_stage != origin_stage and Globals.current_expanded_stage != target_stage:
 		return
+		
 	await Globals.components_tween_finished
 	await get_tree().process_frame
 	visible = true

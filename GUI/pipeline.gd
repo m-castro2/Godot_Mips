@@ -45,6 +45,7 @@ func _on_expand_stage(stage_number: int) -> void:
 		(get_node(stages[expanded_stage]) as Stage).tween_size()
 		
 	Globals.current_expanded_stage = expanded_stage
+	Globals.current_expanded_stage_updated.emit()
 
 func get_stage_component(stage_number: int, component_name: String, caller_ref: NodePath):
 	get_node(caller_ref).set_outside_component(get_node(stages[stage_number]).get("detail").get(component_name), "origin")

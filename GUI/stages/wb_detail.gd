@@ -86,7 +86,6 @@ func _on_wb_line_active(line: LineManager.wb_lines):
 		
 		LineManager.wb_lines.REGDST_FORWARDINGUNIT:
 			await LineManager.if_stage_updated
-			await Globals.components_tween_finished
 			reg_dst_forwarding_unit.target_component = LineManager.get_stage_component(2, "forwarding_unit")
 			reg_dst_forwarding_unit.target = LineManager.get_stage_component(2, "forwarding_unit").get_node("LowerRightInput")
 			reg_dst_forwarding_unit.target_component.request_stage_origin.append(Globals.STAGES.WB)

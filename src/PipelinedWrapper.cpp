@@ -51,7 +51,7 @@ void PipelinedWrapper::_bind_methods() {
 
 PipelinedWrapper::PipelinedWrapper(){
     mem = std::shared_ptr<mips_sim::Memory>(new mips_sim::Memory());
-    cpu = std::unique_ptr<mips_sim::Cpu>(new CpuPipelined(mem));
+    cpu = std::unique_ptr<mips_sim::CpuFlex>(new CpuFlex(mem));
     cpu_info = new godot::Dictionary();
     _update_cpu_info();
 }

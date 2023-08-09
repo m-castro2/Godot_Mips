@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "../mips_sim/src/cpu/cpu_pipelined.h"
+#include "../mips_sim/src/cpu_flex/cpu_flex.h"
 
 
 #include <godot_cpp/godot.hpp>
@@ -29,7 +30,7 @@ public:
     ~PipelinedWrapper();
 
     godot::Dictionary* cpu_info;
-    std::unique_ptr<mips_sim::Cpu> cpu;
+    std::unique_ptr<mips_sim::CpuFlex> cpu;
     std::shared_ptr<mips_sim::Memory> mem;
     godot::Array instructions;
     godot::Array loaded_instructions;

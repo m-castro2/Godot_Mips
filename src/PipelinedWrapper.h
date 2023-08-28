@@ -34,7 +34,7 @@ public:
     std::shared_ptr<mips_sim::Memory> mem;
     godot::Array instructions;
     godot::Array loaded_instructions;
-    godot::Array diagram; //diagram[instruction_index][at_cycle] = "stage_name"
+    godot::Dictionary diagram; //diagram[instruction_index][at_cycle] = "stage_name"
 
     godot::String reset_cpu();
     godot::String next_cycle();
@@ -50,8 +50,8 @@ public:
     void set_instructions(godot::Array p_instructions);
     godot::Array get_loaded_instructions();
     void set_loaded_instructions(godot::Array p_loaded_instructions);
-    void set_diagram(godot::Array p_diagram);
-    godot::Array get_diagram();
+    void set_diagram(godot::Dictionary p_diagram);
+    godot::Dictionary get_diagram();
 
     void _update_cpu_info();
     void _update_loaded_instructions();

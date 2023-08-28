@@ -115,7 +115,7 @@ godot::String PipelinedWrapper::previous_cycle(){
     {
       return "Already at first cycle";
     }
-    
+
     //intercept cout
     bool retval = true;
     std::stringbuf strbuf;
@@ -233,53 +233,59 @@ void PipelinedWrapper::_update_loaded_instructions() {
     }
 }
 
-godot::Array PipelinedWrapper::get_diagram() {
+godot::Dictionary PipelinedWrapper::get_diagram() {
     return diagram;
 }
 
-void PipelinedWrapper::set_diagram(godot::Array p_diagram) {
+void PipelinedWrapper::set_diagram(godot::Dictionary p_diagram) {
     diagram = p_diagram;
 }
 
 void PipelinedWrapper::_update_diagram() {
-    CpuPipelined & cpuPipe = dynamic_cast<CpuPipelined &>(*cpu);
-    const uint32_t * const * l_diagram = cpuPipe.get_diagram();
+    CpuFlex & cpuFlex = dynamic_cast<CpuFlex &>(*cpu);
+    const uint32_t * const * l_diagram = cpuFlex.get_diagram();
     uint32_t current_cycle = cpu->get_cycle();
-    uint32_t min_cycle = current_cycle;
-    uint32_t instr_ids[20];
-    size_t instr_count = 0;
-    godot::Array result = {};
+    godot::Dictionary result = {};
 
-    for (int i = 1; i < loaded_instructions.size(); i++) {
-        if (l_diagram[i][current_cycle] > 0) {
-            instr_ids[instr_count] = i;
-            instr_count++;
-            uint32_t lmin_cycle = current_cycle;
+    std::vector<uint32_t> loaded_inst = cpu->get_loaded_instructions();
+    for (size_t i = 1; i < loaded_inst.size(); ++i)
+    {   
+        uint32_t ipc = loaded_inst[i];
+        uint32_t iindex = (ipc - MEM_TEXT_START)/4 + 1;
+        int runstate = 0;
+        godot::Array cycle_array = {};
 
-            for (size_t j=current_cycle; l_diagram[i][j] > 0 && j > 0; j--) {
-                lmin_cycle--;
-            }
-            if (lmin_cycle < min_cycle) {
-                min_cycle = lmin_cycle;
-            }
-        }
-    }
-
-    for (size_t i=0; i<instr_count; i++) {
-        godot::Array arr = {};
-        for (size_t j=current_cycle; j>min_cycle; j--) {
-            if (l_diagram[instr_ids[i]][j] > 0) {
-                if (l_diagram[instr_ids[i]][j] == l_diagram[instr_ids[i]][j-1]) {
-                    //stall
-                    arr.push_front("stall");
+        for (size_t j = 1; j<=current_cycle && runstate < 2; j++) {
+            godot::Array array;
+            array.push_back(std::to_string(j).c_str());
+            if (l_diagram[i][j] > 0)
+            {
+                runstate = 1;
+                if (l_diagram[i][j] == l_diagram[i][j-1]) {
+                    array.push_back(stage_names[l_diagram[i][j]-1].c_str());
                 }
                 else {
-                    arr.push_front(stage_names[l_diagram[instr_ids[i]][j] - 1].c_str());
+                    array.push_back(stage_names[l_diagram[i][j]-1].c_str());
                 }
             }
+            else
+            {
+                /* if (runstate)
+                    runstate = 2; */
+                array.push_back("/");
+            }
+            /* if (iindex <= cycle_array.size()) { //backwards jumps
+                cycle_array.remove_at(iindex);
+                cycle_array.insert(iindex, array);
+            }
+            else { */
+                cycle_array.push_back(array);
         }
-        result.push_back(arr);
+
+        result[iindex] = cycle_array;
     }
+
+
     set_diagram(result);
 }
 

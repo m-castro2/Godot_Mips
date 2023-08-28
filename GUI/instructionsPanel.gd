@@ -28,7 +28,7 @@ func _on_update_stage_colors(colors_map: Dictionary, _instructions: Array) -> vo
 	for child in labelContainer.get_children():
 		(child as RichTextLabel).remove_theme_stylebox_override("normal")
 	for key in colors_map.keys():
-		if key == null:
+		if key < 0 or key == null:
 			continue
 		var styleBox: StyleBoxFlat = StyleBoxFlat.new()
 		styleBox.bg_color = colors_map[key]

@@ -18,7 +18,7 @@ func add_instructions(p_instructions: Array):
 
 
 func _on_resized():
-	var height = size.y * .75 #stage registers size is 65% of space available
+	var height = size.y * .85 #stage registers size is 65% of space available
 	var max_size: float = 0
 	for child in get_child(0).get_children():
 		if child is StageRegister:

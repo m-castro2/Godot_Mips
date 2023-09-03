@@ -28,10 +28,13 @@ var active: bool :
 	set(value):
 		active = value
 		z_index = 1 if value else 0
-		animate_line(get_parent().get_parent().stage_color)
+		animate_line()
 
+var line_color: Color
 
 func add_points():
+	if origin == null or target == null:
+		return
 	global_position = Vector2(0, 0)
 	clear_points()
 	add_point(origin.global_position)
@@ -55,6 +58,8 @@ func add_points():
 
 func _ready():
 	Globals.expand_stage.connect(_on_Globals_expand_stage)
+	Globals.components_tween_finished.connect(add_points)
+	Globals.components_tween_finished.connect(animate_line)
 
 
 func _on_Globals_expand_stage(_stage_number: int):
@@ -72,6 +77,8 @@ func _on_Globals_expand_stage(_stage_number: int):
 		origin_component.requested = true
 	if target_component:
 		target_component.requested = true
+	
+	animate_line()
 
 
 func set_outside_component(component: Button, which: String):
@@ -81,10 +88,9 @@ func set_outside_component(component: Button, which: String):
 		target.global_position = component.global_position
 
 
-func animate_line(stage_color: Color) -> void:
-	await Globals.components_tween_finished
-	await get_tree().process_frame
+func animate_line() -> void:
+	line_color = get_parent().get_parent().stage_color
 	var tween: Tween = get_tree().create_tween()
-	material.set("shader_parameter/color", stage_color)
+	material.set("shader_parameter/color", line_color)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 0.0, .001)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 1.0, .5)

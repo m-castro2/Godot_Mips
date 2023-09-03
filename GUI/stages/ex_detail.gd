@@ -70,7 +70,7 @@ func draw_lines():
 	for line in lines:
 		if line.active:
 			line.add_points()
-			line.animate_line(stage_color)
+			line.animate_line()
 
 
 func _on_alu_pressed():

@@ -6,8 +6,39 @@ extends Panel
 @onready var control = $DetailedControl/Control
 @onready var hazard_detection_unit = $HazardDetectionUnit
 
-@onready var lines: Array[Node] = [ $OutsideLines/HDU_PC,
-									$DetailedControl/PC]
+#lines
+@onready var inst_25_21 = $"RegistersBank/Inst_25-21"
+@onready var inst_20_16_rd_reg_2 = $"RegistersBank/Inst_20-16_RDReg2"
+@onready var inst_15_0_imm = $"RegistersBank/Inst_15-0_Imm"
+@onready var inst_15_0_add = $"RegistersBank/Inst_15-0_Add"
+@onready var inst_20_16_reg_dst = $"RegistersBank/Inst_20-16_RegDst"
+@onready var inst_control = $RegistersBank/Inst_Control
+@onready var reg_bank_rt_data = $RegistersBank/RegBank_RTData
+@onready var reg_bank_rs_data = $RegistersBank/RegBank_RSData
+@onready var pc = $DetailedControl/PC
+@onready var rs_data = $DetailedControl/RsData
+@onready var rt_data = $DetailedControl/RtData
+@onready var imm_value = $DetailedControl/ImmValue
+@onready var rs = $DetailedControl/Rs
+@onready var rt = $DetailedControl/Rt
+@onready var reg_dst = $DetailedControl/RegDst
+@onready var pc_add = $DetailedControl/PC_Add
+@onready var hdu_pc = $OutsideLines/HDU_PC
+@onready var inst_pc = $OutsideLines/Inst_PC
+@onready var rs_pc = $OutsideLines/RS_PC
+
+
+@onready var lines: Array[Node] = [ inst_25_21,
+									inst_20_16_rd_reg_2,
+									inst_15_0_imm,
+									inst_15_0_add,
+									inst_20_16_reg_dst,
+									inst_control,
+									reg_bank_rt_data,
+									reg_bank_rs_data,
+									pc, rs_data, rt_data,
+									imm_value, rs, rt, reg_dst,
+									pc_add, hdu_pc, inst_pc, rs_pc]
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color
 var stage: Globals.STAGES = Globals.STAGES.ID
@@ -22,9 +53,15 @@ func _ready():
 
 
 func show_lines() -> void:
+	return
 	## Probably not needed once CpuFlex manages which lines to show
 	LineManager.id_line_active.emit(LineManager.id_lines.HDU_PC)
 	LineManager.id_line_active.emit(LineManager.id_lines.PC)
+	#LineManager.id_line_active.emit(LineManager.id_lines.ImmValue)
+	#LineManager.id_line_active.emit(LineManager.id_lines.INST_RDREG1)
+	#LineManager.id_line_active.emit(LineManager.id_lines.INST_RDREG2)
+	#LineManager.id_line_active.emit(LineManager.id_lines.INST_IMMVAL)
+	#LineManager.id_line_active.emit(LineManager.id_lines.INST_REGDST)
 
 
 func show_detail(value: bool) -> void:
@@ -44,7 +81,7 @@ func draw_lines() -> void:
 	for line in lines:
 		if line.active:
 			line.add_points()
-			line.animate_line(stage_color)
+			line.animate_line()
 
 
 func _on_registers_bank_pressed() -> void:
@@ -83,6 +120,7 @@ func _on_stage_tween_finished(_stage):
 
 
 func _on_resized():
+	%IFIDOutput.position = Vector2(0, size.y/2)
 	return
 	if detailed_control:
 		var shrink = (DisplayServer.window_get_size().y < 960)
@@ -108,14 +146,33 @@ func _on_gui_input(_event):
 func _on_LineManager_id_line_active(line: LineManager.id_lines) -> void:
 	match  line:
 		LineManager.id_lines.HDU_PC:
-			$OutsideLines/HDU_PC.origin_component = hazard_detection_unit
-			$OutsideLines/HDU_PC.origin_component.request_stage_origin.append(Globals.STAGES.IF)
-			$OutsideLines/HDU_PC.target = LineManager.get_stage_component(0, "pc").get_node("UpperInput")
-			$OutsideLines/HDU_PC.active = true
+			hdu_pc.origin_component = hazard_detection_unit
+			hdu_pc.origin_component.request_stage_origin.append(Globals.STAGES.IF)
+			hdu_pc.target = LineManager.get_stage_component(0, "pc").get_node("UpperInput")
+			hdu_pc.active = true
 		LineManager.id_lines.PC:
 			await LineManager.if_stage_updated
 			await LineManager.stage_register_updated
-			($DetailedControl/PC as Line).origin = get_node(LineManager.stage_register_path[0]).get("pc_2")
-			$DetailedControl/PC.target = get_node(LineManager.stage_register_path[1]).get("pc")
+			pc.origin = get_node(LineManager.stage_register_path[0]).get("pc_2")
+			pc.target = get_node(LineManager.stage_register_path[1]).get("pc")
+			pc.active = true
+		LineManager.id_lines.ImmValue:
+			await LineManager.if_stage_updated
+			await LineManager.stage_register_updated
+			$DetailedControl/PC.target = get_node(LineManager.stage_register_path[1]).get("imm_value")
 			$DetailedControl/PC.active = true
+		LineManager.id_lines.INST_RDREG1:
+			await LineManager.if_stage_updated
+			$"RegistersBank/Inst_25-21".active = true
+		LineManager.id_lines.INST_RDREG2:
+			await LineManager.if_stage_updated
+			$"RegistersBank/Inst_20-16_RDReg2".active = true
+		LineManager.id_lines.INST_IMMVAL:
+			await LineManager.if_stage_updated
+			$"RegistersBank/Inst_15-0_Imm".target = get_node(LineManager.stage_register_path[1]).get("imm_value")
+			$"RegistersBank/Inst_15-0_Imm".active = true
+		LineManager.id_lines.INST_REGDST:
+			await LineManager.if_stage_updated
+			$"RegistersBank/Inst_15-0_Imm".target = get_node(LineManager.stage_register_path[1]).get("reg_dst")
+			$"RegistersBank/Inst_15-0_Imm".active = true
 

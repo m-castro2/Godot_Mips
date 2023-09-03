@@ -95,7 +95,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_qp051")
 
-[node name="ALU" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+[node name="ALU" type="Button" parent="."]
 custom_minimum_size = Vector2(80, 150)
 layout_mode = 1
 anchors_preset = 8
@@ -111,7 +111,6 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "ALU"
 script = ExtResource("2_qvpnf")
-reference_node = NodePath("..")
 position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.5, 0.5)
 stage_number = 2

@@ -2,7 +2,7 @@ extends Node
 
 enum if_lines {ADD_IFID, MUX_PC, PC_INSTMEM, PC_ADD, INSTMEM_IFID}
 
-enum id_lines {HDU_PC, PC}
+enum id_lines {HDU_PC, PC, ImmValue, INST_RDREG1, INST_RDREG2, INST_IMMVAL, INST_REGDST}
 
 enum ex_lines {PC, RegDst, ALUEXMEM, RSDATA_ALU, RTDATA_ALU2, IMMVAL_ALU2, \
 	RS_HDU, RT_HDU, ALUCONTROL_ALU, RTDATA_EXMEM}

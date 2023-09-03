@@ -11,6 +11,7 @@ var stage: Globals.STAGES = Globals.STAGES.IF
 
 @onready var lines: Array[Node] = [
 	$Add/Add_IFID,
+	$"Add/4_Add",
 	$PC/PC_InstMem,
 	$PC/PC_Add,
 	$Add/Add_PC,
@@ -20,6 +21,7 @@ var stage: Globals.STAGES = Globals.STAGES.IF
 
 func _ready() -> void:
 	LineManager.if_line_active.connect(_on_LineManager_if_line_active)
+	Globals.stage_tween_finished.connect(calculate_positions.unbind(1))
 	show_detail(true)
 
 
@@ -47,13 +49,14 @@ func calculate_positions() -> void:
 	#Globals.stage_component_requested.emit(1, "hazard_detection_unit", $DetailedControl/OutsideLines/PCWrite.get_path())
 	#await Globals.stage_tween_finished
 	LineManager.if_stage_updated.emit()
+	draw_lines()
 
 
 func draw_lines() -> void:
 	for line in lines:
 		if line.active:
 			line.add_points()
-	lines[0].animate_line(stage_color)
+			line.animate_line()
 
 
 func _get_all_children(node: Node, zoom_value: bool):

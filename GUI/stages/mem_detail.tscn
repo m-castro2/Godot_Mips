@@ -99,7 +99,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_cnata")
 
-[node name="DataMemory" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+[node name="DataMemory" type="Button" parent="."]
 custom_minimum_size = Vector2(73, 150)
 layout_mode = 1
 anchors_preset = 8
@@ -116,7 +116,6 @@ grow_vertical = 2
 text = "Data
 Memory"
 script = ExtResource("2_u200c")
-reference_node = NodePath("..")
 position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.5, 0.5)
 stage_number = 3

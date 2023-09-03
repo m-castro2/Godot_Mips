@@ -1,22 +1,41 @@
-[gd_scene load_steps=13 format=3 uid="uid://6fdooui4ml0w"]
+[gd_scene load_steps=18 format=3 uid="uid://6fdooui4ml0w"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_2edk6"]
 [ext_resource type="Script" path="res://stages/id_detail.gd" id="2_5718r"]
 [ext_resource type="Script" path="res://stages/components/registers_bank.gd" id="3_303vi"]
 [ext_resource type="Script" path="res://stages/components/main_component.gd" id="5_dp4n3"]
 [ext_resource type="Script" path="res://stages/components/adder.gd" id="5_w7qfm"]
+[ext_resource type="Script" path="res://stages/components/complex_line.gd" id="6_4vcia"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_21ql4"]
 [ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="6_a6ygu"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="6_vaybo"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7kgwv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s2nlp"]
 shader = ExtResource("6_vaybo")
 shader_parameter/draw_min = 0.0
 shader_parameter/draw_max = 0.0
 shader_parameter/draw_feather = 0.0
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/color = null
 
-[sub_resource type="Gradient" id="Gradient_ugj5p"]
+[sub_resource type="Gradient" id="Gradient_c0h55"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dptm5"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_qvx7r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t0qqh"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_yvr7y"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2fc84"]
 shader = ExtResource("6_vaybo")
@@ -39,7 +58,11 @@ size_flags_vertical = 3
 theme = ExtResource("1_2edk6")
 script = ExtResource("2_5718r")
 
-[node name="RegistersBank" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+[node name="IFIDOutput" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 324)
+
+[node name="RegistersBank" type="Button" parent="."]
 custom_minimum_size = Vector2(90, 150)
 layout_mode = 1
 anchors_preset = 8
@@ -56,7 +79,6 @@ grow_vertical = 2
 text = "Registers
 Bank"
 script = ExtResource("3_303vi")
-reference_node = NodePath("..")
 position_percent = Vector2(0.5, 0.75)
 expanded_position_percent = Vector2(0.5, 0.75)
 stage_number = 1
@@ -64,14 +86,101 @@ alignment_mode = 1
 window_title = "Registers Bank"
 
 [node name="Input1" type="Marker2D" parent="RegistersBank"]
+position = Vector2(0, 25)
 
 [node name="Input2" type="Marker2D" parent="RegistersBank"]
+position = Vector2(0, 50)
 
 [node name="Input3" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 110)
 
 [node name="Input4" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 135)
+
+[node name="Output1" type="Marker2D" parent="RegistersBank"]
+position = Vector2(90, 20)
+
+[node name="Output2" type="Marker2D" parent="RegistersBank"]
+position = Vector2(90, 110)
+
+[node name="Inst_25-21" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_21ql4")
+origin = NodePath("../../IFIDOutput")
+target = NodePath("../Input1")
+steps = 4
+visibility = 1
+
+[node name="Inst_20-16_RDReg2" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_21ql4")
+origin = NodePath("../../IFIDOutput")
+target = NodePath("../Input2")
+steps = 4
+visibility = 1
+
+[node name="Inst_15-0_Imm" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_21ql4")
+origin = NodePath("../../IFIDOutput")
+target = NodePath("../Input2")
+steps = 4
+visibility = 1
+
+[node name="Inst_15-0_Add" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_4vcia")
+origin = NodePath("../Inst_15-0_Imm")
+target = NodePath("../../DetailedControl/Add/Input2")
+visibility = 1
+
+[node name="Inst_20-16_RegDst" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_21ql4")
+origin = NodePath("../../IFIDOutput")
+target = NodePath("../Input2")
+steps = 4
+visibility = 1
+
+[node name="Inst_Control" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_21ql4")
+origin = NodePath("../../IFIDOutput")
+target = NodePath("../Input2")
+steps = 4
+visibility = 1
+
+[node name="RegBank_RTData" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_21ql4")
+origin = NodePath("../../IFIDOutput")
+target = NodePath("../Input2")
+steps = 4
+visibility = 1
+
+[node name="RegBank_RSData" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_21ql4")
+origin = NodePath("../../IFIDOutput")
+target = NodePath("../Input2")
+steps = 4
+visibility = 1
 
 [node name="HazardDetectionUnit" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
 visible = false
@@ -116,6 +225,10 @@ alignment_mode = 1
 visibility = 1
 window_title = "Add"
 
+[node name="Input1" type="Marker2D" parent="DetailedControl/Add"]
+
+[node name="Input2" type="Marker2D" parent="DetailedControl/Add"]
+
 [node name="Control" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
 layout_mode = 0
 offset_right = 8.0
@@ -130,34 +243,61 @@ alignment_mode = 1
 visibility = 1
 
 [node name="PC" type="Line2D" parent="DetailedControl"]
-material = SubResource("ShaderMaterial_7kgwv")
+material = SubResource("ShaderMaterial_dptm5")
 width = 1.0
-gradient = SubResource("Gradient_ugj5p")
+gradient = SubResource("Gradient_qvx7r")
 script = ExtResource("6_21ql4")
 visibility = 1
 
 [node name="RsData" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
 script = ExtResource("6_21ql4")
 visibility = 1
 
 [node name="RtData" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
 script = ExtResource("6_21ql4")
 visibility = 1
 
 [node name="ImmValue" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
 script = ExtResource("6_21ql4")
 visibility = 1
 
 [node name="Rs" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
 script = ExtResource("6_21ql4")
 visibility = 1
 
 [node name="Rt" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
 script = ExtResource("6_21ql4")
 visibility = 1
 
 [node name="RegDst" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
 script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="PC_Add" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_t0qqh")
+width = 1.0
+gradient = SubResource("Gradient_yvr7y")
+script = ExtResource("6_4vcia")
+origin = NodePath("../PC")
+target = NodePath("../Add/Input1")
 visibility = 1
 
 [node name="OutsideLines" type="Control" parent="."]
@@ -174,6 +314,28 @@ visible = false
 material = SubResource("ShaderMaterial_2fc84")
 width = 1.0
 gradient = SubResource("Gradient_sqqqc")
+script = ExtResource("6_a6ygu")
+origin_component = NodePath("../../HazardDetectionUnit")
+origin = NodePath("../../HazardDetectionUnit/HDU_PC")
+flag = true
+origin_stage = 1
+
+[node name="Inst_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
+visible = false
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_a6ygu")
+origin_component = NodePath("../../HazardDetectionUnit")
+origin = NodePath("../../HazardDetectionUnit/HDU_PC")
+flag = true
+origin_stage = 1
+
+[node name="RS_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
+visible = false
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
 script = ExtResource("6_a6ygu")
 origin_component = NodePath("../../HazardDetectionUnit")
 origin = NodePath("../../HazardDetectionUnit/HDU_PC")

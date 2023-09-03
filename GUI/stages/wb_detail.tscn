@@ -83,7 +83,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_2fahh")
 
-[node name="Mux" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+[node name="Mux" type="Button" parent="."]
 custom_minimum_size = Vector2(30, 100)
 layout_mode = 1
 anchors_preset = 8
@@ -101,7 +101,6 @@ text = "M
 U
 X"
 script = ExtResource("2_0tqhl")
-reference_node = NodePath("..")
 position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.35, 0.5)
 stage_number = 4

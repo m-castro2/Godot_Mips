@@ -24,24 +24,36 @@ var min_finish_length: int = 10
 var active: bool :
 	set(value):
 		active = value
-		z_index = 1 if value else 0
-		if target.get_parent() is MainComponent:
-			target.get_parent().requested = value
-		animate_line() # seems duplicate from *_detail.draw_lines but both are needed
+		if value:
+			z_index = 1
+			if target.get_parent() is MainComponent:
+				target.get_parent().requested = value
+			animate_line() # seems duplicate from *_detail.draw_lines but both are needed
+			check_visibility()
+		else:
+			z_index = 0
+			visible = false
 
 
 func add_points():
+	if !active:
+		return
+	
 	if origin == null or target == null:
 		return
 	
 	clear_points()
+	
+	#check_visibility()
+	
 	global_position = Vector2.ZERO
 	add_point(origin.global_position)
-	
 	
 	var origin_component = origin.get_parent()
 	var target_component = target.get_parent()
 	
+	if !origin_component.visible or !target_component.visible:
+		return
 	
 	if origin.global_position.y == target.global_position.y:
 		add_point(target.global_position)
@@ -89,14 +101,22 @@ func _ready():
 	Globals.expand_stage.connect(_on_Globals_expand_stage)
 	Globals.components_tween_finished.connect(add_points)
 	Globals.components_tween_finished.connect(animate_line)
+	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 	
 	if get_parent() is MainComponent:
 		stage = get_parent().stage_number
+		pass
 	else:
 		stage = get_parent().get_parent().stage
+	
+	visible = false
 
 
 func _on_Globals_expand_stage(_stage_number: int):
+	check_visibility()
+
+
+func check_visibility():
 	visible = false
 	await Globals.components_tween_finished
 	await get_tree().process_frame
@@ -117,3 +137,14 @@ func animate_line() -> void:
 	tween.tween_property(self, "material:shader_parameter/draw_max", 0.0, .001)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 1.0, .5)
 
+
+func _on_update_stage_colors(colors_map, instructions_map) -> void:
+	if !StageControl.color_system:
+		line_color = StageControl.colors[stage]
+		
+	else:
+		if instructions_map[stage] == -1:
+			line_color = Color.BLACK
+		else:
+			line_color = get_parent().get_parent().stage_color
+	material.set("shader_parameter/color", line_color)

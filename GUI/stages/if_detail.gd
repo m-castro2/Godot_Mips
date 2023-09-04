@@ -31,6 +31,7 @@ func show_detail(value: bool) -> void:
 	LineManager.if_line_active.emit(LineManager.if_lines.ADD_IFID)
 	LineManager.if_line_active.emit(LineManager.if_lines.PC_ADD)
 	LineManager.if_line_active.emit(LineManager.if_lines.INSTMEM_IFID)
+	LineManager.if_line_active.emit(LineManager.if_lines._4_ADD)
 	
 	detailed_control.visible = true
 	for child in detailed_control.get_children():
@@ -98,3 +99,5 @@ func _on_LineManager_if_line_active(line: LineManager.if_lines) -> void:
 			$PC/PC_Add.active = true
 		LineManager.if_lines.INSTMEM_IFID:
 			$InstructionsMemoryButton/InstMem_IFID.active = true
+		LineManager.if_lines._4_ADD:
+			$"Add/4_Add".active = true

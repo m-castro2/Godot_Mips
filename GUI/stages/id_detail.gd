@@ -26,6 +26,8 @@ extends Panel
 @onready var hdu_pc = $OutsideLines/HDU_PC
 @onready var inst_pc = $OutsideLines/Inst_PC
 @onready var rs_pc = $OutsideLines/RS_PC
+@onready var inst_base = $RegistersBank/InstBase
+@onready var inst_15_11_reg_dst = $"RegistersBank/Inst_15-11_RegDst"
 
 
 @onready var lines: Array[Node] = [ inst_25_21,
@@ -38,7 +40,8 @@ extends Panel
 									reg_bank_rs_data,
 									pc, rs_data, rt_data,
 									imm_value, rs, rt, reg_dst,
-									pc_add, hdu_pc, inst_pc, rs_pc]
+									pc_add, hdu_pc, inst_pc, rs_pc,
+									inst_base, inst_15_11_reg_dst]
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color
 var stage: Globals.STAGES = Globals.STAGES.ID
@@ -49,19 +52,23 @@ var is_shrunk: bool = false
 func _ready():
 	Globals.stage_tween_finished.connect(_on_stage_tween_finished)
 	LineManager.id_line_active.connect(_on_LineManager_id_line_active)
+	inst_base.active = true
 	show_lines()
 
 
 func show_lines() -> void:
-	return
 	## Probably not needed once CpuFlex manages which lines to show
 	LineManager.id_line_active.emit(LineManager.id_lines.HDU_PC)
 	LineManager.id_line_active.emit(LineManager.id_lines.PC)
-	#LineManager.id_line_active.emit(LineManager.id_lines.ImmValue)
-	#LineManager.id_line_active.emit(LineManager.id_lines.INST_RDREG1)
-	#LineManager.id_line_active.emit(LineManager.id_lines.INST_RDREG2)
-	#LineManager.id_line_active.emit(LineManager.id_lines.INST_IMMVAL)
-	#LineManager.id_line_active.emit(LineManager.id_lines.INST_REGDST)
+	LineManager.id_line_active.emit(LineManager.id_lines.ImmValue)
+	LineManager.id_line_active.emit(LineManager.id_lines.INST_RDREG1)
+	LineManager.id_line_active.emit(LineManager.id_lines.INST_RDREG2)
+	LineManager.id_line_active.emit(LineManager.id_lines.INST_IMMVAL)
+	LineManager.id_line_active.emit(LineManager.id_lines.INST20_REGDST)
+	LineManager.id_line_active.emit(LineManager.id_lines.INST15_REGDST)
+	LineManager.id_line_active.emit(LineManager.id_lines.INST_CONTROL)
+	LineManager.id_line_active.emit(LineManager.id_lines.RS)
+	LineManager.id_line_active.emit(LineManager.id_lines.RT)
 
 
 func show_detail(value: bool) -> void:
@@ -121,6 +128,7 @@ func _on_stage_tween_finished(_stage):
 
 func _on_resized():
 	%IFIDOutput.position = Vector2(0, size.y/2)
+	%IFIDOutput.get_child(0).position = Vector2(10, 0)
 	return
 	if detailed_control:
 		var shrink = (DisplayServer.window_get_size().y < 960)
@@ -159,20 +167,32 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines) -> void:
 		LineManager.id_lines.ImmValue:
 			await LineManager.if_stage_updated
 			await LineManager.stage_register_updated
-			$DetailedControl/PC.target = get_node(LineManager.stage_register_path[1]).get("imm_value")
-			$DetailedControl/PC.active = true
 		LineManager.id_lines.INST_RDREG1:
 			await LineManager.if_stage_updated
-			$"RegistersBank/Inst_25-21".active = true
+			inst_25_21.active = true
 		LineManager.id_lines.INST_RDREG2:
 			await LineManager.if_stage_updated
-			$"RegistersBank/Inst_20-16_RDReg2".active = true
+			inst_20_16_rd_reg_2.active = true
 		LineManager.id_lines.INST_IMMVAL:
 			await LineManager.if_stage_updated
-			$"RegistersBank/Inst_15-0_Imm".target = get_node(LineManager.stage_register_path[1]).get("imm_value")
-			$"RegistersBank/Inst_15-0_Imm".active = true
-		LineManager.id_lines.INST_REGDST:
+			inst_15_0_imm.target = get_node(LineManager.stage_register_path[1]).get("imm_value")
+			inst_15_0_imm.active = true
+		LineManager.id_lines.INST20_REGDST:
 			await LineManager.if_stage_updated
-			$"RegistersBank/Inst_15-0_Imm".target = get_node(LineManager.stage_register_path[1]).get("reg_dst")
-			$"RegistersBank/Inst_15-0_Imm".active = true
-
+			inst_20_16_reg_dst.target = get_node(LineManager.stage_register_path[1]).get("reg_dst")
+			inst_20_16_reg_dst.active = true
+		LineManager.id_lines.INST15_REGDST:
+			await LineManager.if_stage_updated
+			inst_15_11_reg_dst.target = get_node(LineManager.stage_register_path[1]).get("reg_dst")
+			inst_15_11_reg_dst.active = true
+		LineManager.id_lines.INST_CONTROL:
+			await LineManager.if_stage_updated
+			inst_control.active = true
+		LineManager.id_lines.RS:
+			await LineManager.if_stage_updated
+			rs.target = get_node(LineManager.stage_register_path[1]).get("rs")
+			rs.active = true
+		LineManager.id_lines.RT:
+			await LineManager.if_stage_updated
+			rt.target = get_node(LineManager.stage_register_path[1]).get("rt")
+			rt.active = true

@@ -60,6 +60,7 @@ func _ready():
 	Globals.expand_stage.connect(_on_Globals_expand_stage)
 	Globals.components_tween_finished.connect(add_points)
 	Globals.components_tween_finished.connect(animate_line)
+	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 
 
 func _on_Globals_expand_stage(_stage_number: int):
@@ -94,3 +95,15 @@ func animate_line() -> void:
 	material.set("shader_parameter/color", line_color)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 0.0, .001)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 1.0, .5)
+
+
+func _on_update_stage_colors(colors_map, instructions_map) -> void:
+	if !StageControl.color_system:
+		line_color = StageControl.colors[origin_stage]
+		
+	else:
+		if instructions_map[origin_stage] == -1:
+			line_color = Color.BLACK
+		else:
+			line_color = get_parent().get_parent().stage_color
+	material.set("shader_parameter/color", line_color)

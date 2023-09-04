@@ -102,7 +102,10 @@ offset_right = -30.0
 offset_bottom = 36.0
 text = "4"
 
-[node name="4_Add" type="Line2D" parent="Add"]
+[node name="Output" type="Marker2D" parent="Add/4"]
+position = Vector2(15, 13)
+
+[node name="4_Add" type="Line2D" parent="Add" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_khh1q")
 position = Vector2(-24, 23)
 points = PackedVector2Array(-4, 0, 24, 0)
@@ -110,6 +113,11 @@ width = 1.0
 gradient = SubResource("Gradient_31u0x")
 antialiased = true
 script = ExtResource("6_4gygt")
+origin = NodePath("../4/Output")
+target = NodePath("../UpperInput")
+
+[node name="UpperInput" type="Marker2D" parent="Add"]
+position = Vector2(0, 23)
 
 [node name="LowerInput" type="Marker2D" parent="Add"]
 position = Vector2(0, 44)

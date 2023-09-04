@@ -19,16 +19,24 @@ var stage: Globals.STAGES
 
 var line_color: Color
 
-var active: bool:
+var active: bool :
 	set(value):
 		active = value
-		z_index = 1 if value else 0 # appear on top
-		if target.get_parent() is MainComponent:
-			target.get_parent().requested = value
-		animate_line() # seems duplicate from *_detail.draw_lines but both are needed
+		if value:
+			z_index = 1
+			if target.get_parent() is MainComponent:
+				target.get_parent().requested = value
+			animate_line() # seems duplicate from *_detail.draw_lines but both are needed
+			check_visibility()
+		else:
+			z_index = 0
+			visible = false
 
 
 func add_points():
+	if !active:
+		return
+	
 	if origin == null and target == null:
 		return
 	
@@ -39,12 +47,20 @@ func add_points():
 	
 	var start: Vector2
 	var end: Vector2
-	start = origin.get_point_position(0)
-	add_point(start)
-	end = origin.get_point_position(1)
+	origin.add_points() #force update line positions
+	if origin.get_point_count() < 2:
+		return
 	
-	#clamp is a workaround for Add_PC, since its origin gets updated after it.
-	var first_point = Vector2(start.x + clamp((end.x - start.x)*intersect_point, 7, end.x-10), start.y) 
+	if origin is ComplexLine2D:
+		start = origin.get_point_position(2)
+		end = origin.get_point_position(3)
+	else:
+		start = origin.get_point_position(0)
+		end = origin.get_point_position(1)
+	
+	add_point(start)
+	
+	var first_point = Vector2(start.x + (end.x - start.x)*intersect_point, start.y) 
 	add_point(first_point)
 	if flag:
 		add_point(Vector2(first_point.x, start.y - offset.y))
@@ -60,14 +76,22 @@ func _ready():
 	Globals.expand_stage.connect(_on_Globals_expand_stage)
 	Globals.components_tween_finished.connect(add_points)
 	Globals.components_tween_finished.connect(animate_line)
+	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 	
 	if get_parent() is MainComponent:
 		stage = get_parent().stage_number
 	else:
 		stage = get_parent().get_parent().stage
+	
+	visible = false
+	active = false
 
 
 func _on_Globals_expand_stage(_stage_number: int):
+	check_visibility()
+
+
+func check_visibility():
 	visible = false
 	await Globals.components_tween_finished
 	await get_tree().process_frame
@@ -87,3 +111,15 @@ func animate_line() -> void:
 	material.set("shader_parameter/color", line_color)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 0.0, .001)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 1.0, .5)
+
+
+func _on_update_stage_colors(colors_map, instructions_map) -> void:
+	if !StageControl.color_system:
+		line_color = StageControl.colors[stage]
+		
+	else:
+		if instructions_map[stage] == -1:
+			line_color = Color.BLACK
+		else:
+			line_color = get_parent().get_parent().stage_color
+	material.set("shader_parameter/color", line_color)

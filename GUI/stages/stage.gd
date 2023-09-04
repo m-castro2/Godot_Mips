@@ -51,6 +51,7 @@ func add_fixed_stage_color():
 		var styleBox: StyleBoxFlat = StyleBoxFlat.new()
 		styleBox.bg_color = StageControl.colors[stage_number]
 		stage_color = styleBox.bg_color
+		detail.stage_color = stage_color
 		$VBoxContainer/PanelContainer/StageButton.add_theme_stylebox_override("normal", styleBox)
 
 
@@ -59,7 +60,10 @@ func _on_update_stage_colors(colors_map: Dictionary, instructions):
 		# fixed instruction color
 		if colors_map.size() > stage_number and instructions[stage_number] != -1:
 			var styleBox: StyleBoxFlat = StyleBoxFlat.new()
-			detail.stage_color = colors_map[instructions[stage_number]]
+			if colors_map.has(instructions[stage_number]):
+				detail.stage_color = colors_map[instructions[stage_number]]
+			else:
+				detail.stage_color = Color.BLACK
 			styleBox.bg_color = detail.stage_color
 			$VBoxContainer/PanelContainer/StageButton.add_theme_stylebox_override("normal", styleBox)
 			return

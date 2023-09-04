@@ -131,7 +131,7 @@ func check_visibility():
 
 
 func animate_line() -> void:
-	line_color = get_parent().get_parent().stage_color
+	#line_color = get_parent().get_parent().stage_color
 	var tween: Tween = get_tree().create_tween()
 	material.set("shader_parameter/color", line_color)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 0.0, .001)
@@ -143,7 +143,7 @@ func _on_update_stage_colors(colors_map, instructions_map) -> void:
 		line_color = StageControl.colors[stage]
 		
 	else:
-		if instructions_map[stage] == -1:
+		if instructions_map[stage] == -1 or instructions_map.size()-1 < stage:
 			line_color = Color.BLACK
 		else:
 			line_color = get_parent().get_parent().stage_color

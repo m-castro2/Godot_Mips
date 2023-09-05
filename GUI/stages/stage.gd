@@ -13,15 +13,15 @@ var lines_groups: Array[String] = ["PC_InstMem", "Mux_PC", "PC_Add", "Add_IFID",
 
 func _ready() -> void:
 	$VBoxContainer/PanelContainer/StageButton.text = stage_name
-	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 	Globals.stage_color_mode_changed.connect(_on_stage_color_mode_changed)
 	get_tree().root.size_changed.connect(_on_resized)
+	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 	
-	add_fixed_stage_color()
 	
 	$VBoxContainer.add_child(load("res://stages/" + stage_name.to_lower() + "_detail.tscn").instantiate())
 	detail = $VBoxContainer.get_child(1)
 	detail.stage_color = stage_color
+	add_fixed_stage_color()
 	LineManager.add_stage_detail_path(detail.get_path())
 
 
@@ -69,6 +69,7 @@ func _on_update_stage_colors(colors_map: Dictionary, instructions):
 			return
 		else:#if colors_map.size() == 0:
 			$VBoxContainer/PanelContainer/StageButton.remove_theme_stylebox_override("normal")
+			detail.stage_color = Color.WHITE
 	else:
 		add_fixed_stage_color()
 

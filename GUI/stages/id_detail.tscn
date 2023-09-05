@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://6fdooui4ml0w"]
+[gd_scene load_steps=22 format=3 uid="uid://6fdooui4ml0w"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_2edk6"]
 [ext_resource type="Script" path="res://stages/id_detail.gd" id="2_5718r"]
@@ -54,6 +54,15 @@ shader_parameter/draw_feather = 0.0
 shader_parameter/color = Color(0, 1, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_sqqqc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5q0q3"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_st5f1"]
 
 [node name="IDDetail" type="Panel"]
 clip_children = 1
@@ -146,11 +155,12 @@ visibility = 1
 
 [node name="Inst_15-0_Add" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
 gradient = SubResource("Gradient_c0h55")
 script = ExtResource("6_4vcia")
-origin = NodePath("../InstBase")
+origin = NodePath("../Inst_15-0_Imm")
 target = NodePath("../../DetailedControl/Add/Input2")
-intersect_point = 1.0
+intersect_point = 0.25
 visibility = 1
 
 [node name="Inst_20-16_RegDst" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin")]
@@ -181,25 +191,22 @@ target = NodePath("../../DetailedControl/Control/Input")
 steps = 4
 visibility = 1
 
-[node name="RegBank_RTData" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+[node name="RegBank_RTData" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_s2nlp")
 width = 1.0
 gradient = SubResource("Gradient_c0h55")
 script = ExtResource("6_21ql4")
-origin = NodePath("../../IFIDOutput")
-target = NodePath("../Input2")
+origin = NodePath("../Output2")
 steps = 4
-visibility = 1
 
-[node name="RegBank_RSData" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+[node name="RegBank_RSData" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_s2nlp")
 width = 1.0
 gradient = SubResource("Gradient_c0h55")
 script = ExtResource("6_21ql4")
-origin = NodePath("../../IFIDOutput")
-target = NodePath("../Input2")
+origin = NodePath("../Output1")
 steps = 4
-visibility = 1
+middle_offset = 10
 
 [node name="InstBase" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_t25jr")
@@ -230,7 +237,6 @@ visibility = 1
 position = Vector2(0, 15)
 
 [node name="DetailedControl" type="Control" parent="."]
-visible = false
 clip_children = 1
 layout_mode = 1
 anchors_preset = 15
@@ -241,12 +247,15 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Add" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
+visible = false
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Add"
 script = ExtResource("5_w7qfm")
+inputs_number = 2
 reference_node = NodePath("../..")
+position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.5, 0.5)
 stage_number = 1
 alignment_mode = 1
@@ -256,8 +265,12 @@ window_title = "Add"
 [node name="Input1" type="Marker2D" parent="DetailedControl/Add"]
 
 [node name="Input2" type="Marker2D" parent="DetailedControl/Add"]
+position = Vector2(0, 20)
+
+[node name="Output" type="Marker2D" parent="DetailedControl/Add"]
 
 [node name="Control" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
+visible = false
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
@@ -332,6 +345,7 @@ gradient = SubResource("Gradient_yvr7y")
 script = ExtResource("6_4vcia")
 origin = NodePath("../PC")
 target = NodePath("../Add/Input1")
+intersect_point = 0.2
 visibility = 1
 
 [node name="OutsideLines" type="Control" parent="."]
@@ -374,6 +388,16 @@ script = ExtResource("6_a6ygu")
 origin_component = NodePath("../../HazardDetectionUnit")
 origin = NodePath("../../HazardDetectionUnit/HDU_PC")
 flag = true
+origin_stage = 1
+
+[node name="Add_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
+visible = false
+material = SubResource("ShaderMaterial_5q0q3")
+width = 1.0
+gradient = SubResource("Gradient_st5f1")
+script = ExtResource("6_a6ygu")
+origin_component = NodePath("../../DetailedControl/Add")
+origin = NodePath("../../DetailedControl/Add/Output")
 origin_stage = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

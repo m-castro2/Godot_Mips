@@ -70,5 +70,5 @@ func _on_expand_stage(_stage: int):
 
 func _on_component_requested(stage: int, component_name: String):
 	if stage == stage_number and component_name == name:
-		if visibility == visibility_type.EXPANDED and requested and Globals.current_expanded_stage in request_stage_origin:
+		if requested and Globals.current_expanded_stage in request_stage_origin:
 			visible = true

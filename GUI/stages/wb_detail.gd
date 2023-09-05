@@ -22,7 +22,12 @@ extends Panel
 									reg_dst_reg_bank,
 									reg_dst_forwarding_unit]
 
-@onready var stage_color: Color = get_parent().get_parent().stage_color
+@onready var stage_color: Color = get_parent().get_parent().stage_color:
+	set(value):
+		stage_color = value
+		for line in lines:
+			line.line_color = value
+
 var stage: Globals.STAGES = Globals.STAGES.WB
 
 

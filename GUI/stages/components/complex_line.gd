@@ -26,8 +26,9 @@ var active: bool :
 			z_index = 1
 			if target.get_parent() is MainComponent:
 				target.get_parent().requested = value
+			add_points()
 			animate_line() # seems duplicate from *_detail.draw_lines but both are needed
-			check_visibility()
+			check_visibility(true)
 		else:
 			z_index = 0
 			visible = false
@@ -77,6 +78,7 @@ func _ready():
 	Globals.components_tween_finished.connect(add_points)
 	Globals.components_tween_finished.connect(animate_line)
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
+	Globals.cycle_changed.connect(_on_Globals_cycle_changed)
 	
 	if get_parent() is MainComponent:
 		stage = get_parent().stage_number
@@ -88,13 +90,15 @@ func _ready():
 
 
 func _on_Globals_expand_stage(_stage_number: int):
-	check_visibility()
+	check_visibility(false)
 
 
-func check_visibility():
+func check_visibility(just_activated: bool):
 	visible = false
-	await Globals.components_tween_finished
-	await get_tree().process_frame
+	
+	if !just_activated:
+		await Globals.components_tween_finished
+		await get_tree().process_frame
 	
 	if visibility == visibility_type.ALWAYS:
 		visible = true
@@ -118,8 +122,14 @@ func _on_update_stage_colors(colors_map, instructions_map) -> void:
 		line_color = StageControl.colors[stage]
 		
 	else:
-		if instructions_map[stage] == -1:
+		if !colors_map.size():
+			line_color = Color.BLACK
+		elif instructions_map[stage] == -1:
 			line_color = Color.BLACK
 		else:
 			line_color = get_parent().get_parent().stage_color
 	material.set("shader_parameter/color", line_color)
+
+
+func _on_Globals_cycle_changed():
+	active = false

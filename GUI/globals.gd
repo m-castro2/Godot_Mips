@@ -13,6 +13,7 @@ signal program_loaded
 signal show_settings_menu
 
 signal cycle_changed
+signal reset_button_pressed
 signal show_menu(value: bool)
 signal close_menu
 

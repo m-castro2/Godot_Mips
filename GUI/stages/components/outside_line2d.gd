@@ -27,8 +27,15 @@ var target_component: MainComponent
 var active: bool :
 	set(value):
 		active = value
-		z_index = 1 if value else 0
-		animate_line()
+		if value:
+			z_index = 1
+			if target.get_parent() is MainComponent:
+				target.get_parent().requested = value
+			add_points()
+			animate_line() # seems duplicate from *_detail.draw_lines but both are needed
+		else:
+			z_index = 0
+			visible = false
 
 var line_color: Color
 
@@ -61,6 +68,7 @@ func _ready():
 	Globals.components_tween_finished.connect(add_points)
 	Globals.components_tween_finished.connect(animate_line)
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
+	Globals.reset_button_pressed.connect(_on_Globals_reset_button_pressed)
 
 
 func _on_Globals_expand_stage(_stage_number: int):
@@ -102,8 +110,14 @@ func _on_update_stage_colors(colors_map, instructions_map) -> void:
 		line_color = StageControl.colors[origin_stage]
 		
 	else:
-		if instructions_map[origin_stage] == -1:
+		if !colors_map.size():
+			line_color = Color.BLACK
+		elif instructions_map[origin_stage] == -1 or instructions_map.size()-1 < origin_stage:
 			line_color = Color.BLACK
 		else:
 			line_color = get_parent().get_parent().stage_color
 	material.set("shader_parameter/color", line_color)
+
+
+func _on_Globals_reset_button_pressed() -> void:
+	active = false

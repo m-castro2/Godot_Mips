@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ca820xflmqb5b"]
+[gd_scene load_steps=16 format=3 uid="uid://ca820xflmqb5b"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_0r720"]
 [ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_4gygt"]
 [ext_resource type="Script" path="res://stages/PC.gd" id="6_k6uw2"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="7_hmr7u"]
+[ext_resource type="Script" path="res://stages/components/complex_line.gd" id="8_0k470"]
 [ext_resource type="Material" uid="uid://dwffi7w6tda4c" path="res://stages/shaders/line_shader_material.tres" id="8_j6ecf"]
 
 [sub_resource type="Gradient" id="Gradient_dmccv"]
@@ -134,11 +135,12 @@ target = NodePath("../IFID_UpperInput")
 material = ExtResource("8_j6ecf")
 width = 1.0
 gradient = SubResource("Gradient_0074m")
-script = ExtResource("6_4gygt")
-origin = NodePath("../Output")
+script = ExtResource("8_0k470")
+origin = NodePath("../Add_IFID")
 target = NodePath("../../PC/Input")
-steps = 5
-force_up = true
+intersect_point = 0.5
+flag = true
+offset = Vector2(10, 50)
 
 [node name="Output" type="Marker2D" parent="Add"]
 position = Vector2(50, 35)

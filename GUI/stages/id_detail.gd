@@ -28,6 +28,7 @@ extends Panel
 @onready var rs_pc = $OutsideLines/RS_PC
 @onready var inst_base = $RegistersBank/InstBase
 @onready var inst_15_11_reg_dst = $"RegistersBank/Inst_15-11_RegDst"
+@onready var add_pc = $OutsideLines/Add_PC
 
 
 @onready var lines: Array[Node] = [ inst_25_21,
@@ -41,9 +42,15 @@ extends Panel
 									pc, rs_data, rt_data,
 									imm_value, rs, rt, reg_dst,
 									pc_add, hdu_pc, inst_pc, rs_pc,
-									inst_base, inst_15_11_reg_dst]
+									inst_base, inst_15_11_reg_dst,
+									add_pc]
 
-@onready var stage_color: Color = get_parent().get_parent().stage_color
+@onready var stage_color: Color = get_parent().get_parent().stage_color:
+	set(value):
+		stage_color = value
+		for line in lines:
+			line.line_color = value
+
 var stage: Globals.STAGES = Globals.STAGES.ID
 
 var is_shrunk: bool = false
@@ -58,7 +65,6 @@ func _ready():
 
 func show_lines() -> void:
 	## Probably not needed once CpuFlex manages which lines to show
-	LineManager.id_line_active.emit(LineManager.id_lines.HDU_PC)
 	LineManager.id_line_active.emit(LineManager.id_lines.PC)
 	LineManager.id_line_active.emit(LineManager.id_lines.ImmValue)
 	LineManager.id_line_active.emit(LineManager.id_lines.INST_RDREG1)
@@ -69,7 +75,10 @@ func show_lines() -> void:
 	LineManager.id_line_active.emit(LineManager.id_lines.INST_CONTROL)
 	LineManager.id_line_active.emit(LineManager.id_lines.RS)
 	LineManager.id_line_active.emit(LineManager.id_lines.RT)
-
+	LineManager.id_line_active.emit(LineManager.id_lines.INST_ADD)
+	LineManager.id_line_active.emit(LineManager.id_lines.PC_ADD)
+	LineManager.id_line_active.emit(LineManager.id_lines.RDDATA_RSDATA)
+	LineManager.id_line_active.emit(LineManager.id_lines.RDDATA2_RTDATA)
 
 func show_detail(value: bool) -> void:
 	detailed_control.visible = true
@@ -196,3 +205,22 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines) -> void:
 			await LineManager.if_stage_updated
 			rt.target = get_node(LineManager.stage_register_path[1]).get("rt")
 			rt.active = true
+		LineManager.id_lines.INST_ADD:
+			await LineManager.if_stage_updated
+			inst_15_0_add.active = true
+		LineManager.id_lines.PC_ADD:
+			await LineManager.if_stage_updated
+			pc_add.active = true
+		LineManager.id_lines.RDDATA_RSDATA:
+			await LineManager.if_stage_updated
+			reg_bank_rs_data.target = get_node(LineManager.stage_register_path[1]).get("rs_data")
+			reg_bank_rs_data.active = true
+		LineManager.id_lines.RDDATA2_RTDATA:
+			await LineManager.if_stage_updated
+			reg_bank_rt_data.target = get_node(LineManager.stage_register_path[1]).get("rt_data")
+			reg_bank_rt_data.active = true
+		LineManager.id_lines.ADD_PC:
+			add_pc.target_component = LineManager.get_stage_component(0, "pc")
+			add_pc.target = add_pc.target_component.get_node("Input")
+			add_pc.origin_component.request_stage_origin.append(Globals.STAGES.IF)
+			add_pc.active = true

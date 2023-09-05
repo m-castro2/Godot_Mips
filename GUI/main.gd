@@ -54,7 +54,9 @@ func _on_load_program_pressed(file_path: String) -> void:
 		
 		update_cpu_info()
 		pipeline.add_instructions(pipelinedWrapper.instructions)
-		StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+		StageControl.update_instruction_map(pipelinedWrapper.instructions, \
+			pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
 		Globals.program_loaded.emit()
 	
 	else:
@@ -66,7 +68,9 @@ func _on_next_cycle_pressed() -> void:
 		pipelinedWrapper.next_cycle()
 		update_cpu_info()
 		Globals.current_cycle = pipelinedWrapper.cpu_info["Cycles"]
-		StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+		StageControl.update_instruction_map(pipelinedWrapper.instructions, \
+			pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
 
 
 func _on_run_program_pressed() -> void:
@@ -74,15 +78,17 @@ func _on_run_program_pressed() -> void:
 		pipelinedWrapper.next_cycle()
 	update_cpu_info()
 	Globals.current_cycle = pipelinedWrapper.cpu_info["Cycles"]
-	StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+	StageControl.update_instruction_map(pipelinedWrapper.instructions, \
+			pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+	LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
 
 
 func _on_reset_pressed() -> void:
-	pipelinedWrapper.reset_cpu()
-	pipeline.clear_instructions()
+	pipelinedWrapper.reset_cpu(true, false)
 	update_cpu_info()
 	Globals.current_cycle = 0
 	StageControl.reset()
+	Globals.reset_button_pressed.emit()
 
 
 func _on_previous_cycle_pressed() -> void:
@@ -90,7 +96,9 @@ func _on_previous_cycle_pressed() -> void:
 		pipelinedWrapper.previous_cycle()
 		update_cpu_info()
 		Globals.current_cycle = pipelinedWrapper.cpu_info["Cycles"]
-		StageControl.update_instruction_map(pipelinedWrapper.instructions, pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+		StageControl.update_instruction_map(pipelinedWrapper.instructions, \
+			pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
 
 
 func _on_show_memory_pressed() -> void:

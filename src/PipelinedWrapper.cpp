@@ -5,6 +5,7 @@
 #include <string>
 #include <ostream>
 #include <sstream>
+#include <string_view>
 
 
 #include "../mips_sim/src/assembler/mips_assembler.h"
@@ -45,7 +46,11 @@ void PipelinedWrapper::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("set_diagram"), &PipelinedWrapper::set_diagram);
     ClassDB::bind_method(D_METHOD("get_diagram"), &PipelinedWrapper::get_diagram);
-    ClassDB::add_property("PipelinedWrapper", PropertyInfo(Variant::ARRAY, "diagram"), "set_diagram", "get_diagram");
+    ClassDB::add_property("PipelinedWrapper", PropertyInfo(Variant::DICTIONARY, "diagram"), "set_diagram", "get_diagram");
+
+    ClassDB::bind_method(D_METHOD("set_stage_signals_map"), &PipelinedWrapper::set_stage_signals_map);
+    ClassDB::bind_method(D_METHOD("get_stage_signals_map"), &PipelinedWrapper::get_stage_signals_map);
+    ClassDB::add_property("PipelinedWrapper", PropertyInfo(Variant::ARRAY, "stage_signals_map"), "set_stage_signals_map", "get_stage_signals_map");
 }
 
 
@@ -96,16 +101,27 @@ void PipelinedWrapper::_update_cpu_info(){
     registers["dRegisters"] = dRegisters.duplicate();
 
     (*cpu_info)["Registers"] = registers.duplicate();
+
+    //stage signals map
+    stage_signals_map.clear();
+    std::map<int, std::map<std::string_view, int>> map = cpu->get_hw_stage_instruction_signals(5);
+    for (int i = 0; i<5; ++i) {
+        godot::Dictionary dict {};
+        for(std::map<std::string_view, int>::iterator it = map[i].begin(); it != map[i].end(); ++it) {
+            dict[godot::String(std::string(it->first).c_str())] = it->second;
+        }
+        stage_signals_map.push_back(dict);
+    }
 }
 
-godot::String PipelinedWrapper::reset_cpu(){
+godot::String PipelinedWrapper::reset_cpu(bool data_memory, bool text_memory){
     if (cpu == nullptr)
     {
       return godot::String("[error] CPU not set");
       
     }
 
-    cpu->reset(true, true);
+    cpu->reset(data_memory, text_memory);
     _update_cpu_info();
     return godot::String("CPU reset");
 }
@@ -286,9 +302,16 @@ void PipelinedWrapper::_update_diagram() {
     }
 
 
-    set_diagram(result);
+    diagram = result;
 }
 
+void PipelinedWrapper::set_stage_signals_map(godot::Array p_signals_map){
+    stage_signals_map = p_signals_map;
+}
+
+godot::Array PipelinedWrapper::get_stage_signals_map() {
+    return stage_signals_map;
+}
 
 
 #endif //TFG_PIPELINED_WRAPPER

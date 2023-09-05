@@ -35,8 +35,9 @@ public:
     godot::Array instructions;
     godot::Array loaded_instructions;
     godot::Dictionary diagram; //diagram[instruction_index][at_cycle] = "stage_name"
+    godot::Array stage_signals_map {}; //map[stage]["Signal"] = value
 
-    godot::String reset_cpu();
+    godot::String reset_cpu(bool data_memory, bool text_memory);
     godot::String next_cycle();
     godot::String previous_cycle();
     godot::String init();
@@ -52,6 +53,8 @@ public:
     void set_loaded_instructions(godot::Array p_loaded_instructions);
     void set_diagram(godot::Dictionary p_diagram);
     godot::Dictionary get_diagram();
+    void set_stage_signals_map(godot::Array p_signals_map);
+    godot::Array get_stage_signals_map();
 
     void _update_cpu_info();
     void _update_loaded_instructions();

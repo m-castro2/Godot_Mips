@@ -50,7 +50,8 @@ func _on_stage_color_mode_changed(mode: int) -> void:
 	update_stage_colors.emit(colors_map, instruction_map)
 
 
-func update_instruction_map(instructions, loaded_instructions: Array, diagram: Dictionary):
+func update_instruction_map(instructions, loaded_instructions: Array, \
+						diagram: Dictionary):
 	if !Globals.current_cycle:
 		return
 	

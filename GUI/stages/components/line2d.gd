@@ -17,7 +17,10 @@ var stage: Globals.STAGES
 var min_initial_length: int = 10
 var min_finish_length: int = 10
 
-@onready var line_color: Color = get_parent().get_parent().stage_color
+@onready var line_color: Color = get_parent().get_parent().stage_color:
+	set(value):
+		line_color = value
+		material.set("shader_parameter/color", line_color)
 
 @export var force_up: bool # force to be drawn up instead of down
 
@@ -28,8 +31,9 @@ var active: bool :
 			z_index = 1
 			if target.get_parent() is MainComponent:
 				target.get_parent().requested = value
+			add_points()
 			animate_line() # seems duplicate from *_detail.draw_lines but both are needed
-			check_visibility()
+			check_visibility(true)
 		else:
 			z_index = 0
 			visible = false
@@ -93,15 +97,11 @@ func add_points():
 	add_point(target.global_position)
 
 
-func get_line_points() -> Array[Vector2]:
-	return [origin.global_position, target.global_position]
-
-
 func _ready():
 	Globals.expand_stage.connect(_on_Globals_expand_stage)
 	Globals.components_tween_finished.connect(add_points)
 	Globals.components_tween_finished.connect(animate_line)
-	StageControl.update_stage_colors.connect(_on_update_stage_colors)
+	Globals.reset_button_pressed.connect(_on_Globals_reset_button_pressed)
 	
 	if get_parent() is MainComponent:
 		stage = get_parent().stage_number
@@ -113,13 +113,15 @@ func _ready():
 
 
 func _on_Globals_expand_stage(_stage_number: int):
-	check_visibility()
+	check_visibility(false)
 
 
-func check_visibility():
+func check_visibility(just_activated: bool):
 	visible = false
-	await Globals.components_tween_finished
-	await get_tree().process_frame
+	
+	if !just_activated:
+		await Globals.components_tween_finished
+		await get_tree().process_frame
 	
 	if visibility == visibility_type.ALWAYS:
 		visible = true
@@ -131,20 +133,11 @@ func check_visibility():
 
 
 func animate_line() -> void:
-	#line_color = get_parent().get_parent().stage_color
 	var tween: Tween = get_tree().create_tween()
 	material.set("shader_parameter/color", line_color)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 0.0, .001)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 1.0, .5)
 
 
-func _on_update_stage_colors(colors_map, instructions_map) -> void:
-	if !StageControl.color_system:
-		line_color = StageControl.colors[stage]
-		
-	else:
-		if instructions_map[stage] == -1 or instructions_map.size()-1 < stage:
-			line_color = Color.BLACK
-		else:
-			line_color = get_parent().get_parent().stage_color
-	material.set("shader_parameter/color", line_color)
+func _on_Globals_reset_button_pressed() -> void:
+	active = false

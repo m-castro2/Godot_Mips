@@ -6,7 +6,12 @@ var expanded: bool = false
 @onready var pc: ClickableComponent = $PC
 @onready var instructions_memory_button: MainComponent = $InstructionsMemoryButton
 
-@onready var stage_color: Color = get_parent().get_parent().stage_color
+@onready var stage_color: Color = get_parent().get_parent().stage_color:
+	set(value):
+		stage_color = value
+		for line in lines:
+			line.line_color = value
+
 var stage: Globals.STAGES = Globals.STAGES.IF
 
 @onready var lines: Array[Node] = [
@@ -26,13 +31,6 @@ func _ready() -> void:
 
 
 func show_detail(value: bool) -> void:
-	LineManager.if_line_active.emit(LineManager.if_lines.ADD_IFID)
-	LineManager.if_line_active.emit(LineManager.if_lines.PC_INSTMEM)
-	LineManager.if_line_active.emit(LineManager.if_lines.ADD_IFID)
-	LineManager.if_line_active.emit(LineManager.if_lines.PC_ADD)
-	LineManager.if_line_active.emit(LineManager.if_lines.INSTMEM_IFID)
-	LineManager.if_line_active.emit(LineManager.if_lines._4_ADD)
-	
 	detailed_control.visible = true
 	for child in detailed_control.get_children():
 		if child is Button:
@@ -101,3 +99,5 @@ func _on_LineManager_if_line_active(line: LineManager.if_lines) -> void:
 			$InstructionsMemoryButton/InstMem_IFID.active = true
 		LineManager.if_lines._4_ADD:
 			$"Add/4_Add".active = true
+		LineManager.if_lines.ADD_PC:
+			$"Add/Add_PC".active = true

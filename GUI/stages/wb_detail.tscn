@@ -102,8 +102,9 @@ U
 X"
 script = ExtResource("2_0tqhl")
 position_percent = Vector2(0.5, 0.5)
-expanded_position_percent = Vector2(0.35, 0.5)
+expanded_position_percent = Vector2(0.5, 0.5)
 stage_number = 4
+alignment_mode = 1
 window_title = "Mux"
 
 [node name="Input0" type="Marker2D" parent="Mux"]
@@ -133,7 +134,6 @@ script = ExtResource("3_shipb")
 origin = NodePath("../../DetailedControl/MemOut")
 target = NodePath("../Input1")
 steps = 4
-middle_offset = 20
 
 [node name="ALUOut_Mux" type="Line2D" parent="Mux" node_paths=PackedStringArray("target")]
 material = SubResource("ShaderMaterial_u8fwp")
@@ -177,7 +177,7 @@ script = ExtResource("5_pp8xc")
 origin_component = NodePath("../../Mux")
 origin = NodePath("../../Mux/Output")
 intersect_point = 1.0
-height_percent = 0.98
+height_percent = 0.975
 origin_stage = 4
 target_stage = 1
 
@@ -210,6 +210,7 @@ gradient = SubResource("Gradient_huiv1")
 script = ExtResource("5_pp8xc")
 origin = NodePath("../../DetailedControl/RegDst")
 height_percent = 0.985
+min_finish_length = 15
 origin_stage = 4
 target_stage = 1
 

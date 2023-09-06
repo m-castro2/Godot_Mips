@@ -43,7 +43,7 @@ func show_detail(value: bool) -> void:
 
 func calculate_positions() -> void:
 	%IFID_UpperInput.global_position = Vector2(global_position.x + size.x, add.global_position.y + add.size.y/2)
-	%IFID_MiddleInput.global_position = Vector2(global_position.x + size.x, instructions_memory_button.global_position.y + instructions_memory_button.size.y/2)
+	%IFID_MiddleInput.global_position = Vector2(global_position.x + size.x, global_position.y + size.y/2)#instructions_memory_button.global_position.y + instructions_memory_button.size.y/2)
 	
 	#Globals.stage_component_requested.emit(1, "hazard_detection_unit", $DetailedControl/OutsideLines/PCWrite.get_path())
 	#await Globals.stage_tween_finished
@@ -51,6 +51,7 @@ func calculate_positions() -> void:
 	draw_lines()
 
 
+#STILL NEEDED
 func draw_lines() -> void:
 	for line in lines:
 		if line.active:

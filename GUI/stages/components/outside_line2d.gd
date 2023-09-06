@@ -33,6 +33,7 @@ var active: bool :
 				target.get_parent().requested = value
 			add_points()
 			animate_line() # seems duplicate from *_detail.draw_lines but both are needed
+			check_visibility(true, false)
 		else:
 			z_index = 0
 			visible = false
@@ -68,26 +69,37 @@ func _ready():
 	Globals.components_tween_finished.connect(add_points)
 	Globals.components_tween_finished.connect(animate_line)
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
-	Globals.reset_button_pressed.connect(_on_Globals_reset_button_pressed)
+	Globals.reset_button_pressed.connect(deactivate_line)
+	Globals.cycle_changed.connect(deactivate_line)
 
 
 func _on_Globals_expand_stage(_stage_number: int):
+	if !active:
+		return
+	add_points()
+	animate_line()
+	check_visibility(false, true)
+
+
+func check_visibility(just_activated: bool, just_expanded: bool) -> void:
 	visible = false
-	await Globals.current_expanded_stage_updated
+	
+	if just_expanded:
+		await Globals.current_expanded_stage_updated
 	
 	if Globals.current_expanded_stage != origin_stage and Globals.current_expanded_stage != target_stage:
 		return
-		
-	await Globals.components_tween_finished
-	await get_tree().process_frame
+	
+	if !just_activated:
+		await Globals.components_tween_finished
+		await get_tree().process_frame
+	
 	visible = true
 	
 	if origin_component:
 		origin_component.requested = true
 	if target_component:
 		target_component.requested = true
-	
-	animate_line()
 
 
 func set_outside_component(component: Button, which: String):
@@ -111,13 +123,13 @@ func _on_update_stage_colors(colors_map, instructions_map) -> void:
 		
 	else:
 		if !colors_map.size():
-			line_color = Color.BLACK
+			line_color = Color.TRANSPARENT
 		elif instructions_map[origin_stage] == -1 or instructions_map.size()-1 < origin_stage:
-			line_color = Color.BLACK
+			line_color = Color.TRANSPARENT
 		else:
 			line_color = get_parent().get_parent().stage_color
 	material.set("shader_parameter/color", line_color)
 
 
-func _on_Globals_reset_button_pressed() -> void:
+func deactivate_line() -> void:
 	active = false

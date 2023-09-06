@@ -87,6 +87,9 @@ func add_points():
 		add_point(Vector2(target.global_position.x, point.y))
 		return
 	
+	min_finish_length = min(10, (target_component.position.x - (origin_component.position.x + origin_component.size.x))/2)
+	min_initial_length = min_finish_length
+	
 	if steps == 3:
 		add_point(Vector2(origin.global_position.x + (target.global_position.x - origin.global_position.x),  origin.global_position.y))
 	
@@ -101,7 +104,9 @@ func _ready():
 	Globals.expand_stage.connect(_on_Globals_expand_stage)
 	Globals.components_tween_finished.connect(add_points)
 	Globals.components_tween_finished.connect(animate_line)
-	Globals.reset_button_pressed.connect(_on_Globals_reset_button_pressed)
+	Globals.reset_button_pressed.connect(deactivate_line)
+	Globals.cycle_changed.connect(deactivate_line)
+	LineManager.redraw_lines.connect(redraw_line)
 	
 	if get_parent() is MainComponent:
 		stage = get_parent().stage_number
@@ -113,13 +118,19 @@ func _ready():
 
 
 func _on_Globals_expand_stage(_stage_number: int):
+	if !Globals.current_cycle:
+		return
+	
 	check_visibility(false)
 
 
 func check_visibility(just_activated: bool):
+	if !active:
+		return
+	
 	visible = false
 	
-	if !just_activated:
+	if !just_activated: #awaits needed to avoid visibility flickering
 		await Globals.components_tween_finished
 		await get_tree().process_frame
 	
@@ -139,5 +150,13 @@ func animate_line() -> void:
 	tween.tween_property(self, "material:shader_parameter/draw_max", 1.0, .5)
 
 
-func _on_Globals_reset_button_pressed() -> void:
+func deactivate_line() -> void:
 	active = false
+
+
+func redraw_line(register: int) -> void:
+	if active and register == (stage - 1):
+		add_points()
+		animate_line()
+		check_visibility(true)
+		

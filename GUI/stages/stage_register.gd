@@ -81,3 +81,11 @@ func _on_resized():
 	reg_dst_2.global_position = reg_dst.global_position + Vector2(31, 0)
 	
 	LineManager.stage_register_updated.emit(register_type)
+
+
+func _on_register_item_rect_changed():
+	LineManager.redraw_lines.emit(int(register_type))
+
+
+func _on_v_box_container_item_rect_changed():
+	LineManager.redraw_lines.emit(int(register_type))

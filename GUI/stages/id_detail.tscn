@@ -132,7 +132,6 @@ script = ExtResource("6_4vcia")
 origin = NodePath("../InstBase")
 target = NodePath("../Input1")
 intersect_point = 1.0
-visibility = 1
 
 [node name="Inst_20-16_RDReg2" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_s2nlp")
@@ -142,7 +141,6 @@ script = ExtResource("6_4vcia")
 origin = NodePath("../InstBase")
 target = NodePath("../Input2")
 intersect_point = 1.0
-visibility = 1
 
 [node name="Inst_15-0_Imm" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_s2nlp")
@@ -215,7 +213,6 @@ gradient = SubResource("Gradient_or8kb")
 script = ExtResource("6_21ql4")
 origin = NodePath("../../IFIDOutput")
 target = NodePath("../../IFIDOutput/Target")
-visibility = 1
 
 [node name="HazardDetectionUnit" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
 visible = false
@@ -268,6 +265,7 @@ window_title = "Add"
 position = Vector2(0, 20)
 
 [node name="Output" type="Marker2D" parent="DetailedControl/Add"]
+position = Vector2(35, 14)
 
 [node name="Control" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
 visible = false
@@ -398,6 +396,7 @@ gradient = SubResource("Gradient_st5f1")
 script = ExtResource("6_a6ygu")
 origin_component = NodePath("../../DetailedControl/Add")
 origin = NodePath("../../DetailedControl/Add/Output")
+height_percent = 0.025
 origin_stage = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

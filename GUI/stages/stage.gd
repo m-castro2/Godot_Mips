@@ -7,7 +7,7 @@ var detail: Panel = null
 @export var stage_name: String
 @export var stage_number: int
 
-var stage_color: Color
+var stage_color: Color = Color.TRANSPARENT
 
 var lines_groups: Array[String] = ["PC_InstMem", "Mux_PC", "PC_Add", "Add_IFID", "InstMem_IFID", "Add_Mux"]
 
@@ -32,7 +32,10 @@ func _on_stage_button_pressed():
 func tween_size():
 	var tween: Tween = get_tree().create_tween()
 	Globals.is_stage_tweening = true
-	tween.tween_property(self, "size_flags_stretch_ratio", 1 if expanded else 2.75, 0.15)
+	if stage_number == 4: #WB does not need as much space
+		tween.tween_property(self, "size_flags_stretch_ratio", 1 if expanded else 1.5, 0.15)
+	else:
+		tween.tween_property(self, "size_flags_stretch_ratio", 1 if expanded else 2.75, 0.15)
 	expanded = !expanded
 	if detail:
 		if !expanded:
@@ -63,13 +66,13 @@ func _on_update_stage_colors(colors_map: Dictionary, instructions):
 			if colors_map.has(instructions[stage_number]):
 				detail.stage_color = colors_map[instructions[stage_number]]
 			else:
-				detail.stage_color = Color.BLACK
+				detail.stage_color = Color.TRANSPARENT
 			styleBox.bg_color = detail.stage_color
 			$VBoxContainer/PanelContainer/StageButton.add_theme_stylebox_override("normal", styleBox)
 			return
 		else:#if colors_map.size() == 0:
 			$VBoxContainer/PanelContainer/StageButton.remove_theme_stylebox_override("normal")
-			detail.stage_color = Color.WHITE
+			detail.stage_color = Color.TRANSPARENT
 	else:
 		add_fixed_stage_color()
 

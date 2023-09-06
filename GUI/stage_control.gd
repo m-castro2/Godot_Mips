@@ -100,7 +100,7 @@ func calculate_stage_color(p_instruction_map):
 						used_colors.push_back(color)
 						break
 			if instruction == -1:
-				colors_map[instruction] = Color.BLACK
+				colors_map[instruction] = Color.TRANSPARENT
 	
 	else:
 		colors_map.clear()

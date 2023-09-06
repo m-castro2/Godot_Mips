@@ -44,16 +44,7 @@ func _ready():
 
 func show_lines() -> void:
 	## Not needed once CpuFlex manages which lines to show
-	LineManager.ex_line_active.emit(LineManager.ex_lines.PC)
-	LineManager.ex_line_active.emit(LineManager.ex_lines.RegDst)
-	LineManager.ex_line_active.emit(LineManager.ex_lines.ALUEXMEM)
-	LineManager.ex_line_active.emit(LineManager.ex_lines.RSDATA_ALU)
-	LineManager.ex_line_active.emit(LineManager.ex_lines.RTDATA_ALU2)
-	LineManager.ex_line_active.emit(LineManager.ex_lines.IMMVAL_ALU2)
-	LineManager.ex_line_active.emit(LineManager.ex_lines.RS_HDU)
-	LineManager.ex_line_active.emit(LineManager.ex_lines.RT_HDU)
-	LineManager.ex_line_active.emit(LineManager.ex_lines.ALUCONTROL_ALU)
-	LineManager.ex_line_active.emit(LineManager.ex_lines.RTDATA_EXMEM)
+	pass
 
 
 func show_detail(value: bool) -> void:
@@ -93,13 +84,11 @@ func _on_gui_input(_event):
 func _on_LineManager_ex_line_active(line: LineManager.ex_lines) -> void:
 	match  line:
 		LineManager.ex_lines.PC:
-			await LineManager.if_stage_updated
 			pc.origin = get_node(LineManager.stage_register_path[1]).get("pc_2")
 			pc.target = get_node(LineManager.stage_register_path[2]).get("pc")
 			pc.active = true
 			
 		LineManager.ex_lines.RegDst:
-			await LineManager.if_stage_updated
 			reg_dst.origin = get_node(LineManager.stage_register_path[1]).get("reg_dst_2")
 			reg_dst.target = get_node(LineManager.stage_register_path[2]).get("reg_dst")
 			reg_dst.active = true
@@ -108,46 +97,26 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines) -> void:
 			alu_ex_mem.active = true
 			
 		LineManager.ex_lines.RSDATA_ALU:
-			var register = 0
-			while register != 2:
-				register = await LineManager.stage_register_updated
-			await LineManager.if_stage_updated
 			rs_data_alu.origin = get_node(LineManager.stage_register_path[1]).get("rs_data_2")
 			rs_data_alu.target = $ALU/UpperInput
 			rs_data_alu.active = true
 			
 		LineManager.ex_lines.RTDATA_ALU2:
-			var register = 0
-			while register != 2:
-				register = await LineManager.stage_register_updated
-			await LineManager.if_stage_updated
 			rt_data_alu_2.origin = get_node(LineManager.stage_register_path[1]).get("rt_data_2")
 			rt_data_alu_2.target = $ALU/LowerInput
 			rt_data_alu_2.active = true
 			
 		LineManager.ex_lines.IMMVAL_ALU2:
-			var register = 0
-			while register != 2:
-				register = await LineManager.stage_register_updated
-			await LineManager.if_stage_updated
 			imm_val_alu_2.origin = get_node(LineManager.stage_register_path[1]).get("imm_value_2")
 			imm_val_alu_2.target = $ALU/LowerInput
 			imm_val_alu_2.active = true
 			
 		LineManager.ex_lines.RS_HDU:
-			var register = 0
-			while register != 2:
-				register = await LineManager.stage_register_updated
-			await LineManager.if_stage_updated
 			rs_hdu.origin = get_node(LineManager.stage_register_path[1]).get("rs_2")
 			rs_hdu.target = $DetailedControl/ForwardingUnit/UpperInput
 			rs_hdu.active = true
 			
 		LineManager.ex_lines.RT_HDU:
-			var register = 0
-			while register != 2:
-				register = await LineManager.stage_register_updated
-			await LineManager.if_stage_updated
 			rt_hdu.origin = get_node(LineManager.stage_register_path[1]).get("rt_2")
 			rt_hdu.target = $DetailedControl/ForwardingUnit/LowerInput
 			rt_hdu.active = true
@@ -156,9 +125,9 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines) -> void:
 			alu_control_alu.active = true
 			
 		LineManager.ex_lines.RTDATA_EXMEM:
-			var register = 0
-			while register != 2:
-				register = await LineManager.stage_register_updated
-			await LineManager.if_stage_updated
+			if imm_val_alu_2.active:
+				rt_data_exmem.origin = imm_val_alu_2
+			if rt_data_alu_2.active:
+				rt_data_exmem.origin = rt_data_alu_2
 			rt_data_exmem.target = get_node(LineManager.stage_register_path[2]).get("imm_value")
 			rt_data_exmem.active = true

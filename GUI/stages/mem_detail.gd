@@ -40,36 +40,30 @@ func _ready():
 func _on_LineManager_mem_line_active(line: LineManager.mem_lines) -> void:
 	match line:
 		LineManager.mem_lines.PC:
-			await LineManager.if_stage_updated
 			pc.origin = get_node(LineManager.stage_register_path[2]).get("pc_2")
 			pc.target = get_node(LineManager.stage_register_path[3]).get("pc")
 			pc.active = true
 			
 		LineManager.mem_lines.RegDst:
-			await LineManager.if_stage_updated
 			reg_dst.origin = get_node(LineManager.stage_register_path[2]).get("reg_dst_2")
 			reg_dst.target = get_node(LineManager.stage_register_path[3]).get("reg_dst")
 			reg_dst.active = true
 			
 		LineManager.mem_lines.ALUOUT_DATAMEM:
-			# await LineManager.if_stage_updated # not awaiting makes line draw by default
 			alu_out_data_mem.origin = $DetailedControl/AluOut
 			alu_out_data_mem.target = $DataMemory/UpperInput
 			alu_out_data_mem.active = true
 		
 		LineManager.mem_lines.ALUOUT_ALU1:
-			await LineManager.if_stage_updated
 			alu_out_alu_1.target_component = LineManager.get_stage_component(2, "alu")
 			alu_out_alu_1.target = LineManager.get_stage_component(2, "alu").get_node("UpperInput")
 			alu_out_alu_1.active = true
 			
 		LineManager.mem_lines.ALUOUT_ALU2:
-			await LineManager.if_stage_updated
 			alu_out_alu_2.target = LineManager.get_stage_component(2, "alu").get_node("LowerInput")
 			alu_out_alu_2.active = true
 			
 		LineManager.mem_lines.REGDST_FORWARDINGUNIT:
-			await LineManager.if_stage_updated
 			reg_dst_forwarding_unit.target_component = LineManager.get_stage_component(2, "forwarding_unit")
 			reg_dst_forwarding_unit.origin = get_node(LineManager.stage_register_path[2]).get("reg_dst_2")
 			reg_dst_forwarding_unit.target = LineManager.get_stage_component(2, "forwarding_unit").get_node("UpperRightInput")
@@ -80,25 +74,15 @@ func _on_LineManager_mem_line_active(line: LineManager.mem_lines) -> void:
 			data_mem_memwb.active = true
 			
 		LineManager.mem_lines.ALUOUT_MEMWB:
-			await LineManager.if_stage_updated
 			alu_out_memwb.active = true
 		
 		LineManager.mem_lines.RTDATA_DATAMEM:
-			await LineManager.if_stage_updated
 			rt_data_data_mem.origin = get_node(LineManager.stage_register_path[2]).get("imm_value_2")
 			rt_data_data_mem.active = true
 
 func show_lines() -> void:
 	## Not needed once CpuFlex manages which lines to show
-	LineManager.mem_line_active.emit(LineManager.mem_lines.PC)
-	LineManager.mem_line_active.emit(LineManager.mem_lines.RegDst)
-	LineManager.mem_line_active.emit(LineManager.mem_lines.ALUOUT_DATAMEM)
-	LineManager.mem_line_active.emit(LineManager.mem_lines.ALUOUT_ALU1)
-	LineManager.mem_line_active.emit(LineManager.mem_lines.ALUOUT_ALU2)
-	LineManager.mem_line_active.emit(LineManager.mem_lines.REGDST_FORWARDINGUNIT)
-	LineManager.mem_line_active.emit(LineManager.mem_lines.DATAMEM_MEMWB)
-	LineManager.mem_line_active.emit(LineManager.mem_lines.ALUOUT_MEMWB)
-	LineManager.mem_line_active.emit(LineManager.mem_lines.RTDATA_DATAMEM)
+	pass
 
 
 func show_detail(value: bool) -> void:

@@ -78,6 +78,7 @@ gradient = SubResource("Gradient_dmccv")
 script = ExtResource("6_4gygt")
 origin = NodePath("../Output")
 target = NodePath("../../DetailedControl/IFID_MiddleInput")
+steps = 4
 
 [node name="Add" type="Button" parent="." node_paths=PackedStringArray("reference_node", "inputs", "outputs")]
 layout_mode = 2

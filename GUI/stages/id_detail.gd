@@ -59,26 +59,13 @@ var is_shrunk: bool = false
 func _ready():
 	Globals.stage_tween_finished.connect(_on_stage_tween_finished)
 	LineManager.id_line_active.connect(_on_LineManager_id_line_active)
-	inst_base.active = true
 	show_lines()
 
 
 func show_lines() -> void:
 	## Probably not needed once CpuFlex manages which lines to show
-	LineManager.id_line_active.emit(LineManager.id_lines.PC)
-	LineManager.id_line_active.emit(LineManager.id_lines.ImmValue)
-	LineManager.id_line_active.emit(LineManager.id_lines.INST_RDREG1)
-	LineManager.id_line_active.emit(LineManager.id_lines.INST_RDREG2)
-	LineManager.id_line_active.emit(LineManager.id_lines.INST_IMMVAL)
-	LineManager.id_line_active.emit(LineManager.id_lines.INST20_REGDST)
-	LineManager.id_line_active.emit(LineManager.id_lines.INST15_REGDST)
-	LineManager.id_line_active.emit(LineManager.id_lines.INST_CONTROL)
-	LineManager.id_line_active.emit(LineManager.id_lines.RS)
-	LineManager.id_line_active.emit(LineManager.id_lines.RT)
-	LineManager.id_line_active.emit(LineManager.id_lines.INST_ADD)
-	LineManager.id_line_active.emit(LineManager.id_lines.PC_ADD)
-	LineManager.id_line_active.emit(LineManager.id_lines.RDDATA_RSDATA)
-	LineManager.id_line_active.emit(LineManager.id_lines.RDDATA2_RTDATA)
+	pass
+
 
 func show_detail(value: bool) -> void:
 	detailed_control.visible = true
@@ -91,7 +78,7 @@ func show_detail(value: bool) -> void:
 
 func calculate_positions() -> void:
 	return
-	
+
 
 func draw_lines() -> void:
 	for line in lines:
@@ -168,55 +155,42 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines) -> void:
 			hdu_pc.target = LineManager.get_stage_component(0, "pc").get_node("UpperInput")
 			hdu_pc.active = true
 		LineManager.id_lines.PC:
-			await LineManager.if_stage_updated
-			await LineManager.stage_register_updated
 			pc.origin = get_node(LineManager.stage_register_path[0]).get("pc_2")
 			pc.target = get_node(LineManager.stage_register_path[1]).get("pc")
 			pc.active = true
 		LineManager.id_lines.ImmValue:
-			await LineManager.if_stage_updated
-			await LineManager.stage_register_updated
+			pass
 		LineManager.id_lines.INST_RDREG1:
-			await LineManager.if_stage_updated
 			inst_25_21.active = true
 		LineManager.id_lines.INST_RDREG2:
-			await LineManager.if_stage_updated
 			inst_20_16_rd_reg_2.active = true
 		LineManager.id_lines.INST_IMMVAL:
 			await LineManager.if_stage_updated
 			inst_15_0_imm.target = get_node(LineManager.stage_register_path[1]).get("imm_value")
 			inst_15_0_imm.active = true
 		LineManager.id_lines.INST20_REGDST:
-			await LineManager.if_stage_updated
 			inst_20_16_reg_dst.target = get_node(LineManager.stage_register_path[1]).get("reg_dst")
 			inst_20_16_reg_dst.active = true
 		LineManager.id_lines.INST15_REGDST:
-			await LineManager.if_stage_updated
 			inst_15_11_reg_dst.target = get_node(LineManager.stage_register_path[1]).get("reg_dst")
 			inst_15_11_reg_dst.active = true
 		LineManager.id_lines.INST_CONTROL:
 			await LineManager.if_stage_updated
 			inst_control.active = true
 		LineManager.id_lines.RS:
-			await LineManager.if_stage_updated
 			rs.target = get_node(LineManager.stage_register_path[1]).get("rs")
 			rs.active = true
 		LineManager.id_lines.RT:
-			await LineManager.if_stage_updated
 			rt.target = get_node(LineManager.stage_register_path[1]).get("rt")
 			rt.active = true
 		LineManager.id_lines.INST_ADD:
-			await LineManager.if_stage_updated
 			inst_15_0_add.active = true
 		LineManager.id_lines.PC_ADD:
-			await LineManager.if_stage_updated
 			pc_add.active = true
 		LineManager.id_lines.RDDATA_RSDATA:
-			await LineManager.if_stage_updated
 			reg_bank_rs_data.target = get_node(LineManager.stage_register_path[1]).get("rs_data")
 			reg_bank_rs_data.active = true
 		LineManager.id_lines.RDDATA2_RTDATA:
-			await LineManager.if_stage_updated
 			reg_bank_rt_data.target = get_node(LineManager.stage_register_path[1]).get("rt_data")
 			reg_bank_rt_data.active = true
 		LineManager.id_lines.ADD_PC:
@@ -224,3 +198,5 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines) -> void:
 			add_pc.target = add_pc.target_component.get_node("Input")
 			add_pc.origin_component.request_stage_origin.append(Globals.STAGES.IF)
 			add_pc.active = true
+		LineManager.id_lines.INST_BASE:
+			inst_base.active = true

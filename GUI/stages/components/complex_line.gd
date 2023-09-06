@@ -78,7 +78,9 @@ func _ready():
 	Globals.components_tween_finished.connect(add_points)
 	Globals.components_tween_finished.connect(animate_line)
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
-	Globals.cycle_changed.connect(_on_Globals_cycle_changed)
+	Globals.cycle_changed.connect(deactivate_line)
+	Globals.reset_button_pressed.connect(deactivate_line)
+	LineManager.redraw_lines.connect(redraw_line)
 	
 	if get_parent() is MainComponent:
 		stage = get_parent().stage_number
@@ -90,10 +92,17 @@ func _ready():
 
 
 func _on_Globals_expand_stage(_stage_number: int):
+	if !active:
+		return
+	add_points()
+	animate_line()
 	check_visibility(false)
 
 
 func check_visibility(just_activated: bool):
+	if !active:
+		return
+	
 	visible = false
 	
 	if !just_activated:
@@ -102,11 +111,9 @@ func check_visibility(just_activated: bool):
 	
 	if visibility == visibility_type.ALWAYS:
 		visible = true
-		return
 	
 	else:
 		visible = (Globals.current_expanded_stage == stage)
-		return
 
 
 func animate_line() -> void:
@@ -131,5 +138,12 @@ func _on_update_stage_colors(colors_map, instructions_map) -> void:
 	material.set("shader_parameter/color", line_color)
 
 
-func _on_Globals_cycle_changed():
+func deactivate_line():
 	active = false
+
+
+func redraw_line(register: int) -> void:
+	if active and register == (stage - 1):
+		add_points()
+		animate_line()
+		check_visibility(true)

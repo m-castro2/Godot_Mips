@@ -9,6 +9,7 @@ enum STAGES {IF, ID, EX, MEM, WB}
 signal load_program_pressed(path: String)
 signal show_load_program_menu
 signal program_loaded
+var is_program_loaded: bool
 
 signal show_settings_menu
 

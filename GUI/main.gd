@@ -62,6 +62,7 @@ func _on_load_program_pressed(file_path: String) -> void:
 		StageControl.update_instruction_map(pipelinedWrapper.instructions, \
 			pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
 		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
+		Globals.is_program_loaded = true
 		Globals.program_loaded.emit()
 	
 	else:

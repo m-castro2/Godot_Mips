@@ -11,11 +11,18 @@ func _ready() -> void:
 	color_mode_option_button.selected = ConfigManager.get_value("Settings/UI", "color_mode_idx")
 	add_color_options()
 	
-	#CPU settings
-	%BranchStageOptionButton.selected = ConfigManager.get_value("Settings/CPU", "branch_stage")
-	%BranchTypeOptionButton.selected = ConfigManager.get_value("Settings/CPU", "branch_type")
-	%HDUCheckBox.button_pressed = ConfigManager.get_value("Settings/CPU", "hdu_enabled")
-	%FUCheckBox.button_pressed = ConfigManager.get_value("Settings/CPU", "fu_enabled")
+	# CPU Settings
+	if Globals.is_program_loaded:
+		%BranchStageOptionButton.selected = ConfigManager.get_value("Settings/CPU", "branch_stage")
+		%BranchTypeOptionButton.selected = ConfigManager.get_value("Settings/CPU", "branch_type")
+		%HDUCheckBox.button_pressed = ConfigManager.get_value("Settings/CPU", "hdu_enabled")
+		%FUCheckBox.button_pressed = ConfigManager.get_value("Settings/CPU", "fu_enabled")
+	else:
+		%BranchStageOptionButton.disabled = true
+		%BranchTypeOptionButton.disabled = true
+		%HDUCheckBox.disabled = true
+		%FUCheckBox.disabled = true
+
 
 
 func add_color_options() -> void:

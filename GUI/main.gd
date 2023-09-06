@@ -15,6 +15,11 @@ func _ready() -> void:
 	Globals.load_program_pressed.connect(_on_load_program_pressed)
 	DisplayServer.window_set_min_size(Vector2(1152, 648))
 	copy_test_files()
+	
+	Globals.fu_available_changed.connect(_on_Globals_fu_available_changed)
+	Globals.hdu_available_changed.connect(_on_Globals_hdu_available_changed)
+	Globals.branch_stage_changed.connect(_on_Globals_branch_stage_changed)
+	Globals.branch_type_changed.connect(_on_Globals_branch_type_changed)
 
 
 func copy_test_files():
@@ -137,4 +142,25 @@ func _on_show_settings_menu() -> void:
 		var load_program = get_node_or_null("/root/Control/MenuInfo")
 		if load_program:
 			remove_child(load_program)
+
+
+func _on_Globals_fu_available_changed(value: int) -> void:
+	pipelinedWrapper.enable_forwarding_unit(value)
+	_on_reset_pressed()
+
+
+func _on_Globals_hdu_available_changed(value: int) -> void:
+	pipelinedWrapper.enable_hazard_detection_unit(value)
+	_on_reset_pressed()
+
+
+func _on_Globals_branch_stage_changed(value: int) -> void:
+	# value is optionButton index, 0 for ID, 1 for MEM
+	pipelinedWrapper.change_branch_stage(4 if value else 1)
+	_on_reset_pressed()
+
+
+func _on_Globals_branch_type_changed(value: int) -> void:
+	pipelinedWrapper.change_branch_type(value)
+	_on_reset_pressed()
 

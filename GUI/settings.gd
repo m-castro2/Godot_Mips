@@ -10,6 +10,12 @@ func _ready() -> void:
 	Globals.active_menu = "settings"
 	color_mode_option_button.selected = ConfigManager.get_value("Settings/UI", "color_mode_idx")
 	add_color_options()
+	
+	#CPU settings
+	%BranchStageOptionButton.selected = ConfigManager.get_value("Settings/CPU", "branch_stage")
+	%BranchTypeOptionButton.selected = ConfigManager.get_value("Settings/CPU", "branch_type")
+	%HDUCheckBox.button_pressed = ConfigManager.get_value("Settings/CPU", "hdu_enabled")
+	%FUCheckBox.button_pressed = ConfigManager.get_value("Settings/CPU", "fu_enabled")
 
 
 func add_color_options() -> void:
@@ -50,3 +56,23 @@ func _on_color_mode_option_button_item_selected(index):
 func _on_color_picker_color_changed(color, i):
 	ConfigManager.update_value("Settings/UI", "color_mode_" + str(i), color)
 	Globals.stage_color_changed.emit(color, i)
+
+
+func _on_branch_type_option_button_item_selected(index):
+	ConfigManager.update_value("Settings/CPU", "branch_type", index)
+	Globals.branch_type_changed.emit(index)
+
+
+func _on_branch_stage_option_button_item_selected(index):
+	ConfigManager.update_value("Settings/CPU", "branch_stage", index)
+	Globals.branch_stage_changed.emit(index)
+
+
+func _on_hdu_check_box_toggled(button_pressed):
+	ConfigManager.update_value("Settings/CPU", "hdu_enabled", button_pressed)
+	Globals.hdu_available_changed.emit(button_pressed)
+
+
+func _on_fu_check_box_toggled(button_pressed):
+	ConfigManager.update_value("Settings/CPU", "fu_enabled", button_pressed)
+	Globals.fu_available_changed.emit(button_pressed)

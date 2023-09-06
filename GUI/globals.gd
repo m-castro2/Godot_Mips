@@ -44,3 +44,8 @@ var current_cycle: int = 0 :
 # notify changes to color settings
 signal stage_color_changed(index: int)
 signal stage_color_mode_changed(mode: int)
+# notify changes to cpu settings
+signal branch_stage_changed(value: int)
+signal branch_type_changed(value: int)
+signal hdu_available_changed(value: int)
+signal fu_available_changed(value: int)

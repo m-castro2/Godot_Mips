@@ -29,6 +29,10 @@ void PipelinedWrapper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("reset_cpu"), &PipelinedWrapper::reset_cpu);
     ClassDB::bind_method(D_METHOD("previous_cycle"), &PipelinedWrapper::previous_cycle);
     ClassDB::bind_method(D_METHOD("show_memory"), &PipelinedWrapper::show_memory);
+    ClassDB::bind_method(D_METHOD("enable_forwarding_unit"), &PipelinedWrapper::enable_forwarding_unit);
+    ClassDB::bind_method(D_METHOD("enable_hazard_detection_unit"), &PipelinedWrapper::enable_hazard_detection_unit);
+    ClassDB::bind_method(D_METHOD("change_branch_stage"), &PipelinedWrapper::change_branch_stage);
+    ClassDB::bind_method(D_METHOD("change_branch_type"), &PipelinedWrapper::change_branch_type);
 
 
     //bind properties
@@ -311,6 +315,22 @@ void PipelinedWrapper::set_stage_signals_map(godot::Array p_signals_map){
 
 godot::Array PipelinedWrapper::get_stage_signals_map() {
     return stage_signals_map;
+}
+
+void PipelinedWrapper::change_branch_stage(int new_branch_stage) {
+    cpu->change_branch_stage(new_branch_stage);
+}
+
+void PipelinedWrapper::change_branch_type(int new_branch_type) {
+    cpu->change_branch_type(new_branch_type);
+}
+
+void PipelinedWrapper::enable_hazard_detection_unit(bool value) {
+    cpu->enable_hazard_detection_unit(value);
+}
+
+void PipelinedWrapper::enable_forwarding_unit(bool value) {
+    cpu->enable_forwarding_unit(value);
 }
 
 

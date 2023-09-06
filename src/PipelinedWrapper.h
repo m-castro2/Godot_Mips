@@ -56,6 +56,11 @@ public:
     void set_stage_signals_map(godot::Array p_signals_map);
     godot::Array get_stage_signals_map();
 
+    void change_branch_stage(int new_branch_stage);
+    void change_branch_type(int new_branch_type);
+    void enable_hazard_detection_unit(bool value);
+    void enable_forwarding_unit(bool value);
+
     void _update_cpu_info();
     void _update_loaded_instructions();
     void _update_diagram();

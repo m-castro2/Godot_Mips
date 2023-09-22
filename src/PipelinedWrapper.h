@@ -7,6 +7,7 @@
 
 #include "../mips_sim/src/cpu/cpu_pipelined.h"
 #include "../mips_sim/src/cpu_flex/cpu_flex.h"
+#include "../mips_sim/src/exception.h"
 
 
 #include <godot_cpp/godot.hpp>
@@ -64,5 +65,10 @@ public:
     void _update_cpu_info();
     void _update_loaded_instructions();
     void _update_diagram();
+
+    godot::Dictionary exception_info;
+    void set_exception_info(godot::Dictionary value);
+    godot::Dictionary get_exception_info();
+    void handle_exception(int exception, std::string message, uint32_t value);
 };
 #endif //TFG_PIPELINED_WRAPPER_H

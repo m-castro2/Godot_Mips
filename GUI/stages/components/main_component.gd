@@ -16,10 +16,12 @@ var expanded: bool = false
 
 signal request_updated
 
+
 var requested: bool = false :
 	set(value):
 		requested = value
 		request_updated.emit(stage_number, name)
+
 
 func _ready():
 	Globals.expand_stage.connect(_on_expand_stage)
@@ -54,13 +56,13 @@ func _on_expand_stage(_stage: int):
 		visible = true
 		return
 	
-	if expanded:
-		await Globals.stage_tween_finished 
-		_on_parent_resized()
-		visible = true
-		return
-		
-	if requested and Globals.current_expanded_stage in request_stage_origin:
+#	if expanded:
+#		await Globals.stage_tween_finished 
+#		_on_parent_resized()
+#		visible = true
+#		return
+	
+	if requested and (expanded or Globals.current_expanded_stage in request_stage_origin):
 		_on_parent_resized()
 		visible = true
 		return
@@ -70,5 +72,7 @@ func _on_expand_stage(_stage: int):
 
 func _on_component_requested(stage: int, component_name: String):
 	if stage == stage_number and component_name == name:
-		if requested and Globals.current_expanded_stage in request_stage_origin:
+		if requested and (expanded or Globals.current_expanded_stage in request_stage_origin):
 			visible = true
+		else:
+			visible = false if visibility == visibility_type.EXPANDED else true

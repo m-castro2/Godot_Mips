@@ -3,6 +3,7 @@ extends Control
 @onready var pipelinedWrapper: PipelinedWrapper = $PipelinedWrapper
 @onready var pipeline: Control = %Pipeline
 @onready var menu: Control = $Menu
+@onready var exception_dialog = $ExceptionDialog
 var program_loaded: bool = false
 
 const load_program_menu: PackedScene = preload("res://MenuInfo.tscn")
@@ -50,6 +51,9 @@ func _on_load_program_pressed(file_path: String) -> void:
 		_on_reset_pressed()
 	
 	program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path))
+	#set up cpu options
+	configure_cpu()
+	
 	if program_loaded and pipelinedWrapper.is_ready():
 		%NextCycle.disabled = false
 		%RunProgram.disabled = false
@@ -70,23 +74,37 @@ func _on_load_program_pressed(file_path: String) -> void:
 
 
 func _on_next_cycle_pressed() -> void:
-	if pipelinedWrapper.is_ready():
-		pipelinedWrapper.next_cycle()
+	if !pipelinedWrapper.is_ready():
+		return
+	
+	pipelinedWrapper.next_cycle()
+	if pipelinedWrapper.exception_info.is_empty():
 		update_cpu_info()
 		Globals.current_cycle = pipelinedWrapper.cpu_info["Cycles"]
 		StageControl.update_instruction_map(pipelinedWrapper.instructions, \
 			pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
 		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
+	
+	else: # exception caught
+		exception_dialog.add_info(pipelinedWrapper.exception_info)
 
 
 func _on_run_program_pressed() -> void:
-	while pipelinedWrapper.is_ready():
-		pipelinedWrapper.next_cycle()
-	update_cpu_info()
-	Globals.current_cycle = pipelinedWrapper.cpu_info["Cycles"]
-	StageControl.update_instruction_map(pipelinedWrapper.instructions, \
-			pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
-	LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
+	while pipelinedWrapper.is_ready() and pipelinedWrapper.exception_info.is_empty():
+		_on_next_cycle_pressed()
+		#pipelinedWrapper.next_cycle()
+		
+	return # use gui's next cycle method to show stage colors and lines if exception is present?
+	
+	if pipelinedWrapper.exception_info.is_empty():
+		update_cpu_info()
+		Globals.current_cycle = pipelinedWrapper.cpu_info["Cycles"]
+		StageControl.update_instruction_map(pipelinedWrapper.instructions, \
+				pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
+	
+	else: # exception caught
+		exception_dialog.add_info(pipelinedWrapper.exception_info)
 
 
 func _on_reset_pressed() -> void:
@@ -165,3 +183,9 @@ func _on_Globals_branch_type_changed(value: int) -> void:
 	pipelinedWrapper.change_branch_type(value)
 	_on_reset_pressed()
 
+
+func configure_cpu():
+	_on_Globals_branch_stage_changed(ConfigManager.get_value("Settings/CPU", "branch_stage"))
+	_on_Globals_branch_type_changed(ConfigManager.get_value("Settings/CPU", "branch_type"))
+	_on_Globals_fu_available_changed(ConfigManager.get_value("Settings/CPU", "fu_enabled"))
+	_on_Globals_hdu_available_changed(ConfigManager.get_value("Settings/CPU", "hdu_enabled"))

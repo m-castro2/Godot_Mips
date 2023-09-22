@@ -10,6 +10,7 @@
 
 #include "../mips_sim/src/assembler/mips_assembler.h"
 #include "../mips_sim/src/utils.h"
+#include "../mips_sim/src/exception.h"
 
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/classes/node.hpp>
@@ -55,6 +56,10 @@ void PipelinedWrapper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_stage_signals_map"), &PipelinedWrapper::set_stage_signals_map);
     ClassDB::bind_method(D_METHOD("get_stage_signals_map"), &PipelinedWrapper::get_stage_signals_map);
     ClassDB::add_property("PipelinedWrapper", PropertyInfo(Variant::ARRAY, "stage_signals_map"), "set_stage_signals_map", "get_stage_signals_map");
+
+    ClassDB::bind_method(D_METHOD("set_exception_info"), &PipelinedWrapper::set_exception_info);
+    ClassDB::bind_method(D_METHOD("get_exception_info"), &PipelinedWrapper::get_exception_info);
+    ClassDB::add_property("PipelinedWrapper", PropertyInfo(Variant::DICTIONARY, "exception_info"), "set_exception_info", "get_exception_info");
 }
 
 
@@ -140,7 +145,12 @@ godot::String PipelinedWrapper::previous_cycle(){
     bool retval = true;
     std::stringbuf strbuf;
     std::ostream out(&strbuf);
-    retval = cpu->run_to_cycle(cpu->get_cycle()-1, out);
+    try {
+        retval = cpu->run_to_cycle(cpu->get_cycle()-1, out);
+    }
+    catch (int e) {
+        handle_exception(e, err_msg, err_v);
+    }
     std::stringstream ss;
     ss << out.rdbuf();
     godot::String str = ss.str().c_str();
@@ -158,11 +168,18 @@ godot::String PipelinedWrapper::next_cycle() {
         return "Program done";
     }
 
+    exception_info.clear();
+
     //intercept cout
     bool retval;
     std::stringbuf strbuf;
     std::ostream out(&strbuf);
-    retval = cpu->next_cycle(out);
+    try {
+        retval = cpu->next_cycle(out);
+    }
+    catch (int e) {
+        handle_exception(e, err_msg, err_v);
+    }
     std::stringstream ss;
     ss << out.rdbuf();
     godot::String str = ss.str().c_str();
@@ -331,6 +348,20 @@ void PipelinedWrapper::enable_hazard_detection_unit(bool value) {
 
 void PipelinedWrapper::enable_forwarding_unit(bool value) {
     cpu->enable_forwarding_unit(value);
+}
+
+void PipelinedWrapper::handle_exception(int exception, std::string message, uint32_t value) {
+    exception_info["err_no"] = exception;
+    exception_info["err_msg"] = godot::String(message.c_str());
+    exception_info["err_v"] = godot::String(Utils::hex32(value).c_str());
+}
+
+void PipelinedWrapper::set_exception_info(godot::Dictionary value) {
+    exception_info = value;
+}
+
+godot::Dictionary PipelinedWrapper::get_exception_info() {
+    return exception_info;
 }
 
 

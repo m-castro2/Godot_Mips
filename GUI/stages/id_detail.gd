@@ -69,6 +69,7 @@ func show_lines() -> void:
 
 func show_detail(value: bool) -> void:
 	detailed_control.visible = true
+	return
 	for child in detailed_control.get_children():
 		if child is Button:
 			child.visible = value or child.requested

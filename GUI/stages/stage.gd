@@ -33,9 +33,9 @@ func tween_size():
 	var tween: Tween = get_tree().create_tween()
 	Globals.is_stage_tweening = true
 	if stage_number == 4: #WB does not need as much space
-		tween.tween_property(self, "size_flags_stretch_ratio", 1 if expanded else 1.5, 0.15)
+		tween.tween_property(self, "size_flags_stretch_ratio", 1.0 if expanded else 1.5, 0.15)
 	else:
-		tween.tween_property(self, "size_flags_stretch_ratio", 1 if expanded else 2.75, 0.15)
+		tween.tween_property(self, "size_flags_stretch_ratio", 1.0 if expanded else 2.75, 0.15)
 	expanded = !expanded
 	if detail:
 		if !expanded:

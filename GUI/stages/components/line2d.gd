@@ -31,6 +31,8 @@ var active: bool :
 			z_index = 1
 			if target.get_parent() is MainComponent:
 				target.get_parent().requested = value
+			if origin.get_parent() is MainComponent:
+				origin.get_parent().requested = value
 			add_points()
 			animate_line() # seems duplicate from *_detail.draw_lines but both are needed
 			check_visibility(true)

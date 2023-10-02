@@ -12,6 +12,8 @@ extends Panel
 @onready var data_mem_memwb = $DataMemory/DataMem_MEMWB
 @onready var alu_out_memwb = $DetailedControl/AluOut_MEMWB
 @onready var rt_data_data_mem = $DataMemory/RtData_DataMem
+@onready var alu_out_rt_data = $OutsideLines/AluOut_RTData
+@onready var rel_branch_pc = $OutsideLines/RelBranch_PC
 
 @onready var lines: Array[Line2D] = [ pc,
 									reg_dst,
@@ -21,7 +23,9 @@ extends Panel
 									reg_dst_forwarding_unit,
 									data_mem_memwb,
 									alu_out_memwb,
-									rt_data_data_mem]
+									rt_data_data_mem,
+									alu_out_rt_data,
+									rel_branch_pc]
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color:
 	set(value):
@@ -79,6 +83,17 @@ func _on_LineManager_mem_line_active(line: LineManager.mem_lines) -> void:
 		LineManager.mem_lines.RTDATA_DATAMEM:
 			rt_data_data_mem.origin = get_node(LineManager.stage_register_path[2]).get("imm_value_2")
 			rt_data_data_mem.active = true
+		
+		LineManager.mem_lines.ALUOUT_RT:
+			alu_out_rt_data.target = get_node(LineManager.stage_register_path[2]).get("rt")
+			alu_out_rt_data.active = true
+		
+		LineManager.mem_lines.RELBRANCH_PC:
+			rel_branch_pc.origin = get_node(LineManager.stage_register_path[2]).get("rel_branch_2")
+			rel_branch_pc.target_component = LineManager.get_stage_component(0, "pc")
+			rel_branch_pc.target = rel_branch_pc.target_component.get_node("Input")
+			rel_branch_pc.active = true
+
 
 func show_lines() -> void:
 	## Not needed once CpuFlex manages which lines to show

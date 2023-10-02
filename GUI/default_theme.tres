@@ -46,6 +46,7 @@ AcceptDialog/styles/panel = SubResource("StyleBoxFlat_bihqp")
 BackgroundPanelContainer/base_type = &"PanelContainer"
 BackgroundPanelContainer/styles/panel = SubResource("StyleBoxFlat_ta6wk")
 Button/font_sizes/font_size = 14
+Label/font_sizes/font_size = 14
 Panel/styles/panel = SubResource("StyleBoxFlat_ht4eq")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_ewnuu")
 Window/styles/embedded_border = SubResource("StyleBoxFlat_7uvxh")

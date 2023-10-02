@@ -11,6 +11,7 @@ extends Panel
 @onready var alu_out_alu_2 = $OutsideLines/ALUOut_ALU2
 @onready var reg_dst_reg_bank = $OutsideLines/RegDst_RegBank
 @onready var reg_dst_forwarding_unit = $OutsideLines/RegDst_ForwardingUnit
+@onready var alu_out_rt_data = $OutsideLines/ALUOut_RTData
 
 
 @onready var lines: Array[Line2D] = [ pc_mux,
@@ -20,7 +21,8 @@ extends Panel
 									alu_out_alu_1,
 									alu_out_alu_2,
 									reg_dst_reg_bank,
-									reg_dst_forwarding_unit]
+									reg_dst_forwarding_unit,
+									alu_out_rt_data]
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color:
 	set(value):
@@ -61,14 +63,12 @@ func _on_wb_line_active(line: LineManager.wb_lines):
 			mux_reg_bank.active = true
 		
 		LineManager.wb_lines.ALUOUT_ALU1:
-			await LineManager.if_stage_updated
 			alu_out_alu_1.target_component = LineManager.get_stage_component(2, "alu")
 			alu_out_alu_1.target = LineManager.get_stage_component(2, "alu").get_node("UpperInput")
 			alu_out_alu_1.target_component.request_stage_origin.append(Globals.STAGES.WB)
 			alu_out_alu_1.active = true
 		
 		LineManager.wb_lines.ALUOUT_ALU2:
-			await LineManager.if_stage_updated
 			alu_out_alu_2.target_component = LineManager.get_stage_component(2, "alu")
 			alu_out_alu_2.target = LineManager.get_stage_component(2, "alu").get_node("LowerInput")
 			alu_out_alu_2.target_component.request_stage_origin.append(Globals.STAGES.WB)
@@ -85,6 +85,10 @@ func _on_wb_line_active(line: LineManager.wb_lines):
 			reg_dst_forwarding_unit.target = LineManager.get_stage_component(2, "forwarding_unit").get_node("LowerRightInput")
 			reg_dst_forwarding_unit.target_component.request_stage_origin.append(Globals.STAGES.WB)
 			reg_dst_forwarding_unit.active = true
+		
+		LineManager.wb_lines.ALUOUT_RT:
+			alu_out_rt_data.target = get_node(LineManager.stage_register_path[2]).get("rt")
+			alu_out_rt_data.active = true
 
 
 func show_detail(value: bool) -> void:

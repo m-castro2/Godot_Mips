@@ -56,6 +56,8 @@ EX"
 
 [node name="PC" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 
+[node name="RelBranch" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
+
 [node name="RsData" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 
 [node name="RtData" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
@@ -69,6 +71,8 @@ EX"
 [node name="RegDst" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 
 [node name="PC2" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
+
+[node name="RelBranch2" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 
 [node name="RsData2" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cyfy0tcp481of"]
+[gd_scene load_steps=25 format=3 uid="uid://cyfy0tcp481of"]
 
 [ext_resource type="Script" path="res://stages/ex_detail.gd" id="1_qp051"]
 [ext_resource type="Script" path="res://stages/components/ALU.gd" id="2_qvpnf"]
@@ -39,7 +39,7 @@ shader = ExtResource("4_2lcnv")
 shader_parameter/draw_min = 0.0
 shader_parameter/draw_max = 0.0
 shader_parameter/draw_feather = 0.0
-shader_parameter/color = Color(0, 0.870588, 0, 1)
+shader_parameter/color = Color(0.976471, 0.580392, 0.705882, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ko70b"]
 shader = ExtResource("4_2lcnv")
@@ -83,6 +83,15 @@ shader_parameter/draw_feather = 0.0
 shader_parameter/color = null
 
 [sub_resource type="Gradient" id="Gradient_fgwxc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o4fdy"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_28mbj"]
 
 [node name="EXDetail" type="Panel"]
 clip_children = 1
@@ -158,6 +167,7 @@ offset_bottom = 8.0
 text = "ALU
 Control"
 script = ExtResource("3_tibhf")
+position_percent = Vector2(0.33, 0.15)
 expanded_position_percent = Vector2(0.33, 0.15)
 stage_number = 2
 alignment_mode = 1
@@ -175,8 +185,8 @@ offset_bottom = 8.0
 text = "Forwarding
 Unit"
 script = ExtResource("3_tibhf")
-position_percent = Vector2(0.5, 0.85)
-expanded_position_percent = Vector2(0.5, 0.85)
+position_percent = Vector2(0.5, 0.8)
+expanded_position_percent = Vector2(0.5, 0.8)
 stage_number = 2
 alignment_mode = 1
 visibility = 1
@@ -192,6 +202,27 @@ position = Vector2(96, 18)
 
 [node name="LowerRightInput" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
 position = Vector2(96, 36)
+
+[node name="Add" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
+visible = false
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Add"
+script = ExtResource("3_tibhf")
+reference_node = NodePath("../..")
+position_percent = Vector2(0.7, 0.2)
+expanded_position_percent = Vector2(0.7, 0.2)
+stage_number = 2
+alignment_mode = 1
+visibility = 1
+
+[node name="Input" type="Marker2D" parent="DetailedControl/Add"]
+
+[node name="Input2" type="Marker2D" parent="DetailedControl/Add"]
+position = Vector2(0, 30)
+
+[node name="Output" type="Marker2D" parent="DetailedControl/Add"]
 
 [node name="PC" type="Line2D" parent="DetailedControl"]
 visible = false
@@ -238,9 +269,10 @@ width = 1.0
 gradient = SubResource("Gradient_j6wyl")
 script = ExtResource("4_q4wkr")
 steps = 4
+middle_offset = 25
 visibility = 1
 
-[node name="Rs_HDU" type="Line2D" parent="DetailedControl"]
+[node name="Rs_FU" type="Line2D" parent="DetailedControl"]
 visible = false
 material = SubResource("ShaderMaterial_khtn1")
 width = 1.0
@@ -249,7 +281,7 @@ script = ExtResource("4_q4wkr")
 steps = 4
 visibility = 1
 
-[node name="Rt_HDU" type="Line2D" parent="DetailedControl"]
+[node name="Rt_FU" type="Line2D" parent="DetailedControl"]
 visible = false
 material = SubResource("ShaderMaterial_mo4ou")
 width = 1.0
@@ -259,15 +291,17 @@ steps = 4
 middle_offset = 18
 visibility = 1
 
-[node name="Rt_Data_EXMEM" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin")]
+[node name="Rt_Data_EXMEM" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "node_to_avoid")]
 visible = false
 material = SubResource("ShaderMaterial_l2snw")
 width = 1.0
 gradient = SubResource("Gradient_sqt3y")
 script = ExtResource("6_bibc7")
 origin = NodePath("../RtData_ALU2")
-intersect_point = 1.1
+intersect_point = 1.0
 visibility = 1
+node_to_avoid = NodePath("../../ALU")
+avoid_offset = Vector2(10, 35)
 
 [node name="ALUControl_ALU" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
 visible = false
@@ -278,6 +312,28 @@ script = ExtResource("4_q4wkr")
 origin = NodePath("../AluControl/Output")
 target = NodePath("../../ALU/UpInput")
 steps = 3
+visibility = 1
+
+[node name="PC_Add" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+visible = false
+material = SubResource("ShaderMaterial_o4fdy")
+width = 1.0
+gradient = SubResource("Gradient_28mbj")
+script = ExtResource("6_bibc7")
+origin = NodePath("../PC")
+target = NodePath("../Add/Input")
+intersect_point = 0.55
+visibility = 1
+
+[node name="ImmVal_Add" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("target")]
+visible = false
+material = SubResource("ShaderMaterial_o4fdy")
+width = 1.0
+gradient = SubResource("Gradient_28mbj")
+script = ExtResource("4_q4wkr")
+target = NodePath("../Add/Input2")
+steps = 4
+middle_offset = 50
 visibility = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

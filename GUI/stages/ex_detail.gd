@@ -12,10 +12,12 @@ extends Panel
 @onready var rs_data_alu = $DetailedControl/RsData_ALU
 @onready var rt_data_alu_2 = $DetailedControl/RtData_ALU2
 @onready var imm_val_alu_2 = $DetailedControl/ImmVal_ALU2
-@onready var rs_hdu = $DetailedControl/Rs_HDU
-@onready var rt_hdu = $DetailedControl/Rt_HDU
+@onready var rs_fu = $DetailedControl/Rs_FU
+@onready var rt_fu = $DetailedControl/Rt_FU
 @onready var alu_control_alu = $DetailedControl/ALUControl_ALU
 @onready var rt_data_exmem = $DetailedControl/Rt_Data_EXMEM
+@onready var pc_add = $DetailedControl/PC_Add
+@onready var imm_val_add = $DetailedControl/ImmVal_Add
 
 @onready var lines: Array[Line2D] = [ pc, 
 									reg_dst,
@@ -23,10 +25,12 @@ extends Panel
 									rs_data_alu,
 									rt_data_alu_2,
 									imm_val_alu_2,
-									rs_hdu,
-									rt_hdu,
+									rs_fu,
+									rt_fu,
 									alu_control_alu,
-									rt_data_exmem]
+									rt_data_exmem,
+									pc_add,
+									imm_val_add]
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color:
 	set(value):
@@ -49,6 +53,7 @@ func show_lines() -> void:
 
 func show_detail(value: bool) -> void:
 	detailed_control.visible = true
+	return
 	for child in detailed_control.get_children():
 		if child is Button:
 			child.visible = value or child.requested
@@ -111,23 +116,43 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines) -> void:
 			imm_val_alu_2.target = $ALU/LowerInput
 			imm_val_alu_2.active = true
 			
-		LineManager.ex_lines.RS_HDU:
-			rs_hdu.origin = get_node(LineManager.stage_register_path[1]).get("rs_2")
-			rs_hdu.target = $DetailedControl/ForwardingUnit/UpperInput
-			rs_hdu.active = true
+		LineManager.ex_lines.RS_FU:
+			rs_fu.origin = get_node(LineManager.stage_register_path[1]).get("rs_2")
+			rs_fu.target = $DetailedControl/ForwardingUnit/UpperInput
+			rs_fu.active = true
 			
-		LineManager.ex_lines.RT_HDU:
-			rt_hdu.origin = get_node(LineManager.stage_register_path[1]).get("rt_2")
-			rt_hdu.target = $DetailedControl/ForwardingUnit/LowerInput
-			rt_hdu.active = true
+		LineManager.ex_lines.RT_FU:
+			rt_fu.origin = get_node(LineManager.stage_register_path[1]).get("rt_2")
+			rt_fu.target = $DetailedControl/ForwardingUnit/LowerInput
+			rt_fu.active = true
 			
 		LineManager.ex_lines.ALUCONTROL_ALU:
 			alu_control_alu.active = true
 			
 		LineManager.ex_lines.RTDATA_EXMEM:
-			if imm_val_alu_2.active:
-				rt_data_exmem.origin = imm_val_alu_2
+			var origin_updated:= false
 			if rt_data_alu_2.active:
 				rt_data_exmem.origin = rt_data_alu_2
+				origin_updated = true
+			
+			var origin_line: OutsideLine2D = LineManager.get_stage_component(4, "alu_out_alu_2")
+			if origin_line.active:
+				rt_data_exmem.origin = origin_line
+				origin_updated = true
+			else:
+				origin_line = LineManager.get_stage_component(3, "alu_out_alu_2")
+				if origin_line.active:
+					rt_data_exmem.origin = origin_line
+					origin_updated = true
+			if !origin_updated:
+				return
+			
 			rt_data_exmem.target = get_node(LineManager.stage_register_path[2]).get("imm_value")
 			rt_data_exmem.active = true
+			
+		LineManager.ex_lines.PC_ADD:
+			pc_add.active = true
+			
+		LineManager.ex_lines.IMMVAL_ADD:
+			imm_val_add.origin = get_node(LineManager.stage_register_path[1]).get("imm_value_2")
+			imm_val_add.active = true

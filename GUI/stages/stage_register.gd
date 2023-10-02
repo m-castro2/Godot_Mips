@@ -16,6 +16,7 @@ class_name StageRegister
 @onready var rs = $StageRegister/VBoxContainer/Register/Rs
 @onready var rt = $StageRegister/VBoxContainer/Register/Rt
 @onready var reg_dst = $StageRegister/VBoxContainer/Register/RegDst
+@onready var rel_branch = $StageRegister/VBoxContainer/Register/RelBranch
 #Output markers
 @onready var pc_2 = $StageRegister/VBoxContainer/Register/PC2
 @onready var rs_data_2 = $StageRegister/VBoxContainer/Register/RsData2
@@ -24,6 +25,7 @@ class_name StageRegister
 @onready var rs_2 = $StageRegister/VBoxContainer/Register/Rs2
 @onready var rt_2 = $StageRegister/VBoxContainer/Register/Rt2
 @onready var reg_dst_2 = $StageRegister/VBoxContainer/Register/RegDst2
+@onready var rel_branch_2 = $StageRegister/VBoxContainer/Register/RelBranch2
 
 var ready_finished: bool
 
@@ -61,6 +63,9 @@ func _on_resized():
 	await LineManager.if_stage_updated
 	pc.global_position.y = LineManager.get_stage_component(0, "add").get_node("IFID_UpperInput").global_position.y
 	pc_2.global_position = pc.global_position + Vector2(31, 0)
+	
+	rel_branch.global_position.y = register.global_position.y + register.size.y * 0.1
+	rel_branch_2.global_position = rel_branch.global_position + Vector2(31, 0)
 	
 	rs_data.global_position.y = register.global_position.y + register.size.y * 0.25
 	rs_data_2.global_position = rs_data.global_position + Vector2(31, 0)

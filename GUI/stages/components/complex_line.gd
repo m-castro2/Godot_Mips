@@ -15,6 +15,11 @@ var draw_requested: bool = false
 enum visibility_type { ALWAYS, EXPANDED}
 @export var visibility: visibility_type
 
+# avoid drawing over components
+@export var node_to_avoid: MainComponent = null
+@export var avoid_offset: Vector2
+
+
 var stage: Globals.STAGES
 
 var line_color: Color
@@ -67,10 +72,18 @@ func add_points():
 		add_point(Vector2(first_point.x, start.y - offset.y))
 		add_point(Vector2(target.global_position.x - offset.x, start.y - offset.y))
 		add_point(Vector2(target.global_position.x - offset.x, target.global_position.y))
-	else:
-		add_point(Vector2(first_point.x, target.global_position.y))
+	elif !node_to_avoid:
+			add_point(Vector2(first_point.x, target.global_position.y))
+		
+	if node_to_avoid: #avoid drawing over a component
+		var halfway_point: float = (target.global_position.x - (node_to_avoid.global_position.x + node_to_avoid.size.x))/2 \
+				+ node_to_avoid.global_position.x + node_to_avoid.size.x
+		add_point(first_point + Vector2(avoid_offset.x, 0))
+		add_point(Vector2(first_point.x, node_to_avoid.global_position.y + node_to_avoid.size.y) + avoid_offset)
+		add_point(Vector2(halfway_point, node_to_avoid.global_position.y + node_to_avoid.size.y) + avoid_offset)
+		add_point(Vector2(halfway_point, target.global_position.y) + Vector2(avoid_offset.x, 0))
+
 	add_point(target.global_position)
-	
 
 
 func _ready():
@@ -94,6 +107,7 @@ func _ready():
 func _on_Globals_expand_stage(_stage_number: int):
 	if !active:
 		return
+	
 	add_points()
 	animate_line()
 	check_visibility(false)

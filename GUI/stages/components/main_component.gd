@@ -25,6 +25,7 @@ var requested: bool = false :
 
 func _ready():
 	Globals.expand_stage.connect(_on_expand_stage)
+	Globals.cycle_changed.connect(_on_globals_cycle_changed)
 	if !reference_node:
 		reference_node = get_parent()
 	reference_node.resized.connect(_on_parent_resized)
@@ -76,3 +77,9 @@ func _on_component_requested(stage: int, component_name: String):
 			visible = true
 		else:
 			visible = false if visibility == visibility_type.EXPANDED else true
+
+
+func _on_globals_cycle_changed():
+	if visibility != visibility_type.ALWAYS:
+		visible = false
+	requested = false

@@ -175,7 +175,7 @@ func _on_Globals_hdu_available_changed(value: int) -> void:
 
 func _on_Globals_branch_stage_changed(value: int) -> void:
 	# value is optionButton index, 0 for ID, 1 for MEM
-	pipelinedWrapper.change_branch_stage(4 if value else 1)
+	pipelinedWrapper.change_branch_stage(3 if value else 1)
 	_on_reset_pressed()
 
 

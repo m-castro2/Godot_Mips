@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cqvkpfjkhblkw"]
+[gd_scene load_steps=29 format=3 uid="uid://cqvkpfjkhblkw"]
 
 [ext_resource type="Script" path="res://stages/mem_detail.gd" id="1_cnata"]
 [ext_resource type="Script" path="res://stages/components/DataMemory.gd" id="2_u200c"]
@@ -79,6 +79,15 @@ shader_parameter/color = null
 
 [sub_resource type="Gradient" id="Gradient_vyivh"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xo40p"]
+shader = ExtResource("3_18s6u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_cgatq"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x2ilp"]
 shader = ExtResource("3_18s6u")
 shader_parameter/draw_min = 0.0
@@ -87,6 +96,15 @@ shader_parameter/draw_feather = 0.0
 shader_parameter/color = null
 
 [sub_resource type="Gradient" id="Gradient_ch8bn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dmtoy"]
+shader = ExtResource("3_18s6u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_meljp"]
 
 [node name="MEMDetail" type="Panel"]
 clip_children = 1
@@ -215,7 +233,7 @@ origin = NodePath("../../DetailedControl/AluOut")
 intersect_point = 1.0
 height_percent = 0.98
 offset = 20
-min_initial_length = 25
+min_initial_length = 15
 min_finish_length = 15
 origin_stage = 3
 target_stage = 2
@@ -233,6 +251,17 @@ min_finish_length = 15
 origin_stage = 3
 target_stage = 2
 
+[node name="AluOut_RTData" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_xo40p")
+width = 1.0
+gradient = SubResource("Gradient_cgatq")
+script = ExtResource("5_23qcg")
+origin = NodePath("../../DetailedControl/AluOut")
+height_percent = 0.98
+offset = 20
+origin_stage = 3
+target_stage = 2
+
 [node name="RegDst_ForwardingUnit" type="Line2D" parent="OutsideLines"]
 visible = false
 material = SubResource("ShaderMaterial_x2ilp")
@@ -243,6 +272,14 @@ height_percent = 0.96
 left_right_input = true
 origin_stage = 3
 target_stage = 2
+
+[node name="RelBranch_PC" type="Line2D" parent="OutsideLines"]
+material = SubResource("ShaderMaterial_dmtoy")
+width = 1.0
+gradient = SubResource("Gradient_meljp")
+script = ExtResource("5_23qcg")
+height_percent = 0.02
+origin_stage = 3
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="DataMemory" to="." method="_on_data_memory_pressed"]

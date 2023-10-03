@@ -1,11 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://cqvkpfjkhblkw"]
+[gd_scene load_steps=28 format=3 uid="uid://cqvkpfjkhblkw"]
 
 [ext_resource type="Script" path="res://stages/mem_detail.gd" id="1_cnata"]
 [ext_resource type="Script" path="res://stages/components/DataMemory.gd" id="2_u200c"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="3_18s6u"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="4_hqwpj"]
 [ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="5_23qcg"]
-[ext_resource type="Script" path="res://stages/components/complex_line.gd" id="5_iodwd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lham1"]
 shader = ExtResource("3_18s6u")
@@ -202,10 +201,11 @@ visibility = 1
 material = SubResource("ShaderMaterial_jag8p")
 width = 1.0
 gradient = SubResource("Gradient_13vtk")
-script = ExtResource("5_iodwd")
-origin = NodePath("../../DataMemory/AluOut_DataMem")
+script = ExtResource("4_hqwpj")
+origin = NodePath("../AluOut")
 target = NodePath("../MEMWB_AluOut")
-intersect_point = 1.0
+steps = 4
+middle_offset = 100
 visibility = 1
 
 [node name="MEMWB_AluOut" type="Marker2D" parent="DetailedControl"]

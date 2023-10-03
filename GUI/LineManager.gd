@@ -53,115 +53,131 @@ func activate_lines(stage_signals_map: Array):
 	var branch_stage = ConfigManager.get_value("Settings/CPU", "branch_stage")
 	
 	# STAGE IF
-	if stage_signals_map[0]["PC_WR"] == 1: 
-		if_line_active.emit(if_lines.PC_INSTMEM)
-		if_line_active.emit(if_lines.INSTMEM_IFID)
-		if_line_active.emit(if_lines.ADD_IFID)
-		if_line_active.emit(if_lines.PC_INSTMEM)
-		if_line_active.emit(if_lines._4_ADD)
-		if_line_active.emit(if_lines.PC_ADD)
-		match stage_signals_map[0]["PC_SRC"]:
-			0:
-				if_line_active.emit(if_lines.ADD_PC)
-			1:
-				if !branch_stage: #0 for ID, 1 for MEM
-					id_line_active.emit(id_lines.ADD_PC)
-				else:
-					mem_line_active.emit(mem_lines.RELBRANCH_PC)
-			2:
-				id_line_active.emit(id_lines.RSDATA_PC)
-			3:
-				id_line_active.emit(id_lines.INST_PC)
-		
-	id_line_active.emit(id_lines.HDU_PC)
+	if StageControl.instruction_map[0] != -1:
+		if stage_signals_map[0]["PC_WR"] == 1: 
+			if_line_active.emit(if_lines.PC_INSTMEM)
+			if_line_active.emit(if_lines.INSTMEM_IFID)
+			if_line_active.emit(if_lines.ADD_IFID)
+			if_line_active.emit(if_lines.PC_INSTMEM)
+			if_line_active.emit(if_lines._4_ADD)
+			if_line_active.emit(if_lines.PC_ADD)
+			match stage_signals_map[0]["PC_SRC"]:
+				0:
+					if_line_active.emit(if_lines.ADD_PC)
+				1:
+					if !branch_stage: #0 for ID, 1 for MEM
+						id_line_active.emit(id_lines.ADD_PC)
+					else:
+						mem_line_active.emit(mem_lines.RELBRANCH_PC)
+				2:
+					id_line_active.emit(id_lines.RSDATA_PC)
+				3:
+					id_line_active.emit(id_lines.INST_PC)
+			
+		id_line_active.emit(id_lines.HDU_PC)
 	
 	# STAGE ID
-	id_line_active.emit(id_lines.PC)
-	id_line_active.emit(id_lines.INST_BASE)
-	id_line_active.emit(id_lines.INST_RDREG1)
-	id_line_active.emit(id_lines.INST_RDREG2)
-	id_line_active.emit(id_lines.RDDATA_RSDATA)
-	id_line_active.emit(id_lines.RDDATA2_RTDATA)
-	id_line_active.emit(id_lines.RS)
-	id_line_active.emit(id_lines.RT)
-	id_line_active.emit(id_lines.INST_IMMVAL)
-	if stage_signals_map[1]["BRANCH"]:
-		id_line_active.emit(id_lines.PC_ADD)
-		id_line_active.emit(id_lines.INST_ADD)
-	if stage_signals_map[1]["REG_DEST"] == 0:
-		id_line_active.emit(id_lines.INST20_REGDST)
-	elif stage_signals_map[1]["REG_DEST"] == 1:
-		id_line_active.emit(id_lines.INST15_REGDST)
-	else:
-		pass # $ra
+	if StageControl.instruction_map[1] != -1:
+		id_line_active.emit(id_lines.PC)
+		id_line_active.emit(id_lines.INST_BASE)
+		id_line_active.emit(id_lines.INST_RDREG1)
+		id_line_active.emit(id_lines.RDDATA_RSDATA)
+		if stage_signals_map[1]["ALU_SRC"]:
+			id_line_active.emit(id_lines.INST_IMMVAL)
+		else:
+			id_line_active.emit(id_lines.INST_RDREG2)
+			id_line_active.emit(id_lines.RDDATA2_RTDATA)
+		if stage_signals_map[1]["REG_WRITE"]:
+			if stage_signals_map[1]["REG_DEST"] == 0:
+				id_line_active.emit(id_lines.INST20_REGDST)
+			elif stage_signals_map[1]["REG_DEST"] == 1:
+				id_line_active.emit(id_lines.INST15_REGDST)
+		if stage_signals_map[1]["ALU_SRC"]:
+			id_line_active.emit(id_lines.INST_IMMVAL)
+		
+		#id_line_active.emit(id_lines.RS)
+		#id_line_active.emit(id_lines.RT)
+		if stage_signals_map[1]["BRANCH"]:
+			id_line_active.emit(id_lines.PC_ADD)
+			id_line_active.emit(id_lines.INST_ADD)
+		else:
+			pass # $ra
 	
 	# STAGE EX
-	ex_line_active.emit(ex_lines.PC)
-	ex_line_active.emit(ex_lines.ALUEXMEM)
-	ex_line_active.emit(ex_lines.RegDst)
-	ex_line_active.emit(ex_lines.ALUCONTROL_ALU)
-	if stage_signals_map[2]["ALU_SRC"]:
-		ex_line_active.emit(ex_lines.IMMVAL_ALU2)
+	if StageControl.instruction_map[2] != -1:
+		ex_line_active.emit(ex_lines.PC)
+		ex_line_active.emit(ex_lines.ALUEXMEM)
+		ex_line_active.emit(ex_lines.RegDst)
+		ex_line_active.emit(ex_lines.ALUCONTROL_ALU)
+		if stage_signals_map[2]["ALU_SRC"]:
+			ex_line_active.emit(ex_lines.IMMVAL_ALU2)
 
-	match stage_signals_map[2]["RS_FU"]:
-		0:
-			ex_line_active.emit(ex_lines.RSDATA_ALU)
-		1:
-			mem_line_active.emit(mem_lines.ALUOUT_ALU1)
-		2:
-			pass
-		3:
-			wb_line_active.emit(wb_lines.ALUOUT_ALU1)
-		4:
-			pass
-	
-	match stage_signals_map[2]["RT_FU"]:
-		0:
-			if !stage_signals_map[2]["ALU_SRC"]:
-				ex_line_active.emit(ex_lines.RTDATA_ALU2)
-			else:
-				ex_line_active.emit(ex_lines.RTDATA_EXMEM)
-		1:
-			if !stage_signals_map[2]["ALU_SRC"]:
-				mem_line_active.emit(mem_lines.ALUOUT_ALU2)
-			else:
-				mem_line_active.emit(mem_lines.ALUOUT_RT)
-		2:
-			pass
-		3:
-			if !stage_signals_map[2]["ALU_SRC"]:
-				wb_line_active.emit(wb_lines.ALUOUT_ALU2)
-			else:
-				wb_line_active.emit(wb_lines.ALUOUT_RT)
-		4:
-			pass
-	
-	ex_line_active.emit(ex_lines.RTDATA_EXMEM) # origin gets updated based on IMMVAL?RTDATA_ALU2
-	ex_line_active.emit(ex_lines.RS_FU)
-	ex_line_active.emit(ex_lines.RT_FU)
-	if stage_signals_map[2]["RELBRANCH"]:
-		ex_line_active.emit(ex_lines.PC_ADD)
-		ex_line_active.emit(ex_lines.IMMVAL_ADD)
+		match stage_signals_map[2]["RS_FU"]:
+			0:
+				ex_line_active.emit(ex_lines.RSDATA_ALU)
+			1:
+				mem_line_active.emit(mem_lines.ALUOUT_ALU1)
+			2:
+				pass
+			3:
+				wb_line_active.emit(wb_lines.ALUOUT_ALU1)
+			4:
+				pass
+		
+		match stage_signals_map[2]["RT_FU"]:
+			0:
+				if !stage_signals_map[2]["ALU_SRC"]:
+					ex_line_active.emit(ex_lines.RTDATA_ALU2)
+				else:
+					ex_line_active.emit(ex_lines.RTDATA_EXMEM)
+			1:
+				if !stage_signals_map[2]["ALU_SRC"]:
+					mem_line_active.emit(mem_lines.ALUOUT_ALU2)
+				else:
+					mem_line_active.emit(mem_lines.ALUOUT_RT)
+			2:
+				pass
+			3:
+				if !stage_signals_map[2]["ALU_SRC"]:
+					wb_line_active.emit(wb_lines.ALUOUT_ALU2)
+				else:
+					wb_line_active.emit(wb_lines.ALUOUT_RT)
+			4:
+				pass
+		
+		ex_line_active.emit(ex_lines.RTDATA_EXMEM) # origin gets updated based on IMMVAL?RTDATA_ALU2
+		ex_line_active.emit(ex_lines.RS_FU)
 		ex_line_active.emit(ex_lines.RT_FU)
+		if stage_signals_map[2]["RELBRANCH"]:
+			ex_line_active.emit(ex_lines.PC_ADD)
+			ex_line_active.emit(ex_lines.IMMVAL_ADD)
+			ex_line_active.emit(ex_lines.RT_FU)
 	
 	# STAGE MEM
-	mem_line_active.emit(mem_lines.PC)
-	mem_line_active.emit(mem_lines.DATAMEM_MEMWB)
-	mem_line_active.emit(mem_lines.RegDst)
-	mem_line_active.emit(mem_lines.ALUOUT_DATAMEM)
-	mem_line_active.emit(mem_lines.ALUOUT_MEMWB)
-	mem_line_active.emit(mem_lines.RTDATA_DATAMEM)
-	mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT)
+	if StageControl.instruction_map[3] != -1:
+		if stage_signals_map[3]["MEM_READ"]:
+			mem_line_active.emit(mem_lines.ALUOUT_DATAMEM)
+			mem_line_active.emit(mem_lines.PC)
+			mem_line_active.emit(mem_lines.DATAMEM_MEMWB)
+			mem_line_active.emit(mem_lines.RegDst)
+		if stage_signals_map[3]["MEM_WRITE"]:
+			mem_line_active.emit(mem_lines.ALUOUT_DATAMEM)
+			mem_line_active.emit(mem_lines.RTDATA_DATAMEM)
+		if stage_signals_map[3]["REG_WRITE"]:
+			mem_line_active.emit(mem_lines.RegDst)
+			mem_line_active.emit(mem_lines.ALUOUT_MEMWB)
+		mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT)
 	
 	# STAGE WB
-	if stage_signals_map[4]["REG_WRITE"]:
-		wb_line_active.emit(wb_lines.REGDST_REGBANK)
-		wb_line_active.emit(wb_lines.MUX_REGBANK)
-	if stage_signals_map[4]["MEM_2_REG"] == 0:
-		wb_line_active.emit(wb_lines.PC_MUX)
-	elif stage_signals_map[4]["MEM_2_REG"] == 1:
-		wb_line_active.emit(wb_lines.MEMOUT_MUX)
-	else:
-		wb_line_active.emit(wb_lines.ALUOUT_MUX)
-	wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT)
+	if StageControl.instruction_map[4] != -1:
+		if stage_signals_map[4]["REG_WRITE"]:
+			wb_line_active.emit(wb_lines.REGDST_REGBANK)
+			wb_line_active.emit(wb_lines.MUX_REGBANK)
+			if stage_signals_map[4]["MEM_2_REG"] == 0:
+				wb_line_active.emit(wb_lines.PC_MUX)
+			elif stage_signals_map[4]["MEM_2_REG"] == 1:
+				wb_line_active.emit(wb_lines.MEMOUT_MUX)
+			else:
+				wb_line_active.emit(wb_lines.ALUOUT_MUX)
+			wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT)
 	

@@ -151,6 +151,7 @@ script = ExtResource("6_4vcia")
 origin = NodePath("../InstBase")
 target = NodePath("../Input1")
 intersect_point = 1.0
+visibility = 1
 
 [node name="Inst_25_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
 visible = false
@@ -187,9 +188,9 @@ material = SubResource("ShaderMaterial_s2nlp")
 width = 1.0
 gradient = SubResource("Gradient_c0h55")
 script = ExtResource("6_4vcia")
-origin = NodePath("../Inst_15-0_Imm")
+origin = NodePath("../InstBase")
 target = NodePath("../../DetailedControl/Add/Input2")
-intersect_point = 0.25
+intersect_point = 1.0
 visibility = 1
 
 [node name="Inst_20-16_RegDst" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "node_to_avoid")]
@@ -248,6 +249,7 @@ gradient = SubResource("Gradient_or8kb")
 script = ExtResource("6_21ql4")
 origin = NodePath("../../IFIDOutput")
 target = NodePath("../../IFIDOutput/Target")
+visibility = 1
 
 [node name="HazardDetectionUnit" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
 visible = false

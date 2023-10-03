@@ -10,14 +10,15 @@ extends Label
 
 func _ready():
 	line.draw.connect(_on_line_drawn)
+	line.visibility_changed.connect(_on_line_visibility_changed)
+	
 	if label_orientation:
 		rotation_degrees = 270
 
 
 func _on_line_drawn():
-	visible = false
-	if Globals.current_expanded_stage != stage:
-		return
-	
-	visible = true
 	global_position = line.get_point_position(label_line_vertex) + label_padding - Vector2(0, size.y)
+
+
+func _on_line_visibility_changed():
+	visible = line.visible

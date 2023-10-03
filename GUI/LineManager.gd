@@ -80,28 +80,29 @@ func activate_lines(stage_signals_map: Array):
 	if StageControl.instruction_map[1] != -1:
 		id_line_active.emit(id_lines.PC)
 		id_line_active.emit(id_lines.INST_BASE)
-		id_line_active.emit(id_lines.INST_RDREG1)
-		id_line_active.emit(id_lines.RDDATA_RSDATA)
-		if stage_signals_map[1]["ALU_SRC"]:
-			id_line_active.emit(id_lines.INST_IMMVAL)
-		else:
-			id_line_active.emit(id_lines.INST_RDREG2)
-			id_line_active.emit(id_lines.RDDATA2_RTDATA)
-		if stage_signals_map[1]["REG_WRITE"]:
-			if stage_signals_map[1]["REG_DEST"] == 0:
-				id_line_active.emit(id_lines.INST20_REGDST)
-			elif stage_signals_map[1]["REG_DEST"] == 1:
-				id_line_active.emit(id_lines.INST15_REGDST)
-		if stage_signals_map[1]["ALU_SRC"]:
-			id_line_active.emit(id_lines.INST_IMMVAL)
-		
-		#id_line_active.emit(id_lines.RS)
-		#id_line_active.emit(id_lines.RT)
 		if stage_signals_map[1]["BRANCH"]:
 			id_line_active.emit(id_lines.PC_ADD)
 			id_line_active.emit(id_lines.INST_ADD)
 		else:
-			pass # $ra
+			id_line_active.emit(id_lines.INST_RDREG1)
+			id_line_active.emit(id_lines.RDDATA_RSDATA)
+			if stage_signals_map[1]["ALU_SRC"]:
+				id_line_active.emit(id_lines.INST_IMMVAL)
+			else:
+				id_line_active.emit(id_lines.INST_RDREG2)
+				id_line_active.emit(id_lines.RDDATA2_RTDATA)
+			if stage_signals_map[1]["REG_WRITE"]:
+				if stage_signals_map[1]["REG_DEST"] == 0:
+					id_line_active.emit(id_lines.INST20_REGDST)
+				elif stage_signals_map[1]["REG_DEST"] == 1:
+					id_line_active.emit(id_lines.INST15_REGDST)
+			if stage_signals_map[1]["ALU_SRC"]:
+				id_line_active.emit(id_lines.INST_IMMVAL)
+			
+			#id_line_active.emit(id_lines.RS)
+			#id_line_active.emit(id_lines.RT)
+			else:
+				pass # $ra
 	
 	# STAGE EX
 	if StageControl.instruction_map[2] != -1:

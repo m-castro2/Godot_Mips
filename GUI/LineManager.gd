@@ -52,8 +52,6 @@ func activate_lines(stage_signals_map: Array):
 	
 	var branch_stage = ConfigManager.get_value("Settings/CPU", "branch_stage")
 	
-	var activate_inst_pc: bool = false
-	
 	# STAGE IF
 	if stage_signals_map[0]["PC_WR"] == 1: 
 		if_line_active.emit(if_lines.PC_INSTMEM)
@@ -73,8 +71,7 @@ func activate_lines(stage_signals_map: Array):
 			2:
 				id_line_active.emit(id_lines.RSDATA_PC)
 			3:
-				activate_inst_pc = true
-				#pc to inst pc
+				id_line_active.emit(id_lines.INST_PC)
 		
 	id_line_active.emit(id_lines.HDU_PC)
 	
@@ -97,9 +94,6 @@ func activate_lines(stage_signals_map: Array):
 		id_line_active.emit(id_lines.INST15_REGDST)
 	else:
 		pass # $ra
-	
-	if activate_inst_pc:
-		id_line_active.emit(id_lines.INST_PC)
 	
 	# STAGE EX
 	ex_line_active.emit(ex_lines.PC)

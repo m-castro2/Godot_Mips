@@ -24,11 +24,16 @@ typedef struct {
 
 class PipelinedWrapper : public godot::Node {
     GDCLASS(PipelinedWrapper, Node);
+    
+    static PipelinedWrapper* pipelinedWrapper;
+
 protected:
     static void _bind_methods();
 public:
     PipelinedWrapper();
     ~PipelinedWrapper();
+
+    static PipelinedWrapper* get_singleton();
 
     godot::Dictionary* cpu_info;
     std::unique_ptr<mips_sim::CpuFlex> cpu;
@@ -70,5 +75,7 @@ public:
     void set_exception_info(godot::Dictionary value);
     godot::Dictionary get_exception_info();
     void handle_exception(int exception, std::string message, uint32_t value);
+
+    godot::Array get_register_names();
 };
 #endif //TFG_PIPELINED_WRAPPER_H

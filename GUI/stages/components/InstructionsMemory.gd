@@ -1,10 +1,10 @@
 extends MainComponent
 
-@onready var pipelinedWrapper: PipelinedWrapper = get_tree().root.get_child(Globals.singleton_number).get_child(0)
+#@onready var pipelinedWrapper: PipelinedWrapper = get_tree().root.get_child(Globals.singleton_number).get_child(0)
 
 func get_info():
 	var info: Array
-	for instruction in pipelinedWrapper.instructions:
+	for instruction in PipelinedWrapper.instructions:
 		info.push_back(instruction[1])
 	return info
 

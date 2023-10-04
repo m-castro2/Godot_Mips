@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://6yt0638i1ha2"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://6yt0638i1ha2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bihqp"]
 bg_color = Color(0.211765, 0.239216, 0.290196, 1)
@@ -11,6 +11,10 @@ content_margin_bottom = 4.0
 bg_color = Color(0.113725, 0.133333, 0.160784, 1)
 corner_detail = 1
 anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdwn4"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ht4eq"]
 bg_color = Color(0.211765, 0.239216, 0.290196, 1)
@@ -46,6 +50,8 @@ AcceptDialog/styles/panel = SubResource("StyleBoxFlat_bihqp")
 BackgroundPanelContainer/base_type = &"PanelContainer"
 BackgroundPanelContainer/styles/panel = SubResource("StyleBoxFlat_ta6wk")
 Button/font_sizes/font_size = 14
+GridLabel/base_type = &"Label"
+GridLabel/styles/normal = SubResource("StyleBoxFlat_jdwn4")
 Label/font_sizes/font_size = 14
 Panel/styles/panel = SubResource("StyleBoxFlat_ht4eq")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_ewnuu")

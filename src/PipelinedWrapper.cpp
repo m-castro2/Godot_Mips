@@ -20,6 +20,7 @@
 using namespace godot;
 using namespace mips_sim;
 
+PipelinedWrapper* PipelinedWrapper::pipelinedWrapper = nullptr; 
 
 void PipelinedWrapper::_bind_methods() {
     //bind methods
@@ -34,6 +35,7 @@ void PipelinedWrapper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("enable_hazard_detection_unit"), &PipelinedWrapper::enable_hazard_detection_unit);
     ClassDB::bind_method(D_METHOD("change_branch_stage"), &PipelinedWrapper::change_branch_stage);
     ClassDB::bind_method(D_METHOD("change_branch_type"), &PipelinedWrapper::change_branch_type);
+    ClassDB::bind_method(D_METHOD("get_register_names"), &PipelinedWrapper::get_register_names);
 
 
     //bind properties
@@ -68,6 +70,11 @@ PipelinedWrapper::PipelinedWrapper(){
     cpu = std::unique_ptr<mips_sim::CpuFlex>(new CpuFlex(mem));
     cpu_info = new godot::Dictionary();
     _update_cpu_info();
+}
+
+PipelinedWrapper* PipelinedWrapper::get_singleton()
+{
+	return pipelinedWrapper;
 }
 
 
@@ -362,6 +369,14 @@ void PipelinedWrapper::set_exception_info(godot::Dictionary value) {
 
 godot::Dictionary PipelinedWrapper::get_exception_info() {
     return exception_info;
+}
+
+godot::Array PipelinedWrapper::get_register_names() {
+    godot::Array name_array {};
+    for (int i = 0; i < 32; ++i) {
+        name_array.append(Utils::get_register_name(i).c_str());
+    }
+    return name_array;
 }
 
 

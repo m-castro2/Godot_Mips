@@ -1,11 +1,11 @@
 extends MainComponent
 
-@onready var pipelinedWrapper: PipelinedWrapper = get_tree().root.get_child(Globals.singleton_number).get_child(0)
+#@onready var pipelinedWrapper: PipelinedWrapper = get_tree().root.get_child(Globals.singleton_number).get_child(0)
 
 
 func get_info():
 	var info: Array
-	for register in pipelinedWrapper.cpu_info["Registers"]["iRegisters"]:
+	for register in PipelinedWrapper.cpu_info["Registers"]["iRegisters"]:
 		#TODO register name
 		info.push_back(register)
 	return info

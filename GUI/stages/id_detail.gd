@@ -92,7 +92,8 @@ func draw_lines() -> void:
 
 
 func _on_registers_bank_pressed() -> void:
-	registers_bank.show_info_window()
+	$RegistersBank/RegBankWindow.add_info()
+	#registers_bank.show_info_window()
 
 
 func _get_all_children(node: Node, shrink: bool):

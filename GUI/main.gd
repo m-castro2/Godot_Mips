@@ -1,6 +1,6 @@
 extends Control
 
-@onready var pipelinedWrapper: PipelinedWrapper = $PipelinedWrapper
+@onready var pipelinedWrapper = PipelinedWrapper
 @onready var pipeline: Control = %Pipeline
 @onready var menu: Control = $Menu
 @onready var exception_dialog = $ExceptionDialog

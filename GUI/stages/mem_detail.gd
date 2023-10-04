@@ -70,7 +70,7 @@ func _on_LineManager_mem_line_active(line: LineManager.mem_lines) -> void:
 		LineManager.mem_lines.REGDST_FORWARDINGUNIT:
 			reg_dst_forwarding_unit.target_component = LineManager.get_stage_component(2, "forwarding_unit")
 			reg_dst_forwarding_unit.origin = get_node(LineManager.stage_register_path[2]).get("reg_dst_2")
-			reg_dst_forwarding_unit.target = LineManager.get_stage_component(2, "forwarding_unit").get_node("UpperRightInput")
+			reg_dst_forwarding_unit.target = LineManager.get_stage_component(2, "forwarding_unit").get_node("Input1")
 			reg_dst_forwarding_unit.target_component.request_stage_origin.append(Globals.STAGES.MEM)
 			reg_dst_forwarding_unit.active = true
 		

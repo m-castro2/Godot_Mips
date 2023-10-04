@@ -7,7 +7,8 @@ enum id_lines {HDU_PC, PC, ImmValue, INST_RDREG1, INST_RDREG2, INST_IMMVAL,\
 	RDDATA_RSDATA, RDDATA2_RTDATA, ADD_PC, INST_BASE, RSDATA_PC, INST_PC}
 
 enum ex_lines {PC, RegDst, ALUEXMEM, RSDATA_ALU, RTDATA_ALU2, IMMVAL_ALU2, \
-	RS_FU, RT_FU, ALUCONTROL_ALU, RTDATA_EXMEM, PC_ADD, IMMVAL_ADD}
+	RS_FU, RT_FU, ALUCONTROL_ALU, RTDATA_EXMEM, PC_ADD, IMMVAL_ADD, \
+	FU_ALU1, FU_ALU2, FU_RTDATA}
 
 enum mem_lines {PC, RegDst, ALUOUT_DATAMEM, ALUOUT_ALU1, ALUOUT_ALU2, \
 	REGDST_FORWARDINGUNIT, DATAMEM_MEMWB, ALUOUT_MEMWB, RTDATA_DATAMEM, ALUOUT_RT, \
@@ -46,9 +47,11 @@ func get_stage_component(stage_number: int, component: String): #Component -> en
 	return get_node(stage_detail_path[stage_number]).get(component)
 
 
-func activate_lines(stage_signals_map: Array):
+func activate_lines(_stage_signals_map: Array):
 	if !Globals.current_cycle:
 		return
+	
+	var stage_signals_map = PipelinedWrapper.stage_signals_map
 	
 	var branch_stage = ConfigManager.get_value("Settings/CPU", "branch_stage")
 	
@@ -117,11 +120,13 @@ func activate_lines(stage_signals_map: Array):
 			0:
 				ex_line_active.emit(ex_lines.RSDATA_ALU)
 			1:
-				mem_line_active.emit(mem_lines.ALUOUT_ALU1)
+				ex_line_active.emit(ex_lines.FU_ALU1)
+				mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT)
 			2:
 				pass
 			3:
-				wb_line_active.emit(wb_lines.ALUOUT_ALU1)
+				ex_line_active.emit(ex_lines.FU_ALU1)
+				wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT)
 			4:
 				pass
 		
@@ -132,23 +137,25 @@ func activate_lines(stage_signals_map: Array):
 				else:
 					ex_line_active.emit(ex_lines.RTDATA_EXMEM)
 			1:
+				mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT)
 				if !stage_signals_map[2]["ALU_SRC"]:
-					mem_line_active.emit(mem_lines.ALUOUT_ALU2)
+					ex_line_active.emit(ex_lines.FU_ALU2)
 				else:
-					mem_line_active.emit(mem_lines.ALUOUT_RT)
+					ex_line_active.emit(ex_lines.FU_RTDATA)
 			2:
 				pass
 			3:
+				wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT)
 				if !stage_signals_map[2]["ALU_SRC"]:
-					wb_line_active.emit(wb_lines.ALUOUT_ALU2)
+					ex_line_active.emit(ex_lines.FU_ALU2)
 				else:
-					wb_line_active.emit(wb_lines.ALUOUT_RT)
+					ex_line_active.emit(ex_lines.FU_RTDATA)
 			4:
 				pass
 		
 		ex_line_active.emit(ex_lines.RTDATA_EXMEM) # origin gets updated based on IMMVAL?RTDATA_ALU2
-		ex_line_active.emit(ex_lines.RS_FU)
-		ex_line_active.emit(ex_lines.RT_FU)
+		#ex_line_active.emit(ex_lines.RS_FU)
+		#ex_line_active.emit(ex_lines.RT_FU)
 		if stage_signals_map[2]["RELBRANCH"]:
 			ex_line_active.emit(ex_lines.PC_ADD)
 			ex_line_active.emit(ex_lines.IMMVAL_ADD)
@@ -167,7 +174,6 @@ func activate_lines(stage_signals_map: Array):
 		if stage_signals_map[3]["REG_WRITE"]:
 			mem_line_active.emit(mem_lines.RegDst)
 			mem_line_active.emit(mem_lines.ALUOUT_MEMWB)
-		mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT)
 	
 	# STAGE WB
 	if StageControl.instruction_map[4] != -1:
@@ -180,5 +186,4 @@ func activate_lines(stage_signals_map: Array):
 				wb_line_active.emit(wb_lines.MEMOUT_MUX)
 			else:
 				wb_line_active.emit(wb_lines.ALUOUT_MUX)
-			wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT)
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cyfy0tcp481of"]
+[gd_scene load_steps=29 format=3 uid="uid://cyfy0tcp481of"]
 
 [ext_resource type="Script" path="res://stages/ex_detail.gd" id="1_qp051"]
 [ext_resource type="Script" path="res://stages/components/ALU.gd" id="2_qvpnf"]
@@ -92,6 +92,29 @@ shader_parameter/draw_feather = 0.0
 shader_parameter/color = null
 
 [sub_resource type="Gradient" id="Gradient_28mbj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xt3cd"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_oof2p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7kcpw"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ju8wm"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
 
 [node name="EXDetail" type="Panel"]
 clip_children = 1
@@ -191,16 +214,16 @@ stage_number = 2
 alignment_mode = 1
 visibility = 1
 
-[node name="UpperInput" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
-position = Vector2(0, 18)
+[node name="Output1" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
+position = Vector2(0, 16)
 
-[node name="LowerInput" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
-position = Vector2(0, 36)
+[node name="Output2" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
+position = Vector2(0, 32)
 
-[node name="UpperRightInput" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
+[node name="Input1" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
 position = Vector2(96, 18)
 
-[node name="LowerRightInput" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
+[node name="Input2" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
 position = Vector2(96, 36)
 
 [node name="Add" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
@@ -335,6 +358,41 @@ target = NodePath("../Add/Input2")
 steps = 4
 middle_offset = 50
 visibility = 1
+
+[node name="FU_ALU1" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_xt3cd")
+width = 1.0
+gradient = SubResource("Gradient_oof2p")
+script = ExtResource("4_q4wkr")
+origin = NodePath("../ForwardingUnit/Output2")
+target = NodePath("../../ALU/UpperInput")
+steps = 4
+middle_offset = -50
+visibility = 1
+force_backwards = true
+
+[node name="FU_ALU2" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_7kcpw")
+width = 1.0
+gradient = SubResource("Gradient_oof2p")
+script = ExtResource("4_q4wkr")
+origin = NodePath("../ForwardingUnit/Output1")
+target = NodePath("../../ALU/LowerInput")
+steps = 4
+middle_offset = -50
+visibility = 1
+force_backwards = true
+
+[node name="FU_RTData" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_ju8wm")
+width = 1.0
+gradient = SubResource("Gradient_oof2p")
+script = ExtResource("4_q4wkr")
+origin = NodePath("../ForwardingUnit/Output1")
+steps = 6
+middle_offset = -35
+visibility = 1
+force_backwards = true
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="ALU" to="." method="_on_alu_pressed"]

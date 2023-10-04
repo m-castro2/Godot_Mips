@@ -18,6 +18,9 @@ extends Panel
 @onready var rt_data_exmem = $DetailedControl/Rt_Data_EXMEM
 @onready var pc_add = $DetailedControl/PC_Add
 @onready var imm_val_add = $DetailedControl/ImmVal_Add
+@onready var fu_alu_1 = $DetailedControl/FU_ALU1
+@onready var fu_alu_2 = $DetailedControl/FU_ALU2
+@onready var fu_rt_data = $DetailedControl/FU_RTData
 
 @onready var lines: Array[Line2D] = [ pc, 
 									reg_dst,
@@ -30,7 +33,10 @@ extends Panel
 									alu_control_alu,
 									rt_data_exmem,
 									pc_add,
-									imm_val_add]
+									imm_val_add,
+									fu_alu_1,
+									fu_alu_2,
+									fu_rt_data]
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color:
 	set(value):
@@ -156,3 +162,31 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines) -> void:
 		LineManager.ex_lines.IMMVAL_ADD:
 			imm_val_add.origin = get_node(LineManager.stage_register_path[1]).get("imm_value_2")
 			imm_val_add.active = true
+		
+		LineManager.ex_lines.FU_ALU1:
+			match PipelinedWrapper.stage_signals_map[2]["RS_FU"]:
+				1:
+					fu_alu_1.line_color = StageControl.colors_map[StageControl.instruction_map[3]]
+				3:
+					fu_alu_1.line_color = StageControl.colors_map[StageControl.instruction_map[4]]
+			
+			fu_alu_1.active = true
+		
+		LineManager.ex_lines.FU_ALU2:
+			match PipelinedWrapper.stage_signals_map[2]["RT_FU"]:
+				1:
+					fu_alu_2.line_color = StageControl.colors_map[StageControl.instruction_map[3]]
+				3:
+					fu_alu_2.line_color = StageControl.colors_map[StageControl.instruction_map[4]]
+			
+			fu_alu_2.active = true
+		
+		LineManager.ex_lines.FU_RTDATA:
+			match PipelinedWrapper.stage_signals_map[2]["RT_FU"]:
+				1:
+					fu_rt_data.line_color = StageControl.colors_map[StageControl.instruction_map[3]]
+				3:
+					fu_rt_data.line_color = StageControl.colors_map[StageControl.instruction_map[4]]
+			
+			fu_rt_data.target = get_node(LineManager.stage_register_path[2]).get("imm_value")
+			fu_rt_data.active = true

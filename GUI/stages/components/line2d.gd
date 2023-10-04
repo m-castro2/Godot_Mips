@@ -24,6 +24,8 @@ var min_finish_length: int = 10
 
 @export var force_up: bool # force to be drawn up instead of down
 
+@export var force_backwards: bool # needed for FU output
+
 var active: bool :
 	set(value):
 		active = value
@@ -69,6 +71,25 @@ func add_points():
 		# y coord mismatch mistakes
 		add_point(Vector2(target.global_position.x, origin.global_position.y))
 		return
+	
+	if force_backwards: # FU backwards lines
+		var point: Vector2 = origin.global_position + Vector2(middle_offset, 0)
+		add_point(point)
+		if steps == 4:
+			point = Vector2(point.x, target.global_position.y)
+			add_point(point)
+			add_point(target.global_position)
+			return
+		else:
+			point = Vector2(point.x, point.y + (target.global_position.y - point.y)/2)
+			add_point(point)
+			point = Vector2(point.x + (target.global_position.x - point.x)*.65, point.y)
+			add_point(point)
+			point = Vector2(point.x, target.global_position.y)
+			add_point(point)
+			point = Vector2(target.global_position.x, target.global_position.y)
+			add_point(point)
+			return
 	
 	if (target.global_position.x - min_finish_length) < (origin.global_position.x + min_finish_length): # origin is further right than target
 		var point: Vector2 = origin.global_position + Vector2(max(\

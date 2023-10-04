@@ -1,10 +1,11 @@
-[gd_scene load_steps=29 format=3 uid="uid://cyfy0tcp481of"]
+[gd_scene load_steps=30 format=3 uid="uid://cyfy0tcp481of"]
 
 [ext_resource type="Script" path="res://stages/ex_detail.gd" id="1_qp051"]
 [ext_resource type="Script" path="res://stages/components/ALU.gd" id="2_qvpnf"]
 [ext_resource type="Script" path="res://stages/components/main_component.gd" id="3_tibhf"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="4_2lcnv"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="4_q4wkr"]
+[ext_resource type="PackedScene" uid="uid://0w0nhveoj2tb" path="res://stages/components/windows/FordwardingUnit_info_window.tscn" id="6_75j1o"]
 [ext_resource type="Script" path="res://stages/components/complex_line.gd" id="6_bibc7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j11ls"]
@@ -226,6 +227,10 @@ position = Vector2(96, 18)
 [node name="Input2" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
 position = Vector2(96, 36)
 
+[node name="FordwardingUnit_info_window" parent="DetailedControl/ForwardingUnit" instance=ExtResource("6_75j1o")]
+title = "Forwarding Unit"
+visible = false
+
 [node name="Add" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
 visible = false
 layout_mode = 0
@@ -396,3 +401,4 @@ force_backwards = true
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="ALU" to="." method="_on_alu_pressed"]
+[connection signal="pressed" from="DetailedControl/ForwardingUnit" to="." method="_on_forwarding_unit_pressed"]

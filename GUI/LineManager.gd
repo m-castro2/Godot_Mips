@@ -134,26 +134,28 @@ func activate_lines(_stage_signals_map: Array):
 			0:
 				if !stage_signals_map[2]["ALU_SRC"]:
 					ex_line_active.emit(ex_lines.RTDATA_ALU2)
-				else:
+				elif stage_signals_map[2]["MEM_WRITE"]:
 					ex_line_active.emit(ex_lines.RTDATA_EXMEM)
 			1:
-				mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT)
 				if !stage_signals_map[2]["ALU_SRC"]:
+					mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT)
 					ex_line_active.emit(ex_lines.FU_ALU2)
-				else:
+				elif stage_signals_map[2]["MEM_WRITE"]:
+					mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT)
 					ex_line_active.emit(ex_lines.FU_RTDATA)
 			2:
 				pass
 			3:
-				wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT)
 				if !stage_signals_map[2]["ALU_SRC"]:
 					ex_line_active.emit(ex_lines.FU_ALU2)
-				else:
+					wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT)
+				elif stage_signals_map[2]["MEM_WRITE"]:
 					ex_line_active.emit(ex_lines.FU_RTDATA)
+					wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT)
 			4:
 				pass
-		
-		ex_line_active.emit(ex_lines.RTDATA_EXMEM) # origin gets updated based on IMMVAL?RTDATA_ALU2
+		if stage_signals_map[2]["MEM_WRITE"]:
+			ex_line_active.emit(ex_lines.RTDATA_EXMEM) # origin gets updated based on IMMVAL?RTDATA_ALU2
 		#ex_line_active.emit(ex_lines.RS_FU)
 		#ex_line_active.emit(ex_lines.RT_FU)
 		if stage_signals_map[2]["RELBRANCH"]:

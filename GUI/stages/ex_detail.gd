@@ -190,3 +190,7 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines) -> void:
 			
 			fu_rt_data.target = get_node(LineManager.stage_register_path[2]).get("imm_value")
 			fu_rt_data.active = true
+
+
+func _on_forwarding_unit_pressed():
+	$DetailedControl/ForwardingUnit/FordwardingUnit_info_window.add_info()

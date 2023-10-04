@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="6_a6ygu"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="6_vaybo"]
 [ext_resource type="Script" path="res://stages/components/line_label.gd" id="7_ngrk1"]
-[ext_resource type="PackedScene" uid="uid://dynh0mgy042yp" path="res://RegBank_info_window.tscn" id="8_3k5xc"]
+[ext_resource type="PackedScene" uid="uid://dynh0mgy042yp" path="res://stages/components/windows/RegBank_info_window.tscn" id="8_3k5xc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s2nlp"]
 shader = ExtResource("6_vaybo")

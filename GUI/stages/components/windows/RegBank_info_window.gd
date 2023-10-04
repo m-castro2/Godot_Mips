@@ -37,7 +37,6 @@ func _on_size_changed():
 func add_info():
 	visible = true
 	for i in range(1, 64, 2):
-		print(i/2)
 		var value: String = PipelinedWrapper.cpu_info["Registers"]["iRegisters"][i/2]
 		grid_container.get_child(i).text = value
 		if value == "00000000":

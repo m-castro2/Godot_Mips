@@ -82,7 +82,7 @@ func activate_lines(_stage_signals_map: Array):
 		id_line_active.emit(id_lines.HDU_PC)
 	
 	# STAGE ID
-	if StageControl.instruction_map[1] != -1:
+	if StageControl.instruction_map[1] != -1 and !stage_signals_map[1]["STALL"]:
 		id_line_active.emit(id_lines.PC)
 		id_line_active.emit(id_lines.INST_BASE)
 		if stage_signals_map[1]["BRANCH"]:

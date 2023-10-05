@@ -287,47 +287,63 @@ void PipelinedWrapper::set_diagram(godot::Dictionary p_diagram) {
 }
 
 void PipelinedWrapper::_update_diagram() {
-    CpuFlex & cpuFlex = dynamic_cast<CpuFlex &>(*cpu);
-    const uint32_t * const * l_diagram = cpuFlex.get_diagram();
-    uint32_t current_cycle = cpu->get_cycle();
-    godot::Dictionary result = {};
+    // CpuFlex & cpuFlex = dynamic_cast<CpuFlex &>(*cpu);
+    // const uint32_t * const * l_diagram = cpuFlex.get_diagram();
+    // uint32_t current_cycle = cpu->get_cycle();
+    // godot::Dictionary result = {};
 
-    std::vector<uint32_t> loaded_inst = cpu->get_loaded_instructions();
-    for (size_t i = 1; i < loaded_inst.size(); ++i)
-    {   
-        uint32_t ipc = loaded_inst[i];
-        uint32_t iindex = (ipc - MEM_TEXT_START)/4 + 1;
-        int runstate = 0;
-        godot::Array cycle_array = {};
+    // std::vector<uint32_t> loaded_inst = cpu->get_loaded_instructions();
+    // for (size_t i = 1; i < loaded_inst.size(); ++i)
+    // {   
+    //     uint32_t ipc = loaded_inst[i];
+    //     uint32_t iindex = (ipc - MEM_TEXT_START)/4 + 1;
+    //     int runstate = 0;
+    //     godot::Array cycle_array = {};
 
-        for (size_t j = 1; j<=current_cycle && runstate < 2; j++) {
-            godot::Array array;
-            array.push_back(std::to_string(j).c_str());
-            if (l_diagram[i][j] > 0)
-            {
-                runstate = 1;
-                if (l_diagram[i][j] == l_diagram[i][j-1]) {
-                    array.push_back(stage_names[l_diagram[i][j]-1].c_str());
-                }
-                else {
-                    array.push_back(stage_names[l_diagram[i][j]-1].c_str());
-                }
-            }
-            else
-            {
-                /* if (runstate)
-                    runstate = 2; */
-                array.push_back("/");
-            }
-            /* if (iindex <= cycle_array.size()) { //backwards jumps
-                cycle_array.remove_at(iindex);
-                cycle_array.insert(iindex, array);
-            }
-            else { */
-                cycle_array.push_back(array);
+    //     for (size_t j = 1; j<=current_cycle && runstate < 2; j++) {
+    //         godot::Array array;
+    //         array.push_back(std::to_string(j).c_str());
+    //         if (l_diagram[i][j] > 0)
+    //         {
+    //             runstate = 1;
+    //             if (l_diagram[i][j] == l_diagram[i][j-1]) {
+    //                 array.push_back(stage_names[l_diagram[i][j]-1].c_str());
+    //             }
+    //             else {
+    //                 array.push_back(stage_names[l_diagram[i][j]-1].c_str());
+    //             }
+    //         }
+    //         else
+    //         {
+    //             /* if (runstate)
+    //                 runstate = 2; */
+    //             array.push_back("/");
+    //         }
+    //         /* if (iindex <= cycle_array.size()) { //backwards jumps
+    //             cycle_array.remove_at(iindex);
+    //             cycle_array.insert(iindex, array);
+    //         }
+    //         else { */
+    //             cycle_array.push_back(array);
+    //     }
+
+    //     //result[iindex] = cycle_array;
+    // }
+    
+    for (int i = 0; i < STAGE_FWB; ++i) {
+        int pc = 0;
+        if (!i) {
+            pc = stage_signals_map[i].get("PREV_PC");
         }
-
-        result[iindex] = cycle_array;
+        else {
+            pc = stage_signals_map[i].get("PC");
+        }
+        if (pc) {
+            result[i] = (pc % MEM_TEXT_START) / 4;
+        }
+        else {
+            result[i] = -1;
+        }
     }
 
 

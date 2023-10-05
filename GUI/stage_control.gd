@@ -55,32 +55,38 @@ func update_instruction_map(instructions, loaded_instructions: Array, \
 	if !Globals.current_cycle:
 		return
 	
-	var if_idx = -1
-	var id_idx = -1
-	var ex_idx = -1
-	var mem_idx = -1
-	var wb_idx = -1
-	for i in diagram.keys():
-		for j in diagram.get(i).size():
-			if Globals.current_cycle == int(diagram.get(i)[j][0]):
-				match diagram[i][j][1]:
-					"WB":
-						wb_idx = i-1
-					"MEM":
-						mem_idx = i-1
-					"EX":
-						ex_idx = i-1
-					"ID":
-						id_idx = i-1
-					"IF":
-						if_idx = i-1
-	
+#	var if_idx = -1
+#	var id_idx = -1
+#	var ex_idx = -1
+#	var mem_idx = -1
+#	var wb_idx = -1
+#	for i in diagram.keys():
+#		for j in diagram.get(i).size():
+#			if Globals.current_cycle == int(diagram.get(i)[j][0]):
+#				match diagram[i][j][1]:
+#					"WB":
+#						wb_idx = i-1
+#					"MEM":
+#						mem_idx = i-1
+#					"EX":
+#						ex_idx = i-1
+#					"ID":
+#						id_idx = i-1
+#					"IF":
+#						if_idx = i-1
+#
+#	instruction_map.clear()
+#	instruction_map.push_back(if_idx)
+#	instruction_map.push_back(id_idx)
+#	instruction_map.push_back(ex_idx)
+#	instruction_map.push_back(mem_idx)
+#	instruction_map.push_back(wb_idx)
 	instruction_map.clear()
-	instruction_map.push_back(if_idx)
-	instruction_map.push_back(id_idx)
-	instruction_map.push_back(ex_idx)
-	instruction_map.push_back(mem_idx)
-	instruction_map.push_back(wb_idx)
+	instruction_map.push_back(PipelinedWrapper.diagram[0])
+	instruction_map.push_back(PipelinedWrapper.diagram[1])
+	instruction_map.push_back(PipelinedWrapper.diagram[2])
+	instruction_map.push_back(PipelinedWrapper.diagram[3])
+	instruction_map.push_back(PipelinedWrapper.diagram[4])
 	
 	calculate_stage_color(instruction_map)
 	update_stage_colors.emit(colors_map, instruction_map)

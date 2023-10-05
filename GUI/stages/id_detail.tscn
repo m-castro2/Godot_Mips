@@ -162,13 +162,11 @@ offset_bottom = 23.0
 text = "[25-21]"
 script = ExtResource("7_ngrk1")
 label_line_vertex = 2
-label_orientation = null
 label_padding = Vector2(5, 0)
 line = NodePath("../Inst_25-21")
 stage = 1
 map_key = "RS_REG"
 map_stage = 1
-is_register_name = null
 
 [node name="Inst_20-16_RDReg2" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_s2nlp")
@@ -188,13 +186,11 @@ offset_bottom = 23.0
 text = "[25-21]"
 script = ExtResource("7_ngrk1")
 label_line_vertex = 2
-label_orientation = null
 label_padding = Vector2(5, 0)
 line = NodePath("../Inst_20-16_RDReg2")
 stage = 1
 map_key = "RT_REG"
 map_stage = 1
-is_register_name = null
 
 [node name="Inst_15-0_Imm" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_s2nlp")
@@ -213,7 +209,6 @@ offset_bottom = 23.0
 text = "[25-21]"
 script = ExtResource("7_ngrk1")
 label_line_vertex = 2
-label_orientation = null
 label_padding = Vector2(5, 0)
 line = NodePath("../Inst_15-0_Imm")
 stage = 1
@@ -239,7 +234,6 @@ offset_bottom = 23.0
 text = "[25-21]"
 script = ExtResource("7_ngrk1")
 label_line_vertex = 2
-label_orientation = null
 label_padding = Vector2(5, 0)
 line = NodePath("../Inst_15-0_Add")
 stage = 1

@@ -21,9 +21,11 @@ signal close_menu
 signal expand_stage(stage_number: int)
 var current_expanded_stage: STAGES = -1
 signal current_expanded_stage_updated
-var is_stage_tweening: bool
+var is_stage_tweening: bool = false
 signal stage_tween_finished(stage: STAGES)
 signal components_tween_finished
+
+var timer:= Timer.new()
 
 ## used by stages to get coords to other stages components
 signal stage_component_requested(stage_number: int, component_name: String, caller_ref: NodePath)
@@ -50,3 +52,8 @@ signal branch_stage_changed(value: int)
 signal branch_type_changed(value: int)
 signal hdu_available_changed(value: int)
 signal fu_available_changed(value: int)
+
+
+func _ready():
+	timer.one_shot = true
+	add_child(timer)

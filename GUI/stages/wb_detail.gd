@@ -122,6 +122,8 @@ func _on_mux_pressed():
 
 
 func _on_gui_input(_event):
+	if !Globals.timer.is_stopped():
+		return
 	if Input.is_action_just_pressed("Click"):
 		if Globals.close_window_handled:
 			Globals.close_window_handled = false

@@ -2,7 +2,7 @@ class_name LineLabel
 extends Label
 
 @export var label_line_vertex: int
-@export var label_orientation: bool
+@export var label_orientation: bool = false
 @export var label_padding: Vector2
 @export var line: Line2D
 @export var stage: int
@@ -25,7 +25,7 @@ func _on_line_drawn():
 
 
 func _on_line_visibility_changed():
-	visible = line.visible
+	visible = line.visible and Globals.current_expanded_stage == stage
 	if !visible:
 		return
 	if is_register_name:

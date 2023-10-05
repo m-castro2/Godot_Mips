@@ -154,7 +154,7 @@ func check_visibility(just_activated: bool):
 	visible = false
 	
 	if !just_activated: #awaits needed to avoid visibility flickering
-		await Globals.components_tween_finished
+		await Globals.components_tween_finished # this awaits causes the lines not appearing sometimes
 		await get_tree().process_frame
 	
 	if visibility == visibility_type.ALWAYS:

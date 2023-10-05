@@ -162,9 +162,13 @@ offset_bottom = 23.0
 text = "[25-21]"
 script = ExtResource("7_ngrk1")
 label_line_vertex = 2
+label_orientation = null
 label_padding = Vector2(5, 0)
 line = NodePath("../Inst_25-21")
 stage = 1
+map_key = "RS_REG"
+map_stage = 1
+is_register_name = null
 
 [node name="Inst_20-16_RDReg2" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_s2nlp")
@@ -174,6 +178,23 @@ script = ExtResource("6_4vcia")
 origin = NodePath("../InstBase")
 target = NodePath("../Input2")
 intersect_point = 1.0
+visibility = 1
+
+[node name="Inst_20_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_orientation = null
+label_padding = Vector2(5, 0)
+line = NodePath("../Inst_20-16_RDReg2")
+stage = 1
+map_key = "RT_REG"
+map_stage = 1
+is_register_name = null
 
 [node name="Inst_15-0_Imm" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_s2nlp")
@@ -184,6 +205,22 @@ origin = NodePath("../InstBase")
 intersect_point = 1.0
 visibility = 1
 
+[node name="Inst_Imm_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_orientation = null
+label_padding = Vector2(5, 0)
+line = NodePath("../Inst_15-0_Imm")
+stage = 1
+map_key = "IMM_VALUE"
+map_stage = 1
+is_register_name = false
+
 [node name="Inst_15-0_Add" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_s2nlp")
 width = 1.0
@@ -193,6 +230,22 @@ origin = NodePath("../InstBase")
 target = NodePath("../../DetailedControl/Add/Input2")
 intersect_point = 1.0
 visibility = 1
+
+[node name="Inst_Add_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_orientation = null
+label_padding = Vector2(5, 0)
+line = NodePath("../Inst_15-0_Add")
+stage = 1
+map_key = "C_BRANCH"
+map_stage = 1
+is_register_name = false
 
 [node name="Inst_20-16_RegDst" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "node_to_avoid")]
 material = SubResource("ShaderMaterial_s2nlp")
@@ -205,6 +258,20 @@ visibility = 1
 node_to_avoid = NodePath("..")
 avoid_offset = Vector2(0, 10)
 
+[node name="Inst_20_RegDest_label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 3
+label_padding = Vector2(5, 0)
+line = NodePath("../Inst_20-16_RegDst")
+stage = 1
+map_key = "REG_DEST_REGISTER"
+map_stage = 1
+
 [node name="Inst_15-11_RegDst" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "node_to_avoid")]
 material = SubResource("ShaderMaterial_s2nlp")
 width = 1.0
@@ -215,6 +282,20 @@ intersect_point = 1.0
 visibility = 1
 node_to_avoid = NodePath("..")
 avoid_offset = Vector2(0, 5)
+
+[node name="Inst_15_RegDest_label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 3
+label_padding = Vector2(5, 0)
+line = NodePath("../Inst_15-11_RegDst")
+stage = 1
+map_key = "REG_DEST_REGISTER"
+map_stage = 1
 
 [node name="Inst_Control" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_s2nlp")
@@ -233,6 +314,22 @@ gradient = SubResource("Gradient_c0h55")
 script = ExtResource("6_21ql4")
 origin = NodePath("../Output2")
 steps = 4
+visibility = 1
+
+[node name="RegBank_RTData_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_padding = Vector2(0, 5)
+line = NodePath("../RegBank_RTData")
+stage = 1
+map_key = "RT_VALUE"
+map_stage = 1
+is_register_name = false
 
 [node name="RegBank_RSData" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_s2nlp")
@@ -242,6 +339,22 @@ script = ExtResource("6_21ql4")
 origin = NodePath("../Output1")
 steps = 4
 middle_offset = 10
+visibility = 1
+
+[node name="RegBank_RSData_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_padding = Vector2(0, 5)
+line = NodePath("../RegBank_RSData")
+stage = 1
+map_key = "RS_VALUE"
+map_stage = 1
+is_register_name = false
 
 [node name="InstBase" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_t25jr")

@@ -36,6 +36,7 @@ void PipelinedWrapper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("change_branch_stage"), &PipelinedWrapper::change_branch_stage);
     ClassDB::bind_method(D_METHOD("change_branch_type"), &PipelinedWrapper::change_branch_type);
     ClassDB::bind_method(D_METHOD("get_register_names"), &PipelinedWrapper::get_register_names);
+    ClassDB::bind_method(D_METHOD("to_hex32"), &PipelinedWrapper::to_hex32);
 
 
     //bind properties
@@ -377,6 +378,10 @@ godot::Array PipelinedWrapper::get_register_names() {
         name_array.append(Utils::get_register_name(i).c_str());
     }
     return name_array;
+}
+
+godot::String PipelinedWrapper::to_hex32(uint32_t value){
+    return Utils::hex32(value).c_str();
 }
 
 

@@ -34,6 +34,8 @@ signal redraw_lines(register: int)
 var stage_detail_path: Array = []
 var stage_register_path: Array = []
 
+@onready var register_names: Array = PipelinedWrapper.get_register_names()
+
 
 func add_stage_detail_path(path: NodePath):
 	stage_detail_path.append(path)
@@ -161,7 +163,7 @@ func activate_lines(_stage_signals_map: Array):
 		if stage_signals_map[2]["RELBRANCH"]:
 			ex_line_active.emit(ex_lines.PC_ADD)
 			ex_line_active.emit(ex_lines.IMMVAL_ADD)
-			ex_line_active.emit(ex_lines.RT_FU)
+			#ex_line_active.emit(ex_lines.RT_FU)
 	
 	# STAGE MEM
 	if StageControl.instruction_map[3] != -1:

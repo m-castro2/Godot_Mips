@@ -124,12 +124,12 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines) -> void:
 			
 		LineManager.ex_lines.RS_FU:
 			rs_fu.origin = get_node(LineManager.stage_register_path[1]).get("rs_2")
-			rs_fu.target = $DetailedControl/ForwardingUnit/UpperInput
+			rs_fu.target = $DetailedControl/ForwardingUnit/Input1
 			rs_fu.active = true
 			
 		LineManager.ex_lines.RT_FU:
 			rt_fu.origin = get_node(LineManager.stage_register_path[1]).get("rt_2")
-			rt_fu.target = $DetailedControl/ForwardingUnit/LowerInput
+			rt_fu.target = $DetailedControl/ForwardingUnit/Input2
 			rt_fu.active = true
 			
 		LineManager.ex_lines.ALUCONTROL_ALU:

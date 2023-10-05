@@ -7,6 +7,10 @@ extends Label
 @export var line: Line2D
 @export var stage: int
 
+@export var map_key: String
+@export var map_stage: int
+@export var is_register_name: bool = true
+
 
 func _ready():
 	line.draw.connect(_on_line_drawn)
@@ -22,3 +26,9 @@ func _on_line_drawn():
 
 func _on_line_visibility_changed():
 	visible = line.visible
+	if !visible:
+		return
+	if is_register_name:
+		text = LineManager.register_names[PipelinedWrapper.stage_signals_map[map_stage][map_key]]
+	else:
+		text = PipelinedWrapper.to_hex32(PipelinedWrapper.stage_signals_map[map_stage][map_key])

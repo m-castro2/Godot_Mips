@@ -26,6 +26,7 @@ var min_finish_length: int = 10
 
 @export var force_backwards: bool # needed for FU output
 
+
 var active: bool :
 	set(value):
 		active = value
@@ -124,7 +125,7 @@ func add_points():
 
 
 func _ready():
-	Globals.expand_stage.connect(_on_Globals_expand_stage)
+	Globals.current_expanded_stage_updated.connect(_on_Globals_expand_stage)
 	Globals.components_tween_finished.connect(add_points)
 	Globals.components_tween_finished.connect(animate_line)
 	Globals.reset_button_pressed.connect(deactivate_line)
@@ -140,7 +141,7 @@ func _ready():
 	visible = false
 
 
-func _on_Globals_expand_stage(_stage_number: int):
+func _on_Globals_expand_stage():#_stage_number: int):
 	if !Globals.current_cycle:
 		return
 	
@@ -149,20 +150,31 @@ func _on_Globals_expand_stage(_stage_number: int):
 
 func check_visibility(just_activated: bool):
 	if !active:
+		Globals.can_click = true
 		return
 	
 	visible = false
 	
 	if !just_activated: #awaits needed to avoid visibility flickering
-		await Globals.components_tween_finished # this awaits causes the lines not appearing sometimes
+		if Globals.is_stage_tweening:
+			await Globals.components_tween_finished
+#		if !Globals.is_components_tween_finished:
+#			await Globals.components_tween_finished # this awaits causes the lines not appearing sometimes
 		await get_tree().process_frame
+		Globals.can_click = true
 	
 	if visibility == visibility_type.ALWAYS:
+		if !Globals.is_components_tween_finished:
+			await Globals.components_tween_finished
 		visible = true
+		Globals.can_click = true
 		return
 	
 	else:
+		if !Globals.is_components_tween_finished:
+			await Globals.components_tween_finished
 		visible = (Globals.current_expanded_stage == stage)
+		Globals.can_click = true
 		return
 
 

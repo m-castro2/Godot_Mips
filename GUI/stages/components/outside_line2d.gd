@@ -71,6 +71,23 @@ func _ready():
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 	Globals.reset_button_pressed.connect(deactivate_line)
 	Globals.cycle_changed.connect(deactivate_line)
+	
+	if origin_component:
+		origin_component.visibility_changed.connect(_on_component_visibility_changed)
+	if target_component:
+		target_component.visibility_changed.connect(_on_component_visibility_changed)
+
+
+func _on_component_visibility_changed():
+	if Globals.is_stage_tweening:
+		return
+	
+	var vis:= true
+	if origin_component:
+		vis = vis and origin_component.visible
+	if target_component:
+		vis = vis and target_component.visible
+	visible = vis
 
 
 func _on_Globals_expand_stage(_stage_number: int):
@@ -91,15 +108,17 @@ func check_visibility(just_activated: bool, just_expanded: bool) -> void:
 		return
 	
 	if !just_activated:
-		await Globals.components_tween_finished
+		if Globals.is_stage_tweening:
+			await Globals.components_tween_finished
 		await get_tree().process_frame
-	
-	visible = true
 	
 	if origin_component:
 		origin_component.requested = true
 	if target_component:
 		target_component.requested = true
+	
+	_on_component_visibility_changed()
+	
 
 
 func set_outside_component(component: Button, which: String):

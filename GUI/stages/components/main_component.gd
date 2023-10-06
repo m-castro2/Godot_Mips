@@ -14,8 +14,9 @@ var expanded: bool = false
 
 @export var request_stage_origin: Array[int] = []
 
-signal request_updated
+var tween: Tween = null
 
+signal request_updated
 
 var requested: bool = false :
 	set(value):
@@ -33,19 +34,24 @@ func _ready():
 
 
 func _on_parent_resized() -> void:
+	if tween:
+		Globals.is_components_tween_finished = false
+		tween.kill()
+	
 	var position_modifier: Vector2 = expanded_position_percent if expanded else position_percent
 	var new_position: Vector2 = Vector2.ZERO
-	var tween: Tween = get_tree().create_tween()
+	tween = get_tree().create_tween()
 	if expanded and alignment_mode == alignment_type.OFFSET:
 		new_position.x = reference_node.size.x*position_modifier.x - size.x
 		new_position.y = reference_node.size.y*position_modifier.y - size.y/2
 	else:
 		new_position = reference_node.size*position_modifier - size/2
-	tween.tween_property(self, "position", new_position, 0.05)
+	tween.tween_property(self, "position", new_position, 0.1)
 	
 	if !Globals.is_stage_tweening:
 		await tween.finished
 		Globals.components_tween_finished.emit()
+		Globals.is_components_tween_finished = true
 
 
 func _on_expand_stage(_stage: int):

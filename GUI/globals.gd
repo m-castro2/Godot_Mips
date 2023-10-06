@@ -19,11 +19,13 @@ signal show_menu(value: bool)
 signal close_menu
 
 signal expand_stage(stage_number: int)
-var current_expanded_stage: STAGES = -1
+var current_expanded_stage: int = -1
 signal current_expanded_stage_updated
 var is_stage_tweening: bool = false
 signal stage_tween_finished(stage: STAGES)
 signal components_tween_finished
+var is_components_tween_finished:= false
+var can_click:= true
 
 var timer:= Timer.new()
 
@@ -55,5 +57,14 @@ signal fu_available_changed(value: int)
 
 
 func _ready():
+	stage_tween_finished.connect(_on_stage_tween_finished)
+	timer.timeout.connect(_on_timer_timeout)
 	timer.one_shot = true
 	add_child(timer)
+
+
+func _on_stage_tween_finished(_stage):
+	pass#can_click = true
+
+func _on_timer_timeout():
+	can_click = true

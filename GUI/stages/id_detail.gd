@@ -1,13 +1,13 @@
 extends Panel
 
-@onready var registers_bank = $RegistersBank
-@onready var detailed_control = $DetailedControl
-@onready var add = $DetailedControl/Add
-@onready var control = $DetailedControl/Control
-@onready var hazard_detection_unit = $HazardDetectionUnit
+@onready var registers_bank: MainComponent = $RegistersBank
+@onready var detailed_control: Control = $DetailedControl
+@onready var add: MainComponent = $DetailedControl/Add
+@onready var control: Control = $DetailedControl/Control
+@onready var hazard_detection_unit: MainComponent = $HazardDetectionUnit
 
 #lines
-@onready var inst_25_21 = $"RegistersBank/Inst_25-21"
+@onready var inst_25_21: ComplexLine2D = $"RegistersBank/Inst_25-21"
 @onready var inst_20_16_rd_reg_2 = $"RegistersBank/Inst_20-16_RDReg2"
 @onready var inst_15_0_imm = $"RegistersBank/Inst_15-0_Imm"
 @onready var inst_15_0_add = $"RegistersBank/Inst_15-0_Add"
@@ -146,10 +146,12 @@ func _on_resized():
 		Globals.recenter_window.emit()
 
 
-func _on_gui_input(_event):
-	if !Globals.timer.is_stopped():
+func _on_gui_input(_event) -> void:
+	if !Globals.can_click:
 		return
 	if Input.is_action_just_pressed("Click"):
+		Globals.can_click = false
+		Input.flush_buffered_events()
 		if Globals.close_window_handled:
 			Globals.close_window_handled = false
 		else:
@@ -161,7 +163,8 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines) -> void:
 		LineManager.id_lines.HDU_PC:
 			hdu_pc.origin_component = hazard_detection_unit
 			hdu_pc.origin_component.request_stage_origin.append(Globals.STAGES.IF)
-			hdu_pc.target = LineManager.get_stage_component(0, "pc").get_node("UpperInput")
+			hdu_pc.target_component = LineManager.get_stage_component(0, "pc")
+			hdu_pc.target = hdu_pc.target_component.get_node("UpperInput")
 			hdu_pc.active = true
 			
 		LineManager.id_lines.PC:

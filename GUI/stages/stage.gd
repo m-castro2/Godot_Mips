@@ -7,6 +7,8 @@ var detail: Panel = null
 @export var stage_name: String
 @export var stage_number: int
 
+var tween: Tween = null
+
 var stage_color: Color = Color.TRANSPARENT
 
 var lines_groups: Array[String] = ["PC_InstMem", "Mux_PC", "PC_Add", "Add_IFID", "InstMem_IFID", "Add_Mux"]
@@ -26,14 +28,15 @@ func _ready() -> void:
 
 
 func _on_stage_button_pressed():
-	if !Globals.timer.is_stopped():
+	if !Globals.can_click:
 		return
 	Globals.expand_stage.emit(stage_number)
 
 
 func tween_size():
-	var tween: Tween = get_tree().create_tween()
-	Globals.timer.start(0.3)
+	if tween:
+		tween.kill()
+	tween = get_tree().create_tween()
 	Globals.is_stage_tweening = true
 	if stage_number == 4: #WB does not need as much space
 		tween.tween_property(self, "size_flags_stretch_ratio", 1.0 if expanded else 1.5, 0.15)

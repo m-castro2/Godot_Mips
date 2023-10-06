@@ -81,9 +81,11 @@ func _on_add_pressed() -> void:
 
 
 func _on_gui_input(_event) -> void:
-	if !Globals.timer.is_stopped():
+	if !Globals.can_click:
 		return
 	if Input.is_action_just_pressed("Click"):
+		Input.flush_buffered_events()
+		Globals.can_click = false
 		if Globals.close_window_handled:
 			Globals.close_window_handled = false
 		else:

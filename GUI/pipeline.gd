@@ -33,7 +33,7 @@ func _on_resized():
 
 
 func _on_expand_stage(stage_number: int) -> void:
-	if expanded_stage == -1: #nothing is expanded
+	if Globals.current_expanded_stage == -1: #nothing is expanded
 		expanded_stage = stage_number
 		(get_node(stages[expanded_stage]) as Stage).tween_size()
 	elif expanded_stage == stage_number: #reduce expanded stage

@@ -290,7 +290,7 @@ void PipelinedWrapper::_update_diagram() {
     // CpuFlex & cpuFlex = dynamic_cast<CpuFlex &>(*cpu);
     // const uint32_t * const * l_diagram = cpuFlex.get_diagram();
     // uint32_t current_cycle = cpu->get_cycle();
-    // godot::Dictionary result = {};
+    godot::Dictionary result = {};
 
     // std::vector<uint32_t> loaded_inst = cpu->get_loaded_instructions();
     // for (size_t i = 1; i < loaded_inst.size(); ++i)

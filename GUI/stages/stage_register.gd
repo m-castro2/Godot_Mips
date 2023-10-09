@@ -27,6 +27,9 @@ class_name StageRegister
 @onready var reg_dst_2 = $StageRegister/VBoxContainer/Register/RegDst2
 @onready var rel_branch_2 = $StageRegister/VBoxContainer/Register/RelBranch2
 
+#window
+@onready var info_window: Window = $SegReg_info_window
+
 var ready_finished: bool
 
 var input_markers: Array[Marker2D]
@@ -45,6 +48,7 @@ func _ready():
 	ready_finished = true
 	
 	LineManager.add_stage_register_path(get_path())
+	info_window.seg_reg_index = register_type
 
 
 func get_data():
@@ -94,3 +98,11 @@ func _on_register_item_rect_changed():
 
 func _on_v_box_container_item_rect_changed():
 	LineManager.redraw_lines.emit(int(register_type))
+
+
+func _on_register_pressed():
+	info_window.add_info()
+
+
+func _on_seg_reg_info_window_focus_exited():
+	info_window.visible = false

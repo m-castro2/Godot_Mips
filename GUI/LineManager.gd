@@ -36,6 +36,8 @@ var stage_register_path: Array = []
 
 @onready var register_names: Array = PipelinedWrapper.get_register_names()
 
+var seg_reg_values:Array[Dictionary] = [{}, {}, {}, {}]
+
 
 func add_stage_detail_path(path: NodePath):
 	stage_detail_path.append(path)
@@ -57,9 +59,13 @@ func activate_lines(_stage_signals_map: Array):
 	
 	var branch_stage = ConfigManager.get_value("Settings/CPU", "branch_stage")
 	
+	
+	seg_reg_values = [{}, {}, {}, {}] #clear
+	
 	# STAGE IF
 	if StageControl.instruction_map[0] != -1:
-		if stage_signals_map[0]["PC_WR"] == 1: 
+		seg_reg_values[0]["PC_W"] = PipelinedWrapper.to_hex32(stage_signals_map[0]["PREV_PC"])
+		if stage_signals_map[0]["PC_WR"] == 1:
 			if_line_active.emit(if_lines.PC_INSTMEM)
 			if_line_active.emit(if_lines.INSTMEM_IFID)
 			if_line_active.emit(if_lines.ADD_IFID)
@@ -80,6 +86,9 @@ func activate_lines(_stage_signals_map: Array):
 					id_line_active.emit(id_lines.INST_PC)
 			
 		id_line_active.emit(id_lines.HDU_PC)
+		
+		seg_reg_values[0]["PC_W"] = PipelinedWrapper.to_hex32(stage_signals_map[0]["PREV_PC"])
+		seg_reg_values[0]["INSTRUCTION"] = PipelinedWrapper.to_hex32(StageControl.instruction_map[1]) 
 	
 	# STAGE ID
 	if StageControl.instruction_map[1] != -1 and !stage_signals_map[1]["STALL"]:
@@ -91,16 +100,20 @@ func activate_lines(_stage_signals_map: Array):
 		else:
 			id_line_active.emit(id_lines.INST_RDREG1)
 			id_line_active.emit(id_lines.RDDATA_RSDATA)
+			seg_reg_values[0]["RS_DATA_R"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["RS_VALUE"])
 			if stage_signals_map[1]["ALU_SRC"]:
 				id_line_active.emit(id_lines.INST_IMMVAL)
+				seg_reg_values[0]["IMM_VALUE_R"] = stage_signals_map[1]["IMM_VALUE"]
 			else:
 				id_line_active.emit(id_lines.INST_RDREG2)
 				id_line_active.emit(id_lines.RDDATA2_RTDATA)
+				seg_reg_values[0]["RT_DATA_R"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["RT_VALUE"])
 			if stage_signals_map[1]["REG_WRITE"]:
 				if stage_signals_map[1]["REG_DEST"] == 0:
 					id_line_active.emit(id_lines.INST20_REGDST)
 				elif stage_signals_map[1]["REG_DEST"] == 1:
 					id_line_active.emit(id_lines.INST15_REGDST)
+				seg_reg_values[0]["REG_DEST_R"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["REG_DEST"])
 			if stage_signals_map[1]["ALU_SRC"]:
 				id_line_active.emit(id_lines.INST_IMMVAL)
 			
@@ -108,6 +121,7 @@ func activate_lines(_stage_signals_map: Array):
 			#id_line_active.emit(id_lines.RT)
 			else:
 				pass # $ra
+		seg_reg_values[0]["PC_R"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["PC"])
 	
 	# STAGE EX
 	if StageControl.instruction_map[2] != -1:

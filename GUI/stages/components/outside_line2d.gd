@@ -91,8 +91,12 @@ func _on_component_visibility_changed():
 
 
 func _on_Globals_expand_stage(_stage_number: int):
+	if !Globals.current_cycle:
+		return
+	
 	if !active:
 		return
+	
 	add_points()
 	animate_line()
 	check_visibility(false, true)

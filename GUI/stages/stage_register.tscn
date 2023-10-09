@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://btd652x2vip8"]
+[gd_scene load_steps=4 format=3 uid="uid://btd652x2vip8"]
 
 [ext_resource type="Script" path="res://stages/stage_register.gd" id="1_72d7w"]
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="2_vdabb"]
+[ext_resource type="PackedScene" uid="uid://bgt57keji14g3" path="res://stages/components/windows/SegReg_info_window.tscn" id="3_7t7t1"]
 
 [node name="Control" type="Control"]
 custom_minimum_size = Vector2(31, 0)
@@ -86,4 +87,7 @@ EX"
 
 [node name="RegDst2" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 
+[node name="SegReg_info_window" parent="." instance=ExtResource("3_7t7t1")]
+
 [connection signal="resized" from="." to="." method="_on_resized"]
+[connection signal="pressed" from="StageRegister/VBoxContainer/Register" to="." method="_on_register_pressed"]

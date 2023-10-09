@@ -122,7 +122,7 @@ func _on_mux_pressed():
 
 
 func _on_gui_input(_event) -> void:
-	if !Globals.can_click:
+	if !Globals.can_click and Globals.current_cycle:
 		return
 	if Input.is_action_just_pressed("Click"):
 		Globals.can_click = false

@@ -25,22 +25,22 @@ func add_info():
 	if !PipelinedWrapper.stage_signals_map[2]["ALU_SRC"]:
 		alu_2.text = register_names[PipelinedWrapper.stage_signals_map[2]["RT"]]
 	elif PipelinedWrapper.stage_signals_map[2]["MEM_WRITE"] and PipelinedWrapper.stage_signals_map[2]["RT_FU"] == 1:
-		rt_data.text = register_names[PipelinedWrapper.stage_signals_map[3]["REGDEST"]]
+		rt_data.text = register_names[PipelinedWrapper.stage_signals_map[3]["REG_DEST_REGISTER"]]
 	elif PipelinedWrapper.stage_signals_map[2]["MEM_WRITE"] and PipelinedWrapper.stage_signals_map[2]["RT_FU"] == 3:
-		rt_data.text = register_names[PipelinedWrapper.stage_signals_map[4]["REGDEST"]]
+		rt_data.text = register_names[PipelinedWrapper.stage_signals_map[4]["REG_DEST_REGISTER"]]
 	else:
 		alu_2.text = "/"
 		rt_data.text = "/"
 	
 	if !PipelinedWrapper.stage_signals_map[3]["MEM_WRITE"] and PipelinedWrapper.stage_signals_map[3]["REG_WRITE"] \
 			and (PipelinedWrapper.stage_signals_map[2]["RS_FU"] == 1 or PipelinedWrapper.stage_signals_map[2]["RT_FU"] == 1):
-		mem_reg_dest.text = register_names[PipelinedWrapper.stage_signals_map[3]["REGDEST"]]
+		mem_reg_dest.text = register_names[PipelinedWrapper.stage_signals_map[3]["REG_DEST_REGISTER"]]
 	else:
 		mem_reg_dest.text = "/"
 	
 	if PipelinedWrapper.stage_signals_map[4]["REG_WRITE"] and (PipelinedWrapper.stage_signals_map[2]["RS_FU"] == 3 \
 			or PipelinedWrapper.stage_signals_map[2]["RT_FU"] == 3):
-		wb_reg_dest.text = register_names[PipelinedWrapper.stage_signals_map[4]["REGDEST"]]
+		wb_reg_dest.text = register_names[PipelinedWrapper.stage_signals_map[4]["REG_DEST_REGISTER"]]
 	else:
 		wb_reg_dest.text = "/"
 		

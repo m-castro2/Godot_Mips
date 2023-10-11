@@ -21,6 +21,10 @@ extends Panel
 @onready var fu_alu_1 = $DetailedControl/FU_ALU1
 @onready var fu_alu_2 = $DetailedControl/FU_ALU2
 @onready var fu_rt_data = $DetailedControl/FU_RTData
+@onready var rt_data_exmem_base = $DetailedControl/Rt_Data_EXMEM_Base
+
+@onready var fake_target = $DetailedControl/Fake_Target
+
 
 @onready var lines: Array[Line2D] = [ pc, 
 									reg_dst,
@@ -71,6 +75,8 @@ func calculate_positions():
 	%ALUOut.global_position = Vector2(global_position.x + size.x, $ALU/Output.global_position.y)
 	
 	%RtData.global_position = Vector2(global_position.x + size.x, size.y * .6)
+	
+	fake_target.global_position = get_node(LineManager.stage_register_path[1]).get("rt_data_2").global_position + Vector2(90,0)
 
 
 func draw_lines():
@@ -140,23 +146,14 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines) -> void:
 			alu_control_alu.active = true
 			
 		LineManager.ex_lines.RTDATA_EXMEM:
-			var origin_updated:= false
-			if rt_data_alu_2.active:
-				rt_data_exmem.origin = rt_data_alu_2
-				origin_updated = true
-			
-			var origin_line: OutsideLine2D = LineManager.get_stage_component(4, "alu_out_alu_2")
-			if origin_line.active:
-				rt_data_exmem.origin = origin_line
-				origin_updated = true
-			else:
-				origin_line = LineManager.get_stage_component(3, "alu_out_alu_2")
-				if origin_line.active:
-					rt_data_exmem.origin = origin_line
-					origin_updated = true
-			if !origin_updated:
+			if PipelinedWrapper.stage_signals_map[2]["RT_FU"]:
 				return
 			
+			rt_data_exmem_base.origin = get_node(LineManager.stage_register_path[1]).get("rt_data_2")
+			rt_data_exmem_base.default_color = Color.TRANSPARENT
+			rt_data_exmem_base.active = true
+			
+			rt_data_exmem.origin = rt_data_exmem_base
 			rt_data_exmem.target = get_node(LineManager.stage_register_path[2]).get("imm_value")
 			rt_data_exmem.active = true
 			

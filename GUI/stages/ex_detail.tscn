@@ -1,10 +1,11 @@
-[gd_scene load_steps=30 format=3 uid="uid://cyfy0tcp481of"]
+[gd_scene load_steps=33 format=3 uid="uid://cyfy0tcp481of"]
 
 [ext_resource type="Script" path="res://stages/ex_detail.gd" id="1_qp051"]
 [ext_resource type="Script" path="res://stages/components/ALU.gd" id="2_qvpnf"]
 [ext_resource type="Script" path="res://stages/components/main_component.gd" id="3_tibhf"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="4_2lcnv"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="4_q4wkr"]
+[ext_resource type="Script" path="res://stages/components/line_label.gd" id="5_gmc7d"]
 [ext_resource type="PackedScene" uid="uid://0w0nhveoj2tb" path="res://stages/components/windows/FordwardingUnit_info_window.tscn" id="6_75j1o"]
 [ext_resource type="Script" path="res://stages/components/complex_line.gd" id="6_bibc7"]
 
@@ -66,6 +67,15 @@ shader_parameter/draw_feather = 0.0
 shader_parameter/color = null
 
 [sub_resource type="Gradient" id="Gradient_aeuyd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qlwsf"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_vnyf2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l2snw"]
 shader = ExtResource("4_2lcnv")
@@ -167,6 +177,18 @@ script = ExtResource("4_q4wkr")
 origin = NodePath("../Output")
 target = NodePath("../ALUOut")
 
+[node name="ALUExMem_Label" type="Label" parent="ALU" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+label_padding = Vector2(10, 0)
+line = NodePath("../ALUExMem")
+stage = 2
+map_key = "ALU_OUT"
+map_stage = 2
+is_register_name = false
+
 [node name="ALUOut" type="Marker2D" parent="ALU"]
 unique_name_in_owner = true
 
@@ -188,6 +210,8 @@ custom_minimum_size = Vector2(66, 54)
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
+theme_type_variation = &"WindowlessComponent"
+disabled = true
 text = "ALU
 Control"
 script = ExtResource("3_tibhf")
@@ -268,6 +292,16 @@ gradient = SubResource("Gradient_xbjb4")
 script = ExtResource("4_q4wkr")
 visibility = 1
 
+[node name="RegDest_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+line = NodePath("../RegDst")
+stage = 2
+map_key = "REG_DEST_REGISTER"
+map_stage = 2
+
 [node name="RtData" type="Marker2D" parent="DetailedControl"]
 unique_name_in_owner = true
 visible = false
@@ -281,6 +315,18 @@ script = ExtResource("4_q4wkr")
 steps = 4
 visibility = 1
 
+[node name="RsData_ALU_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+label_padding = Vector2(5, 5)
+line = NodePath("../RsData_ALU")
+stage = 2
+map_key = "ALU_A"
+map_stage = 2
+is_register_name = false
+
 [node name="RtData_ALU2" type="Line2D" parent="DetailedControl"]
 visible = false
 material = SubResource("ShaderMaterial_3gas1")
@@ -289,6 +335,17 @@ gradient = SubResource("Gradient_j6wyl")
 script = ExtResource("4_q4wkr")
 steps = 4
 visibility = 1
+
+[node name="RtData_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+line = NodePath("../RtData_ALU2")
+stage = 2
+map_key = "ALU_B"
+map_stage = 2
+is_register_name = false
 
 [node name="ImmVal_ALU2" type="Line2D" parent="DetailedControl"]
 visible = false
@@ -299,6 +356,17 @@ script = ExtResource("4_q4wkr")
 steps = 4
 middle_offset = 25
 visibility = 1
+
+[node name="ImmVal_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+line = NodePath("../ImmVal_ALU2")
+stage = 2
+map_key = "ALU_B"
+map_stage = 2
+is_register_name = false
 
 [node name="Rs_FU" type="Line2D" parent="DetailedControl"]
 visible = false
@@ -319,17 +387,38 @@ steps = 4
 middle_offset = 18
 visibility = 1
 
-[node name="Rt_Data_EXMEM" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "node_to_avoid")]
+[node name="Fake_Target" type="Marker2D" parent="DetailedControl"]
+
+[node name="Rt_Data_EXMEM_Base" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("target")]
+material = SubResource("ShaderMaterial_qlwsf")
+width = 1.0
+gradient = SubResource("Gradient_vnyf2")
+script = ExtResource("4_q4wkr")
+target = NodePath("../Fake_Target")
+visibility = 1
+
+[node name="Rt_Data_EXMEM" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("node_to_avoid")]
 visible = false
 material = SubResource("ShaderMaterial_l2snw")
 width = 1.0
 gradient = SubResource("Gradient_sqt3y")
 script = ExtResource("6_bibc7")
-origin = NodePath("../RtData_ALU2")
 intersect_point = 1.0
+offset = Vector2(-50, 0)
 visibility = 1
 node_to_avoid = NodePath("../../ALU")
-avoid_offset = Vector2(10, 35)
+avoid_offset = Vector2(0, 50)
+
+[node name="RtData_EXMEM_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+line = NodePath("../Rt_Data_EXMEM")
+stage = 2
+map_key = "ALU_B"
+map_stage = 2
+is_register_name = false
 
 [node name="ALUControl_ALU" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
 visible = false
@@ -376,6 +465,19 @@ middle_offset = -50
 visibility = 1
 force_backwards = true
 
+[node name="FU_ALU1_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+label_line_vertex = 2
+label_padding = Vector2(-10, 0)
+line = NodePath("../FU_ALU1")
+stage = 2
+map_key = "ALU_A"
+map_stage = 2
+is_register_name = false
+
 [node name="FU_ALU2" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_7kcpw")
 width = 1.0
@@ -388,6 +490,19 @@ middle_offset = -50
 visibility = 1
 force_backwards = true
 
+[node name="FU_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+label_line_vertex = 2
+label_padding = Vector2(-10, 0)
+line = NodePath("../FU_ALU2")
+stage = 2
+map_key = "RT_VALUE"
+map_stage = 2
+is_register_name = false
+
 [node name="FU_RTData" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_ju8wm")
 width = 1.0
@@ -398,6 +513,19 @@ steps = 6
 middle_offset = -35
 visibility = 1
 force_backwards = true
+
+[node name="FU_RTData_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+label_line_vertex = 5
+label_padding = Vector2(-75, 0)
+line = NodePath("../FU_RTData")
+stage = 2
+map_key = "ALU_B"
+map_stage = 2
+is_register_name = false
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="ALU" to="." method="_on_alu_pressed"]

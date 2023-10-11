@@ -172,6 +172,7 @@ func activate_lines(_stage_signals_map: Array):
 				elif stage_signals_map[2]["MEM_WRITE"]:
 					mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT)
 					ex_line_active.emit(ex_lines.FU_RTDATA)
+					seg_reg_values[2]["RT_DATA_W"] = PipelinedWrapper.to_hex32(stage_signals_map[2]["RT_VALUE"])
 			2:
 				pass
 			3:
@@ -181,6 +182,7 @@ func activate_lines(_stage_signals_map: Array):
 				elif stage_signals_map[2]["MEM_WRITE"]:
 					ex_line_active.emit(ex_lines.FU_RTDATA)
 					wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT)
+					seg_reg_values[2]["RT_DATA_W"] = PipelinedWrapper.to_hex32(stage_signals_map[2]["RT_VALUE"])
 			4:
 				pass
 		if stage_signals_map[2]["MEM_WRITE"]:
@@ -210,12 +212,12 @@ func activate_lines(_stage_signals_map: Array):
 			seg_reg_values[3]["ALU_OUT_W"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REG_VALUE"])
 			seg_reg_values[3]["MEM_OUT_W"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["MEM_OUT"])
 			seg_reg_values[3]["REG_DEST_W"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REG_DEST_REGISTER"])
-			seg_reg_values[2]["ALU_OUT_R"] = PipelinedWrapper.to_hex32(stage_signals_map[2]["REG_VALUE"])
+			seg_reg_values[3]["ALU_OUT_R"] = PipelinedWrapper.to_hex32(stage_signals_map[2]["ALU_OUT"])
 		if stage_signals_map[3]["MEM_WRITE"]:
 			mem_line_active.emit(mem_lines.ALUOUT_DATAMEM)
 			mem_line_active.emit(mem_lines.RTDATA_DATAMEM)
 			seg_reg_values[3]["RT_DATA_R"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["RT_VALUE"])
-			seg_reg_values[2]["ALU_OUT_R"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REG_VALUE"])
+			seg_reg_values[3]["ALU_OUT_R"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REG_VALUE"])
 		if stage_signals_map[3]["REG_WRITE"]:
 			mem_line_active.emit(mem_lines.RegDst)
 			if !stage_signals_map[3]["MEM_READ"] and !stage_signals_map[3]["MEM_WRITE"]:

@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://bqqsns53ftp6y"]
+[gd_scene load_steps=22 format=3 uid="uid://bqqsns53ftp6y"]
 
 [ext_resource type="Script" path="res://stages/wb_detail.gd" id="1_2fahh"]
 [ext_resource type="Script" path="res://stages/components/mux.gd" id="2_0tqhl"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="3_qap6j"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="3_shipb"]
+[ext_resource type="Script" path="res://stages/components/line_label.gd" id="5_i7od7"]
 [ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="5_pp8xc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5kbth"]
@@ -134,6 +135,19 @@ script = ExtResource("3_shipb")
 target = NodePath("../Input0")
 steps = 4
 
+[node name="PC_Mux_Label" type="Label" parent="Mux" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 3
+label_padding = Vector2(-70, 0)
+line = NodePath("../PC_Mux")
+stage = 4
+map_key = "PC"
+map_stage = 4
+is_register_name = false
+
 [node name="MemOut_Mux" type="Line2D" parent="Mux" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_buoiq")
 position = Vector2(-561, -274)
@@ -144,6 +158,19 @@ origin = NodePath("../../DetailedControl/MemOut")
 target = NodePath("../Input1")
 steps = 4
 
+[node name="MemOut_Mux_Label" type="Label" parent="Mux" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 3
+label_padding = Vector2(-70, 0)
+line = NodePath("../MemOut_Mux")
+stage = 4
+map_key = "REG_VALUE"
+map_stage = 4
+is_register_name = false
+
 [node name="ALUOut_Mux" type="Line2D" parent="Mux" node_paths=PackedStringArray("target")]
 material = SubResource("ShaderMaterial_u8fwp")
 position = Vector2(-561, -274)
@@ -152,6 +179,19 @@ gradient = SubResource("Gradient_4lgk8")
 script = ExtResource("3_shipb")
 target = NodePath("../Input2")
 steps = 4
+
+[node name="ALUOut_Mux_Label" type="Label" parent="Mux" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 3
+label_padding = Vector2(-70, 0)
+line = NodePath("../ALUOut_Mux")
+stage = 4
+map_key = "REG_VALUE"
+map_stage = 4
+is_register_name = false
 
 [node name="Output" type="Marker2D" parent="Mux"]
 position = Vector2(30, 50)
@@ -191,6 +231,19 @@ min_finish_length = 15
 origin_stage = 4
 target_stage = 1
 
+[node name="Mux_RegBank_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 274.0
+offset_right = 601.0
+offset_bottom = 294.0
+script = ExtResource("5_i7od7")
+line = NodePath("../Mux_RegBank")
+stage = 4
+map_key = "REG_VALUE"
+map_stage = 4
+is_register_name = false
+
 [node name="ALUOut_ALU1" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_8h2lb")
 width = 1.0
@@ -224,6 +277,18 @@ origin = NodePath("../../DetailedControl/RegDst")
 height_percent = 0.95
 origin_stage = 4
 target_stage = 1
+
+[node name="RegDst_RegBank_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 274.0
+offset_right = 601.0
+offset_bottom = 294.0
+script = ExtResource("5_i7od7")
+line = NodePath("../RegDst_RegBank")
+stage = 4
+map_key = "REG_DEST_REGISTER"
+map_stage = 4
 
 [node name="RegDst_ForwardingUnit" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_h2jch")

@@ -48,6 +48,7 @@ func add_points():
 	
 	global_position = Vector2(0, 0)
 	clear_points()
+	
 	if !origin.get_point_count():
 		return
 	

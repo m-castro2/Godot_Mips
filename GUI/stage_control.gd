@@ -52,8 +52,16 @@ func _on_stage_color_mode_changed(mode: int) -> void:
 
 func update_instruction_map(instructions, loaded_instructions: Array, \
 						diagram: Dictionary):
-	if !Globals.current_cycle:
+	if !Globals.is_program_loaded:
 		return
+	
+	instruction_map.clear()
+	if Globals.current_cycle:
+		instruction_map.push_back(PipelinedWrapper.diagram[0])
+		instruction_map.push_back(PipelinedWrapper.diagram[1])
+		instruction_map.push_back(PipelinedWrapper.diagram[2])
+		instruction_map.push_back(PipelinedWrapper.diagram[3])
+		instruction_map.push_back(PipelinedWrapper.diagram[4])
 	
 #	var if_idx = -1
 #	var id_idx = -1
@@ -81,12 +89,6 @@ func update_instruction_map(instructions, loaded_instructions: Array, \
 #	instruction_map.push_back(ex_idx)
 #	instruction_map.push_back(mem_idx)
 #	instruction_map.push_back(wb_idx)
-	instruction_map.clear()
-	instruction_map.push_back(PipelinedWrapper.diagram[0])
-	instruction_map.push_back(PipelinedWrapper.diagram[1])
-	instruction_map.push_back(PipelinedWrapper.diagram[2])
-	instruction_map.push_back(PipelinedWrapper.diagram[3])
-	instruction_map.push_back(PipelinedWrapper.diagram[4])
 	
 	calculate_stage_color(instruction_map)
 	update_stage_colors.emit(colors_map, instruction_map)

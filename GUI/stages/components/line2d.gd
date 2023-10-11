@@ -150,7 +150,7 @@ func _on_Globals_expand_stage():#_stage_number: int):
 
 func check_visibility(just_activated: bool):
 	if !active:
-		Globals.can_click = true
+		#Globals.can_click = true
 		return
 	
 	visible = false

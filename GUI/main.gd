@@ -164,24 +164,28 @@ func _on_show_settings_menu() -> void:
 
 
 func _on_Globals_fu_available_changed(value: int) -> void:
-	pipelinedWrapper.enable_forwarding_unit(value)
-	_on_reset_pressed()
+	if program_loaded:
+		pipelinedWrapper.enable_forwarding_unit(value)
+		_on_reset_pressed()
 
 
 func _on_Globals_hdu_available_changed(value: int) -> void:
-	pipelinedWrapper.enable_hazard_detection_unit(value)
-	_on_reset_pressed()
+	if program_loaded:
+		pipelinedWrapper.enable_hazard_detection_unit(value)
+		_on_reset_pressed()
 
 
 func _on_Globals_branch_stage_changed(value: int) -> void:
-	# value is optionButton index, 0 for ID, 1 for MEM
-	pipelinedWrapper.change_branch_stage(3 if value else 1)
-	_on_reset_pressed()
+	if program_loaded:
+		# value is optionButton index, 0 for ID, 1 for MEM
+		pipelinedWrapper.change_branch_stage(3 if value else 1)
+		_on_reset_pressed()
 
 
 func _on_Globals_branch_type_changed(value: int) -> void:
-	pipelinedWrapper.change_branch_type(value)
-	_on_reset_pressed()
+	if program_loaded:
+		pipelinedWrapper.change_branch_type(value)
+		_on_reset_pressed()
 
 
 func configure_cpu():

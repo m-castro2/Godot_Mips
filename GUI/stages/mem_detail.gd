@@ -124,7 +124,7 @@ func draw_lines():
 
 
 func _on_data_memory_pressed():
-	data_memory.show_info_window()
+	$DataMemory/DataMemory_info_window.add_info()
 
 
 func _on_gui_input(_event) -> void:

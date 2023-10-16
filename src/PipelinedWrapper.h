@@ -79,5 +79,7 @@ public:
     godot::Array get_register_names();
 
     godot::String to_hex32(uint32_t value);
+
+    godot::Array get_memory_data();
 };
 #endif //TFG_PIPELINED_WRAPPER_H

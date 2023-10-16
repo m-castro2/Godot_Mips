@@ -157,7 +157,7 @@ func check_visibility(just_activated: bool):
 	
 	if !just_activated: #awaits needed to avoid visibility flickering
 		if Globals.is_stage_tweening:
-			var timer:= get_tree().create_timer(0.275)
+			var timer:= get_tree().create_timer(0.3)
 			await timer.timeout
 #		if !Globals.is_components_tween_finished:
 #			await Globals.components_tween_finished # this await causes the lines not appearing sometimes
@@ -166,14 +166,16 @@ func check_visibility(just_activated: bool):
 	
 	if visibility == visibility_type.ALWAYS:
 		if !Globals.is_components_tween_finished and !just_activated:
-			await Globals.components_tween_finished
+			var timer:= get_tree().create_timer(0.3)
+			await timer.timeout
 		visible = true
 		Globals.can_click = true
 		return
 	
 	else:
 		if !Globals.is_components_tween_finished and !just_activated:
-			await Globals.components_tween_finished
+			var timer:= get_tree().create_timer(0.3)
+			await timer.timeout
 		visible = (Globals.current_expanded_stage == stage)
 		Globals.can_click = true
 		return

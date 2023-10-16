@@ -123,18 +123,55 @@ position_percent = Vector2(0.5, 0.75)
 expanded_position_percent = Vector2(0.5, 0.75)
 stage_number = 1
 alignment_mode = 1
+window_title = "Registers Bank"
 
 [node name="Input1" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 25)
 
+[node name="RDreg1" type="Label" parent="RegistersBank/Input1"]
+offset_left = 1.0
+offset_top = -10.0
+offset_right = 44.0
+offset_bottom = 10.0
+theme_type_variation = &"InputOutputLabel"
+theme_override_font_sizes/font_size = 12
+text = "RDreg1"
+
 [node name="Input2" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 50)
+
+[node name="RDreg2" type="Label" parent="RegistersBank/Input2"]
+offset_left = 1.0
+offset_top = -10.0
+offset_right = 44.0
+offset_bottom = 10.0
+theme_type_variation = &"InputOutputLabel"
+theme_override_font_sizes/font_size = 12
+text = "RDreg2"
 
 [node name="Input3" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 110)
 
+[node name="RDreg3" type="Label" parent="RegistersBank/Input3"]
+offset_left = 1.0
+offset_top = -10.0
+offset_right = 44.0
+offset_bottom = 10.0
+theme_type_variation = &"InputOutputLabel"
+theme_override_font_sizes/font_size = 12
+text = "WRreg"
+
 [node name="Input4" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 135)
+
+[node name="RDreg4" type="Label" parent="RegistersBank/Input4"]
+offset_left = 1.0
+offset_top = -10.0
+offset_right = 47.0
+offset_bottom = 10.0
+theme_type_variation = &"InputOutputLabel"
+theme_override_font_sizes/font_size = 12
+text = "WRdata"
 
 [node name="Output1" type="Marker2D" parent="RegistersBank"]
 position = Vector2(90, 20)

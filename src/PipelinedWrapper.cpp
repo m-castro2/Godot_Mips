@@ -37,6 +37,7 @@ void PipelinedWrapper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("change_branch_type"), &PipelinedWrapper::change_branch_type);
     ClassDB::bind_method(D_METHOD("get_register_names"), &PipelinedWrapper::get_register_names);
     ClassDB::bind_method(D_METHOD("to_hex32"), &PipelinedWrapper::to_hex32);
+    ClassDB::bind_method(D_METHOD("get_memory_data"), &PipelinedWrapper::get_memory_data);
 
 
     //bind properties
@@ -398,6 +399,16 @@ godot::Array PipelinedWrapper::get_register_names() {
 
 godot::String PipelinedWrapper::to_hex32(uint32_t value){
     return Utils::hex32(value).c_str();
+}
+
+godot::Array PipelinedWrapper::get_memory_data() {
+    godot::Array data_array {};
+
+    for (auto value: cpu->get_memory_data()) {
+        data_array.push_back(godot::String(value.c_str()));
+    }
+
+    return data_array;
 }
 
 

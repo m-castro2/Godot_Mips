@@ -117,7 +117,6 @@ antialiased = true
 script = ExtResource("6_4gygt")
 origin = NodePath("../4/Output")
 target = NodePath("../UpperInput")
-visibility = 1
 
 [node name="UpperInput" type="Marker2D" parent="Add"]
 position = Vector2(0, 23)

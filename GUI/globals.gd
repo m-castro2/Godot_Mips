@@ -25,7 +25,13 @@ var is_stage_tweening: bool = false
 signal stage_tween_finished(stage: STAGES)
 signal components_tween_finished
 var is_components_tween_finished:= false
-var can_click:= true
+signal can_click_updated(value: bool)
+var can_click:= true:
+	set(value):
+		if value == can_click:
+			return
+		can_click = value
+		can_click_updated.emit(value)
 
 var timer:= Timer.new()
 

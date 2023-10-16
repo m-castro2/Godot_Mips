@@ -4,7 +4,10 @@ extends MainComponent
 
 
 func get_info():
-	var info: Array
+	if !Globals.is_program_loaded:
+		return
+	
+	var info: Array = PipelinedWrapper.get_memory_data()
 	return info
 
 

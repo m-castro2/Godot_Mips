@@ -2,10 +2,25 @@ extends Line2D
 
 class_name OutsideLine2D
 
-@export var origin_component: MainComponent
+@export var origin_component: MainComponent:
+	set(value):
+		if origin_component != null:
+			origin_component.visibility_changed.disconnect(_on_component_visibility_changed)
+			origin_component.position_updated.disconnect(_on_component_position_updated)
+		origin_component = value
+		origin_component.visibility_changed.connect(_on_component_visibility_changed)
+		origin_component.position_updated.connect(_on_component_position_updated)
 @export var origin: Marker2D
 var target: Marker2D
-var target_component: MainComponent
+var target_component: MainComponent:
+	set(value):
+		if target_component != null:
+			target_component.visibility_changed.disconnect(_on_component_visibility_changed)
+			target_component.position_updated.disconnect(_on_component_position_updated)
+		target_component = value
+		target_component.visibility_changed.connect(_on_component_visibility_changed)
+		target_component.position_updated.connect(_on_component_position_updated)
+
 @export var intersect_point: float
 
 ## true if the line's height doesn't need ajdustment to not be drawn over other components
@@ -65,23 +80,17 @@ func add_points():
 
 
 func _ready():
-	Globals.expand_stage.connect(_on_Globals_expand_stage)
-	Globals.components_tween_finished.connect(add_points)
-	Globals.components_tween_finished.connect(animate_line)
+	Globals.current_expanded_stage_updated.connect(_on_Globals_expand_stage)
+#	Globals.components_tween_finished.connect(add_points)
+#	Globals.components_tween_finished.connect(animate_line)
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 	Globals.reset_button_pressed.connect(deactivate_line)
 	Globals.cycle_changed.connect(deactivate_line)
-	
-	if origin_component:
-		origin_component.visibility_changed.connect(_on_component_visibility_changed)
-	if target_component:
-		target_component.visibility_changed.connect(_on_component_visibility_changed)
 
 
 func _on_component_visibility_changed():
-	if Globals.is_stage_tweening:
-		return
-	
+#	if Globals.is_stage_tweening:
+#		return
 	var vis:= true
 	if origin_component:
 		vis = vis and origin_component.visible
@@ -90,31 +99,33 @@ func _on_component_visibility_changed():
 	visible = vis
 
 
-func _on_Globals_expand_stage(_stage_number: int):
+func _on_Globals_expand_stage():#_stage_number: int):
 	if !Globals.current_cycle:
 		return
 	
-	if !active:
-		return
+	visible = false
 	
-	add_points()
-	animate_line()
+#	add_points()
+#	animate_line()
 	check_visibility(false, true)
 
 
 func check_visibility(just_activated: bool, just_expanded: bool) -> void:
 	visible = false
 	
-	if just_expanded:
-		await Globals.current_expanded_stage_updated
+	if !active:
+		return
+	
+#	if just_expanded:
+#		await Globals.current_expanded_stage_updated
 	
 	if Globals.current_expanded_stage != origin_stage and Globals.current_expanded_stage != target_stage:
 		return
 	
-	if !just_activated:
-		if Globals.is_stage_tweening:
-			await Globals.components_tween_finished
-		await get_tree().process_frame
+#	if !just_activated:
+#		if Globals.is_stage_tweening:
+#			await Globals.components_tween_finished
+#		await get_tree().process_frame
 	
 	if origin_component:
 		origin_component.requested = true
@@ -156,3 +167,15 @@ func _on_update_stage_colors(colors_map, instructions_map) -> void:
 
 func deactivate_line() -> void:
 	active = false
+
+
+func _on_component_position_updated() -> void:
+	if !active:
+		return
+	if !visible:
+		return
+	
+	hide()
+	add_points()
+	animate_line()
+	_on_component_visibility_changed()

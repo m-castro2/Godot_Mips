@@ -61,7 +61,6 @@ var is_shrunk: bool = false
 
 func _ready():
 	Globals.stage_tween_finished.connect(_on_stage_tween_finished)
-	Globals.can_click_updated.connect(_on_Globals_can_click_updated)
 	LineManager.id_line_active.connect(_on_LineManager_id_line_active)
 	show_lines()
 
@@ -90,6 +89,15 @@ func draw_lines() -> void:
 		if line.active:
 			line.add_points()
 			line.animate_line()
+			if line is OutsideLine2D:
+				line.check_visibility(false, true)
+			else:
+				line.check_visibility(false)
+
+
+func hide_lines() -> void:
+	for line in lines:
+		line.visible = false
 
 
 func _on_registers_bank_pressed() -> void:
@@ -151,7 +159,7 @@ func _on_gui_input(_event) -> void:
 		return
 	if Input.is_action_just_pressed("Click"):
 		Globals.can_click = false
-		#Input.flush_buffered_events()
+		Input.flush_buffered_events()
 		if Globals.close_window_handled:
 			Globals.close_window_handled = false
 		else:
@@ -235,9 +243,3 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines) -> void:
 			inst_pc.target = inst_pc.target_component.get_node("Input")
 			inst_pc.active = true
 			pc_inst_pc.active = true
-
-
-func _on_Globals_can_click_updated(value: bool):
-	if !Globals.current_cycle:
-		return
-	mouse_filter = Control.MOUSE_FILTER_STOP if value else MOUSE_FILTER_IGNORE

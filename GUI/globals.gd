@@ -19,21 +19,37 @@ signal show_menu(value: bool)
 signal close_menu
 
 signal expand_stage(stage_number: int)
-var current_expanded_stage: int = -1
+var previous_expanded_stage: int
+var current_expanded_stage: int = -1:
+	set(value):
+		previous_expanded_stage = current_expanded_stage
+		current_expanded_stage = value
+		current_expanded_stage_updated.emit()
+
 signal current_expanded_stage_updated
 var is_stage_tweening: bool = false
 signal stage_tween_finished(stage: STAGES)
 signal components_tween_finished
 var is_components_tween_finished:= false
 signal can_click_updated(value: bool)
+var tweened_stage_sizes: Array[float] = []
+var current_stage_sizes: Array[float] = [0,0,0,0,0]
+signal current_stage_sizes_updated(stage:int)
 var can_click:= true:
 	set(value):
 		if value == can_click:
 			return
+		if !value:
+			if timer != null:
+				timer.timeout.disconnect(_on_timer_timeout)
+			timer = get_tree().create_timer(0.05)
+			timer.timeout.connect(_on_timer_timeout)
+		else:
+			pass
 		can_click = value
 		can_click_updated.emit(value)
 
-var timer:= Timer.new()
+var timer: SceneTreeTimer = null
 
 ## used by stages to get coords to other stages components
 signal stage_component_requested(stage_number: int, component_name: String, caller_ref: NodePath)
@@ -64,9 +80,6 @@ signal fu_available_changed(value: int)
 
 func _ready():
 	stage_tween_finished.connect(_on_stage_tween_finished)
-	timer.timeout.connect(_on_timer_timeout)
-	timer.one_shot = true
-	add_child(timer)
 
 
 func _on_stage_tween_finished(_stage):
@@ -74,3 +87,17 @@ func _on_stage_tween_finished(_stage):
 
 func _on_timer_timeout():
 	can_click = true
+
+
+func update_current_stage_sizes(value: float, stage: int):
+	var stage_size_type: int
+	if Globals.current_expanded_stage == -1:
+		stage_size_type = 0
+	elif Globals.current_expanded_stage == stage:
+		stage_size_type = 1 if stage != 4 else 3
+	else:
+		stage_size_type = 2
+	if abs(value - tweened_stage_sizes[stage_size_type]) > 2:
+		return
+	current_stage_sizes[stage] = value
+	current_stage_sizes_updated.emit(stage)

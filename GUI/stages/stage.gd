@@ -25,6 +25,8 @@ func _ready() -> void:
 	detail.stage_color = stage_color
 	add_fixed_stage_color()
 	LineManager.add_stage_detail_path(detail.get_path())
+	
+	Globals.current_stage_sizes_updated.connect(_on_Globals_current_stage_sizez_updated)
 
 
 func _on_stage_button_pressed():
@@ -83,13 +85,56 @@ func _on_update_stage_colors(colors_map: Dictionary, instructions):
 		add_fixed_stage_color()
 
 
+signal resize_completed
+var timer: SceneTreeTimer = null
+var resize_completed_emited:= false
 func _on_resized():
-	await Globals.components_tween_finished
+	if detail:
+		detail.hide_lines()
+	resize_completed_emited = false
+	Globals.update_current_stage_sizes(size.x, stage_number)
+	if timer != null:
+		timer.unreference()
+	timer = get_tree().create_timer(0.5)
+	timer.timeout.connect(_on_Globals_components_tween_finished)
+	_await_component_tween_finished()
+	await resize_completed
+	# some stages are not getting this signal
+	# root of the line bug? no need for marker_updated if fixed?
 	await get_tree().process_frame # positions are broken unless we wait a frame
 	
 	detail.calculate_positions()
-	detail.draw_lines()
+	if stage_number == 0:
+			pass
+	if abs(Globals.current_stage_sizes[stage_number] - size.x) <= 1:
+		detail.draw_lines()
+		Globals.can_click = true
+		if stage_number == 0:
+			pass
 
 
 func _on_stage_color_mode_changed(mode: int) -> void:
 	pass
+
+
+func _on_Globals_components_tween_finished() -> void:
+#	if resize_completed_emited:
+#		return
+	resize_completed.emit()
+	resize_completed_emited = true
+
+
+func _await_component_tween_finished() -> void:
+	await Globals.components_tween_finished
+	_on_Globals_components_tween_finished()
+
+
+func _on_Globals_current_stage_sizez_updated(stage: int) -> void:
+	return
+	if stage != stage_number:
+		return
+	if abs(Globals.current_stage_sizes[stage_number] - size.x) <= 1:
+		detail.draw_lines()
+		Globals.can_click = true
+		if stage_number == 0:
+			pass

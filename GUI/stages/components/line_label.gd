@@ -21,7 +21,7 @@ func _ready():
 
 
 func _on_line_drawn():
-	if !line.get_point_count():
+	if line.get_point_count() < (label_line_vertex - 1):
 		return
 	global_position = line.get_point_position(label_line_vertex) + label_padding - Vector2(0, size.y)
 

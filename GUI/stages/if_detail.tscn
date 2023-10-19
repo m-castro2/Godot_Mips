@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ca820xflmqb5b"]
+[gd_scene load_steps=20 format=3 uid="uid://ca820xflmqb5b"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_0r720"]
 [ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
@@ -8,7 +8,13 @@
 [ext_resource type="Script" path="res://stages/PC.gd" id="6_k6uw2"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="7_hmr7u"]
 [ext_resource type="Script" path="res://stages/components/complex_line.gd" id="8_0k470"]
-[ext_resource type="Material" uid="uid://dwffi7w6tda4c" path="res://stages/shaders/line_shader_material.tres" id="8_j6ecf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tkr3u"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
 
 [sub_resource type="Gradient" id="Gradient_dmccv"]
 
@@ -21,11 +27,39 @@ shader_parameter/color = null
 
 [sub_resource type="Gradient" id="Gradient_31u0x"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3y5of"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
 [sub_resource type="Gradient" id="Gradient_bg0dw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fkbgy"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
 
 [sub_resource type="Gradient" id="Gradient_0074m"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_omrfj"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
 [sub_resource type="Gradient" id="Gradient_183sx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nfdqc"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
 
 [node name="IFDetail" type="Panel"]
 clip_children = 1
@@ -71,7 +105,7 @@ position = Vector2(90, 75)
 position = Vector2(0, 75)
 
 [node name="InstMem_IFID" type="Line2D" parent="InstructionsMemoryButton" node_paths=PackedStringArray("origin", "target")]
-material = ExtResource("8_j6ecf")
+material = SubResource("ShaderMaterial_tkr3u")
 position = Vector2(-531, -249)
 width = 1.0
 gradient = SubResource("Gradient_dmccv")
@@ -125,7 +159,7 @@ position = Vector2(0, 23)
 position = Vector2(0, 44)
 
 [node name="Add_IFID" type="Line2D" parent="Add" node_paths=PackedStringArray("origin", "target")]
-material = ExtResource("8_j6ecf")
+material = SubResource("ShaderMaterial_3y5of")
 width = 1.0
 gradient = SubResource("Gradient_bg0dw")
 script = ExtResource("6_4gygt")
@@ -133,7 +167,7 @@ origin = NodePath("../Output")
 target = NodePath("../IFID_UpperInput")
 
 [node name="Add_PC" type="Line2D" parent="Add" node_paths=PackedStringArray("origin", "target")]
-material = ExtResource("8_j6ecf")
+material = SubResource("ShaderMaterial_fkbgy")
 width = 1.0
 gradient = SubResource("Gradient_0074m")
 script = ExtResource("8_0k470")
@@ -174,7 +208,7 @@ position = Vector2(50, 35)
 position = Vector2(0, 35)
 
 [node name="PC_Add" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target")]
-material = ExtResource("8_j6ecf")
+material = SubResource("ShaderMaterial_omrfj")
 width = 1.0
 gradient = SubResource("Gradient_183sx")
 script = ExtResource("6_4gygt")
@@ -186,7 +220,7 @@ steps = 4
 position = Vector2(25, 0)
 
 [node name="PC_InstMem" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target")]
-material = ExtResource("8_j6ecf")
+material = SubResource("ShaderMaterial_nfdqc")
 width = 1.0
 gradient = SubResource("Gradient_183sx")
 antialiased = true

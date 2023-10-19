@@ -48,7 +48,7 @@ func calculate_positions() -> void:
 	#Globals.stage_component_requested.emit(1, "hazard_detection_unit", $DetailedControl/OutsideLines/PCWrite.get_path())
 	#await Globals.stage_tween_finished
 	LineManager.if_stage_updated.emit()
-	draw_lines()
+	#draw_lines()
 
 
 #STILL NEEDED
@@ -57,6 +57,12 @@ func draw_lines() -> void:
 		if line.active:
 			line.add_points()
 			line.animate_line()
+			line.check_visibility(false)
+
+
+func hide_lines() -> void:
+	for line in lines:
+		line.visible = false
 
 
 func _get_all_children(node: Node, zoom_value: bool):

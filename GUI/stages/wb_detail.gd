@@ -105,6 +105,15 @@ func draw_lines():
 		if line.active:
 			line.add_points()
 			line.animate_line()
+			if line is OutsideLine2D:
+				line.check_visibility(false, true)
+			else:
+				line.check_visibility(false)
+
+
+func hide_lines() -> void:
+	for line in lines:
+		line.visible = false
 
 
 func calculate_positions():

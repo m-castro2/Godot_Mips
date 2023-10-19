@@ -88,9 +88,9 @@ func add_points():
 
 
 func _ready():
-	Globals.expand_stage.connect(_on_Globals_expand_stage)
-	Globals.components_tween_finished.connect(add_points)
-	Globals.components_tween_finished.connect(animate_line)
+	Globals.current_expanded_stage_updated.connect(_on_Globals_expand_stage)
+#	Globals.components_tween_finished.connect(add_points)
+#	Globals.components_tween_finished.connect(animate_line)
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 	Globals.cycle_changed.connect(deactivate_line)
 	Globals.reset_button_pressed.connect(deactivate_line)
@@ -105,12 +105,18 @@ func _ready():
 	active = false
 
 
-func _on_Globals_expand_stage(_stage_number: int):
+func _on_Globals_expand_stage():#_stage_number: int):
 	if !active:
 		return
 	
-	add_points()
-	animate_line()
+	visible = false
+	
+#	if Globals.current_expanded_stage == stage \
+#			or Globals.previous_expanded_stage == stage:
+#		return
+	
+#	add_points()
+#	animate_line()
 	check_visibility(false)
 
 
@@ -120,9 +126,9 @@ func check_visibility(just_activated: bool):
 	
 	visible = false
 	
-	if !just_activated:
-		await Globals.components_tween_finished
-		await get_tree().process_frame
+#	if !just_activated:
+#		await Globals.components_tween_finished
+#		await get_tree().process_frame
 	
 	if visibility == visibility_type.ALWAYS:
 		visible = true
@@ -158,6 +164,7 @@ func deactivate_line():
 
 
 func redraw_line(register: int) -> void:
+	return
 	if active and register == (stage - 1):
 		add_points()
 		animate_line()

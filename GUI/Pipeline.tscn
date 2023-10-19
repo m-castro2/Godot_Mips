@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://btd652x2vip8" path="res://stages/stage_register.tscn" id="4_p2imv"]
 [ext_resource type="Script" path="res://stages/IFIDRegister.gd" id="5_a5bg2"]
 
-[node name="Pipeline" type="Control"]
+[node name="Pipeline" type="Control" node_paths=PackedStringArray("stages")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +16,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_lb30k")
-stages = Array[NodePath]([NodePath("HBoxContainer/Stage1"), NodePath("HBoxContainer/Stage2"), NodePath("HBoxContainer/Stage3"), NodePath("HBoxContainer/Stage4"), NodePath("HBoxContainer/Stage5")])
+stages = [NodePath("HBoxContainer/Stage1"), NodePath("HBoxContainer/Stage2"), NodePath("HBoxContainer/Stage3"), NodePath("HBoxContainer/Stage4"), NodePath("HBoxContainer/Stage5")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -29,6 +29,7 @@ theme_override_constants/separation = 0
 
 [node name="InstructionsPanel" parent="HBoxContainer" instance=ExtResource("1_mi6q1")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(171, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 

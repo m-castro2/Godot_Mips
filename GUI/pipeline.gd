@@ -15,8 +15,9 @@ func clear_instructions():
 	%InstructionsPanel.clear_instructions()
 
 
-func add_instructions(p_instructions: Array):
+func add_instructions(p_instructions: Array, description: String):
 	%InstructionsPanel.add_instructions(p_instructions)
+	%InstructionsPanel.add_description(description)
 
 
 func _on_resized():

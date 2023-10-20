@@ -62,7 +62,8 @@ func _on_load_program_pressed(file_path: String) -> void:
 		%Reset.disabled = false
 		
 		update_cpu_info()
-		pipeline.add_instructions(pipelinedWrapper.instructions)
+		var desc_file:= FileAccess.open(file_path.get_basename() + ".desc", FileAccess.READ)
+		pipeline.add_instructions(pipelinedWrapper.instructions, desc_file.get_as_text() if desc_file else "")
 		StageControl.update_instruction_map(pipelinedWrapper.instructions, \
 			pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
 		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)

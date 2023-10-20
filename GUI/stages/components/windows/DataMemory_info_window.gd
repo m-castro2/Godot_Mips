@@ -17,15 +17,18 @@ func add_info():
 		return
 	
 	var memory_data:= PipelinedWrapper.get_memory_data()
-	while labels.size() != memory_data.size():
-		var label:= Label.new()
-		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		grid_container.add_child(label)
-		labels.push_back(label)
+	if labels.size() < memory_data.size():
+		while labels.size() != memory_data.size():
+			var label:= Label.new()
+			label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			grid_container.add_child(label)
+			labels.push_back(label)
 	
 	for label in labels:
-		if label.get_index() % 5 == 0:
+		if label.get_index() > memory_data.size()-1:
+			label.text = ""
+		elif label.get_index() % 5 == 0:
 			label.text = "[" + memory_data[label.get_index()] + "]"
 		else:
 			label.text = memory_data[label.get_index()]

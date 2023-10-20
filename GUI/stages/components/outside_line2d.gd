@@ -91,6 +91,9 @@ func _ready():
 func _on_component_visibility_changed():
 #	if Globals.is_stage_tweening:
 #		return
+	if !active:
+		return
+	
 	var vis:= true
 	if origin_component:
 		vis = vis and origin_component.visible

@@ -8,6 +8,7 @@ size = Vector2i(350, 400)
 visible = false
 transient = true
 popup_window = true
+min_size = Vector2i(350, 400)
 script = ExtResource("1_jnxo7")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]

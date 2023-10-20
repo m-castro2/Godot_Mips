@@ -1,0 +1,2 @@
+Initializes a memory region with 100 bytes of space and fills it with values starting from 25 and decreasing by 1 at each location.
+The program calculates some intermediate values in registers $t1, $a0, and $8 during this process.

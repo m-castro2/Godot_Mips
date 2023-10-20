@@ -34,7 +34,8 @@ func _ready():
 
 func _on_size_changed():
 	if v_box_container:
-		v_box_container.size = size
+		v_box_container.set_deferred("size", size)
+#		v_box_container.size = size
 
 
 func add_info():

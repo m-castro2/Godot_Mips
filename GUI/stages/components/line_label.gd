@@ -21,14 +21,13 @@ func _ready():
 
 
 func _on_line_drawn():
-	if line.get_point_count() < (label_line_vertex - 1):
+	if line.get_point_count() < (label_line_vertex):
 		return
 	global_position = line.get_point_position(label_line_vertex) + label_padding - Vector2(0, size.y)
 
 
 func _on_line_visibility_changed():
 	visible = line.visible and Globals.current_expanded_stage == stage
-	var map = PipelinedWrapper.stage_signals_map
 	if !visible:
 		return
 	if is_register_name:

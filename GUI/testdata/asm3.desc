@@ -1,0 +1,2 @@
+Initializes an array "Mem" with values [16, 5, 1, 20] and a counter "Count" with the value 4. 
+It then loops through the "Mem" array, doubling the values in it "Count" times.

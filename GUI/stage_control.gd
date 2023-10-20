@@ -38,7 +38,7 @@ func _on_stage_color_changed(p_color: Color, index: int) -> void:
 
 
 func _on_stage_color_mode_changed(mode: int) -> void:
-	color_system = mode
+	color_system = mode as coloring_type
 	if color_system:
 		var i: int = 0
 		for key in colors_map.keys():

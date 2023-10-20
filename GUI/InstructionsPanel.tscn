@@ -30,34 +30,49 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="VSplitContainer" type="VSplitContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_constants/autohide = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="ProgramLabel" type="Label" parent="PanelContainer/MarginContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+text = "Program"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VSplitContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="LabelVBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VSplitContainer/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="CodeEdit" type="CodeEdit" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-unique_name_in_owner = true
-visible = false
+[node name="DescriptionVBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VSplitContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-editable = false
+theme_override_constants/separation = 0
+alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="DescriptionTitle" type="Label" parent="PanelContainer/MarginContainer/VSplitContainer/DescriptionVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Description"
+horizontal_alignment = 1
+
+[node name="DescriptionScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VSplitContainer/DescriptionVBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LabelVBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer"]
-unique_name_in_owner = true
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VSplitContainer/DescriptionVBoxContainer/DescriptionScrollContainer"]
 layout_mode = 2
-
-[node name="Compile" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-disabled = true
-text = "Compile"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+autowrap_mode = 3

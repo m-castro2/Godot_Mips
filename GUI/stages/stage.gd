@@ -94,7 +94,7 @@ func _on_resized():
 	resize_completed_emited = false
 	Globals.update_current_stage_sizes(size.x, stage_number)
 	if timer != null:
-		timer.unreference()
+		timer.timeout.disconnect(_on_Globals_components_tween_finished)
 	timer = get_tree().create_timer(0.5)
 	timer.timeout.connect(_on_Globals_components_tween_finished)
 	_await_component_tween_finished()

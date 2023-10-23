@@ -14,7 +14,7 @@ var expanded: bool = false
 
 @export var request_stage_origin: Array[int] = []
 
-var tween: Tween = null
+#var tween: Tween = null
 
 signal request_updated
 
@@ -36,9 +36,9 @@ func _ready():
 
 signal position_updated
 func _on_parent_resized() -> void:
-	if tween:
-		Globals.is_components_tween_finished = false
-		tween.kill()
+#	if tween:
+#		Globals.is_components_tween_finished = false
+#		tween.kill()
 	
 	var position_modifier: Vector2 = expanded_position_percent if expanded else position_percent
 	var new_position: Vector2 = Vector2.ZERO

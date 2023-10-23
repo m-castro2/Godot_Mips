@@ -1,7 +1,7 @@
 extends Window
 
 @onready var v_box_container: VBoxContainer = $VBoxContainer
-@onready var parent: MainComponent = get_parent()
+@onready var parent: MainComponent = get_parent() as MainComponent
 @onready var name_v_box_container = $VBoxContainer/ScrollContainer/HBoxContainer/NameVBoxContainer
 @onready var value_v_box_container = $VBoxContainer/ScrollContainer/HBoxContainer/ValueVBoxContainer
 

@@ -19,6 +19,9 @@ enum visibility_type { ALWAYS, EXPANDED}
 @export var node_to_avoid: MainComponent = null
 @export var avoid_offset: Vector2
 
+# force visible even if not active
+@export var force_visible:= false
+
 
 var stage: Globals.STAGES
 
@@ -27,8 +30,8 @@ var line_color: Color
 var active: bool :
 	set(value):
 		active = value
-		if value:
-			z_index = 1
+		if value or force_visible:
+			z_index = 2 if value else 1 # grey lines arent drawn over colored lines
 			if target.get_parent() is MainComponent:
 				target.get_parent().requested = value
 			add_points()
@@ -40,7 +43,10 @@ var active: bool :
 
 
 func add_points():
-	if !active:
+	if !active and !force_visible:
+		return
+	
+	if StageControl.instruction_map.size() > stage and StageControl.instruction_map[stage] == -1:
 		return
 	
 	if origin == null and target == null:
@@ -92,7 +98,8 @@ func _ready():
 #	Globals.components_tween_finished.connect(add_points)
 #	Globals.components_tween_finished.connect(animate_line)
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
-	Globals.cycle_changed.connect(deactivate_line)
+#	Globals.cycle_changed.connect(deactivate_line)
+	StageControl.instruction_map_updated.connect(deactivate_line)
 	Globals.reset_button_pressed.connect(deactivate_line)
 	LineManager.redraw_lines.connect(redraw_line)
 	
@@ -106,7 +113,7 @@ func _ready():
 
 
 func _on_Globals_expand_stage():#_stage_number: int):
-	if !active:
+	if !active and !force_visible:
 		return
 	
 	visible = false
@@ -115,16 +122,23 @@ func _on_Globals_expand_stage():#_stage_number: int):
 #			or Globals.previous_expanded_stage == stage:
 #		return
 	
-#	add_points()
 #	animate_line()
 	check_visibility(false)
+#	add_points()
 
 
 func check_visibility(just_activated: bool):
-	if !active:
+	if !active and !force_visible:
 		return
 	
 	visible = false
+	
+	if StageControl.instruction_map.size() < stage + 1:
+		return
+	if StageControl.instruction_map[stage] == -1:
+		return
+	if stage == 1 and PipelinedWrapper.stage_signals_map[1]["STALL"]: # for id lines
+		return
 	
 #	if !just_activated:
 #		await Globals.components_tween_finished
@@ -138,7 +152,10 @@ func check_visibility(just_activated: bool):
 
 
 func animate_line() -> void:
-	line_color = get_parent().get_parent().stage_color
+	if !active and force_visible:
+		line_color = Color.GRAY
+	else:
+		line_color = get_parent().get_parent().stage_color
 	var tween: Tween = get_tree().create_tween()
 	material.set("shader_parameter/color", line_color)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 0.0, .001)
@@ -151,9 +168,9 @@ func _on_update_stage_colors(colors_map, instructions_map) -> void:
 		
 	else:
 		if !colors_map.size():
-			line_color = Color.BLACK
+			line_color = Color.TRANSPARENT
 		elif instructions_map[stage] == -1:
-			line_color = Color.BLACK
+			line_color = Color.TRANSPARENT
 		else:
 			line_color = get_parent().get_parent().stage_color
 	material.set("shader_parameter/color", line_color)

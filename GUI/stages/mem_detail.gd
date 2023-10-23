@@ -29,6 +29,8 @@ extends Panel
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color:
 	set(value):
+		if stage_color == value:
+			return
 		stage_color = value
 		for line in lines:
 			line.line_color = value
@@ -41,7 +43,7 @@ func _ready():
 	show_lines()
 
 
-func _on_LineManager_mem_line_active(line: LineManager.mem_lines) -> void:
+func _on_LineManager_mem_line_active(line: LineManager.mem_lines, active: bool) -> void:
 	match line:
 		LineManager.mem_lines.PC:
 			pc.origin = get_node(LineManager.stage_register_path[2]).get("pc_2")
@@ -56,7 +58,7 @@ func _on_LineManager_mem_line_active(line: LineManager.mem_lines) -> void:
 		LineManager.mem_lines.ALUOUT_DATAMEM:
 			alu_out_data_mem.origin = $DetailedControl/AluOut
 			alu_out_data_mem.target = $DataMemory/UpperInput
-			alu_out_data_mem.active = true
+			alu_out_data_mem.active = active
 		
 		LineManager.mem_lines.ALUOUT_ALU1:
 			alu_out_alu_1.target_component = LineManager.get_stage_component(2, "alu")
@@ -82,7 +84,7 @@ func _on_LineManager_mem_line_active(line: LineManager.mem_lines) -> void:
 		
 		LineManager.mem_lines.RTDATA_DATAMEM:
 			rt_data_data_mem.origin = get_node(LineManager.stage_register_path[2]).get("imm_value_2")
-			rt_data_data_mem.active = true
+			rt_data_data_mem.active = active
 		
 		LineManager.mem_lines.ALUOUT_RT:
 			alu_out_rt_data.target = get_node(LineManager.stage_register_path[2]).get("rt")
@@ -118,7 +120,7 @@ func calculate_positions():
 
 func draw_lines():
 	for line in lines:
-		if line.active:
+		if line.active or line.force_visible:
 			line.add_points()
 			line.animate_line()
 			if line is OutsideLine2D:

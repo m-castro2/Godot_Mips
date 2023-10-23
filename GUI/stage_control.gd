@@ -19,6 +19,7 @@ var used_colors: Array = []
 var instruction_map: Array = [] # map[stage] = instruction_idx
 
 signal update_stage_colors(colors_map, instructions)
+signal instruction_map_updated
 
 func _ready():
 	Globals.stage_color_changed.connect(_on_stage_color_changed)
@@ -89,7 +90,7 @@ func update_instruction_map(instructions, loaded_instructions: Array, \
 #	instruction_map.push_back(ex_idx)
 #	instruction_map.push_back(mem_idx)
 #	instruction_map.push_back(wb_idx)
-	
+	instruction_map_updated.emit()
 	calculate_stage_color(instruction_map)
 	update_stage_colors.emit(colors_map, instruction_map)
 

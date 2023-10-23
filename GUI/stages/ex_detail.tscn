@@ -36,14 +36,14 @@ shader_parameter/color = Color(1, 0.34902, 0.780392, 1)
 
 [sub_resource type="Gradient" id="Gradient_j6wyl"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3gas1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bgoe1"]
 shader = ExtResource("4_2lcnv")
 shader_parameter/draw_min = 0.0
 shader_parameter/draw_max = 0.0
 shader_parameter/draw_feather = 0.0
-shader_parameter/color = Color(0.976471, 0.580392, 0.705882, 1)
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ko70b"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t4irj"]
 shader = ExtResource("4_2lcnv")
 shader_parameter/draw_min = 0.0
 shader_parameter/draw_max = 0.0
@@ -314,6 +314,7 @@ gradient = SubResource("Gradient_j6wyl")
 script = ExtResource("4_q4wkr")
 steps = 4
 visibility = 1
+force_visible = true
 
 [node name="RsData_ALU_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
 layout_mode = 0
@@ -329,12 +330,13 @@ is_register_name = false
 
 [node name="RtData_ALU2" type="Line2D" parent="DetailedControl"]
 visible = false
-material = SubResource("ShaderMaterial_3gas1")
+material = SubResource("ShaderMaterial_bgoe1")
 width = 1.0
 gradient = SubResource("Gradient_j6wyl")
 script = ExtResource("4_q4wkr")
 steps = 4
 visibility = 1
+force_visible = true
 
 [node name="RtData_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
 layout_mode = 0
@@ -349,13 +351,13 @@ is_register_name = false
 
 [node name="ImmVal_ALU2" type="Line2D" parent="DetailedControl"]
 visible = false
-material = SubResource("ShaderMaterial_ko70b")
+material = SubResource("ShaderMaterial_t4irj")
 width = 1.0
 gradient = SubResource("Gradient_j6wyl")
 script = ExtResource("4_q4wkr")
 steps = 4
-middle_offset = 25
 visibility = 1
+force_visible = true
 
 [node name="ImmVal_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
 layout_mode = 0

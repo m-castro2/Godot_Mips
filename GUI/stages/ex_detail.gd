@@ -81,7 +81,7 @@ func calculate_positions():
 
 func draw_lines():
 	for line in lines:
-		if line.active:
+		if line.active or line.force_visible:
 			line.add_points()
 			line.animate_line()
 			if line is OutsideLine2D:
@@ -111,7 +111,7 @@ func _on_gui_input(_event) -> void:
 			Globals.expand_stage.emit(2)
 
 
-func _on_LineManager_ex_line_active(line: LineManager.ex_lines) -> void:
+func _on_LineManager_ex_line_active(line: LineManager.ex_lines, active: bool) -> void:
 	match  line:
 		LineManager.ex_lines.PC:
 			pc.origin = get_node(LineManager.stage_register_path[1]).get("pc_2")
@@ -129,17 +129,17 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines) -> void:
 		LineManager.ex_lines.RSDATA_ALU:
 			rs_data_alu.origin = get_node(LineManager.stage_register_path[1]).get("rs_data_2")
 			rs_data_alu.target = $ALU/UpperInput
-			rs_data_alu.active = true
+			rs_data_alu.active = active
 			
 		LineManager.ex_lines.RTDATA_ALU2:
 			rt_data_alu_2.origin = get_node(LineManager.stage_register_path[1]).get("rt_data_2")
 			rt_data_alu_2.target = $ALU/LowerInput
-			rt_data_alu_2.active = true
+			rt_data_alu_2.active = active
 			
 		LineManager.ex_lines.IMMVAL_ALU2:
 			imm_val_alu_2.origin = get_node(LineManager.stage_register_path[1]).get("imm_value_2")
 			imm_val_alu_2.target = $ALU/LowerInput
-			imm_val_alu_2.active = true
+			imm_val_alu_2.active = active
 			
 		LineManager.ex_lines.RS_FU:
 			rs_fu.origin = get_node(LineManager.stage_register_path[1]).get("rs_2")

@@ -27,9 +27,14 @@ func _on_line_drawn():
 
 
 func _on_line_visibility_changed():
+	if !line.active:
+		visible = false
+		return
 	visible = line.visible and Globals.current_expanded_stage == stage
 	if !visible:
 		return
+	if name == "Inst_20_Label":
+		pass
 	if is_register_name:
 		text = LineManager.register_names[PipelinedWrapper.stage_signals_map[map_stage][map_key]]
 	else:

@@ -154,6 +154,7 @@ width = 1.0
 gradient = SubResource("Gradient_qgand")
 script = ExtResource("4_hqwpj")
 steps = 4
+force_visible = true
 
 [node name="AluOut_DataMem_Label" type="Label" parent="DataMemory" node_paths=PackedStringArray("line")]
 layout_mode = 0
@@ -175,6 +176,7 @@ gradient = SubResource("Gradient_dtrhi")
 script = ExtResource("4_hqwpj")
 origin = NodePath("../Output")
 target = NodePath("../../DetailedControl/MEMWB")
+force_visible = true
 
 [node name="DataMem_MEMWB_Label" type="Label" parent="DataMemory" node_paths=PackedStringArray("line")]
 layout_mode = 0
@@ -202,6 +204,7 @@ target = NodePath("../LowerInput")
 steps = 4
 middle_offset = 20
 visibility = 1
+force_visible = true
 
 [node name="RtData_DataMem_Label" type="Label" parent="DataMemory" node_paths=PackedStringArray("line")]
 layout_mode = 0

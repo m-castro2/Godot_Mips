@@ -26,7 +26,7 @@ func _ready() -> void:
 	add_fixed_stage_color()
 	LineManager.add_stage_detail_path(detail.get_path())
 	
-	Globals.current_stage_sizes_updated.connect(_on_Globals_current_stage_sizez_updated)
+	Globals.current_stage_sizes_updated.connect(_on_Globals_current_stage_sizes_updated)
 
 
 func _on_stage_button_pressed():
@@ -129,7 +129,7 @@ func _await_component_tween_finished() -> void:
 	_on_Globals_components_tween_finished()
 
 
-func _on_Globals_current_stage_sizez_updated(stage: int) -> void:
+func _on_Globals_current_stage_sizes_updated(stage: int) -> void:
 	return
 	if stage != stage_number:
 		return

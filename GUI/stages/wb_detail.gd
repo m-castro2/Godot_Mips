@@ -43,7 +43,7 @@ func show_lines() -> void:
 	pass
 
 
-func _on_wb_line_active(line: LineManager.wb_lines):
+func _on_wb_line_active(line: LineManager.wb_lines, active: bool) -> void:
 	match line:
 		LineManager.wb_lines.PC_MUX:
 			pc_mux.origin = get_node(LineManager.stage_register_path[3]).get("pc_2")

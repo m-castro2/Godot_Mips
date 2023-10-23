@@ -42,11 +42,11 @@ var min_finish_length: int = 10
 var active: bool :
 	set(value):
 		active = value
-		if value:
-			z_index = 1
-			if target.get_parent() is MainComponent:
+		if value or force_visible:
+			z_index = 2 if value else 1 # grey lines arent drawn over colored lines
+			if target and target.get_parent() is MainComponent:
 				target.get_parent().requested = value
-			if origin.get_parent() is MainComponent:
+			if origin and origin.get_parent() is MainComponent:
 				origin.get_parent().requested = value
 			add_points()
 			animate_line() # seems duplicate from *_detail.draw_lines but both are needed
@@ -55,9 +55,15 @@ var active: bool :
 			z_index = 0
 			visible = false
 
+# force visible even if not active
+@export var force_visible:= false
+
 
 func add_points():
-	if !active:
+	if !active and !force_visible:
+		return
+	
+	if StageControl.instruction_map.size() > stage and StageControl.instruction_map[stage] == -1:
 		return
 	
 	if origin == null or target == null:
@@ -141,7 +147,8 @@ func _ready():
 	#Globals.components_tween_finished.connect(add_points)
 	#Globals.components_tween_finished.connect(animate_line)
 	Globals.reset_button_pressed.connect(deactivate_line)
-	Globals.cycle_changed.connect(deactivate_line)
+#	Globals.cycle_changed.connect(deactivate_line)
+	StageControl.instruction_map_updated.connect(deactivate_line)
 	LineManager.redraw_lines.connect(redraw_line)
 	Globals.current_stage_sizes_updated.connect(_on_Globals_current_stage_sizes_updated)
 	
@@ -155,7 +162,7 @@ func _ready():
 
 
 func _on_Globals_expand_stage():#_stage_number: int):
-	if !Globals.current_cycle:
+	if !Globals.current_cycle and !force_visible:
 		return
 	visible = false
 	
@@ -167,12 +174,25 @@ func _on_Globals_expand_stage():#_stage_number: int):
 
 
 func check_visibility(just_activated: bool):
-	if !active:
+	if !active and !force_visible:
 		#Globals.can_click = true
 		return
 	
 	visible = false
-	
+	if name == "RsData_ALU":
+		pass
+	if StageControl.instruction_map.size() < stage + 1:
+		return
+	if name == "RsData_ALU":
+		pass
+	if StageControl.instruction_map[stage] == -1:
+		return
+	if name == "RsData_ALU":
+		pass
+	if stage == 1 and PipelinedWrapper.stage_signals_map[1]["STALL"]: # for id lines
+		return
+	if name == "RsData_ALU":
+		pass
 	if !just_activated: #awaits needed to avoid visibility flickering
 		pass
 #		var stage_size_type: int
@@ -219,6 +239,10 @@ func check_visibility(just_activated: bool):
 func animate_line() -> void:
 	if !points:
 		return
+	if !active and force_visible:
+		line_color = Color.GRAY
+	else:
+		line_color = get_parent().get_parent().stage_color
 	var tween: Tween = get_tree().create_tween()
 	material.set("shader_parameter/color", line_color)
 	tween.tween_property(self, "material:shader_parameter/draw_max", 0.0, .001)

@@ -86,7 +86,7 @@ func calculate_positions() -> void:
 
 func draw_lines() -> void:
 	for line in lines:
-		if line.active:
+		if line.active or line.force_visible:
 			line.add_points()
 			line.animate_line()
 			if line is OutsideLine2D:
@@ -166,7 +166,7 @@ func _on_gui_input(_event) -> void:
 			Globals.expand_stage.emit(1)
 
 
-func _on_LineManager_id_line_active(line: LineManager.id_lines) -> void:
+func _on_LineManager_id_line_active(line: LineManager.id_lines, active: bool) -> void:
 	match  line:
 		LineManager.id_lines.HDU_PC:
 			hdu_pc.origin_component = hazard_detection_unit
@@ -181,10 +181,10 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines) -> void:
 			pc.active = true
 			
 		LineManager.id_lines.INST_RDREG1:
-			inst_25_21.active = true
+			inst_25_21.active = active
 			
 		LineManager.id_lines.INST_RDREG2:
-			inst_20_16_rd_reg_2.active = true
+			inst_20_16_rd_reg_2.active = active
 			
 		LineManager.id_lines.INST_IMMVAL:
 			inst_15_0_imm.target = get_node(LineManager.stage_register_path[1]).get("imm_value")
@@ -230,7 +230,7 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines) -> void:
 			add_pc.active = true
 			
 		LineManager.id_lines.INST_BASE:
-			inst_base.active = true
+			inst_base.active = active
 		
 		LineManager.id_lines.RSDATA_PC:
 			rs_data_pc.target_component = LineManager.get_stage_component(0, "pc")

@@ -39,6 +39,9 @@ var target_component: MainComponent:
 @export var origin_stage: Globals.STAGES
 @export var target_stage: Globals.STAGES
 
+# force visible even if not active
+@export var force_visible:= false
+
 var active: bool :
 	set(value):
 		active = value

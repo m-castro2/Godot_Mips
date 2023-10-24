@@ -106,3 +106,35 @@ func _on_register_pressed():
 
 func _on_seg_reg_info_window_focus_exited():
 	info_window.visible = false
+
+
+@onready var tooltip_group = $StageRegister/VBoxContainer/Register/TooltipGroup
+func _on_register_mouse_entered():
+	var active_fields_names = $SegReg_info_window.get_active_fields()
+	var fields_position: Array = [[], []]
+	for field in active_fields_names[0]:
+		var value = match_names(field)
+		fields_position[0].append([get(value).global_position, field])
+	for field in active_fields_names[1]:
+		var value = match_names(field)
+		fields_position[1].append([get(value + "_2").global_position, field])
+	tooltip_group.configure(fields_position)
+	tooltip_group.show()
+
+
+func _on_register_mouse_exited():
+	tooltip_group.hide_panels()
+
+
+func match_names(field_name: String) -> String:
+	match field_name:
+		"Instruction":
+			return "rt_data"
+		"ALUOut":
+			return "rt_data" if register_type == 2 else "rt"
+		"MemOut":
+			return "rt_data"
+		"RegDest":
+			return "reg_dst"
+		_:
+			return field_name.to_snake_case()

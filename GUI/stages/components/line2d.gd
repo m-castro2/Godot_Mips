@@ -179,20 +179,12 @@ func check_visibility(just_activated: bool):
 		return
 	
 	visible = false
-	if name == "RsData_ALU":
-		pass
 	if StageControl.instruction_map.size() < stage + 1:
 		return
-	if name == "RsData_ALU":
-		pass
 	if StageControl.instruction_map[stage] == -1:
 		return
-	if name == "RsData_ALU":
-		pass
 	if stage == 1 and PipelinedWrapper.stage_signals_map[1]["STALL"]: # for id lines
 		return
-	if name == "RsData_ALU":
-		pass
 	if !just_activated: #awaits needed to avoid visibility flickering
 		pass
 #		var stage_size_type: int

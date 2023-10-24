@@ -101,56 +101,66 @@ size_flags_vertical = 0
 alignment = 1
 
 [node name="WriteTitle" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "Write"
 horizontal_alignment = 1
 
 [node name="PC" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
-text = " "
 horizontal_alignment = 1
 
 [node name="Instruction" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="RsData" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="MemOut" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="ALUOut" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="RtData" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="ImmValue" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="Rs" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="Rt" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="RegDest" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
@@ -161,56 +171,66 @@ size_flags_vertical = 0
 alignment = 1
 
 [node name="ReadTitle" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "Read"
 horizontal_alignment = 1
 
 [node name="PC" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
-text = " "
 horizontal_alignment = 1
 
 [node name="Instruction" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="RsData" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="MemOut" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="ALUOut" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="RtData" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="ImmValue" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="Rs" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="Rt" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="RegDest" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 horizontal_alignment = 1
 

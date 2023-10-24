@@ -36,12 +36,76 @@ extends Window
 @onready var alu_out_r: Label = $ScrollContainer/HBoxContainer/VBoxContainerRead/ALUOut
 @onready var mem_out_r: Label = $ScrollContainer/HBoxContainer/VBoxContainerRead/MemOut
 
-var empty_value: String = " "
+var empty_value: String = ""
 
 var seg_reg_index: int:
 	set(value):
 		seg_reg_index = value
 		setup_labels()
+
+
+func _ready():
+	LineManager.seg_regs_updated.connect(_on_LineManager_seg_regs_updated)
+
+
+func _on_LineManager_seg_regs_updated():
+	var keys:= LineManager.seg_reg_values[seg_reg_index].keys()
+	
+	match seg_reg_index:
+		0:
+			instruction_w.text = LineManager.seg_reg_values[seg_reg_index]["INSTRUCTION_W"] if "INSTRUCTION_W" in keys else empty_value
+			instruction_r.text = LineManager.seg_reg_values[seg_reg_index]["INSTRUCTION_R"] if "INSTRUCTION_R" in keys else empty_value
+			
+			pc_w.text = LineManager.seg_reg_values[seg_reg_index]["PC_W"] if "PC_W" in keys else empty_value
+			pc_r.text =  LineManager.seg_reg_values[seg_reg_index]["PC_R"] if "PC_R" in keys else empty_value
+		
+		1:
+			pc_w.text = LineManager.seg_reg_values[seg_reg_index]["PC_W"] if "PC_W" in keys else empty_value
+			pc_r.text =  LineManager.seg_reg_values[seg_reg_index]["PC_R"] if "PC_R" in keys else empty_value
+			
+			rs_data_w.text = LineManager.seg_reg_values[seg_reg_index]["RS_DATA_W"] if "RS_DATA_W" in keys else empty_value
+			rs_data_r.text = LineManager.seg_reg_values[seg_reg_index]["RS_DATA_R"] if "RS_DATA_R" in keys else empty_value
+			
+			rt_data_w.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_W"] if "RT_DATA_W" in keys else empty_value
+			rt_data_r.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_R"] if "RT_DATA_R" in keys else empty_value
+			
+			reg_dest_w.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_W"] if "REG_DEST_W" in keys else empty_value
+			reg_dest_r.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_R"] if "REG_DEST_R" in keys else empty_value
+			
+			imm_value_w.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_W"]) if "IMM_VALUE_W" in keys else empty_value
+			imm_value_r.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_R"]) if "IMM_VALUE_R" in keys else empty_value
+		
+		2:
+			pc_w.text = LineManager.seg_reg_values[seg_reg_index]["PC_W"] if "PC_W" in keys else empty_value
+			pc_r.text =  LineManager.seg_reg_values[seg_reg_index]["PC_R"] if "PC_R" in keys else empty_value
+			
+			rs_data_w.text = LineManager.seg_reg_values[seg_reg_index]["RS_DATA_W"] if "RS_DATA_W" in keys else empty_value
+			rs_data_r.text = LineManager.seg_reg_values[seg_reg_index]["RS_DATA_R"] if "RS_DATA_R" in keys else empty_value
+			
+			rt_data_w.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_W"] if "RT_DATA_W" in keys else empty_value
+			rt_data_r.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_R"] if "RT_DATA_R" in keys else empty_value
+			
+			reg_dest_w.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_W"] if "REG_DEST_W" in keys else empty_value
+			reg_dest_r.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_R"] if "REG_DEST_R" in keys else empty_value
+			
+			imm_value_w.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_W"]) if "IMM_VALUE_W" in keys else empty_value
+			imm_value_r.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_R"]) if "IMM_VALUE_R" in keys else empty_value
+			
+			alu_out_w.text = str(LineManager.seg_reg_values[seg_reg_index]["ALU_OUT_W"]) if "ALU_OUT_W" in keys else empty_value
+			alu_out_r.text = str(LineManager.seg_reg_values[seg_reg_index]["ALU_OUT_R"]) if "ALU_OUT_R" in keys else empty_value
+		
+		3:
+			pc_w.text = LineManager.seg_reg_values[seg_reg_index]["PC_W"] if "PC_W" in keys else empty_value
+			pc_r.text =  LineManager.seg_reg_values[seg_reg_index]["PC_R"] if "PC_R" in keys else empty_value
+			
+			reg_dest_w.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_W"] if "REG_DEST_W" in keys else empty_value
+			reg_dest_r.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_R"] if "REG_DEST_R" in keys else empty_value
+			
+			mem_out_w.text = str(LineManager.seg_reg_values[seg_reg_index]["MEM_OUT_W"]) if "MEM_OUT_W" in keys else empty_value
+			mem_out_r.text = str(LineManager.seg_reg_values[seg_reg_index]["MEM_OUT_R"]) if "MEM_OUT_R" in keys else empty_value
+			
+			alu_out_w.text = str(LineManager.seg_reg_values[seg_reg_index]["ALU_OUT_W"]) if "ALU_OUT_W" in keys else empty_value
+			alu_out_r.text = str(LineManager.seg_reg_values[seg_reg_index]["ALU_OUT_R"]) if "ALU_OUT_R" in keys else empty_value
 
 
 func setup_labels():
@@ -105,63 +169,6 @@ func setup_labels():
 
 func add_info():
 	show()
-	var keys:= LineManager.seg_reg_values[seg_reg_index].keys()
-	
-	match seg_reg_index:
-		0:
-			instruction_w.text = LineManager.seg_reg_values[seg_reg_index]["INSTRUCTION_W"] if "INSTRUCTION_W" in keys else empty_value
-			instruction_r.text = LineManager.seg_reg_values[seg_reg_index]["INSTRUCTION_R"] if "INSTRUCTION_R" in keys else empty_value
-			
-			pc_w.text = LineManager.seg_reg_values[seg_reg_index]["PC_W"] if "PC_W" in keys else empty_value
-			pc_r.text =  LineManager.seg_reg_values[seg_reg_index]["PC_R"] if "PC_R" in keys else empty_value
-		
-		1:
-			pc_w.text = LineManager.seg_reg_values[seg_reg_index]["PC_W"] if "PC_W" in keys else empty_value
-			pc_r.text =  LineManager.seg_reg_values[seg_reg_index]["PC_R"] if "PC_R" in keys else empty_value
-			
-			rs_data_w.text = LineManager.seg_reg_values[seg_reg_index]["RS_DATA_W"] if "RS_DATA_W" in keys else empty_value
-			rs_data_r.text = LineManager.seg_reg_values[seg_reg_index]["RS_DATA_R"] if "RS_DATA_R" in keys else empty_value
-			
-			rt_data_w.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_W"] if "RT_DATA_W" in keys else empty_value
-			rt_data_r.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_R"] if "RT_DATA_R" in keys else empty_value
-			
-			reg_dest_w.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_W"] if "REG_DEST_W" in keys else empty_value
-			reg_dest_r.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_R"] if "REG_DEST_R" in keys else empty_value
-			
-			imm_value_w.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_W"]) if "IMM_VALUE_W" in keys else empty_value
-			imm_value_r.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_R"]) if "IMM_VALUE_R" in keys else empty_value
-		
-		2:
-			pc_w.text = LineManager.seg_reg_values[seg_reg_index]["PC_W"] if "PC_W" in keys else empty_value
-			pc_r.text =  LineManager.seg_reg_values[seg_reg_index]["PC_R"] if "PC_R" in keys else empty_value
-			
-			rs_data_w.text = LineManager.seg_reg_values[seg_reg_index]["RS_DATA_W"] if "RS_DATA_W" in keys else empty_value
-			rs_data_r.text = LineManager.seg_reg_values[seg_reg_index]["RS_DATA_R"] if "RS_DATA_R" in keys else empty_value
-			
-			rt_data_w.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_W"] if "RT_DATA_W" in keys else empty_value
-			rt_data_r.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_R"] if "RT_DATA_R" in keys else empty_value
-			
-			reg_dest_w.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_W"] if "REG_DEST_W" in keys else empty_value
-			reg_dest_r.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_R"] if "REG_DEST_R" in keys else empty_value
-			
-			imm_value_w.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_W"]) if "IMM_VALUE_W" in keys else empty_value
-			imm_value_r.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_R"]) if "IMM_VALUE_R" in keys else empty_value
-			
-			alu_out_w.text = str(LineManager.seg_reg_values[seg_reg_index]["ALU_OUT_W"]) if "ALU_OUT_W" in keys else empty_value
-			alu_out_r.text = str(LineManager.seg_reg_values[seg_reg_index]["ALU_OUT_R"]) if "ALU_OUT_R" in keys else empty_value
-		
-		3:
-			pc_w.text = LineManager.seg_reg_values[seg_reg_index]["PC_W"] if "PC_W" in keys else empty_value
-			pc_r.text =  LineManager.seg_reg_values[seg_reg_index]["PC_R"] if "PC_R" in keys else empty_value
-			
-			reg_dest_w.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_W"] if "REG_DEST_W" in keys else empty_value
-			reg_dest_r.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_R"] if "REG_DEST_R" in keys else empty_value
-			
-			mem_out_w.text = str(LineManager.seg_reg_values[seg_reg_index]["MEM_OUT_W"]) if "MEM_OUT_W" in keys else empty_value
-			mem_out_r.text = str(LineManager.seg_reg_values[seg_reg_index]["MEM_OUT_R"]) if "MEM_OUT_R" in keys else empty_value
-			
-			alu_out_w.text = str(LineManager.seg_reg_values[seg_reg_index]["ALU_OUT_W"]) if "ALU_OUT_W" in keys else empty_value
-			alu_out_r.text = str(LineManager.seg_reg_values[seg_reg_index]["ALU_OUT_R"]) if "ALU_OUT_R" in keys else empty_value
 
 
 func _on_focus_exited():
@@ -170,3 +177,18 @@ func _on_focus_exited():
 
 func _on_close_requested():
 	visible = false
+
+
+func get_active_fields():
+	var active_field_index:= [[], []]
+	for child in $ScrollContainer/HBoxContainer/VBoxContainerWrite.get_children():
+		if !child.get_index():
+			continue
+		if (child as Label).text != empty_value:
+			active_field_index[0].append(child.name)
+	for child in $ScrollContainer/HBoxContainer/VBoxContainerRead.get_children():
+		if !child.get_index():
+			continue
+		if (child as Label).text != empty_value:
+			active_field_index[1].append(child.name)
+	return active_field_index

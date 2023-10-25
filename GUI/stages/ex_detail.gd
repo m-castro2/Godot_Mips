@@ -56,6 +56,7 @@ var stage: Globals.STAGES = Globals.STAGES.EX
 func _ready():
 	LineManager.ex_line_active.connect(_on_LineManager_ex_line_active)
 	LineManager.seg_regs_updated.connect(_on_LineManager_seg_regs_updated)
+	Globals.reset_button_pressed.connect(_on_Globals_reset_button_pressed)
 	show_lines()
 
 
@@ -211,8 +212,9 @@ func _on_forwarding_unit_pressed():
 
 func _on_LineManager_seg_regs_updated():
 	if StageControl.instruction_map[stage] == -1:
+		op_label.text = ""
 		return
-	var t = PipelinedWrapper.stage_signals_map
+	
 	if PipelinedWrapper.stage_signals_map[2]["ALU_OP"] == 0:
 		op_label.text = "ADDU"
 	elif  PipelinedWrapper.stage_signals_map[2]["ALU_OP"] == 1:
@@ -294,3 +296,7 @@ func _on_LineManager_seg_regs_updated():
 					op_label.text = "XORI"
 				15:
 					op_label.text = "LUI"
+
+
+func _on_Globals_reset_button_pressed():
+	op_label.text = ""

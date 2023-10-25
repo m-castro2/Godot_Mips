@@ -210,12 +210,14 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="AluLabel" type="Label" parent="ALU/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
 text = "ALU"
 horizontal_alignment = 1
 
 [node name="OpLabel" type="Label" parent="ALU/CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
 horizontal_alignment = 1
 

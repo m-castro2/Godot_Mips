@@ -435,7 +435,7 @@ intersect_point = 1.0
 offset = Vector2(-50, 0)
 visibility = 1
 node_to_avoid = NodePath("../../ALU")
-avoid_offset = Vector2(0, 50)
+avoid_offset = Vector2(0, 30)
 
 [node name="RtData_EXMEM_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
 layout_mode = 0

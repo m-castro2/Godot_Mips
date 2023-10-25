@@ -8,6 +8,7 @@ func get_info():
 
 
 func show_info_window():
+	return
 	if is_window_active:
 		return
 	var window = WINDOW.instantiate()

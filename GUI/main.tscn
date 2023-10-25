@@ -63,45 +63,52 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="Reset" type="Button" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 6
+size_flags_vertical = 4
 disabled = true
 text = "Reset"
 
 [node name="PreviousCycle" type="Button" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 6
+size_flags_vertical = 4
 disabled = true
 text = "Previous cycle"
 
 [node name="NextCycle" type="Button" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 6
+size_flags_vertical = 4
 disabled = true
 text = "Next cycle"
 
 [node name="RunProgram" type="Button" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 6
+size_flags_vertical = 4
 disabled = true
 text = "Run program"
 
 [node name="ShowMemory" type="Button" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 100)
+visible = false
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 6
+size_flags_vertical = 4
 disabled = true
 text = "Show memory"
 

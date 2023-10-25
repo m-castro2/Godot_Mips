@@ -1,9 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://cyfy0tcp481of"]
+[gd_scene load_steps=34 format=3 uid="uid://cyfy0tcp481of"]
 
 [ext_resource type="Script" path="res://stages/ex_detail.gd" id="1_qp051"]
 [ext_resource type="Texture2D" uid="uid://b72vxstxeo2tx" path="res://80x150_negro-default.svg" id="2_er7vb"]
 [ext_resource type="Script" path="res://stages/components/ALU.gd" id="2_qvpnf"]
-[ext_resource type="Texture2D" uid="uid://3meny0eob7yl" path="res://80x150_gris-highlight.svg" id="2_rxnif"]
 [ext_resource type="Script" path="res://stages/components/main_component.gd" id="3_tibhf"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="4_2lcnv"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="4_q4wkr"]
@@ -155,7 +154,7 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("2_er7vb")
-texture_hover = ExtResource("2_rxnif")
+texture_hover = ExtResource("2_er7vb")
 script = ExtResource("2_qvpnf")
 position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.5, 0.5)

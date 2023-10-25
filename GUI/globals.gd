@@ -76,6 +76,8 @@ signal branch_stage_changed(value: int)
 signal branch_type_changed(value: int)
 signal hdu_available_changed(value: int)
 signal fu_available_changed(value: int)
+# notify changes to window scaling
+signal window_scaling_changed(value: int)
 
 
 func _ready():

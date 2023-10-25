@@ -5,6 +5,13 @@
     la $a1, Count
     lw $a1, 0($a1)
 Loop:
+    mov.s $f10, $f12
+    c.eq.s $f12, $f14
+    c.eq.d $f12, $f14
+    c.le.s $f12, $f14
+    c.le.d $f12, $f14
+    c.lt.s $f12, $f14
+    c.lt.d $f12, $f14
     lwc1 $f0, 0($a0)
     lwc1 $f1, 4($a0)
     add.d $f2, $f0, $f0

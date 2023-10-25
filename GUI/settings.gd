@@ -2,6 +2,7 @@ extends Control
 
 @onready var color_mode_options = $PanelContainer/MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/ColorModeOptions
 @onready var color_mode_option_button = $PanelContainer/MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer/VBoxContainer/ColorMode/ColorModeOptionButton
+@onready var scaling_option_button = %ScalingOptionButton
 
 const color_mode_option: PackedScene = preload("res://color_mode_option.tscn")
 
@@ -16,6 +17,7 @@ func _ready() -> void:
 	%BranchTypeOptionButton.selected = ConfigManager.get_value("Settings/CPU", "branch_type")
 	%HDUCheckBox.button_pressed = ConfigManager.get_value("Settings/CPU", "hdu_enabled")
 	%FUCheckBox.button_pressed = ConfigManager.get_value("Settings/CPU", "fu_enabled")
+	scaling_option_button.selected = ConfigManager.get_value("Settings/UI", "scaling")
 
 
 func add_color_options() -> void:
@@ -76,3 +78,8 @@ func _on_hdu_check_box_toggled(button_pressed):
 func _on_fu_check_box_toggled(button_pressed):
 	ConfigManager.update_value("Settings/CPU", "fu_enabled", button_pressed)
 	Globals.fu_available_changed.emit(button_pressed)
+
+
+func _on_scaling_option_button_item_selected(index):
+	ConfigManager.update_value("Settings/UI", "scaling", index)
+	Globals.window_scaling_changed.emit(index)

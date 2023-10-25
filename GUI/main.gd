@@ -21,6 +21,8 @@ func _ready() -> void:
 	Globals.hdu_available_changed.connect(_on_Globals_hdu_available_changed)
 	Globals.branch_stage_changed.connect(_on_Globals_branch_stage_changed)
 	Globals.branch_type_changed.connect(_on_Globals_branch_type_changed)
+	Globals.window_scaling_changed.connect(_on_Globals_window_scaling_changed)
+	_on_Globals_window_scaling_changed(ConfigManager.get_value("Settings/UI", "scaling"))
 
 
 func copy_test_files():
@@ -194,3 +196,8 @@ func configure_cpu():
 	_on_Globals_branch_type_changed(ConfigManager.get_value("Settings/CPU", "branch_type"))
 	_on_Globals_fu_available_changed(ConfigManager.get_value("Settings/CPU", "fu_enabled"))
 	_on_Globals_hdu_available_changed(ConfigManager.get_value("Settings/CPU", "hdu_enabled"))
+
+
+func _on_Globals_window_scaling_changed(value: int) -> void:
+	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if value \
+			else Window.CONTENT_SCALE_MODE_DISABLED

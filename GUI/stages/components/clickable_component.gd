@@ -1,4 +1,4 @@
-extends Button
+extends BaseButton
 class_name ClickableComponent
 
 const WINDOW = preload("res://component_info_window.tscn")

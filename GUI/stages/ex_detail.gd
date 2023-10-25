@@ -25,6 +25,8 @@ extends Panel
 
 @onready var fake_target = $DetailedControl/Fake_Target
 
+@onready var op_label: Label = %OpLabel
+
 
 @onready var lines: Array[Line2D] = [ pc, 
 									reg_dst,
@@ -53,6 +55,7 @@ var stage: Globals.STAGES = Globals.STAGES.EX
 
 func _ready():
 	LineManager.ex_line_active.connect(_on_LineManager_ex_line_active)
+	LineManager.seg_regs_updated.connect(_on_LineManager_seg_regs_updated)
 	show_lines()
 
 
@@ -204,3 +207,90 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines, active: bool) ->
 
 func _on_forwarding_unit_pressed():
 	$DetailedControl/ForwardingUnit/FordwardingUnit_info_window.add_info()
+
+
+func _on_LineManager_seg_regs_updated():
+	if StageControl.instruction_map[stage] == -1:
+		return
+	var t = PipelinedWrapper.stage_signals_map
+	if PipelinedWrapper.stage_signals_map[2]["ALU_OP"] == 0:
+		op_label.text = "ADDU"
+	elif  PipelinedWrapper.stage_signals_map[2]["ALU_OP"] == 1:
+		op_label.text = "SUBU"
+	else: 
+		if !PipelinedWrapper.stage_signals_map[2]["OPCODE"]:
+			match PipelinedWrapper.stage_signals_map[2]["FUNCT"]:
+				0:
+					op_label.text = "SLL"
+				2:
+					op_label.text = "SRL"
+				3:
+					op_label.text = "SRA"
+				4:
+					op_label.text = "SLLV"
+				6:
+					op_label.text = "SRLV"
+				7:
+					op_label.text = "SRAV"
+				8:
+					op_label.text = "JR"
+				9:
+					op_label.text = "JALR"
+				12:
+					op_label.text = "SYSCALL"
+				24:
+					op_label.text = "MULT"
+				25:
+					op_label.text = "MULTU"
+				26:
+					op_label.text = "DIV"
+				27:
+					op_label.text = "DIVU"
+				32:
+					op_label.text = "ADD"
+				33:
+					op_label.text = "ADDU"
+				34:
+					op_label.text = "SUB"
+				35:
+					op_label.text = "SUBU"
+				36:
+					op_label.text = "AND"
+				37:
+					op_label.text = "OR"
+				38:
+					op_label.text = "XOR"
+				39:
+					op_label.text = "NOR"
+				42:
+					op_label.text = "SLT"
+				43:
+					op_label.text = "SLTU"
+				16:
+					op_label.text = "MFHI"
+				17:
+					op_label.text = "MTHI"
+				18:
+					op_label.text = "MFLO"
+				19:
+					op_label.text = "MTLO"
+				_:
+					op_label.text = ""
+		else:
+			match PipelinedWrapper.stage_signals_map[2]["OPCODE"]:
+				8:
+					op_label.text = "ADDI"
+				9:
+					op_label.text = "ADDIU"
+				10:
+					op_label.text = "SLTI"
+				11:
+					op_label.text = "SLTIU"
+				12:
+					op_label.text = "ANDI"
+				13:
+					op_label.text = "ORI"
+				14:
+					op_label.text = "XORI"
+				15:
+					op_label.text = "LUI"

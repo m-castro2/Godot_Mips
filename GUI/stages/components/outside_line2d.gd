@@ -33,8 +33,18 @@ var target_component: MainComponent:
 @export var left_right_input: bool = 0
 
 
-@export var min_initial_length: int = 10
-@export var min_finish_length: int = 10
+@export var min_initial_length: int = 10:
+	set(value):
+		min_initial_length = value
+		expanded_min_initial_length = value * 6
+
+@export var min_finish_length: int = 10:
+	set(value):
+		min_finish_length = value
+		expanded_min_finish_length = value * 6
+
+@export var expanded_min_initial_length: int = min_initial_length * 6
+@export var expanded_min_finish_length: int = min_finish_length * 6
 
 @export var origin_stage: Globals.STAGES
 @export var target_stage: Globals.STAGES
@@ -68,16 +78,22 @@ func add_points():
 		add_point(Vector2(target.global_position.x - offset, origin.global_position.y))
 		add_point(Vector2(target.global_position.x - offset, target.global_position.y))
 	else:
+		
+		var actual_min_initial_length: int = expanded_min_initial_length \
+				if Globals.current_expanded_stage == origin_stage else min_initial_length
+		var actual_min_finish_length: int = expanded_min_finish_length \
+				if Globals.current_expanded_stage == target_stage else min_finish_length
+		
 		var parent_position: float = get_parent().global_position.y
 		var parent_height: float = get_parent().size.y
-		add_point(origin.global_position + Vector2(min_initial_length, 0)) # force to start drawing to the right
-		add_point(Vector2(origin.global_position.x + min_initial_length, parent_position + parent_height * height_percent)) # continue to height percent point
+		add_point(origin.global_position + Vector2(actual_min_initial_length, 0)) # force to start drawing to the right
+		add_point(Vector2(origin.global_position.x + actual_min_initial_length, parent_position + parent_height * height_percent)) # continue to height percent point
 		if left_right_input:
-			add_point(Vector2(target.global_position.x + min_finish_length, parent_position + parent_height * height_percent)) # go further left than target point
-			add_point(Vector2(target.global_position.x + min_finish_length, target.global_position.y)) # come back to target height
+			add_point(Vector2(target.global_position.x + actual_min_finish_length, parent_position + parent_height * height_percent)) # go further left than target point
+			add_point(Vector2(target.global_position.x + actual_min_finish_length, target.global_position.y)) # come back to target height
 		else:
-			add_point(Vector2(target.global_position.x - min_finish_length, parent_position + parent_height * height_percent)) # go further left than target point
-			add_point(Vector2(target.global_position.x - min_finish_length, target.global_position.y)) # come back to target height
+			add_point(Vector2(target.global_position.x - actual_min_finish_length, parent_position + parent_height * height_percent)) # go further left than target point
+			add_point(Vector2(target.global_position.x - actual_min_finish_length, target.global_position.y)) # come back to target height
 	
 	add_point(target.global_position)
 

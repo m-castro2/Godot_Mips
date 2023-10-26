@@ -14,15 +14,19 @@ var expanded: bool = false
 
 var stage: Globals.STAGES = Globals.STAGES.IF
 
+
+@onready var pc_ifid: ComplexLine2D = $PC/PC_IFID
+@onready var add_pc = $Add/Add_PC
+@onready var add_ifid = $Add/Add_IFID
+
 @onready var lines: Array[Node] = [
-	$Add/Add_IFID,
 	$"Add/4_Add",
 	$PC/PC_InstMem,
 	$PC/PC_Add,
-	$Add/Add_PC,
 	$InstructionsMemoryButton/InstMem_IFID,
-	]
-
+	pc_ifid,
+	add_pc,
+	add_ifid]
 
 func _ready() -> void:
 	LineManager.if_line_active.connect(_on_LineManager_if_line_active)
@@ -111,4 +115,6 @@ func _on_LineManager_if_line_active(line: LineManager.if_lines) -> void:
 		LineManager.if_lines._4_ADD:
 			$"Add/4_Add".active = true
 		LineManager.if_lines.ADD_PC:
-			$"Add/Add_PC".active = true
+			add_pc.active = true
+		LineManager.if_lines.PC_IFID:
+			pc_ifid.active = true

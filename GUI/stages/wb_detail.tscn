@@ -83,7 +83,6 @@ shader_parameter/color = null
 [sub_resource type="Gradient" id="Gradient_yahud"]
 
 [node name="WBDetail" type="Panel"]
-clip_children = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -228,6 +227,8 @@ origin = NodePath("../../Mux/Output")
 intersect_point = 1.0
 height_percent = 0.97
 min_finish_length = 15
+expanded_min_initial_length = 10
+expanded_min_finish_length = 70
 origin_stage = 4
 target_stage = 1
 
@@ -240,6 +241,21 @@ offset_bottom = 294.0
 script = ExtResource("5_i7od7")
 line = NodePath("../Mux_RegBank")
 stage = 4
+map_key = "REG_VALUE"
+map_stage = 4
+is_register_name = false
+
+[node name="Mux_RegBank_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 274.0
+offset_right = 601.0
+offset_bottom = 294.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 4
+label_padding = Vector2(-33, 0)
+line = NodePath("../Mux_RegBank")
+stage = 1
 map_key = "REG_VALUE"
 map_stage = 4
 is_register_name = false
@@ -275,6 +291,8 @@ gradient = SubResource("Gradient_huiv1")
 script = ExtResource("5_pp8xc")
 origin = NodePath("../../DetailedControl/RegDst")
 height_percent = 0.95
+expanded_min_initial_length = 35
+expanded_min_finish_length = 30
 origin_stage = 4
 target_stage = 1
 
@@ -290,6 +308,18 @@ stage = 4
 map_key = "REG_DEST_REGISTER"
 map_stage = 4
 
+[node name="RegDst_RegBank_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 4
+label_padding = Vector2(0, 0)
+line = NodePath("../RegDst_RegBank")
+stage = 1
+map_key = "REG_DEST_REGISTER"
+map_stage = 4
+
 [node name="RegDst_ForwardingUnit" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_h2jch")
 width = 1.0
@@ -298,6 +328,7 @@ script = ExtResource("5_pp8xc")
 origin = NodePath("../../DetailedControl/RegDst")
 height_percent = 0.95
 left_right_input = true
+expanded_min_initial_length = 35
 origin_stage = 4
 target_stage = 2
 

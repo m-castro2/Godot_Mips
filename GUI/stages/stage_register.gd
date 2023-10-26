@@ -1,4 +1,4 @@
-extends Control
+extends Panel
 class_name StageRegister
 
 @export var register_type: LineManager.Register_Type
@@ -65,7 +65,7 @@ func update_input_output_markers() -> void:
 
 func _on_resized():
 	await LineManager.if_stage_updated
-	pc.global_position.y = LineManager.get_stage_component(0, "add").get_node("IFID_UpperInput").global_position.y
+	pc.global_position.y = LineManager.get_stage_component(0, "pc").get_node("IFID_UpperInput").global_position.y
 	pc_2.global_position = pc.global_position + Vector2(31, 0)
 	
 	rel_branch.global_position.y = register.global_position.y + register.size.y * 0.1

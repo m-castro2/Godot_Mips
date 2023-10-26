@@ -98,7 +98,6 @@ shader_parameter/color = null
 [sub_resource type="Gradient" id="Gradient_y2urq"]
 
 [node name="IDDetail" type="Panel"]
-clip_children = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -211,7 +210,6 @@ script = ExtResource("6_4vcia")
 origin = NodePath("../InstBase")
 target = NodePath("../Input1")
 intersect_point = 1.0
-visibility = 1
 force_visible = true
 
 [node name="Inst_25_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
@@ -234,7 +232,6 @@ script = ExtResource("6_4vcia")
 origin = NodePath("../InstBase")
 target = NodePath("../Input2")
 intersect_point = 1.0
-visibility = 1
 force_visible = true
 
 [node name="Inst_20_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
@@ -443,6 +440,8 @@ visible = false
 layout_mode = 0
 offset_right = 50.0
 offset_bottom = 70.0
+theme_type_variation = &"WindowlessComponent"
+disabled = true
 text = "Add"
 script = ExtResource("5_w7qfm")
 inputs_number = 2
@@ -485,6 +484,18 @@ width = 1.0
 gradient = SubResource("Gradient_qvx7r")
 script = ExtResource("6_21ql4")
 visibility = 1
+
+[node name="PC_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+line = NodePath("../PC")
+stage = 1
+map_key = "PC"
+map_stage = 1
+is_register_name = false
 
 [node name="RsData" type="Line2D" parent="DetailedControl"]
 material = SubResource("ShaderMaterial_dptm5")
@@ -600,6 +611,31 @@ origin = NodePath("../../HazardDetectionUnit/HDU_PC")
 flag = true
 origin_stage = 1
 
+[node name="RS_PC_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_padding = Vector2(-100, 0)
+line = NodePath("../Inst_PC")
+stage = 1
+map_key = "J_BRANCH"
+map_stage = 1
+is_register_name = false
+
+[node name="RS_PC_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 4
+label_padding = Vector2(-10, 0)
+line = NodePath("../Inst_PC")
+map_key = "J_BRANCH"
+map_stage = 1
+is_register_name = false
+
 [node name="Add_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
 visible = false
 material = SubResource("ShaderMaterial_5q0q3")
@@ -611,6 +647,30 @@ origin = NodePath("../../DetailedControl/Add/Output")
 height_percent = 0.025
 origin_stage = 1
 
+[node name="Add_PC_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_padding = Vector2(15, 25)
+line = NodePath("../Add_PC")
+stage = 1
+map_key = "C_BRANCH"
+map_stage = 1
+is_register_name = false
+
+[node name="Add_PC_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 4
+label_padding = Vector2(-15, 25)
+line = NodePath("../Add_PC")
+map_key = "C_BRANCH"
+map_stage = 1
+is_register_name = false
+
 [node name="RsData_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
 visible = false
 material = SubResource("ShaderMaterial_37tcj")
@@ -621,6 +681,30 @@ origin_component = NodePath("../../RegistersBank")
 origin = NodePath("../../RegistersBank/Output1")
 height_percent = 0.99
 origin_stage = 1
+
+[node name="RsData_PC_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_padding = Vector2(15, 0)
+line = NodePath("../RsData_PC")
+stage = 1
+map_key = "R_BRANCH"
+map_stage = 1
+is_register_name = false
+
+[node name="RsData_PC_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 4
+label_padding = Vector2(-10, 0)
+line = NodePath("../RsData_PC")
+map_key = "R_BRANCH"
+map_stage = 1
+is_register_name = false
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="resized" from="." to="." method="_on_resized"]

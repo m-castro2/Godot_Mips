@@ -20,8 +20,6 @@ signal request_updated
 
 var requested: bool = false :
 	set(value):
-		if name == "ForwardingUnit":
-			pass
 		requested = value
 		request_updated.emit(stage_number, name)
 

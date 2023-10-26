@@ -5,9 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://bgt57keji14g3" path="res://stages/components/windows/SegReg_info_window.tscn" id="3_7t7t1"]
 [ext_resource type="PackedScene" uid="uid://2kbv4ig23x7j" path="res://stages/stage_register_tooltip.tscn" id="3_dunci"]
 
-[node name="Control" type="Control"]
+[node name="Control" type="Panel"]
 custom_minimum_size = Vector2(31, 0)
-layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0

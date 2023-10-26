@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ca820xflmqb5b"]
+[gd_scene load_steps=23 format=3 uid="uid://ca820xflmqb5b"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_0r720"]
 [ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://stages/PC.gd" id="6_k6uw2"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="7_hmr7u"]
 [ext_resource type="Script" path="res://stages/components/complex_line.gd" id="8_0k470"]
+[ext_resource type="Script" path="res://stages/components/line_label.gd" id="9_vv8pe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tkr3u"]
 shader = ExtResource("7_hmr7u")
@@ -36,14 +37,14 @@ shader_parameter/color = null
 
 [sub_resource type="Gradient" id="Gradient_bg0dw"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fkbgy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ylsuh"]
 shader = ExtResource("7_hmr7u")
 shader_parameter/draw_min = 0.0
 shader_parameter/draw_max = 0.0
 shader_parameter/draw_feather = 0.0
 shader_parameter/color = null
 
-[sub_resource type="Gradient" id="Gradient_0074m"]
+[sub_resource type="Gradient" id="Gradient_mdblk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_omrfj"]
 shader = ExtResource("7_hmr7u")
@@ -61,8 +62,16 @@ shader_parameter/draw_max = 0.0
 shader_parameter/draw_feather = 0.0
 shader_parameter/color = null
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sudxr"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_lbsf3"]
+
 [node name="IFDetail" type="Panel"]
-clip_children = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -164,24 +173,42 @@ width = 1.0
 gradient = SubResource("Gradient_bg0dw")
 script = ExtResource("6_4gygt")
 origin = NodePath("../Output")
-target = NodePath("../IFID_UpperInput")
+target = NodePath("../../PC/IFID_UpperInput")
+
+[node name="Add_IFID_Label" type="Label" parent="Add" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("9_vv8pe")
+label_padding = Vector2(15, 25)
+line = NodePath("../Add_IFID")
+map_key = "PC"
+is_register_name = false
 
 [node name="Add_PC" type="Line2D" parent="Add" node_paths=PackedStringArray("origin", "target")]
-material = SubResource("ShaderMaterial_fkbgy")
+material = SubResource("ShaderMaterial_ylsuh")
 width = 1.0
-gradient = SubResource("Gradient_0074m")
-script = ExtResource("8_0k470")
-origin = NodePath("../Add_IFID")
+gradient = SubResource("Gradient_mdblk")
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
 target = NodePath("../../PC/Input")
-intersect_point = 0.5
-flag = true
-offset = Vector2(10, 50)
+steps = 6
+force_up = true
+
+[node name="Add_PC_Label" type="Label" parent="Add" node_paths=PackedStringArray("line", "label_to_substitute")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("9_vv8pe")
+label_line_vertex = 2
+label_padding = Vector2(-65, 0)
+line = NodePath("../Add_PC")
+map_key = "PC"
+is_register_name = false
+label_to_substitute = NodePath("../Add_IFID_Label")
 
 [node name="Output" type="Marker2D" parent="Add"]
 position = Vector2(50, 35)
-
-[node name="IFID_UpperInput" type="Marker2D" parent="Add"]
-unique_name_in_owner = true
 
 [node name="PC" type="Button" parent="." node_paths=PackedStringArray("reference_node", "inputs", "outputs")]
 custom_minimum_size = Vector2(50, 70)
@@ -207,14 +234,26 @@ position = Vector2(50, 35)
 [node name="Input" type="Marker2D" parent="PC"]
 position = Vector2(0, 35)
 
-[node name="PC_Add" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target")]
+[node name="PC_Add" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target", "line_to_match")]
 material = SubResource("ShaderMaterial_omrfj")
 width = 1.0
 gradient = SubResource("Gradient_183sx")
 script = ExtResource("6_4gygt")
 origin = NodePath("../Output")
 target = NodePath("../../Add/LowerInput")
-steps = 4
+steps = 6
+line_to_match = NodePath("../PC_InstMem")
+
+[node name="PC_Add_Label" type="Label" parent="PC" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("9_vv8pe")
+label_line_vertex = 1
+label_padding = Vector2(20, 0)
+line = NodePath("../PC_Add")
+map_key = "PREV_PC"
+is_register_name = false
 
 [node name="UpperInput" type="Marker2D" parent="PC"]
 position = Vector2(25, 0)
@@ -228,6 +267,21 @@ script = ExtResource("6_4gygt")
 origin = NodePath("../Output")
 target = NodePath("../../InstructionsMemoryButton/Input")
 steps = 4
+
+[node name="PC_IFID" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target", "node_to_avoid")]
+material = SubResource("ShaderMaterial_sudxr")
+width = 1.0
+gradient = SubResource("Gradient_lbsf3")
+script = ExtResource("8_0k470")
+origin = NodePath("../PC_InstMem")
+target = NodePath("../IFID_UpperInput")
+intersect_point = 1.0
+node_to_avoid = NodePath("../../Add")
+avoid_offset = Vector2(10, 68.5)
+
+[node name="IFID_UpperInput" type="Marker2D" parent="PC"]
+unique_name_in_owner = true
+position = Vector2(76, -93)
 
 [node name="DetailedControl" type="Control" parent="."]
 layout_mode = 1

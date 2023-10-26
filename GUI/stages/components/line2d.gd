@@ -58,6 +58,7 @@ var active: bool :
 # force visible even if not active
 @export var force_visible:= false
 
+@export var line_to_match: Line = null
 
 func add_points():
 	if !active and !force_visible:
@@ -136,8 +137,13 @@ func add_points():
 		add_point(Vector2(origin.global_position.x + (target.global_position.x - origin.global_position.x),  origin.global_position.y))
 	
 	elif steps != 2:
-		add_point(Vector2(origin.global_position.x + (target.global_position.x - origin.global_position.x)/2 - middle_offset,  origin.global_position.y))
-		add_point(Vector2(origin.global_position.x + (target.global_position.x - origin.global_position.x)/2 - middle_offset,  target.global_position.y))
+		if line_to_match:
+			var point:= line_to_match.get_point_position(1)
+			add_point(point)
+			add_point(Vector2(point.x,  target.global_position.y))
+		else:
+			add_point(Vector2(origin.global_position.x + (target.global_position.x - origin.global_position.x)/2 - middle_offset,  origin.global_position.y))
+			add_point(Vector2(origin.global_position.x + (target.global_position.x - origin.global_position.x)/2 - middle_offset,  target.global_position.y))
 	
 	add_point(target.global_position)
 

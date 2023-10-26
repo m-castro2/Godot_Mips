@@ -129,7 +129,6 @@ shader_parameter/draw_feather = 0.0
 shader_parameter/color = null
 
 [node name="EXDetail" type="Panel"]
-clip_children = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

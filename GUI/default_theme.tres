@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://6yt0638i1ha2"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://6yt0638i1ha2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bihqp"]
 bg_color = Color(0.211765, 0.239216, 0.290196, 1)
@@ -14,6 +14,18 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arc52"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x0r3q"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdwn4"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_bottom = 1
@@ -28,6 +40,22 @@ content_margin_right = 4.0
 content_margin_bottom = 4.0
 bg_color = Color(0.211765, 0.239216, 0.290196, 1)
 border_color = Color(0.084, 0.096, 0.116, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ki1j"]
+content_margin_left = 4.0
+content_margin_top = 6.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.211765, 0.239216, 0.290196, 1)
+border_width_right = 3
+border_color = Color(0.101961, 0.101961, 0.101961, 0.6)
+border_blend = true
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -65,6 +93,7 @@ BackgroundPanelContainer/base_type = &"PanelContainer"
 BackgroundPanelContainer/styles/panel = SubResource("StyleBoxFlat_ta6wk")
 Button/font_sizes/font_size = 14
 Button/styles/focus = SubResource("StyleBoxEmpty_arc52")
+Button/styles/normal = SubResource("StyleBoxFlat_x0r3q")
 GridLabel/base_type = &"Label"
 GridLabel/styles/normal = SubResource("StyleBoxFlat_jdwn4")
 InputOutputLabel/base_type = &"Label"
@@ -73,6 +102,8 @@ InputOutputLabel/font_sizes/font_size = 10
 Label/font_sizes/font_size = 14
 Panel/styles/panel = SubResource("StyleBoxFlat_ht4eq")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_ewnuu")
+PanelContainerRightBorder/base_type = &"PanelContainer"
+PanelContainerRightBorder/styles/panel = SubResource("StyleBoxFlat_4ki1j")
 Window/styles/embedded_border = SubResource("StyleBoxFlat_7uvxh")
 WindowlessComponent/base_type = &"Button"
 WindowlessComponent/colors/font_disabled_color = Color(1, 1, 1, 1)

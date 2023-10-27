@@ -78,26 +78,30 @@ func activate_lines(_stage_signals_map: Array):
 			match stage_signals_map[0]["PC_SRC"]:
 				0:
 					if_line_active.emit(if_lines.ADD_IFID)
+					if_line_active.emit(if_lines.ADD_PC)
+					if_line_active.emit(if_lines._4_ADD)
+					if_line_active.emit(if_lines.PC_ADD)
 				1:
-#					if !branch_stage: #0 for ID, 1 for MEM
-#						id_line_active.emit(id_lines.ADD_PC, true)
+					# C branch
+					if !branch_stage: #0 for ID, 1 for MEM
+						id_line_active.emit(id_lines.ADD_PC, true)
+						id_line_active.emit(id_lines.PC_ADD, true)
+						id_line_active.emit(id_lines.INST_ADD, true)
 #						if_line_active.emit(if_lines._4_ADD)
 #						if_line_active.emit(if_lines.ADD_IFID)
-					if branch_stage:
+					else:
 						mem_line_active.emit(mem_lines.RELBRANCH_PC, true)
 					if_line_active.emit(if_lines.PC_IFID)
 				2:
+					# R branch
 					id_line_active.emit(id_lines.RSDATA_PC, true)
 					if_line_active.emit(if_lines.PC_IFID)
 				3:
+					# J branch
 					id_line_active.emit(id_lines.INST_PC, true)
 					if_line_active.emit(if_lines.PC_IFID)
 			
-			if_line_active.emit(if_lines.ADD_PC)
-			if_line_active.emit(if_lines._4_ADD)
-			if_line_active.emit(if_lines.PC_ADD)
-			
-			seg_reg_values[0]["PC_W"] = PipelinedWrapper.to_hex32(stage_signals_map[0]["PREV_PC"])
+			seg_reg_values[0]["PC_W"] = PipelinedWrapper.to_hex32(stage_signals_map[0]["PC"])
 			seg_reg_values[0]["INSTRUCTION_W"] = PipelinedWrapper.to_hex32(stage_signals_map[0]["INSTRUCTION"])
 		
 		else:

@@ -197,8 +197,10 @@ force_up = true
 
 [node name="Add_PC_Label" type="Label" parent="Add" node_paths=PackedStringArray("line", "label_to_substitute")]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 20.0
+offset_left = -76.0
+offset_top = 93.0
+offset_right = -36.0
+offset_bottom = 113.0
 script = ExtResource("9_vv8pe")
 label_line_vertex = 2
 label_padding = Vector2(-65, 0)
@@ -244,17 +246,6 @@ target = NodePath("../../Add/LowerInput")
 steps = 6
 line_to_match = NodePath("../PC_InstMem")
 
-[node name="PC_Add_Label" type="Label" parent="PC" node_paths=PackedStringArray("line")]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 20.0
-script = ExtResource("9_vv8pe")
-label_line_vertex = 1
-label_padding = Vector2(20, 0)
-line = NodePath("../PC_Add")
-map_key = "PREV_PC"
-is_register_name = false
-
 [node name="UpperInput" type="Marker2D" parent="PC"]
 position = Vector2(25, 0)
 
@@ -268,6 +259,17 @@ origin = NodePath("../Output")
 target = NodePath("../../InstructionsMemoryButton/Input")
 steps = 4
 
+[node name="PC_InstMem_Label" type="Label" parent="PC" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("9_vv8pe")
+label_line_vertex = 1
+label_padding = Vector2(20, 0)
+line = NodePath("../PC_InstMem")
+map_key = "PREV_PC"
+is_register_name = false
+
 [node name="PC_IFID" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target", "node_to_avoid")]
 material = SubResource("ShaderMaterial_sudxr")
 width = 1.0
@@ -277,7 +279,7 @@ origin = NodePath("../PC_InstMem")
 target = NodePath("../IFID_UpperInput")
 intersect_point = 1.0
 node_to_avoid = NodePath("../../Add")
-avoid_offset = Vector2(10, 68.5)
+avoid_offset = Vector2(0, 68.5)
 
 [node name="IFID_UpperInput" type="Marker2D" parent="PC"]
 unique_name_in_owner = true

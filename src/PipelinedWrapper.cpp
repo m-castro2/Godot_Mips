@@ -338,6 +338,7 @@ void PipelinedWrapper::_update_diagram() {
         }
         else {
             pc = stage_signals_map[i].get("PC");
+            pc -= 4;
         }
         if (pc) {
             result[i] = (pc % MEM_TEXT_START) / 4;

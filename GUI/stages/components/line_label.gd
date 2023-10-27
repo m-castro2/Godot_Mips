@@ -13,6 +13,8 @@ extends Label
 
 @export var label_to_substitute: LineLabel = null
 
+@export var to_hex: bool = true
+
 func _ready():
 	line.draw.connect(_on_line_drawn)
 	line.visibility_changed.connect(_on_line_visibility_changed)
@@ -42,8 +44,10 @@ func _on_line_visibility_changed():
 		return
 	if is_register_name:
 		text = LineManager.register_names[PipelinedWrapper.stage_signals_map[map_stage][map_key]]
-	else:
+	elif to_hex:
 		text = PipelinedWrapper.to_hex32(PipelinedWrapper.stage_signals_map[map_stage][map_key])
+	else:
+		text = str(PipelinedWrapper.stage_signals_map[map_stage][map_key])
 
 
 func _on_line_to_substitute_visibility_changed() -> void:

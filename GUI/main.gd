@@ -183,12 +183,14 @@ func _on_Globals_branch_stage_changed(value: int) -> void:
 		# value is optionButton index, 0 for ID, 1 for MEM
 		pipelinedWrapper.change_branch_stage(3 if value else 1)
 		_on_reset_pressed()
+		Globals.branch_stage = value
 
 
 func _on_Globals_branch_type_changed(value: int) -> void:
 	if program_loaded:
 		pipelinedWrapper.change_branch_type(value)
 		_on_reset_pressed()
+		Globals.branch_type = value
 
 
 func configure_cpu():

@@ -22,6 +22,7 @@ extends Panel
 @onready var fu_alu_2 = $DetailedControl/FU_ALU2
 @onready var fu_rt_data = $DetailedControl/FU_RTData
 @onready var rt_data_exmem_base = $DetailedControl/Rt_Data_EXMEM_Base
+@onready var add_rel_branch = $DetailedControl/Add_RelBranch
 
 @onready var fake_target = $DetailedControl/Fake_Target
 
@@ -42,7 +43,8 @@ extends Panel
 									imm_val_add,
 									fu_alu_1,
 									fu_alu_2,
-									fu_rt_data]
+									fu_rt_data,
+									add_rel_branch]
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color:
 	set(value):
@@ -204,6 +206,10 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines, active: bool) ->
 			
 			fu_rt_data.target = get_node(LineManager.stage_register_path[2]).get("imm_value")
 			fu_rt_data.active = true
+		
+		LineManager.ex_lines.ADD_RELBRANCH:
+			add_rel_branch.target = get_node(LineManager.stage_register_path[2]).get("rel_branch")
+			add_rel_branch.active = true
 
 
 func _on_forwarding_unit_pressed():

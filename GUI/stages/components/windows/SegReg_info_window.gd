@@ -1,6 +1,7 @@
 extends Window
 
 # field labels
+@onready var rel_branch = $ScrollContainer/HBoxContainer/VBoxContainerField/RelBranch
 @onready var pc: Label = $ScrollContainer/HBoxContainer/VBoxContainerField/PC
 @onready var instruction: Label = $ScrollContainer/HBoxContainer/VBoxContainerField/Instruction
 @onready var rs_data: Label = $ScrollContainer/HBoxContainer/VBoxContainerField/RsData
@@ -13,6 +14,7 @@ extends Window
 @onready var mem_out: Label = $ScrollContainer/HBoxContainer/VBoxContainerField/MemOut
 
 #write labels
+@onready var rel_branch_w = $ScrollContainer/HBoxContainer/VBoxContainerWrite/RelBranch
 @onready var pc_w: Label = $ScrollContainer/HBoxContainer/VBoxContainerWrite/PC
 @onready var instruction_w: Label = $ScrollContainer/HBoxContainer/VBoxContainerWrite/Instruction
 @onready var rs_data_w: Label = $ScrollContainer/HBoxContainer/VBoxContainerWrite/RsData
@@ -25,6 +27,7 @@ extends Window
 @onready var mem_out_w: Label = $ScrollContainer/HBoxContainer/VBoxContainerWrite/MemOut
 
 #read labels
+@onready var rel_branch_r = $ScrollContainer/HBoxContainer/VBoxContainerRead/RelBranch
 @onready var pc_r: Label = $ScrollContainer/HBoxContainer/VBoxContainerRead/PC
 @onready var instruction_r: Label = $ScrollContainer/HBoxContainer/VBoxContainerRead/Instruction
 @onready var rs_data_r: Label = $ScrollContainer/HBoxContainer/VBoxContainerRead/RsData
@@ -46,6 +49,7 @@ var seg_reg_index: int:
 
 func _ready():
 	LineManager.seg_regs_updated.connect(_on_LineManager_seg_regs_updated)
+	Globals.branch_stage_changed.connect(_on_Globals_branch_stage_changed)
 
 
 func _on_LineManager_seg_regs_updated():
@@ -76,6 +80,9 @@ func _on_LineManager_seg_regs_updated():
 			imm_value_r.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_R"]) if "IMM_VALUE_R" in keys else empty_value
 		
 		2:
+			rel_branch_w.text = str(LineManager.seg_reg_values[seg_reg_index]["REL_BRANCH_W"]) if "REL_BRANCH_W" in keys else empty_value
+			rel_branch_r.text = str(LineManager.seg_reg_values[seg_reg_index]["REL_BRANCH_R"]) if "REL_BRANCH_R" in keys else empty_value
+			
 			pc_w.text = LineManager.seg_reg_values[seg_reg_index]["PC_W"] if "PC_W" in keys else empty_value
 			pc_r.text =  LineManager.seg_reg_values[seg_reg_index]["PC_R"] if "PC_R" in keys else empty_value
 			
@@ -139,6 +146,8 @@ func setup_labels():
 		2:
 			title = "EX/MEM"
 			
+			_on_Globals_branch_stage_changed(ConfigManager.get_value("Settings/CPU", "branch_stage"))
+			
 			rs_data.show()
 			rs_data_w.show()
 			rs_data_r.show()
@@ -192,3 +201,9 @@ func get_active_fields():
 		if (child as Label).text != empty_value:
 			active_field_index[1].append(child.name)
 	return active_field_index
+
+
+func _on_Globals_branch_stage_changed(value: int) -> void:
+	rel_branch.visible = value
+	rel_branch_w.visible = value
+	rel_branch_r.visible = value

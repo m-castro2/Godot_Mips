@@ -73,7 +73,9 @@ signal stage_color_changed(index: int)
 signal stage_color_mode_changed(mode: int)
 # notify changes to cpu settings
 signal branch_stage_changed(value: int)
+var branch_stage: int
 signal branch_type_changed(value: int)
+var branch_type: int # move to configManager keep copy of fields in memory?
 signal hdu_available_changed(value: int)
 signal fu_available_changed(value: int)
 # notify changes to window scaling

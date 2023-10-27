@@ -36,6 +36,13 @@ layout_mode = 2
 text = "Field"
 horizontal_alignment = 1
 
+[node name="RelBranch" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerField"]
+visible = false
+custom_minimum_size = Vector2(0, 23)
+layout_mode = 2
+text = "RelBranch"
+horizontal_alignment = 1
+
 [node name="PC" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerField"]
 layout_mode = 2
 text = "PC"
@@ -106,6 +113,12 @@ layout_mode = 2
 text = "Write"
 horizontal_alignment = 1
 
+[node name="RelBranch" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
+visible = false
+custom_minimum_size = Vector2(0, 23)
+layout_mode = 2
+horizontal_alignment = 1
+
 [node name="PC" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerWrite"]
 custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
@@ -174,6 +187,12 @@ alignment = 1
 custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "Read"
+horizontal_alignment = 1
+
+[node name="RelBranch" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]
+visible = false
+custom_minimum_size = Vector2(0, 23)
+layout_mode = 2
 horizontal_alignment = 1
 
 [node name="PC" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainerRead"]

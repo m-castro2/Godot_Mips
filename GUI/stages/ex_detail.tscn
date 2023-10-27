@@ -281,24 +281,27 @@ visible = false
 
 [node name="Add" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
 visible = false
+custom_minimum_size = Vector2(50, 70)
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Add"
 script = ExtResource("3_tibhf")
 reference_node = NodePath("../..")
-position_percent = Vector2(0.7, 0.2)
-expanded_position_percent = Vector2(0.7, 0.2)
+position_percent = Vector2(0.7, 0.17)
+expanded_position_percent = Vector2(0.7, 0.17)
 stage_number = 2
 alignment_mode = 1
 visibility = 1
 
 [node name="Input" type="Marker2D" parent="DetailedControl/Add"]
+position = Vector2(0, 20)
 
 [node name="Input2" type="Marker2D" parent="DetailedControl/Add"]
-position = Vector2(0, 30)
+position = Vector2(0, 50)
 
 [node name="Output" type="Marker2D" parent="DetailedControl/Add"]
+position = Vector2(50, 35)
 
 [node name="PC" type="Line2D" parent="DetailedControl"]
 visible = false
@@ -307,6 +310,17 @@ width = 1.0
 gradient = SubResource("Gradient_xbjb4")
 script = ExtResource("4_q4wkr")
 visibility = 1
+
+[node name="PC_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+line = NodePath("../PC")
+stage = 2
+map_key = "PC"
+map_stage = 2
+is_register_name = false
 
 [node name="RegDst" type="Line2D" parent="DetailedControl"]
 visible = false
@@ -478,6 +492,41 @@ target = NodePath("../Add/Input2")
 steps = 4
 middle_offset = 50
 visibility = 1
+
+[node name="ImmVal_Add_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+label_line_vertex = 2
+line = NodePath("../ImmVal_Add")
+stage = 2
+map_key = "REL_BRANCH_IMM"
+map_stage = 2
+is_register_name = false
+to_hex = false
+
+[node name="Add_RelBranch" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+visible = false
+material = SubResource("ShaderMaterial_o4fdy")
+width = 1.0
+gradient = SubResource("Gradient_28mbj")
+script = ExtResource("4_q4wkr")
+origin = NodePath("../Add/Output")
+target = NodePath("../Add/Input2")
+steps = 4
+visibility = 1
+
+[node name="Add_RelBranch_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+line = NodePath("../Add_RelBranch")
+stage = 2
+map_key = "REL_BRANCH"
+map_stage = 2
+is_register_name = false
 
 [node name="FU_ALU1" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_xt3cd")

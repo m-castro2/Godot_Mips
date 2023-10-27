@@ -345,7 +345,31 @@ width = 1.0
 gradient = SubResource("Gradient_meljp")
 script = ExtResource("5_23qcg")
 height_percent = 0.02
+expanded_min_initial_length = 80
 origin_stage = 3
+
+[node name="RelBranch_PC_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_kju10")
+line = NodePath("../RelBranch_PC")
+stage = 3
+map_key = "REL_BRANCH"
+map_stage = 3
+is_register_name = false
+
+[node name="RelBranch_PC_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_kju10")
+label_line_vertex = 4
+label_padding = Vector2(-15, 25)
+line = NodePath("../RelBranch_PC")
+map_key = "REL_BRANCH"
+map_stage = 3
+is_register_name = false
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="DataMemory" to="." method="_on_data_memory_pressed"]

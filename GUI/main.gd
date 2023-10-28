@@ -91,7 +91,7 @@ func _on_next_cycle_pressed() -> void:
 		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
 	
 	else: # exception caught
-		exception_dialog.add_info(pipelinedWrapper.exception_info)
+		handle_exception()
 	
 	
 	if !pipelinedWrapper.is_ready():
@@ -115,7 +115,7 @@ func _on_run_program_pressed() -> void:
 		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
 	
 	else: # exception caught
-		exception_dialog.add_info(pipelinedWrapper.exception_info)
+		handle_exception()
 	
 	if !pipelinedWrapper.is_ready():
 		next_cycle.disabled = true
@@ -149,6 +149,9 @@ func _on_previous_cycle_pressed() -> void:
 	
 	if !Globals.current_cycle:
 		previous_cycle.disabled = true
+	
+	next_cycle.disabled = false
+	run_program.disabled = false
 
 
 func _on_show_memory_pressed() -> void:
@@ -226,3 +229,9 @@ func configure_cpu():
 func _on_Globals_window_scaling_changed(value: int) -> void:
 	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if value \
 			else Window.CONTENT_SCALE_MODE_DISABLED
+
+
+func handle_exception():
+	exception_dialog.add_info(pipelinedWrapper.exception_info)
+	next_cycle.disabled = true
+	run_program.disabled = true

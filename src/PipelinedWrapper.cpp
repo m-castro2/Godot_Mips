@@ -141,6 +141,7 @@ godot::String PipelinedWrapper::reset_cpu(bool data_memory, bool text_memory){
 
     cpu->reset(data_memory, text_memory);
     _update_cpu_info();
+    exception_info.clear();
     return godot::String("CPU reset");
 }
 
@@ -177,7 +178,7 @@ godot::String PipelinedWrapper::next_cycle() {
         return "Program done";
     }
 
-    exception_info.clear();
+    // exception_info.clear();
 
     //intercept cout
     bool retval;

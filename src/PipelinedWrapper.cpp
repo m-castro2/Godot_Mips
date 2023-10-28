@@ -151,6 +151,8 @@ godot::String PipelinedWrapper::previous_cycle(){
       return "Already at first cycle";
     }
 
+    exception_info.clear();
+
     //intercept cout
     bool retval = true;
     std::stringbuf strbuf;
@@ -178,7 +180,7 @@ godot::String PipelinedWrapper::next_cycle() {
         return "Program done";
     }
 
-    // exception_info.clear();
+    exception_info.clear();
 
     //intercept cout
     bool retval;

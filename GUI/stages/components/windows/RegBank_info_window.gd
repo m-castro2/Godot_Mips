@@ -40,6 +40,7 @@ func _on_size_changed():
 
 func add_info():
 	visible = true
+	Globals.close_window_handled = false
 	for i in range(0, 32):
 		var value: String = PipelinedWrapper.cpu_info["Registers"]["iRegisters"][i]
 		value_v_box_container.get_child(i).text = value
@@ -54,10 +55,12 @@ func add_info():
 
 func _on_close_requested():
 	visible = false
+	Globals.close_window_handled = true
 
 
 func _on_focus_exited():
 	visible = false
+	Globals.close_window_handled = true
 
 
 func _on_recenter_window():

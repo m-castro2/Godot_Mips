@@ -11,14 +11,17 @@ extends Window
 
 func _on_close_requested():
 	visible = false
+	Globals.close_window_handled = true
 
 
 func _on_focus_exited():
 	visible = false
+	Globals.close_window_handled = true
 
 
 func add_info():
 	visible = true
+	Globals.close_window_handled = false
 	
 	alu_1.text = register_names[PipelinedWrapper.stage_signals_map[2]["RS"]]
 	

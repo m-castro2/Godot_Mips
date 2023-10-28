@@ -97,7 +97,11 @@ func _on_next_cycle_pressed() -> void:
 	
 	else: # exception caught
 		handle_exception()
-	
+		update_cpu_info()
+		Globals.current_cycle = pipelinedWrapper.cpu_info["Cycles"]
+		StageControl.update_instruction_map(pipelinedWrapper.instructions, \
+			pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
+		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
 	
 	if !pipelinedWrapper.is_ready():
 		next_cycle.disabled = true

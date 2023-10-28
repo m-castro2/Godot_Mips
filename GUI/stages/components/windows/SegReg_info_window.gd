@@ -178,14 +178,17 @@ func setup_labels():
 
 func add_info():
 	show()
+	Globals.close_window_handled = false
 
 
 func _on_focus_exited():
 	visible = false
+	Globals.close_window_handled = true
 
 
 func _on_close_requested():
 	visible = false
+	Globals.close_window_handled = true
 
 
 func get_active_fields():

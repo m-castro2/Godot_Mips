@@ -5,14 +5,18 @@ var labels: Array[Label]
 
 func _on_close_requested():
 	visible = false
+	Globals.close_window_handled = true
 
 
 func _on_focus_exited():
 	visible = false
+	Globals.close_window_handled = true
 
 
 func add_info():
 	visible = true
+	Globals.close_window_handled = false
+	
 	if !Globals.is_program_loaded:
 		return
 	

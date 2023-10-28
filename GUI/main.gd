@@ -10,6 +10,11 @@ const load_program_menu: PackedScene = preload("res://MenuInfo.tscn")
 const settings_menu: PackedScene = preload("res://settings.tscn")
 const component_info_window: PackedScene = preload("res://component_info_window.tscn")
 
+@onready var reset = %Reset
+@onready var previous_cycle = %PreviousCycle
+@onready var next_cycle = %NextCycle
+@onready var run_program = %RunProgram
+
 func _ready() -> void:
 	Globals.show_load_program_menu.connect(_on_show_load_program_menu)
 	Globals.show_settings_menu.connect(_on_show_settings_menu)
@@ -57,11 +62,11 @@ func _on_load_program_pressed(file_path: String) -> void:
 	configure_cpu()
 	
 	if program_loaded and pipelinedWrapper.is_ready():
-		%NextCycle.disabled = false
-		%RunProgram.disabled = false
-		%PreviousCycle.disabled = false
+		next_cycle.disabled = false
+		run_program.disabled = false
+		previous_cycle.disabled = true
 		%ShowMemory.disabled = false
-		%Reset.disabled = false
+		reset.disabled = false
 		
 		update_cpu_info()
 		var desc_file:= FileAccess.open(file_path.get_basename() + ".desc", FileAccess.READ)
@@ -77,9 +82,6 @@ func _on_load_program_pressed(file_path: String) -> void:
 
 
 func _on_next_cycle_pressed() -> void:
-	if !pipelinedWrapper.is_ready():
-		return
-	
 	pipelinedWrapper.next_cycle()
 	if pipelinedWrapper.exception_info.is_empty():
 		update_cpu_info()
@@ -90,6 +92,12 @@ func _on_next_cycle_pressed() -> void:
 	
 	else: # exception caught
 		exception_dialog.add_info(pipelinedWrapper.exception_info)
+	
+	
+	if !pipelinedWrapper.is_ready():
+		next_cycle.disabled = true
+		run_program.disabled = true
+	previous_cycle.disabled = false
 
 
 func _on_run_program_pressed() -> void:
@@ -108,6 +116,10 @@ func _on_run_program_pressed() -> void:
 	
 	else: # exception caught
 		exception_dialog.add_info(pipelinedWrapper.exception_info)
+	
+	if !pipelinedWrapper.is_ready():
+		next_cycle.disabled = true
+		run_program.disabled = true
 
 
 func _on_reset_pressed() -> void:
@@ -116,9 +128,17 @@ func _on_reset_pressed() -> void:
 	Globals.current_cycle = 0
 	StageControl.reset()
 	Globals.reset_button_pressed.emit()
+	
+	previous_cycle.disabled = true
+	next_cycle.disabled = false
+	run_program.disabled = false
 
 
 func _on_previous_cycle_pressed() -> void:
+	if !pipelinedWrapper.is_ready():
+		next_cycle.disabled = false
+		run_program.disabled = false
+	
 	if Globals.current_cycle > 0:
 		pipelinedWrapper.previous_cycle()
 		update_cpu_info()
@@ -126,6 +146,9 @@ func _on_previous_cycle_pressed() -> void:
 		StageControl.update_instruction_map(pipelinedWrapper.instructions, \
 			pipelinedWrapper.loaded_instructions, pipelinedWrapper.diagram)
 		LineManager.activate_lines(pipelinedWrapper.stage_signals_map)
+	
+	if !Globals.current_cycle:
+		previous_cycle.disabled = true
 
 
 func _on_show_memory_pressed() -> void:

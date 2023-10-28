@@ -81,6 +81,7 @@ signal fu_available_changed(value: int)
 # notify changes to window scaling
 signal window_scaling_changed(value: int)
 
+signal instructions_panel_resized(width: int)
 
 func _ready():
 	stage_tween_finished.connect(_on_stage_tween_finished)

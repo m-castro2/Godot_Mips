@@ -10,10 +10,11 @@ const load_program_menu: PackedScene = preload("res://MenuInfo.tscn")
 const settings_menu: PackedScene = preload("res://settings.tscn")
 const component_info_window: PackedScene = preload("res://component_info_window.tscn")
 
-@onready var reset = %Reset
-@onready var previous_cycle = %PreviousCycle
-@onready var next_cycle = %NextCycle
-@onready var run_program = %RunProgram
+@onready var cycle_label: Label = $VBoxContainer/HBoxContainer/CycleLabel
+@onready var reset: Button = %Reset
+@onready var previous_cycle: Button = %PreviousCycle
+@onready var next_cycle: Button = %NextCycle
+@onready var run_program: Button = %RunProgram
 
 func _ready() -> void:
 	Globals.show_load_program_menu.connect(_on_show_load_program_menu)
@@ -28,6 +29,10 @@ func _ready() -> void:
 	Globals.branch_type_changed.connect(_on_Globals_branch_type_changed)
 	Globals.window_scaling_changed.connect(_on_Globals_window_scaling_changed)
 	_on_Globals_window_scaling_changed(ConfigManager.get_value("Settings/UI", "scaling"))
+	
+	# Cycle label
+	Globals.cycle_changed.connect(_on_Globals_cycle_changed)
+	Globals.instructions_panel_resized.connect(_on_Globals_instructions_panel_resized)
 
 
 func copy_test_files():
@@ -231,7 +236,20 @@ func _on_Globals_window_scaling_changed(value: int) -> void:
 			else Window.CONTENT_SCALE_MODE_DISABLED
 
 
-func handle_exception():
+func handle_exception() -> void:
 	exception_dialog.add_info(pipelinedWrapper.exception_info)
 	next_cycle.disabled = true
 	run_program.disabled = true
+
+
+func _on_Globals_cycle_changed() -> void:
+	var cycle:= str(Globals.current_cycle)
+	cycle_label.text = "Cycle " + cycle
+	var space_padding_count:= 4
+	while cycle.length() < space_padding_count:
+		cycle_label.text += " "
+		space_padding_count -= 1
+
+
+func _on_Globals_instructions_panel_resized(width: int) -> void:
+	cycle_label.custom_minimum_size.x = width

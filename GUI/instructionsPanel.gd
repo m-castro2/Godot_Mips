@@ -52,3 +52,7 @@ func add_description(description: String) -> void:
 		description_label.show()
 		v_split_container.split_offset = 0
 		description_label.text = description
+
+
+func _on_resized():
+	Globals.instructions_panel_resized.emit(size.x)

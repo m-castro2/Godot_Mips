@@ -66,6 +66,14 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
+[node name="CycleLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(171, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Cycle 0  "
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Reset" type="Button" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 40)

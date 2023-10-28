@@ -58,10 +58,11 @@ layout_mode = 2
 size_flags_vertical = 3
 editable = false
 
-[node name="Load" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CodeVBoxContainer"]
+[node name="LoadButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CodeVBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+disabled = true
 text = "Load"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Close" to="." method="_on_close_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CodeVBoxContainer/Load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CodeVBoxContainer/LoadButton" to="." method="_on_load_pressed"]

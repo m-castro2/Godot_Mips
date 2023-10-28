@@ -2,6 +2,7 @@ extends Control
 
 @onready var name_container: VBoxContainer = %NameVBoxContainer
 @onready var code_container: VBoxContainer = %CodeVBoxContainer
+@onready var load_button: Button = $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CodeVBoxContainer/LoadButton
 
 var file_path: String = ""
 
@@ -49,6 +50,7 @@ func _on_program_name_pressed(file_name: String) -> void:
 	var content: String = file.get_as_text()
 	(code_container.get_node("DescriptionLabel") as Label).text = content.left(content.find("\n")) #update files to have description on first line?
 	(code_container.get_node("CodeEdit") as CodeEdit).text = content
+	load_button.disabled = false
 
 
 func _on_load_pressed():

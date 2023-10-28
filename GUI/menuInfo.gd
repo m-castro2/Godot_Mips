@@ -39,7 +39,9 @@ func check_files() -> void:
 		var button: Button = Button.new()
 		button.text = file_name
 		button.pressed.connect(_on_program_name_pressed.bind(file_name))
-		button.size_flags_horizontal =Control.SIZE_SHRINK_CENTER
+		button.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		button.clip_text = true
+		button.size_flags_horizontal =Control.SIZE_EXPAND_FILL
 		name_container.add_child(button)
 		file_name = dir.get_next()
 
@@ -48,7 +50,7 @@ func _on_program_name_pressed(file_name: String) -> void:
 	file_path = "testdata/" + file_name
 	var file: FileAccess = FileAccess.open("user://" + file_path, FileAccess.READ)
 	var content: String = file.get_as_text()
-	(code_container.get_node("DescriptionLabel") as Label).text = content.left(content.find("\n")) #update files to have description on first line?
+	(code_container.get_node("DescriptionLabel") as Label).text = file_name.get_basename() #update files to have description on first line?
 	(code_container.get_node("CodeEdit") as CodeEdit).text = content
 	load_button.disabled = false
 

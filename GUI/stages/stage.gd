@@ -13,6 +13,8 @@ var stage_color: Color = Color.TRANSPARENT
 
 var lines_groups: Array[String] = ["PC_InstMem", "Mux_PC", "PC_Add", "Add_IFID", "InstMem_IFID", "Add_Mux"]
 
+@onready var stage_button: Button = $VBoxContainer/PanelContainer/StageButton
+
 func _ready() -> void:
 	$VBoxContainer/PanelContainer/StageButton.text = stage_name
 	Globals.stage_color_mode_changed.connect(_on_stage_color_mode_changed)
@@ -62,8 +64,9 @@ func add_fixed_stage_color():
 		var styleBox: StyleBoxFlat = StyleBoxFlat.new()
 		styleBox.bg_color = StageControl.colors[stage_number]
 		stage_color = styleBox.bg_color
+		styleBox.set_corner_radius_all(5)
 		detail.stage_color = stage_color
-		$VBoxContainer/PanelContainer/StageButton.add_theme_stylebox_override("normal", styleBox)
+		stage_button.add_theme_stylebox_override("normal", styleBox)
 
 
 func _on_update_stage_colors(colors_map: Dictionary, instructions):
@@ -76,10 +79,11 @@ func _on_update_stage_colors(colors_map: Dictionary, instructions):
 			else:
 				detail.stage_color = Color.TRANSPARENT
 			styleBox.bg_color = detail.stage_color
-			$VBoxContainer/PanelContainer/StageButton.add_theme_stylebox_override("normal", styleBox)
+			styleBox.set_corner_radius_all(3)
+			stage_button.add_theme_stylebox_override("normal", styleBox)
 			return
 		else:#if colors_map.size() == 0:
-			$VBoxContainer/PanelContainer/StageButton.remove_theme_stylebox_override("normal")
+			stage_button.remove_theme_stylebox_override("normal")
 			detail.stage_color = Color.TRANSPARENT
 	else:
 		add_fixed_stage_color()

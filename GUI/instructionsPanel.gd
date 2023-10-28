@@ -36,6 +36,7 @@ func _on_update_stage_colors(colors_map: Dictionary, _instructions: Array) -> vo
 		if key < 0 or key == null:
 			continue
 		var styleBox: StyleBoxFlat = StyleBoxFlat.new()
+		styleBox.set_corner_radius_all(5)
 		styleBox.bg_color = colors_map[key]
 		(label_v_box_container.get_child(key) as RichTextLabel).add_theme_stylebox_override("normal", styleBox)
 	

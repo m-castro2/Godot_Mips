@@ -40,10 +40,6 @@ content_margin_right = 4.0
 content_margin_bottom = 4.0
 bg_color = Color(0.211765, 0.239216, 0.290196, 1)
 border_color = Color(0.084, 0.096, 0.116, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
 corner_detail = 3
 anti_aliasing = false
 
@@ -56,10 +52,6 @@ bg_color = Color(0.211765, 0.239216, 0.290196, 1)
 border_width_right = 3
 border_color = Color(0.101961, 0.101961, 0.101961, 0.6)
 border_blend = true
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
 corner_detail = 3
 anti_aliasing = false
 

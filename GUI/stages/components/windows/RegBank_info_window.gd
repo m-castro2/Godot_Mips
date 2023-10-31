@@ -1,9 +1,9 @@
 extends Window
 
-@onready var v_box_container: VBoxContainer = $VBoxContainer
+@onready var v_box_container: VBoxContainer = $PanelContainer/VBoxContainer
 @onready var parent: MainComponent = get_parent() as MainComponent
-@onready var name_v_box_container = $VBoxContainer/ScrollContainer/HBoxContainer/NameVBoxContainer
-@onready var value_v_box_container = $VBoxContainer/ScrollContainer/HBoxContainer/ValueVBoxContainer
+@onready var name_v_box_container = $PanelContainer/VBoxContainer/ScrollContainer/HBoxContainer/NameVBoxContainer
+@onready var value_v_box_container = $PanelContainer/VBoxContainer/ScrollContainer/HBoxContainer/ValueVBoxContainer
 
 func _ready():
 	Globals.recenter_window.connect(_on_recenter_window)

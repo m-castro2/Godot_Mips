@@ -2,12 +2,12 @@ extends Window
 
 @onready var register_names: Array = PipelinedWrapper.get_register_names()
 
-@onready var alu_1 = $VBoxContainer/HBoxContainer3/ALU1
-@onready var alu_2 = $VBoxContainer/HBoxContainer3/ALU2
-@onready var rt_data = $VBoxContainer/HBoxContainer3/RTData
-@onready var mem_reg_dest = $VBoxContainer/HBoxContainer3/MEM_RegDest
-@onready var wb_reg_dest = $VBoxContainer/HBoxContainer3/WB_RegDest
-@onready var summary = $VBoxContainer/MarginContainer/Summary
+@onready var alu_1 = $PanelContainer/VBoxContainer/HBoxContainer3/ALU1
+@onready var alu_2 = $PanelContainer/VBoxContainer/HBoxContainer3/ALU2
+@onready var rt_data = $PanelContainer/VBoxContainer/HBoxContainer3/RTData
+@onready var mem_reg_dest = $PanelContainer/VBoxContainer/HBoxContainer3/MEM_RegDest
+@onready var wb_reg_dest = $PanelContainer/VBoxContainer/HBoxContainer3/WB_RegDest
+@onready var summary = $PanelContainer/VBoxContainer/MarginContainer/Summary
 
 func _on_close_requested():
 	visible = false

@@ -9,7 +9,7 @@ transient = true
 min_size = Vector2i(300, 400)
 script = ExtResource("1_e83gj")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -18,106 +18,111 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="EX" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="EX" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "EX"
 horizontal_alignment = 1
 
-[node name="MEM" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="MEM" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 text = "MEM"
 horizontal_alignment = 1
 
-[node name="WB" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="WB" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 text = "WB"
 horizontal_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ALU1" type="Label" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "ALU1"
-horizontal_alignment = 1
-
-[node name="ALU2" type="Label" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "ALU2"
-horizontal_alignment = 1
-
-[node name="RTData" type="Label" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "RTData"
-horizontal_alignment = 1
-
-[node name="MEM_RegDest" type="Label" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-text = "RegDest"
-horizontal_alignment = 1
-
-[node name="WB_RegDest" type="Label" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-text = "RegDest"
-horizontal_alignment = 1
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="ALU1" type="Label" parent="VBoxContainer/HBoxContainer3"]
+[node name="ALU1" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "ALU1"
 horizontal_alignment = 1
 
-[node name="ALU2" type="Label" parent="VBoxContainer/HBoxContainer3"]
+[node name="ALU2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "ALU2"
 horizontal_alignment = 1
 
-[node name="RTData" type="Label" parent="VBoxContainer/HBoxContainer3"]
+[node name="RTData" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "RTData"
 horizontal_alignment = 1
 
-[node name="MEM_RegDest" type="Label" parent="VBoxContainer/HBoxContainer3"]
+[node name="MEM_RegDest" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 text = "RegDest"
 horizontal_alignment = 1
 
-[node name="WB_RegDest" type="Label" parent="VBoxContainer/HBoxContainer3"]
+[node name="WB_RegDest" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 text = "RegDest"
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ALU1" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ALU1"
+horizontal_alignment = 1
+
+[node name="ALU2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ALU2"
+horizontal_alignment = 1
+
+[node name="RTData" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "RTData"
+horizontal_alignment = 1
+
+[node name="MEM_RegDest" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "RegDest"
+horizontal_alignment = 1
+
+[node name="WB_RegDest" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "RegDest"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 
-[node name="Summary" type="Label" parent="VBoxContainer/MarginContainer"]
+[node name="Summary" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 text = "aaaa"
 

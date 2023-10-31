@@ -1,6 +1,6 @@
 extends Window
 
-@onready var grid_container = $ScrollContainer/GridContainer
+@onready var grid_container = $PanelContainer/ScrollContainer/GridContainer
 var labels: Array[Label]
 
 func _on_close_requested():

@@ -93,7 +93,7 @@ func add_points():
 		return
 	
 	if force_backwards: # FU backwards lines
-		var point: Vector2 = origin.global_position + Vector2(middle_offset, 0)
+		var point: Vector2 = origin.global_position + Vector2(middle_offset * scaling, 0)
 		add_point(point)
 		if steps == 4:
 			point = Vector2(point.x, target.global_position.y)
@@ -111,9 +111,10 @@ func add_points():
 			add_point(point)
 			return
 	
-	if (target.global_position.x - min_finish_length) < (origin.global_position.x + min_finish_length): # origin is further right than target
+	if (target.global_position.x - min_finish_length * scaling) < (origin.global_position.x + min_finish_length * scaling): 
+		# origin is further right than target
 		var point: Vector2 = origin.global_position + Vector2(max(\
-							max(min_initial_length, target.global_position.x - origin.global_position.x),\
+							max(min_initial_length * scaling, target.global_position.x - origin.global_position.x),\
 							(get_parent().get_parent().size.x-origin.position.x)/8), 0) # why does this work for /8??
 		add_point(point)
 		if force_up:
@@ -123,14 +124,14 @@ func add_points():
 			point = Vector2(point.x, (origin_component.global_position.y + origin_component.size.y + (target_component.global_position.y - \
 				origin_component.global_position.y - origin_component.size.y)/2))
 		add_point(point)
-		point = Vector2(target.global_position.x - min_finish_length, point.y)
+		point = Vector2(target.global_position.x - min_finish_length * scaling, point.y)
 		add_point(point)
 		point = Vector2(point.x, target.global_position.y)
 		add_point(point)
 		add_point(Vector2(target.global_position.x, point.y))
 		return
 	
-	min_finish_length = min(10, (target_component.position.x - (origin_component.position.x + origin_component.size.x))/2)
+	min_finish_length = min(10, (target_component.position.x - (origin_component.position.x + origin_component.size.x))/2) * scaling
 	min_initial_length = min_finish_length
 	
 	if steps == 3:
@@ -142,8 +143,12 @@ func add_points():
 			add_point(point)
 			add_point(Vector2(point.x,  target.global_position.y))
 		else:
-			add_point(Vector2(origin.global_position.x + (target.global_position.x - origin.global_position.x)/2 - middle_offset,  origin.global_position.y))
-			add_point(Vector2(origin.global_position.x + (target.global_position.x - origin.global_position.x)/2 - middle_offset,  target.global_position.y))
+			add_point(Vector2(origin.global_position.x + \
+					(target.global_position.x - origin.global_position.x)/2 - middle_offset * scaling,\
+					origin.global_position.y))
+			add_point(Vector2(origin.global_position.x + \
+					(target.global_position.x - origin.global_position.x)/2 - middle_offset * scaling,\
+					target.global_position.y))
 	
 	add_point(target.global_position)
 
@@ -279,3 +284,8 @@ func _on_marker_updated():
 	add_points()
 	animate_line()
 	check_visibility(false)
+
+
+var scaling:= 1
+func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
+	scaling = max(viewport_size.x / Globals.base_viewport_size.x, 1)

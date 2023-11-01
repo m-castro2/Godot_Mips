@@ -147,10 +147,5 @@ func match_names(field_name: String) -> String:
 
 func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
 	var base_scale:= Globals.base_viewport_size / custom_minimum_size
-#	size = viewport_size / base_scale
 	var font_size: int = max(12, 1 * viewport_size.y / 72)
 	add_theme_font_size_override("font_size",font_size)
-	
-#	stage_register.size = viewport_size / base_scale
-#	size = viewport_size / base_scale
-	pass

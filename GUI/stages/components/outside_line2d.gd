@@ -79,10 +79,10 @@ func add_points():
 		add_point(Vector2(target.global_position.x - offset, target.global_position.y))
 	else:
 		
-		var actual_min_initial_length: int = expanded_min_initial_length \
-				if Globals.current_expanded_stage == origin_stage else min_initial_length
-		var actual_min_finish_length: int = expanded_min_finish_length \
-				if Globals.current_expanded_stage == target_stage else min_finish_length
+		var actual_min_initial_length: int = expanded_min_initial_length * scaling \
+				if Globals.current_expanded_stage == origin_stage else min_initial_length * scaling
+		var actual_min_finish_length: int = expanded_min_finish_length * scaling \
+				if Globals.current_expanded_stage == target_stage else min_finish_length * scaling
 		
 		var parent_position: float = get_parent().global_position.y
 		var parent_height: float = get_parent().size.y
@@ -105,6 +105,7 @@ func _ready():
 	StageControl.update_stage_colors.connect(_on_update_stage_colors)
 	Globals.reset_button_pressed.connect(deactivate_line)
 	Globals.cycle_changed.connect(deactivate_line)
+	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
 
 
 func _on_component_visibility_changed():
@@ -201,3 +202,7 @@ func _on_component_position_updated() -> void:
 	add_points()
 	animate_line()
 	_on_component_visibility_changed()
+
+var scaling:= 1
+func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
+	scaling = max(viewport_size.x / Globals.base_viewport_size.x, 1)

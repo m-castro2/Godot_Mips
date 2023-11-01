@@ -24,6 +24,8 @@ func _ready():
 	
 	if label_to_substitute:
 		label_to_substitute.visibility_changed.connect(_on_line_to_substitute_visibility_changed)
+	
+	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
 
 
 func _on_line_drawn():
@@ -53,3 +55,7 @@ func _on_line_visibility_changed():
 func _on_line_to_substitute_visibility_changed() -> void:
 	if label_to_substitute.visible:
 		visible = false
+
+
+func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
+	size = custom_minimum_size

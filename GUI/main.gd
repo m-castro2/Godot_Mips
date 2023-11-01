@@ -10,7 +10,8 @@ const load_program_menu: PackedScene = preload("res://MenuInfo.tscn")
 const settings_menu: PackedScene = preload("res://settings.tscn")
 const component_info_window: PackedScene = preload("res://component_info_window.tscn")
 
-@onready var cycle_label: Label = $VBoxContainer/HBoxContainer/CycleLabel
+@onready var control_buttons_h_box_container = $VBoxContainer/ControlButtonsHBoxContainer
+@onready var cycle_label: Label = $VBoxContainer/ControlButtonsHBoxContainer/CycleLabel
 @onready var reset: Button = %Reset
 @onready var previous_cycle: Button = %PreviousCycle
 @onready var next_cycle: Button = %NextCycle
@@ -242,6 +243,8 @@ func _on_Globals_window_scaling_changed(value: int) -> void:
 	window_scaling = value
 #	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if value \
 #			else Window.CONTENT_SCALE_MODE_DISABLED
+	#if !window_scaling:
+		#_resize_ui(Globals.base_viewport_size)
 
 
 func handle_exception() -> void:
@@ -266,10 +269,30 @@ func _on_Globals_instructions_panel_resized(width: int) -> void:
 func _on_resized():
 	if !window_scaling:
 		return
+	_resize_ui(size)
+
+
+func _resize_ui(viewport_size: Vector2) -> void:
 	var font_size: int = max(12, 1.6 * size.y / 72)
 	theme.set_font_size("font_size", "Label", font_size)
 	theme.set_font_size("font_size", "Button", font_size)
 	theme.set_font_size("font_size", "PopupMenu", font_size)
 	theme.set_font_size("font_size", "TabContainer", font_size)
+	theme.set_font_size("font_size", "CodeEdit", font_size)
+	theme.set_font_size("normal_font_size", "RichTextLabel", font_size)
 	theme.set_font_size("title_font_size", "Window", font_size)
 	Globals.viewport_resized.emit(size)
+	Globals.alu_update_svg.emit(size)
+	
+	resize_control_buttons(size)
+
+const base_control_size:= 50
+const base_button_size:= Vector2(150, 40)
+func resize_control_buttons(viewport_size: Vector2) -> void:
+	var new_scale:= viewport_size / Globals.base_viewport_size
+	control_buttons_h_box_container.custom_minimum_size.y = base_control_size * new_scale.y
+	reset.custom_minimum_size = base_button_size * new_scale
+	previous_cycle.custom_minimum_size = base_button_size * new_scale
+	next_cycle.custom_minimum_size = base_button_size * new_scale
+	run_program.custom_minimum_size = base_button_size * new_scale
+	

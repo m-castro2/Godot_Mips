@@ -5,8 +5,6 @@ extends Label
 @onready var base_scale:= Globals.base_viewport_size / custom_minimum_size
 
 func _ready():
-	print(Globals.base_viewport_size)
-	print(custom_minimum_size)
 #	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
 	parent.resized.connect(_on_parent_resized)
 #	resized.connect(_on_resized)

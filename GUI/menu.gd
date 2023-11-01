@@ -4,6 +4,8 @@ var has_mouse: bool = false
 
 const ANIMATION_SPEED = 0.15
 
+@onready var margin_container = $PanelContainer/MarginContainer
+@onready var close_menu = $CloseMenu
 
 func _ready():
 	Globals.load_program_pressed.connect(_on_load_program_pressed)
@@ -51,3 +53,7 @@ func _on_close_menu() -> void:
 
 func _on_settings_pressed():
 	Globals.show_settings_menu.emit()
+
+
+func _on_close_menu_resized():
+	margin_container.add_theme_constant_override("margin_top", max(10, close_menu.size.y))

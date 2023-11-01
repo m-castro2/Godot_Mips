@@ -82,6 +82,7 @@ signal fu_available_changed(value: int)
 signal window_scaling_changed(value: int)
 const base_viewport_size:= Vector2(1152, 648)
 signal viewport_resized(size: Vector2)
+signal alu_update_svg(size: Vector2)
 
 signal instructions_panel_resized(width: int)
 

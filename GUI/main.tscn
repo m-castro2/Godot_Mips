@@ -56,17 +56,18 @@ script = ExtResource("2_1lfc7")
 
 [node name="MenuButton" type="Button" parent="VBoxContainer/PanelContainer/ToolbarMenu"]
 layout_mode = 2
+theme_type_variation = &"LoadProgramButton"
 text = "---"
 
 [node name="Pipeline" parent="VBoxContainer" instance=ExtResource("4_cpm5c")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ControlButtonsHBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="CycleLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="CycleLabel" type="Label" parent="VBoxContainer/ControlButtonsHBoxContainer"]
 custom_minimum_size = Vector2(171, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -74,43 +75,47 @@ text = "Cycle 0  "
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Reset" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Reset" type="Button" parent="VBoxContainer/ControlButtonsHBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
+theme_type_variation = &"LoadProgramButton"
 disabled = true
 text = "Reset"
 
-[node name="PreviousCycle" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="PreviousCycle" type="Button" parent="VBoxContainer/ControlButtonsHBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
+theme_type_variation = &"LoadProgramButton"
 disabled = true
 text = "Previous cycle"
 
-[node name="NextCycle" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="NextCycle" type="Button" parent="VBoxContainer/ControlButtonsHBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
+theme_type_variation = &"LoadProgramButton"
 disabled = true
 text = "Next cycle"
 
-[node name="RunProgram" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="RunProgram" type="Button" parent="VBoxContainer/ControlButtonsHBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
+theme_type_variation = &"LoadProgramButton"
 disabled = true
 text = "Run program"
 
-[node name="ShowMemory" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="ShowMemory" type="Button" parent="VBoxContainer/ControlButtonsHBoxContainer"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(150, 40)
@@ -132,6 +137,7 @@ title = "Exception caught"
 initial_position = 1
 size = Vector2i(200, 100)
 popup_window = true
+min_size = Vector2i(200, 100)
 theme = ExtResource("1_gn6x2")
 ok_button_text = "Close"
 dialog_text = "asaaaa"
@@ -139,11 +145,11 @@ script = ExtResource("6_0ickj")
 
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/ToolbarMenu/MenuButton" to="." method="_on_menu_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Reset" to="." method="_on_reset_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/PreviousCycle" to="." method="_on_previous_cycle_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/NextCycle" to="." method="_on_next_cycle_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/RunProgram" to="." method="_on_run_program_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/ShowMemory" to="." method="_on_show_memory_pressed"]
+[connection signal="pressed" from="VBoxContainer/ControlButtonsHBoxContainer/Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="VBoxContainer/ControlButtonsHBoxContainer/PreviousCycle" to="." method="_on_previous_cycle_pressed"]
+[connection signal="pressed" from="VBoxContainer/ControlButtonsHBoxContainer/NextCycle" to="." method="_on_next_cycle_pressed"]
+[connection signal="pressed" from="VBoxContainer/ControlButtonsHBoxContainer/RunProgram" to="." method="_on_run_program_pressed"]
+[connection signal="pressed" from="VBoxContainer/ControlButtonsHBoxContainer/ShowMemory" to="." method="_on_show_memory_pressed"]
 
 [editable path="VBoxContainer/Pipeline"]
 [editable path="VBoxContainer/Pipeline/HBoxContainer/Stage1"]

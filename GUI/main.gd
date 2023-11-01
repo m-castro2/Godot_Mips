@@ -243,8 +243,7 @@ func _on_Globals_window_scaling_changed(value: int) -> void:
 	window_scaling = value
 #	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if value \
 #			else Window.CONTENT_SCALE_MODE_DISABLED
-	#if !window_scaling:
-		#_resize_ui(Globals.base_viewport_size)
+	_resize_ui(size if value else Globals.base_viewport_size)
 
 
 func handle_exception() -> void:
@@ -273,7 +272,7 @@ func _on_resized():
 
 
 func _resize_ui(viewport_size: Vector2) -> void:
-	var font_size: int = max(12, 1.6 * size.y / 72)
+	var font_size: int = max(12, 1.6 * viewport_size.y / 72)
 	theme.set_font_size("font_size", "Label", font_size)
 	theme.set_font_size("font_size", "Button", font_size)
 	theme.set_font_size("font_size", "PopupMenu", font_size)
@@ -281,10 +280,10 @@ func _resize_ui(viewport_size: Vector2) -> void:
 	theme.set_font_size("font_size", "CodeEdit", font_size)
 	theme.set_font_size("normal_font_size", "RichTextLabel", font_size)
 	theme.set_font_size("title_font_size", "Window", font_size)
-	Globals.viewport_resized.emit(size)
-	Globals.alu_update_svg.emit(size)
+	Globals.viewport_resized.emit(viewport_size)
+	Globals.alu_update_svg.emit(viewport_size)
 	
-	resize_control_buttons(size)
+	resize_control_buttons(viewport_size)
 
 const base_control_size:= 50
 const base_button_size:= Vector2(150, 40)

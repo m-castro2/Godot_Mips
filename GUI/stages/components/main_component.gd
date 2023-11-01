@@ -31,6 +31,10 @@ func _ready():
 		reference_node = get_parent()
 	reference_node.resized.connect(_on_parent_resized)
 	request_updated.connect(_on_component_requested)
+	
+	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
+	custom_minimum_size = size
+
 
 signal position_updated
 func _on_parent_resized() -> void:
@@ -91,3 +95,11 @@ func _on_globals_cycle_changed():
 	if visibility != visibility_type.ALWAYS:
 		visible = false
 	requested = false
+
+
+func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
+	var base_scale:= Globals.base_viewport_size / custom_minimum_size
+#	size = viewport_size / base_scale
+	var font_size: int = max(12, 1.6 * viewport_size.y / 72)
+	add_theme_font_size_override("font_size",font_size)
+	size = viewport_size / base_scale

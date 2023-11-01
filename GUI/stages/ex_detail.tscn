@@ -1,10 +1,11 @@
-[gd_scene load_steps=34 format=3 uid="uid://cyfy0tcp481of"]
+[gd_scene load_steps=35 format=3 uid="uid://cyfy0tcp481of"]
 
 [ext_resource type="Script" path="res://stages/ex_detail.gd" id="1_qp051"]
 [ext_resource type="Texture2D" uid="uid://b72vxstxeo2tx" path="res://80x150_negro-default.svg" id="2_er7vb"]
 [ext_resource type="Script" path="res://stages/components/ALU.gd" id="2_qvpnf"]
 [ext_resource type="Script" path="res://stages/components/main_component.gd" id="3_tibhf"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="4_2lcnv"]
+[ext_resource type="Script" path="res://stages/marker.gd" id="4_38ak0"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="4_q4wkr"]
 [ext_resource type="Script" path="res://stages/components/line_label.gd" id="5_gmc7d"]
 [ext_resource type="PackedScene" uid="uid://0w0nhveoj2tb" path="res://stages/components/windows/FordwardingUnit_info_window.tscn" id="6_75j1o"]
@@ -163,12 +164,15 @@ window_title = "ALU"
 
 [node name="UpperInput" type="Marker2D" parent="ALU"]
 position = Vector2(0, 40)
+script = ExtResource("4_38ak0")
 
 [node name="LowerInput" type="Marker2D" parent="ALU"]
 position = Vector2(0, 110)
+script = ExtResource("4_38ak0")
 
 [node name="Output" type="Marker2D" parent="ALU"]
 position = Vector2(80, 75)
+script = ExtResource("4_38ak0")
 
 [node name="ALUExMem" type="Line2D" parent="ALU" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_j11ls")
@@ -192,9 +196,11 @@ is_register_name = false
 
 [node name="ALUOut" type="Marker2D" parent="ALU"]
 unique_name_in_owner = true
+script = ExtResource("4_38ak0")
 
 [node name="UpInput" type="Marker2D" parent="ALU"]
 position = Vector2(40, 24)
+script = ExtResource("4_38ak0")
 
 [node name="CenterContainer" type="CenterContainer" parent="ALU"]
 layout_mode = 1
@@ -247,6 +253,7 @@ visibility = 1
 
 [node name="Output" type="Marker2D" parent="DetailedControl/AluControl"]
 position = Vector2(66, 27)
+script = ExtResource("4_38ak0")
 
 [node name="ForwardingUnit" type="Button" parent="DetailedControl"]
 visible = false
@@ -265,15 +272,19 @@ visibility = 1
 
 [node name="Output1" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
 position = Vector2(0, 16)
+script = ExtResource("4_38ak0")
 
 [node name="Output2" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
 position = Vector2(0, 32)
+script = ExtResource("4_38ak0")
 
 [node name="Input1" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
 position = Vector2(96, 18)
+script = ExtResource("4_38ak0")
 
 [node name="Input2" type="Marker2D" parent="DetailedControl/ForwardingUnit"]
 position = Vector2(96, 36)
+script = ExtResource("4_38ak0")
 
 [node name="FordwardingUnit_info_window" parent="DetailedControl/ForwardingUnit" instance=ExtResource("6_75j1o")]
 title = "Forwarding Unit"
@@ -296,12 +307,15 @@ visibility = 1
 
 [node name="Input" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(0, 20)
+script = ExtResource("4_38ak0")
 
 [node name="Input2" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(0, 50)
+script = ExtResource("4_38ak0")
 
 [node name="Output" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(50, 35)
+script = ExtResource("4_38ak0")
 
 [node name="PC" type="Line2D" parent="DetailedControl"]
 visible = false

@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://6fdooui4ml0w"]
+[gd_scene load_steps=30 format=3 uid="uid://6fdooui4ml0w"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_2edk6"]
 [ext_resource type="Script" path="res://stages/id_detail.gd" id="2_5718r"]
+[ext_resource type="Script" path="res://stages/marker.gd" id="4_gw1uy"]
 [ext_resource type="Script" path="res://stages/components/main_component.gd" id="5_dp4n3"]
 [ext_resource type="Script" path="res://stages/components/adder.gd" id="5_w7qfm"]
 [ext_resource type="Script" path="res://stages/components/complex_line.gd" id="6_4vcia"]
@@ -140,6 +141,7 @@ window_title = "Registers Bank"
 
 [node name="Input1" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 25)
+script = ExtResource("4_gw1uy")
 
 [node name="RDreg1" type="Label" parent="RegistersBank/Input1"]
 offset_left = 1.0
@@ -152,6 +154,7 @@ text = "RDreg1"
 
 [node name="Input2" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 50)
+script = ExtResource("4_gw1uy")
 
 [node name="RDreg2" type="Label" parent="RegistersBank/Input2"]
 offset_left = 1.0
@@ -164,6 +167,7 @@ text = "RDreg2"
 
 [node name="Input3" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 110)
+script = ExtResource("4_gw1uy")
 
 [node name="RDreg3" type="Label" parent="RegistersBank/Input3"]
 offset_left = 1.0
@@ -176,6 +180,7 @@ text = "WRreg"
 
 [node name="Input4" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 135)
+script = ExtResource("4_gw1uy")
 
 [node name="RDreg4" type="Label" parent="RegistersBank/Input4"]
 offset_left = 1.0
@@ -188,9 +193,11 @@ text = "WRdata"
 
 [node name="Output1" type="Marker2D" parent="RegistersBank"]
 position = Vector2(90, 20)
+script = ExtResource("4_gw1uy")
 
 [node name="Output2" type="Marker2D" parent="RegistersBank"]
 position = Vector2(90, 110)
+script = ExtResource("4_gw1uy")
 
 [node name="InstBase" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_t25jr")
@@ -424,6 +431,7 @@ visibility = 1
 
 [node name="HDU_PC" type="Marker2D" parent="HazardDetectionUnit"]
 position = Vector2(0, 15)
+script = ExtResource("4_gw1uy")
 
 [node name="DetailedControl" type="Control" parent="."]
 clip_children = 1
@@ -455,12 +463,15 @@ window_title = "Add"
 
 [node name="Input1" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(0, 20)
+script = ExtResource("4_gw1uy")
 
 [node name="Input2" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(0, 50)
+script = ExtResource("4_gw1uy")
 
 [node name="Output" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(50, 35)
+script = ExtResource("4_gw1uy")
 
 [node name="Control" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
 visible = false
@@ -477,6 +488,7 @@ alignment_mode = 1
 visibility = 1
 
 [node name="Input" type="Marker2D" parent="DetailedControl/Control"]
+script = ExtResource("4_gw1uy")
 
 [node name="PC" type="Line2D" parent="DetailedControl"]
 material = SubResource("ShaderMaterial_dptm5")

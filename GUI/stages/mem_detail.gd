@@ -37,6 +37,7 @@ extends Panel
 
 var stage: Globals.STAGES = Globals.STAGES.MEM
 
+@onready var data_memory_info_window = $DataMemory/DataMemory_info_window
 
 func _ready():
 	LineManager.mem_line_active.connect(_on_LineManager_mem_line_active)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ca820xflmqb5b"]
+[gd_scene load_steps=24 format=3 uid="uid://ca820xflmqb5b"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_0r720"]
 [ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://stages/PC.gd" id="6_k6uw2"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="7_hmr7u"]
 [ext_resource type="Script" path="res://stages/components/complex_line.gd" id="8_0k470"]
-[ext_resource type="Script" path="res://stages/4Label.gd" id="8_1h1m3"]
 [ext_resource type="Script" path="res://stages/components/line_label.gd" id="9_vv8pe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tkr3u"]
@@ -146,17 +145,17 @@ inputs = [null]
 outputs = [null]
 
 [node name="4" type="Label" parent="Add"]
-custom_minimum_size = Vector2(10, 24)
 layout_mode = 0
 offset_left = -40.0
 offset_top = 10.0
 offset_right = -30.0
-offset_bottom = 33.0
+offset_bottom = 36.0
 text = "4"
-script = ExtResource("8_1h1m3")
 
 [node name="Output" type="Marker2D" parent="Add/4"]
 position = Vector2(15, 13)
+script = ExtResource("4_7m7bq")
+position_percent = Vector2(1.1, 0.5)
 
 [node name="4_Add" type="Line2D" parent="Add" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_khh1q")
@@ -170,6 +169,7 @@ origin = NodePath("../4/Output")
 target = NodePath("../UpperInput")
 
 [node name="UpperInput" type="Marker2D" parent="Add"]
+position = Vector2(0, 23)
 script = ExtResource("4_7m7bq")
 position_percent = Vector2(0, 0.328571)
 

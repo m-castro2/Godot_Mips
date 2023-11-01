@@ -41,7 +41,7 @@ stage_name = "IF"
 [node name="IFID" parent="HBoxContainer" instance=ExtResource("4_p2imv")]
 layout_mode = 2
 script = ExtResource("5_a5bg2")
-text = "IF\\n/\\nID"
+text = "I\\nF\\n/\\nI\\nD"
 
 [node name="Stage2" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
 custom_minimum_size = Vector2(0, 0)
@@ -52,7 +52,7 @@ stage_number = 1
 [node name="IDEX" parent="HBoxContainer" instance=ExtResource("4_p2imv")]
 layout_mode = 2
 register_type = 1
-text = "ID\\n/\\nEX"
+text = "I\\nD\\n/\\nE\\nX"
 
 [node name="Stage3" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
 custom_minimum_size = Vector2(0, 0)
@@ -63,7 +63,7 @@ stage_number = 2
 [node name="EXMEM" parent="HBoxContainer" instance=ExtResource("4_p2imv")]
 layout_mode = 2
 register_type = 2
-text = "EX\\n/\\nM\\nE\\nM"
+text = "E\\nX\\n/\\nM\\nE\\nM"
 
 [node name="Stage4" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
 custom_minimum_size = Vector2(0, 0)
@@ -74,7 +74,7 @@ stage_number = 3
 [node name="MEMWB" parent="HBoxContainer" instance=ExtResource("4_p2imv")]
 layout_mode = 2
 register_type = 3
-text = "M\\nE\\nM\\n/\\nWB"
+text = "M\\nE\\nM\\n/\\nW\\nB"
 
 [node name="Stage5" parent="HBoxContainer" instance=ExtResource("3_hdhxw")]
 custom_minimum_size = Vector2(0, 0)

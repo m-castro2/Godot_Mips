@@ -36,6 +36,8 @@ var input_markers: Array[Marker2D]
 var output_markers: Array[Marker2D]
 var markers_resolution: Vector2i
 
+@onready var stage_register = $StageRegister
+
 func _ready():
 	Globals.expand_stage.connect(_on_expand_stage)
 	for i in range(0, $StageRegister/VBoxContainer.get_child_count() -1):
@@ -49,6 +51,9 @@ func _ready():
 	
 	LineManager.add_stage_register_path(get_path())
 	info_window.seg_reg_index = register_type
+	
+	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
+	custom_minimum_size = size
 
 
 func get_data():
@@ -138,3 +143,14 @@ func match_names(field_name: String) -> String:
 			return "reg_dst"
 		_:
 			return field_name.to_snake_case()
+
+
+func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
+	var base_scale:= Globals.base_viewport_size / custom_minimum_size
+#	size = viewport_size / base_scale
+	var font_size: int = max(12, 1 * viewport_size.y / 72)
+	add_theme_font_size_override("font_size",font_size)
+	
+#	stage_register.size = viewport_size / base_scale
+#	size = viewport_size / base_scale
+	pass

@@ -1,4 +1,4 @@
-extends Window
+extends BaseWindow
 
 @onready var register_names: Array = PipelinedWrapper.get_register_names()
 
@@ -9,14 +9,9 @@ extends Window
 @onready var wb_reg_dest = $PanelContainer/VBoxContainer/HBoxContainer3/WB_RegDest
 @onready var summary = $PanelContainer/VBoxContainer/MarginContainer/Summary
 
-func _on_close_requested():
-	visible = false
-	Globals.close_window_handled = true
-
-
-func _on_focus_exited():
-	visible = false
-	Globals.close_window_handled = true
+func _ready():
+	base_window_scale = Globals.base_viewport_size / Vector2(min_size)
+	super._ready()
 
 
 func add_info():

@@ -16,6 +16,9 @@ const component_info_window: PackedScene = preload("res://component_info_window.
 @onready var next_cycle: Button = %NextCycle
 @onready var run_program: Button = %RunProgram
 
+enum WindowScaling {IGNORE, SCALE}
+var window_scaling: WindowScaling
+
 func _ready() -> void:
 	Globals.show_load_program_menu.connect(_on_show_load_program_menu)
 	Globals.show_settings_menu.connect(_on_show_settings_menu)
@@ -236,8 +239,9 @@ func configure_cpu():
 
 
 func _on_Globals_window_scaling_changed(value: int) -> void:
-	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if value \
-			else Window.CONTENT_SCALE_MODE_DISABLED
+	window_scaling = value
+#	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if value \
+#			else Window.CONTENT_SCALE_MODE_DISABLED
 
 
 func handle_exception() -> void:
@@ -257,3 +261,15 @@ func _on_Globals_cycle_changed() -> void:
 
 func _on_Globals_instructions_panel_resized(width: int) -> void:
 	cycle_label.custom_minimum_size.x = width
+
+
+func _on_resized():
+	if !window_scaling:
+		return
+	var font_size: int = max(12, 1.6 * size.y / 72)
+	theme.set_font_size("font_size", "Label", font_size)
+	theme.set_font_size("font_size", "Button", font_size)
+	theme.set_font_size("font_size", "PopupMenu", font_size)
+	theme.set_font_size("font_size", "TabContainer", font_size)
+	theme.set_font_size("title_font_size", "Window", font_size)
+	Globals.viewport_resized.emit(size)

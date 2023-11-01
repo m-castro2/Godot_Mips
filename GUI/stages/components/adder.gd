@@ -5,6 +5,7 @@ class_name Adder extends MainComponent
 
 var sources_info: Array
 
+
 func get_info():
 	sources_info.clear()
 	for i in range(0, sources.size()):

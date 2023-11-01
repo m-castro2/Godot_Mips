@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://bqqsns53ftp6y"]
+[gd_scene load_steps=23 format=3 uid="uid://bqqsns53ftp6y"]
 
 [ext_resource type="Script" path="res://stages/wb_detail.gd" id="1_2fahh"]
 [ext_resource type="Script" path="res://stages/components/mux.gd" id="2_0tqhl"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="3_qap6j"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="3_shipb"]
+[ext_resource type="Script" path="res://stages/marker.gd" id="3_t4ulf"]
 [ext_resource type="Script" path="res://stages/components/line_label.gd" id="5_i7od7"]
 [ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="5_pp8xc"]
 
@@ -118,12 +119,15 @@ window_title = "Mux"
 
 [node name="Input0" type="Marker2D" parent="Mux"]
 position = Vector2(0, 25)
+script = ExtResource("3_t4ulf")
 
 [node name="Input1" type="Marker2D" parent="Mux"]
 position = Vector2(0, 50)
+script = ExtResource("3_t4ulf")
 
 [node name="Input2" type="Marker2D" parent="Mux"]
 position = Vector2(0, 75)
+script = ExtResource("3_t4ulf")
 
 [node name="PC_Mux" type="Line2D" parent="Mux" node_paths=PackedStringArray("target")]
 material = SubResource("ShaderMaterial_5kbth")
@@ -194,6 +198,7 @@ is_register_name = false
 
 [node name="Output" type="Marker2D" parent="Mux"]
 position = Vector2(30, 50)
+script = ExtResource("3_t4ulf")
 
 [node name="DetailedControl" type="Control" parent="."]
 anchors_preset = 0

@@ -1,16 +1,17 @@
-extends Window
+extends BaseWindow
 
 @onready var grid_container = $PanelContainer/ScrollContainer/GridContainer
 var labels: Array[Label]
 
-func _on_close_requested():
-	visible = false
-	Globals.close_window_handled = true
+#@onready var base_window_scale = Globals.base_viewport_size / Vector2(min_size)
 
+#func _enter_tree():
+#	super._enter_tree()
 
-func _on_focus_exited():
-	visible = false
-	Globals.close_window_handled = true
+func _ready():
+	
+	base_window_scale = Globals.base_viewport_size / Vector2(min_size)
+	super._ready()
 
 
 func add_info():

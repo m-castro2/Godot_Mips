@@ -1,4 +1,4 @@
-extends Window
+extends BaseWindow
 
 # field labels
 @onready var rel_branch = $PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField/RelBranch
@@ -54,6 +54,9 @@ var seg_reg_index: int:
 func _ready():
 	LineManager.seg_regs_updated.connect(_on_LineManager_seg_regs_updated)
 	Globals.branch_stage_changed.connect(_on_Globals_branch_stage_changed)
+	
+	base_window_scale = Globals.base_viewport_size / Vector2(min_size)
+	super._ready()
 
 
 func _on_LineManager_seg_regs_updated():
@@ -183,16 +186,6 @@ func setup_labels():
 func add_info():
 	show()
 	Globals.close_window_handled = false
-
-
-func _on_focus_exited():
-	visible = false
-	Globals.close_window_handled = true
-
-
-func _on_close_requested():
-	visible = false
-	Globals.close_window_handled = true
 
 
 func get_active_fields():

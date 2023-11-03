@@ -365,7 +365,6 @@ gradient = SubResource("Gradient_c0h55")
 script = ExtResource("6_21ql4")
 origin = NodePath("../Output2")
 steps = 4
-visibility = 1
 
 [node name="RegBank_RTData_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
 visible = false
@@ -390,7 +389,6 @@ script = ExtResource("6_21ql4")
 origin = NodePath("../Output1")
 steps = 4
 middle_offset = 10
-visibility = 1
 
 [node name="RegBank_RSData_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
 visible = false

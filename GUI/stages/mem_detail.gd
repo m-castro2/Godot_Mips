@@ -78,7 +78,7 @@ func _on_LineManager_mem_line_active(line: LineManager.mem_lines, active: bool) 
 			reg_dst_forwarding_unit.active = true
 		
 		LineManager.mem_lines.DATAMEM_MEMWB:
-			data_mem_memwb.active = true
+			data_mem_memwb.active = active
 			
 		LineManager.mem_lines.ALUOUT_MEMWB:
 			alu_out_memwb.active = true

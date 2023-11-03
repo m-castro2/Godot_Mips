@@ -234,6 +234,9 @@ func activate_lines(_stage_signals_map: Array):
 	
 	# STAGE MEM
 	if StageControl.instruction_map[3] != -1:
+		mem_line_active.emit(mem_lines.ALUOUT_DATAMEM, false)
+		mem_line_active.emit(mem_lines.DATAMEM_MEMWB, false)
+		mem_line_active.emit(mem_lines.RTDATA_DATAMEM, false)
 		if stage_signals_map[3]["BRANCH"]:
 			mem_line_active.emit(mem_lines.RELBRANCH_PC, true)
 			seg_reg_values[2]["REL_BRANCH_R"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REL_BRANCH"])

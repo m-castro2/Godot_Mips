@@ -365,7 +365,6 @@ width = 1.0
 gradient = SubResource("Gradient_j6wyl")
 script = ExtResource("4_q4wkr")
 steps = 4
-visibility = 1
 force_visible = true
 
 [node name="RsData_ALU_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
@@ -387,7 +386,6 @@ width = 1.0
 gradient = SubResource("Gradient_j6wyl")
 script = ExtResource("4_q4wkr")
 steps = 4
-visibility = 1
 force_visible = true
 
 [node name="RtData_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
@@ -408,7 +406,6 @@ width = 1.0
 gradient = SubResource("Gradient_j6wyl")
 script = ExtResource("4_q4wkr")
 steps = 4
-visibility = 1
 force_visible = true
 
 [node name="ImmVal_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]

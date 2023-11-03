@@ -102,7 +102,7 @@ func hide_lines() -> void:
 
 
 func _on_alu_pressed():
-	alu.show_info_window()
+	return#alu.show_info_window()
 
 
 func _on_gui_input(_event) -> void:

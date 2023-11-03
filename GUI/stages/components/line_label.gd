@@ -15,6 +15,8 @@ extends Label
 
 @export var to_hex: bool = true
 
+var scaling:= 1
+
 func _ready():
 	line.draw.connect(_on_line_drawn)
 	line.visibility_changed.connect(_on_line_visibility_changed)
@@ -26,12 +28,14 @@ func _ready():
 		label_to_substitute.visibility_changed.connect(_on_line_to_substitute_visibility_changed)
 	
 	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
+	visible = false
+	size = custom_minimum_size
 
 
 func _on_line_drawn():
 	if line.get_point_count() < label_line_vertex:
 		return
-	global_position = line.get_point_position(label_line_vertex) + label_padding - Vector2(0, size.y)
+	global_position = line.get_point_position(label_line_vertex) + label_padding * scaling - Vector2(0, size.y)
 
 
 func _on_line_visibility_changed():
@@ -58,4 +62,6 @@ func _on_line_to_substitute_visibility_changed() -> void:
 
 
 func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
+	scaling = max(viewport_size.y / Globals.base_viewport_size.y, 1)
 	size = custom_minimum_size
+	#_on_line_visibility_changed()

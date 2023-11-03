@@ -131,7 +131,7 @@ func add_points():
 		add_point(Vector2(target.global_position.x, point.y))
 		return
 	
-	min_finish_length = min(10, (target_component.position.x - (origin_component.position.x + origin_component.size.x))/2) * scaling
+	min_finish_length = min(10, (target_component.position.x - (origin_component.position.x + origin_component.size.x))/2)
 	min_initial_length = min_finish_length
 	
 	if steps == 3:
@@ -145,6 +145,8 @@ func add_points():
 		else:
 			var expanded:= (Globals.current_expanded_stage == stage)
 			var offset:= middle_offset * scaling if expanded else 0
+			if name == "AluOut_MEMWB":
+				pass
 			add_point(Vector2(origin.global_position.x + \
 					(target.global_position.x - origin.global_position.x)/2 - offset,\
 					origin.global_position.y))
@@ -164,6 +166,7 @@ func _ready():
 	StageControl.instruction_map_updated.connect(deactivate_line)
 	LineManager.redraw_lines.connect(redraw_line)
 	Globals.current_stage_sizes_updated.connect(_on_Globals_current_stage_sizes_updated)
+	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
 	
 	if get_parent() is MainComponent:
 		stage = get_parent().stage_number

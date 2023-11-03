@@ -71,28 +71,28 @@ func update_input_output_markers() -> void:
 func _on_resized():
 	await LineManager.if_stage_updated
 	pc.global_position.y = LineManager.get_stage_component(0, "pc").get_node("IFID_UpperInput").global_position.y
-	pc_2.global_position = pc.global_position + Vector2(31, 0)
+	pc_2.global_position = pc.global_position + Vector2(register.size.x, 0)
 	
 	rel_branch.global_position.y = register.global_position.y + register.size.y * 0.1
-	rel_branch_2.global_position = rel_branch.global_position + Vector2(31, 0)
+	rel_branch_2.global_position = rel_branch.global_position + Vector2(register.size.x, 0)
 	
 	rs_data.global_position.y = register.global_position.y + register.size.y * 0.25
-	rs_data_2.global_position = rs_data.global_position + Vector2(31, 0)
+	rs_data_2.global_position = rs_data.global_position + Vector2(register.size.x, 0)
 	
 	rt_data.global_position.y = register.global_position.y + register.size.y * 0.5
-	rt_data_2.global_position = rt_data.global_position + Vector2(31, 0)
+	rt_data_2.global_position = rt_data.global_position + Vector2(register.size.x, 0)
 	
 	imm_value.global_position.y = register.global_position.y + register.size.y * 0.6
-	imm_value_2.global_position = imm_value.global_position + Vector2(31, 0)
+	imm_value_2.global_position = imm_value.global_position + Vector2(register.size.x, 0)
 	
 	rs.global_position.y = register.global_position.y + register.size.y * 0.7
-	rs_2.global_position = rs.global_position + Vector2(31, 0)
+	rs_2.global_position = rs.global_position + Vector2(register.size.x, 0)
 	
 	rt.global_position.y = register.global_position.y + register.size.y * 0.75
-	rt_2.global_position = rt.global_position + Vector2(31, 0)
+	rt_2.global_position = rt.global_position + Vector2(register.size.x, 0)
 	
 	reg_dst.global_position.y = register.global_position.y + register.size.y * 0.97
-	reg_dst_2.global_position = reg_dst.global_position + Vector2(31, 0)
+	reg_dst_2.global_position = reg_dst.global_position + Vector2(register.size.x, 0)
 	
 	LineManager.stage_register_updated.emit(register_type)
 

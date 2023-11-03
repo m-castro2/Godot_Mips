@@ -102,6 +102,7 @@ func _ready():
 	StageControl.instruction_map_updated.connect(deactivate_line)
 	Globals.reset_button_pressed.connect(deactivate_line)
 	LineManager.redraw_lines.connect(redraw_line)
+	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
 	
 	if get_parent() is MainComponent:
 		stage = get_parent().stage_number

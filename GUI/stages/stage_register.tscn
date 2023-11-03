@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://2kbv4ig23x7j" path="res://stages/stage_register_tooltip.tscn" id="3_dunci"]
 
 [node name="Control" type="Panel"]
+clip_children = 2
 custom_minimum_size = Vector2(31, 0)
 anchors_preset = 7
 anchor_left = 0.5
@@ -21,6 +22,7 @@ script = ExtResource("1_72d7w")
 has_block = Array[bool]([false, false, false])
 
 [node name="StageRegister" type="MarginContainer" parent="."]
+clip_children = 1
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

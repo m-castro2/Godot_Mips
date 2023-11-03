@@ -78,7 +78,7 @@ func show_detail(value: bool) -> void:
 
 
 func calculate_positions():
-	%ALUOut.global_position = Vector2(global_position.x + size.x, $ALU/Output.global_position.y)
+	%ALUOut.position = Vector2(size.x, size.y/2)
 	
 	%RtData.global_position = Vector2(global_position.x + size.x, size.y * .6)
 	

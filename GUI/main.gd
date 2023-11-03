@@ -42,9 +42,10 @@ func _ready() -> void:
 func copy_test_files():
 	var path: String = OS.get_user_data_dir() + "testdata"
 	var target: DirAccess = DirAccess.open(path)
+	var filename:String
 	if target: # remove existing files in case theres been changes
 		target.list_dir_begin()
-		var filename: String = target.get_next()
+		filename = target.get_next()
 		while filename != "":
 			target.remove(filename)
 			filename = target.get_next()
@@ -52,7 +53,7 @@ func copy_test_files():
 	
 	var source: DirAccess = DirAccess.open("res://testdata")
 	source.list_dir_begin()
-	var filename: String = source.get_next()
+	filename = source.get_next()
 	while filename != "":
 		source.copy("res://testdata/" + filename, "user://testdata/" + filename)
 		filename = source.get_next()
@@ -240,7 +241,7 @@ func configure_cpu():
 
 
 func _on_Globals_window_scaling_changed(value: int) -> void:
-	window_scaling = value
+	window_scaling = value as WindowScaling
 #	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if value \
 #			else Window.CONTENT_SCALE_MODE_DISABLED
 	_resize_ui(size if value else Globals.base_viewport_size)

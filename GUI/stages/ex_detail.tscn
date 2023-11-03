@@ -139,6 +139,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_qp051")
 
+[node name="ALUOut" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(536, 249)
+
 [node name="ALU" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(80, 150)
 layout_mode = 1
@@ -173,6 +177,7 @@ script = ExtResource("4_38ak0")
 [node name="Output" type="Marker2D" parent="ALU"]
 position = Vector2(80, 75)
 script = ExtResource("4_38ak0")
+position_percent = Vector2(1, 0.5)
 
 [node name="ALUExMem" type="Line2D" parent="ALU" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_j11ls")
@@ -180,7 +185,7 @@ width = 1.0
 gradient = SubResource("Gradient_b1okb")
 script = ExtResource("4_q4wkr")
 origin = NodePath("../Output")
-target = NodePath("../ALUOut")
+target = NodePath("../../ALUOut")
 
 [node name="ALUExMem_Label" type="Label" parent="ALU" node_paths=PackedStringArray("line")]
 layout_mode = 0
@@ -193,10 +198,6 @@ stage = 2
 map_key = "ALU_OUT"
 map_stage = 2
 is_register_name = false
-
-[node name="ALUOut" type="Marker2D" parent="ALU"]
-unique_name_in_owner = true
-script = ExtResource("4_38ak0")
 
 [node name="UpInput" type="Marker2D" parent="ALU"]
 position = Vector2(40, 24)

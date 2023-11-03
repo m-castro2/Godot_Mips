@@ -13,5 +13,6 @@ func _on_Globals_alu_update_svg(viewport_size: Vector2) -> void:
 	var new_scale = (viewport_size / custom_minimum_size) / (Globals.base_viewport_size / custom_minimum_size)
 	var image:= Image.new()
 	image.load_svg_from_string(alu_svg, min(new_scale.x, new_scale.y))
-	set("texture_normal", ImageTexture.create_from_image(image))
-	size = viewport_size / (Globals.base_viewport_size / custom_minimum_size)
+	var image_tex:= ImageTexture.create_from_image(image)
+	set("texture_normal", image_tex)
+	size = image_tex.get_size()

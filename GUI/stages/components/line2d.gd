@@ -143,11 +143,13 @@ func add_points():
 			add_point(point)
 			add_point(Vector2(point.x,  target.global_position.y))
 		else:
+			var expanded:= (Globals.current_expanded_stage == stage)
+			var offset:= middle_offset * scaling if expanded else 0
 			add_point(Vector2(origin.global_position.x + \
-					(target.global_position.x - origin.global_position.x)/2 - middle_offset * scaling,\
+					(target.global_position.x - origin.global_position.x)/2 - offset,\
 					origin.global_position.y))
 			add_point(Vector2(origin.global_position.x + \
-					(target.global_position.x - origin.global_position.x)/2 - middle_offset * scaling,\
+					(target.global_position.x - origin.global_position.x)/2 - offset,\
 					target.global_position.y))
 	
 	add_point(target.global_position)
@@ -186,7 +188,6 @@ func _on_Globals_expand_stage():#_stage_number: int):
 
 func check_visibility(just_activated: bool):
 	if !active and !force_visible:
-		#Globals.can_click = true
 		return
 	
 	visible = false
@@ -221,21 +222,11 @@ func check_visibility(just_activated: bool):
 #		await timer.timeout
 #		await get_tree().process_frame
 #		Globals.can_click = true
-	
 	if visibility == visibility_type.ALWAYS:
-#		if !Globals.is_components_tween_finished and !just_activated:
-#			var timer:= get_tree().create_timer(0.3)
-#			await timer.timeout
 		visible = true
-#		Globals.can_click = true
 		return
-	
 	else:
-#		if !Globals.is_components_tween_finished and !just_activated:
-#			var timer:= get_tree().create_timer(0.3)
-#			await timer.timeout
 		visible = (Globals.current_expanded_stage == stage)
-#		Globals.can_click = true
 		return
 
 

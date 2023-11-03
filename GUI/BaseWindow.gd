@@ -9,7 +9,7 @@ func _enter_tree():
 
 func _ready():
 	close_requested.connect(_on_close_requested)
-	focus_exited.connect(_on_close_requested)
+	focus_exited.connect(_on_focus_exited)
 
 
 func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
@@ -17,5 +17,9 @@ func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
 
 
 func _on_close_requested():
+	visible = false
+	Globals.close_window_handled = false
+
+func _on_focus_exited():
 	visible = false
 	Globals.close_window_handled = true

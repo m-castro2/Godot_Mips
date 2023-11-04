@@ -1,0 +1,188 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkugrg5g6bc6o"]
+
+[ext_resource type="Script" path="res://menus/SettingsMenu.gd" id="1_huh23"]
+
+[node name="SettingsMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"BackgroundPanelContainer"
+script = ExtResource("1_huh23")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="CPU Sim" type="HBoxContainer" parent="MarginContainer/TabContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/CPU Sim"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = -15
+theme_override_constants/margin_bottom = -10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BranchStage" type="Label" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+text = "Branch stage: "
+vertical_alignment = 1
+
+[node name="BranchType" type="Label" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+text = "Branch type: "
+vertical_alignment = 1
+
+[node name="HDU" type="Label" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+text = "Hazard Detection Unit: "
+vertical_alignment = 1
+
+[node name="FU" type="Label" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+text = "Forwarding Unit: "
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BranchStageOptionButton" type="OptionButton" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+alignment = 1
+item_count = 2
+selected = 0
+popup/item_0/text = "ID"
+popup/item_0/id = 0
+popup/item_1/text = "MEM"
+popup/item_1/id = 1
+
+[node name="BranchTypeOptionButton" type="OptionButton" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+alignment = 1
+item_count = 3
+selected = 1
+popup/item_0/text = "FLUSH"
+popup/item_0/id = 0
+popup/item_1/text = "NON TAKEN"
+popup/item_1/id = 1
+popup/item_2/text = "DELAYED"
+popup/item_2/id = 2
+
+[node name="HDUCheckBox" type="CheckBox" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+size_flags_horizontal = 4
+button_pressed = true
+
+[node name="FUCheckBox" type="CheckBox" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+size_flags_horizontal = 4
+button_pressed = true
+
+[node name="UI" type="HBoxContainer" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/UI"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = -15
+theme_override_constants/margin_bottom = -10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ColorMode" type="HBoxContainer" parent="MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorModeLabel" type="Label" parent="MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer/VBoxContainer/ColorMode"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+text = "Color mode: "
+vertical_alignment = 1
+
+[node name="ColorModeOptionButton" type="OptionButton" parent="MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer/VBoxContainer/ColorMode"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "Fixed stage color"
+popup/item_0/id = 0
+popup/item_1/text = "Fixed instruction color"
+popup/item_1/id = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+
+[node name="ColorModeOptions" type="VBoxContainer" parent="MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Scaling" type="HBoxContainer" parent="MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScalingLabel" type="Label" parent="MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer/VBoxContainer/Scaling"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+text = "UI scale behaviour: "
+vertical_alignment = 1
+
+[node name="ScalingOptionButton" type="OptionButton" parent="MarginContainer/TabContainer/UI/MarginContainer/HBoxContainer/VBoxContainer/Scaling"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "Keep"
+popup/item_0/id = 0
+popup/item_1/text = "Scale"
+popup/item_1/id = 1
+
+[node name="Close" type="Button" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "X"
+
+[connection signal="focus_entered" from="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2/BranchStageOptionButton" to="." method="_on_branch_stage_option_button_focus_entered"]
+[connection signal="focus_exited" from="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2/BranchStageOptionButton" to="." method="_on_branch_stage_option_button_focus_exited"]
+[connection signal="item_selected" from="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2/BranchStageOptionButton" to="." method="_on_branch_stage_option_button_item_selected"]
+[connection signal="focus_entered" from="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2/BranchTypeOptionButton" to="." method="_on_branch_type_option_button_focus_entered"]
+[connection signal="focus_exited" from="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2/BranchTypeOptionButton" to="." method="_on_branch_type_option_button_focus_exited"]
+[connection signal="item_selected" from="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2/BranchTypeOptionButton" to="." method="_on_branch_type_option_button_item_selected"]
+[connection signal="mouse_exited" from="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2/BranchTypeOptionButton" to="." method="_on_branch_type_option_button_mouse_exited"]

@@ -191,6 +191,9 @@ func is_mouse_in_node(p_position:Vector2, p_size:Vector2) -> bool:
 
 
 func _on_show_load_program_menu() -> void:
+	$BaseMenu.instantiate_load_program_menu()
+	$BaseMenu.visible = true
+	return
 	if Globals.active_menu != "load_program":
 		add_child(load_program_menu.instantiate())
 		var settings = get_node_or_null("/root/Control/Settings")
@@ -199,6 +202,9 @@ func _on_show_load_program_menu() -> void:
 
 
 func _on_show_settings_menu() -> void:
+	$BaseMenu.instantiate_settings_menu()
+	$BaseMenu.visible = true
+	return
 	if Globals.active_menu != "settings":
 		add_child(settings_menu.instantiate())
 		var load_program = get_node_or_null("/root/Control/MenuInfo")

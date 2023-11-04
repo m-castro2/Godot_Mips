@@ -5,10 +5,12 @@ var base_window_scale:= Vector2.ZERO
 func _ready():
 	base_window_scale = Globals.base_viewport_size / Vector2(min_size)
 	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
+	#get_ok_button().theme_type_variation = "LoadProgramButton"
 
 
 func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
 	size = viewport_size / base_window_scale
+	move_to_center()
 
 
 func add_info(exception_info: Dictionary):

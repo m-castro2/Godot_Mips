@@ -14,6 +14,7 @@ func _ready():
 
 func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
 	size = viewport_size / base_window_scale
+	move_to_center()
 
 
 func _on_close_requested():

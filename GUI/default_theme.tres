@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://6yt0638i1ha2"]
+[gd_resource type="Theme" load_steps=21 format=3 uid="uid://6yt0638i1ha2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bihqp"]
 bg_color = Color(0.211765, 0.239216, 0.290196, 1)
@@ -25,6 +25,21 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_43bx1"]
+content_margin_left = 4.0
+content_margin_top = 6.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.113725, 0.133333, 0.160784, 1)
+border_color = Color(0.084, 0.096, 0.116, 1)
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 3
+anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e2bc6"]
 content_margin_left = 0.0
@@ -94,7 +109,67 @@ border_color = Color(0.084, 0.096, 0.116, 1)
 corner_detail = 3
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jo8mt"]
+content_margin_left = 4.0
+content_margin_top = 6.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.211765, 0.239216, 0.290196, 1)
+border_color = Color(0.084, 0.096, 0.116, 1)
+corner_detail = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t86ib"]
+content_margin_left = 4.0
+content_margin_top = 6.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.211765, 0.239216, 0.290196, 1)
+border_color = Color(0.084, 0.096, 0.116, 1)
+corner_detail = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hq8uh"]
+content_margin_left = 4.0
+content_margin_top = 6.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.211765, 0.239216, 0.290196, 1)
+border_color = Color(0.084, 0.096, 0.116, 1)
+corner_detail = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nrx36"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.113725, 0.133333, 0.160784, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wh26k"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.113725, 0.133333, 0.160784, 1)
+corner_detail = 1
+anti_aliasing = false
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7uvxh"]
+bg_color = Color(0.113725, 0.133333, 0.160784, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.627451, 0.627451, 0.627451, 1)
+expand_margin_left = 1.0
+expand_margin_top = 30.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eqff3"]
 bg_color = Color(0.113725, 0.133333, 0.160784, 1)
 border_width_left = 1
 border_width_top = 1
@@ -125,6 +200,8 @@ BackgroundPanelContainer/styles/panel = SubResource("StyleBoxFlat_ta6wk")
 Button/font_sizes/font_size = 14
 Button/styles/focus = SubResource("StyleBoxEmpty_arc52")
 Button/styles/normal = SubResource("StyleBoxFlat_x0r3q")
+ButtonMenu/base_type = &"Button"
+ButtonMenu/styles/normal = SubResource("StyleBoxFlat_43bx1")
 FakeWindow/base_type = &"PanelContainer"
 FakeWindow/styles/panel = SubResource("StyleBoxFlat_e2bc6")
 GridLabel/base_type = &"Label"
@@ -140,7 +217,13 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_ewnuu")
 PanelContainerRightBorder/base_type = &"PanelContainer"
 PanelContainerRightBorder/styles/panel = SubResource("StyleBoxFlat_4ki1j")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_hkr0x")
+TabContainer/styles/panel = SubResource("StyleBoxFlat_jo8mt")
+TabContainer/styles/tab_focus = SubResource("StyleBoxFlat_t86ib")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_hq8uh")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_nrx36")
+TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_wh26k")
 Window/styles/embedded_border = SubResource("StyleBoxFlat_7uvxh")
+Window/styles/embedded_unfocused_border = SubResource("StyleBoxFlat_eqff3")
 WindowlessComponent/base_type = &"Button"
 WindowlessComponent/colors/font_disabled_color = Color(1, 1, 1, 1)
 WindowlessComponent/styles/disabled = SubResource("StyleBoxFlat_htfng")

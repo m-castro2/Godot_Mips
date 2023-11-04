@@ -5,6 +5,7 @@ var expanded: bool = false
 @onready var add: ClickableComponent = $Add
 @onready var pc: ClickableComponent = $PC
 @onready var instructions_memory_button: MainComponent = $InstructionsMemoryButton
+@onready var instruction_memory_info_window = $InstructionsMemoryButton/InstructionMemoryInfoWindow
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color:
 	set(value):
@@ -76,7 +77,8 @@ func _get_all_children(node: Node, zoom_value: bool):
 
 
 func _on_instructions_memory_button_pressed() -> void:
-	instructions_memory_button.show_info_window()
+	instruction_memory_info_window.add_info()
+	#instructions_memory_button.show_info_window()
 
 
 func _on_pc_pressed() -> void:

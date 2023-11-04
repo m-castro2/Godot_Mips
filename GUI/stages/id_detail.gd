@@ -166,7 +166,7 @@ func _on_gui_input(_event) -> void:
 			Globals.expand_stage.emit(1)
 
 
-func _on_LineManager_id_line_active(line: LineManager.id_lines, active: bool) -> void:
+func _on_LineManager_id_line_active(line: LineManager.id_lines, active: bool, label_key: String = "") -> void:
 	match  line:
 		LineManager.id_lines.HDU_PC:
 			hdu_pc.origin_component = hazard_detection_unit
@@ -188,6 +188,7 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines, active: bool) ->
 			
 		LineManager.id_lines.INST_IMMVAL:
 			inst_15_0_imm.target = get_node(LineManager.stage_register_path[1]).get("imm_value")
+			(%Inst_Imm_Label as LineLabel).map_key = label_key
 			inst_15_0_imm.active = true
 			
 		LineManager.id_lines.INST20_REGDST:

@@ -37,6 +37,7 @@ size_flags_vertical = 0
 alignment = 1
 
 [node name="FieldTitle" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "Field"
 horizontal_alignment = 1
@@ -49,59 +50,69 @@ text = "RelBranch"
 horizontal_alignment = 1
 
 [node name="PC" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "PC"
 horizontal_alignment = 1
 
 [node name="Instruction" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "Instruction"
 horizontal_alignment = 1
 
 [node name="RsData" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "RsData"
 horizontal_alignment = 1
 
 [node name="MemOut" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "Mem Out"
 horizontal_alignment = 1
 
 [node name="ALUOut" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "ALU Out"
 horizontal_alignment = 1
 
 [node name="RtData" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "RtData"
 horizontal_alignment = 1
 
 [node name="ImmValue" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "Immediate"
 horizontal_alignment = 1
 
 [node name="Rs" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "Rs"
 horizontal_alignment = 1
 
 [node name="Rt" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
 visible = false
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "Rt"
 horizontal_alignment = 1
 
 [node name="RegDest" type="Label" parent="PanelContainer/ScrollContainer/HBoxContainer/VBoxContainerField"]
+custom_minimum_size = Vector2(0, 23)
 layout_mode = 2
 text = "RegDest"
 horizontal_alignment = 1

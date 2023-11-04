@@ -419,6 +419,7 @@ stage = 2
 map_key = "ALU_B"
 map_stage = 2
 is_register_name = false
+to_hex = false
 
 [node name="Rs_FU" type="Line2D" parent="DetailedControl"]
 visible = false

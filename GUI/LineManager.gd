@@ -21,7 +21,7 @@ enum wb_lines {PC_MUX, REGDST_REGBANK, ALUOUT_MUX, MEMOUT_MUX, \
 enum Register_Type {IFID, IDEX, EXMEM, WB}
 
 signal if_line_active(line: if_lines)
-signal id_line_active(line: id_lines, value: bool)
+signal id_line_active(line: id_lines, value: bool, label_key: String)
 signal ex_line_active(line: ex_lines, value: bool, force_visible: bool)
 signal mem_line_active(line: mem_lines, value: bool)
 signal wb_line_active(line: wb_lines, value: bool)
@@ -116,8 +116,8 @@ func activate_lines(_stage_signals_map: Array):
 			id_line_active.emit(id_lines.RDDATA_RSDATA, true)
 			seg_reg_values[1]["RS_DATA_W"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["RS_VALUE"])
 			if stage_signals_map[1]["ALU_SRC"]:
-				id_line_active.emit(id_lines.INST_IMMVAL, true)
-				seg_reg_values[1]["IMM_VALUE_W"] = stage_signals_map[1]["IMM_VALUE"]
+				id_line_active.emit(id_lines.INST_IMMVAL, true, "ADDR_I32")
+				seg_reg_values[1]["IMM_VALUE_W"] = stage_signals_map[1]["ADDR_I32"]
 				id_line_active.emit(id_lines.INST_RDREG2, false)
 			else:
 				id_line_active.emit(id_lines.INST_RDREG2, true)
@@ -130,12 +130,17 @@ func activate_lines(_stage_signals_map: Array):
 					id_line_active.emit(id_lines.INST15_REGDST, true)
 				seg_reg_values[1]["REG_DEST_W"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["REG_DEST_REGISTER"])
 			if stage_signals_map[1]["ALU_SRC"]:
-				id_line_active.emit(id_lines.INST_IMMVAL, true)
+				id_line_active.emit(id_lines.INST_IMMVAL, true, "ADDR_I32")
 			
 			#id_line_active.emit(id_lines.RS)
 			#id_line_active.emit(id_lines.RT)
 			else:
 				pass # $ra
+		
+		elif Globals.branch_stage: # MEM is branch stage
+			id_line_active.emit(id_lines.INST_IMMVAL, true, "ADDR_I32_MEMBRANCH")
+			seg_reg_values[1]["IMM_VALUE_W"] = stage_signals_map[1]["ADDR_I32_MEMBRANCH"]
+		
 		seg_reg_values[0]["PC_R"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["PC"])
 		seg_reg_values[0]["INSTRUCTION_R"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["INSTRUCTION"])
 		

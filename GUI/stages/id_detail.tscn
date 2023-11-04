@@ -263,6 +263,7 @@ intersect_point = 1.0
 visibility = 1
 
 [node name="Inst_Imm_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_right = 46.0
@@ -272,9 +273,10 @@ script = ExtResource("7_ngrk1")
 label_line_vertex = 2
 line = NodePath("../Inst_15-0_Imm")
 stage = 1
-map_key = "IMM_VALUE"
+map_key = "ADDR_I32"
 map_stage = 1
 is_register_name = false
+to_hex = false
 
 [node name="Inst_15-0_Add" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_s2nlp")

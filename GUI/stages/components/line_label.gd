@@ -15,6 +15,9 @@ extends Label
 
 @export var to_hex: bool = true
 
+@export var use_special_text: bool
+@export var special_text: String = "STALL"
+
 var scaling:= 1
 
 func _ready():
@@ -22,7 +25,7 @@ func _ready():
 	line.visibility_changed.connect(_on_line_visibility_changed)
 	
 	if label_orientation:
-		rotation_degrees = 270
+		rotation_degrees = 90
 	
 	if label_to_substitute:
 		label_to_substitute.visibility_changed.connect(_on_line_to_substitute_visibility_changed)
@@ -54,6 +57,8 @@ func _on_line_visibility_changed():
 		text = PipelinedWrapper.to_hex32(PipelinedWrapper.stage_signals_map[map_stage][map_key])
 	else:
 		text = str(PipelinedWrapper.stage_signals_map[map_stage][map_key])
+	if use_special_text:
+		text = special_text
 
 
 func _on_line_to_substitute_visibility_changed() -> void:

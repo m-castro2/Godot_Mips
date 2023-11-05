@@ -602,6 +602,34 @@ origin = NodePath("../../HazardDetectionUnit/HDU_PC")
 flag = true
 origin_stage = 1
 
+[node name="HDU_PC_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_padding = Vector2(-50, 0)
+line = NodePath("../HDU_PC")
+stage = 1
+map_key = "STALL"
+map_stage = 1
+is_register_name = false
+to_hex = false
+use_special_text = true
+
+[node name="HDU_PC_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_padding = Vector2(5, -5)
+line = NodePath("../HDU_PC")
+map_key = "STALL"
+map_stage = 1
+is_register_name = false
+to_hex = false
+use_special_text = true
+
 [node name="Inst_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
 visible = false
 material = SubResource("ShaderMaterial_s2nlp")

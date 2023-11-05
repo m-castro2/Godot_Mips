@@ -342,6 +342,28 @@ left_right_input = true
 origin_stage = 3
 target_stage = 2
 
+[node name="RegDst_ForwardingUnit_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line", "label_to_substitute")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_kju10")
+line = NodePath("../RegDst_ForwardingUnit")
+stage = 3
+map_key = "REG_DEST_REGISTER"
+map_stage = 3
+label_to_substitute = NodePath("../../DetailedControl/RegDst_Label")
+
+[node name="RegDst_ForwardingUnit_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_kju10")
+label_line_vertex = 4
+line = NodePath("../RegDst_ForwardingUnit")
+stage = 2
+map_key = "REG_DEST_REGISTER"
+map_stage = 3
+
 [node name="RelBranch_PC" type="Line2D" parent="OutsideLines"]
 material = SubResource("ShaderMaterial_dmtoy")
 width = 1.0
@@ -361,6 +383,7 @@ stage = 3
 map_key = "REL_BRANCH"
 map_stage = 3
 is_register_name = false
+label_to_substitute = NodePath("")
 
 [node name="RelBranch_PC_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
 layout_mode = 0

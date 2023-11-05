@@ -337,6 +337,33 @@ expanded_min_initial_length = 35
 origin_stage = 4
 target_stage = 2
 
+[node name="RegDst_ForwardingUnit_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line", "label_to_substitute")]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 274.0
+offset_right = 601.0
+offset_bottom = 294.0
+script = ExtResource("5_i7od7")
+line = NodePath("../RegDst_ForwardingUnit")
+stage = 4
+map_key = "REG_DEST_REGISTER"
+map_stage = 4
+label_to_substitute = NodePath("../RegDst_RegBank_Label")
+
+[node name="RegDst_ForwardingUnit_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 274.0
+offset_right = 601.0
+offset_bottom = 294.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 4
+label_padding = Vector2(5, 15)
+line = NodePath("../RegDst_ForwardingUnit")
+stage = 2
+map_key = "REG_DEST_REGISTER"
+map_stage = 4
+
 [node name="ALUOut_RTData" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_gr26p")
 width = 1.0

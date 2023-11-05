@@ -67,6 +67,8 @@ func add_fixed_stage_color():
 		styleBox.set_corner_radius_all(5)
 		detail.stage_color = stage_color
 		stage_button.add_theme_stylebox_override("normal", styleBox)
+		stage_button.add_theme_stylebox_override("hover", styleBox)
+		stage_button.add_theme_stylebox_override("pressed", styleBox)
 
 
 func _on_update_stage_colors(colors_map: Dictionary, instructions):
@@ -81,9 +83,13 @@ func _on_update_stage_colors(colors_map: Dictionary, instructions):
 			styleBox.bg_color = detail.stage_color
 			styleBox.set_corner_radius_all(3)
 			stage_button.add_theme_stylebox_override("normal", styleBox)
+			stage_button.add_theme_stylebox_override("hover", styleBox)
+			stage_button.add_theme_stylebox_override("pressed", styleBox)
 			return
 		else:#if colors_map.size() == 0:
 			stage_button.remove_theme_stylebox_override("normal")
+			stage_button.remove_theme_stylebox_override("hover")
+			stage_button.remove_theme_stylebox_override("pressed")
 			detail.stage_color = Color.TRANSPARENT
 	else:
 		add_fixed_stage_color()

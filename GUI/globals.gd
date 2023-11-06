@@ -58,7 +58,6 @@ signal stage_component_requested(stage_number: int, component_name: String, call
 var close_window_handled: bool = false
 signal recenter_window
 
-
 var can_instantiate_load_menu: bool = true
 var active_menu: String = ""
 
@@ -109,3 +108,7 @@ func update_current_stage_sizes(value: float, stage: int):
 		return
 	current_stage_sizes[stage] = value
 	current_stage_sizes_updated.emit(stage)
+
+
+# for RegBank tooltip
+signal wb_to_regbank_line_activated

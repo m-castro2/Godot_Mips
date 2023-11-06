@@ -14,6 +14,8 @@ var expanded: bool = false
 
 @export var request_stage_origin: Array[int] = []
 
+@export var component_tooltip: Control = null
+
 #var tween: Tween = null
 
 signal request_updated
@@ -103,3 +105,11 @@ func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
 	var font_size: int = max(12, 1.6 * viewport_size.y / 72)
 	add_theme_font_size_override("font_size",font_size)
 	size = viewport_size / base_scale
+
+
+func _on_mouse_entered():
+	component_tooltip.show_tooltip()
+
+
+func _on_mouse_exited():
+	component_tooltip.hide()

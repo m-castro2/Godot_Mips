@@ -244,3 +244,4 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines, active: bool, la
 			inst_pc.target = inst_pc.target_component.get_node("Input")
 			inst_pc.active = true
 			pc_inst_pc.active = true
+

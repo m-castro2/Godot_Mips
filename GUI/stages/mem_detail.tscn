@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cqvkpfjkhblkw"]
+[gd_scene load_steps=32 format=3 uid="uid://cqvkpfjkhblkw"]
 
 [ext_resource type="Script" path="res://stages/mem_detail.gd" id="1_cnata"]
 [ext_resource type="Script" path="res://stages/components/DataMemory.gd" id="2_u200c"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="5_23qcg"]
 [ext_resource type="Script" path="res://stages/components/line_label.gd" id="5_kju10"]
 [ext_resource type="PackedScene" uid="uid://d13m8ihmc3sue" path="res://stages/components/windows/DataMemory_info_window.tscn" id="6_srity"]
+[ext_resource type="PackedScene" uid="uid://dc0rok8wdnp1q" path="res://stages/components/tooltips/ComponentTooltip.tscn" id="8_rumpy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lham1"]
 shader = ExtResource("3_18s6u")
@@ -118,7 +119,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_cnata")
 
-[node name="DataMemory" type="Button" parent="."]
+[node name="DataMemory" type="Button" parent="." node_paths=PackedStringArray("component_tooltip")]
 custom_minimum_size = Vector2(73, 150)
 layout_mode = 1
 anchors_preset = 8
@@ -139,6 +140,7 @@ position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.5, 0.5)
 stage_number = 3
 alignment_mode = 1
+component_tooltip = NodePath("ComponentTooltip")
 window_title = "Data Memory"
 
 [node name="UpperInput" type="Marker2D" parent="DataMemory"]
@@ -221,6 +223,13 @@ map_key = "REG_DEST_REGISTER"
 map_stage = 3
 
 [node name="DataMemory_info_window" parent="DataMemory" instance=ExtResource("6_srity")]
+
+[node name="ComponentTooltip" parent="DataMemory" node_paths=PackedStringArray("line_labels", "positions") instance=ExtResource("8_rumpy")]
+layout_mode = 1
+component_type = 1
+line_labels = [NodePath("../AluOut_DataMem_Label"), NodePath("../RtData_DataMem_Label"), NodePath("../DataMem_MEMWB_Label")]
+positions = [NodePath("../UpperInput"), NodePath("../LowerInput"), NodePath("../Output")]
+names = Array[String](["Addr", "WRdata", "RDdata"])
 
 [node name="DetailedControl" type="Control" parent="."]
 anchors_preset = 0
@@ -398,4 +407,6 @@ map_stage = 3
 is_register_name = false
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="DataMemory" to="DataMemory" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="DataMemory" to="DataMemory" method="_on_mouse_exited"]
 [connection signal="pressed" from="DataMemory" to="." method="_on_data_memory_pressed"]

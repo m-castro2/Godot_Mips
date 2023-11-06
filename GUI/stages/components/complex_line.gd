@@ -138,8 +138,8 @@ func check_visibility(just_activated: bool):
 		return
 	if StageControl.instruction_map[stage] == -1:
 		return
-	if stage == 1 and PipelinedWrapper.stage_signals_map[1]["STALL"]: # for id lines
-		return
+	#if stage == 1 and PipelinedWrapper.stage_signals_map[1]["STALL"]: # for id lines
+		#return
 	
 #	if !just_activated:
 #		await Globals.components_tween_finished

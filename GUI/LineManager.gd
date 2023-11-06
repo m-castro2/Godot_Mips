@@ -92,6 +92,7 @@ func activate_lines(_stage_signals_map: Array):
 				2:
 					# R branch
 					id_line_active.emit(id_lines.RSDATA_PC, true)
+					id_line_active.emit(id_lines.INST_RDREG1, true)
 					if_line_active.emit(if_lines.PC_IFID)
 				3:
 					# J branch
@@ -108,7 +109,8 @@ func activate_lines(_stage_signals_map: Array):
 	# STAGE ID
 	if stage_signals_map[1]["INSTRUCTION"] != 0 and !stage_signals_map[1]["STALL"]:
 		id_line_active.emit(id_lines.PC, true)
-		id_line_active.emit(id_lines.INST_RDREG1, false)
+		if stage_signals_map[0]["PC_SRC"] != 2:
+			id_line_active.emit(id_lines.INST_RDREG1, false)
 		id_line_active.emit(id_lines.INST_RDREG2, false)
 		if !stage_signals_map[1]["BRANCH"]:
 			id_line_active.emit(id_lines.INST_BASE, true)

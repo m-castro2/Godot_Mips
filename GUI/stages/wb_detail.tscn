@@ -107,6 +107,8 @@ offset_right = 15.0
 offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"WindowlessComponent"
+disabled = true
 text = "M
 U
 X"

@@ -114,13 +114,9 @@ func _on_resized():
 	await get_tree().process_frame # positions are broken unless we wait a frame
 	
 	detail.calculate_positions()
-	if stage_number == 0:
-			pass
 #	if abs(Globals.current_stage_sizes[stage_number] - size.x) <= 1:
 	detail.draw_lines()
 	Globals.can_click = true
-	if stage_number == 0:
-		pass
 
 
 func _on_stage_color_mode_changed(mode: int) -> void:

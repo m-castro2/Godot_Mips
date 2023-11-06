@@ -24,8 +24,10 @@ func add_info():
 		alu_2.text = register_names[PipelinedWrapper.stage_signals_map[2]["RT"]]
 	elif PipelinedWrapper.stage_signals_map[2]["MEM_WRITE"] and PipelinedWrapper.stage_signals_map[2]["RT_FU"] == 1:
 		rt_data.text = register_names[PipelinedWrapper.stage_signals_map[3]["REG_DEST_REGISTER"]]
+		alu_2.text = "/"
 	elif PipelinedWrapper.stage_signals_map[2]["MEM_WRITE"] and PipelinedWrapper.stage_signals_map[2]["RT_FU"] == 3:
 		rt_data.text = register_names[PipelinedWrapper.stage_signals_map[4]["REG_DEST_REGISTER"]]
+		alu_2.text = "/"
 	else:
 		alu_2.text = "/"
 		rt_data.text = "/"

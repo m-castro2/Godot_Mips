@@ -97,6 +97,7 @@ func _on_timer_timeout():
 
 
 func update_current_stage_sizes(value: float, stage: int):
+	return
 	var stage_size_type: int
 	if Globals.current_expanded_stage == -1:
 		stage_size_type = 0

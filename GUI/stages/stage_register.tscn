@@ -39,14 +39,17 @@ layout_mode = 2
 theme_override_constants/separation = 2
 
 [node name="WB" type="Button" parent="StageRegister/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "WB"
 
 [node name="M" type="Button" parent="StageRegister/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "M"
 
 [node name="EX" type="Button" parent="StageRegister/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "EX"
 

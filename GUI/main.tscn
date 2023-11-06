@@ -24,8 +24,6 @@ grow_vertical = 2
 theme = ExtResource("1_gn6x2")
 script = ExtResource("1_vjp27")
 
-[node name="PipelinedWrapper" type="PipelinedWrapper" parent="."]
-
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -56,9 +54,21 @@ flat = false
 script = ExtResource("2_1lfc7")
 
 [node name="MenuButton" type="Button" parent="VBoxContainer/PanelContainer/ToolbarMenu"]
+visible = false
 layout_mode = 2
 theme_type_variation = &"LoadProgramButton"
 text = "---"
+
+[node name="LoadProgramButton" type="Button" parent="VBoxContainer/PanelContainer/ToolbarMenu"]
+layout_mode = 2
+theme_type_variation = &"LoadProgramButton"
+text = "Load Program
+"
+
+[node name="SettingsButton" type="Button" parent="VBoxContainer/PanelContainer/ToolbarMenu"]
+layout_mode = 2
+theme_type_variation = &"LoadProgramButton"
+text = "Settings"
 
 [node name="Pipeline" parent="VBoxContainer" instance=ExtResource("4_cpm5c")]
 unique_name_in_owner = true
@@ -149,6 +159,8 @@ visible = false
 
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/ToolbarMenu/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/ToolbarMenu/LoadProgramButton" to="." method="_on_load_program_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/ToolbarMenu/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ControlButtonsHBoxContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="VBoxContainer/ControlButtonsHBoxContainer/PreviousCycle" to="." method="_on_previous_cycle_pressed"]
 [connection signal="pressed" from="VBoxContainer/ControlButtonsHBoxContainer/NextCycle" to="." method="_on_next_cycle_pressed"]

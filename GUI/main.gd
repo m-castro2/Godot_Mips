@@ -302,3 +302,11 @@ func resize_control_buttons(viewport_size: Vector2) -> void:
 	next_cycle.custom_minimum_size = base_button_size * new_scale
 	run_program.custom_minimum_size = base_button_size * new_scale
 	
+
+
+func _on_load_program_button_pressed():
+	Globals.show_load_program_menu.emit()
+
+
+func _on_settings_button_pressed():
+	Globals.show_settings_menu.emit()

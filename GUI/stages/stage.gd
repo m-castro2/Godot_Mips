@@ -72,9 +72,11 @@ func add_fixed_stage_color():
 
 
 func _on_update_stage_colors(colors_map: Dictionary, instructions):
+	if stage_number == 4:
+		var i = 0
 	if StageControl.color_system:
 		# fixed instruction color
-		if colors_map.size() > stage_number and instructions[stage_number] != -1:
+		if instructions.size() > stage_number and instructions[stage_number] != -1:
 			var styleBox: StyleBoxFlat = StyleBoxFlat.new()
 			if colors_map.has(instructions[stage_number]):
 				detail.stage_color = colors_map[instructions[stage_number]]

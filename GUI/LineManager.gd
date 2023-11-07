@@ -84,8 +84,6 @@ func activate_lines(_stage_signals_map: Array):
 						id_line_active.emit(id_lines.ADD_PC, true)
 						id_line_active.emit(id_lines.PC_ADD, true)
 						id_line_active.emit(id_lines.INST_ADD, true)
-#						if_line_active.emit(if_lines._4_ADD)
-#						if_line_active.emit(if_lines.ADD_IFID)
 					else:
 						mem_line_active.emit(mem_lines.RELBRANCH_PC, true)
 					if_line_active.emit(if_lines.PC_IFID)
@@ -303,3 +301,4 @@ func activate_lines(_stage_signals_map: Array):
 
 func _on_Globals_reset_button_pressed():
 	seg_reg_values = [{}, {}, {}, {}] #clear
+	seg_regs_updated.emit()

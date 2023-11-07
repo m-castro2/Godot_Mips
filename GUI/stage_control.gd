@@ -51,8 +51,8 @@ func _on_stage_color_mode_changed(mode: int) -> void:
 	update_stage_colors.emit(colors_map, instruction_map)
 
 
-func update_instruction_map(instructions, loaded_instructions: Array, \
-						diagram: Dictionary):
+func update_instruction_map(_instructions: Array, _loaded_instructions: Array, \
+		_diagram: Dictionary) -> void:
 	if !Globals.is_program_loaded:
 		return
 	
@@ -64,32 +64,6 @@ func update_instruction_map(instructions, loaded_instructions: Array, \
 		instruction_map.push_back(PipelinedWrapper.diagram[3])
 		instruction_map.push_back(PipelinedWrapper.diagram[4])
 	
-#	var if_idx = -1
-#	var id_idx = -1
-#	var ex_idx = -1
-#	var mem_idx = -1
-#	var wb_idx = -1
-#	for i in diagram.keys():
-#		for j in diagram.get(i).size():
-#			if Globals.current_cycle == int(diagram.get(i)[j][0]):
-#				match diagram[i][j][1]:
-#					"WB":
-#						wb_idx = i-1
-#					"MEM":
-#						mem_idx = i-1
-#					"EX":
-#						ex_idx = i-1
-#					"ID":
-#						id_idx = i-1
-#					"IF":
-#						if_idx = i-1
-#
-#	instruction_map.clear()
-#	instruction_map.push_back(if_idx)
-#	instruction_map.push_back(id_idx)
-#	instruction_map.push_back(ex_idx)
-#	instruction_map.push_back(mem_idx)
-#	instruction_map.push_back(wb_idx)
 	instruction_map_updated.emit()
 	calculate_stage_color(instruction_map)
 	update_stage_colors.emit(colors_map, instruction_map)
@@ -119,7 +93,7 @@ func calculate_stage_color(p_instruction_map):
 			used_colors.push_back(colors[i])
 
 
-func get_instruction_from_address(instructions, address):
+func get_instruction_from_address(instructions, address): #UNUSED?
 	for i in range(0, instructions.size()):
 		if str(instructions[i][0]) == address:
 			return i
@@ -128,5 +102,4 @@ func get_instruction_from_address(instructions, address):
 func reset():
 	colors_map.clear()
 	used_colors.clear()
-	instruction_map.clear()
 	update_stage_colors.emit(colors_map, instruction_map)

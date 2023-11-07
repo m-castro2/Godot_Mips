@@ -217,7 +217,7 @@ func _on_forwarding_unit_pressed():
 
 
 func _on_LineManager_seg_regs_updated():
-	if StageControl.instruction_map[stage] == -1:
+	if LineManager.seg_reg_values == [{},{},{},{}] or StageControl.instruction_map[stage] == -1:
 		op_label.text = ""
 		return
 	

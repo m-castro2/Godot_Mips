@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=21 format=3 uid="uid://6yt0638i1ha2"]
+[gd_resource type="Theme" load_steps=22 format=3 uid="uid://6yt0638i1ha2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bihqp"]
 bg_color = Color(0.211765, 0.239216, 0.290196, 1)
@@ -73,6 +73,18 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 3
 anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7ex4"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ht4eq"]
 bg_color = Color(0.211765, 0.239216, 0.290196, 1)
@@ -212,6 +224,9 @@ InputOutputLabel/font_sizes/font_size = 10
 Label/font_sizes/font_size = 14
 LoadProgramButton/base_type = &"Button"
 LoadProgramButton/styles/normal = SubResource("StyleBoxFlat_8lok1")
+MuxButton/base_type = &"Button"
+MuxButton/colors/font_disabled_color = Color(1, 1, 1, 1)
+MuxButton/styles/disabled = SubResource("StyleBoxFlat_t7ex4")
 Panel/styles/panel = SubResource("StyleBoxFlat_ht4eq")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_ewnuu")
 PanelContainerRightBorder/base_type = &"PanelContainer"

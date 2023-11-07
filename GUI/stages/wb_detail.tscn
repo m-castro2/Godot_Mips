@@ -107,7 +107,7 @@ offset_right = 15.0
 offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"WindowlessComponent"
+theme_type_variation = &"MuxButton"
 disabled = true
 text = "M
 U
@@ -117,7 +117,6 @@ position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.5, 0.5)
 stage_number = 4
 alignment_mode = 1
-window_title = "Mux"
 
 [node name="Input0" type="Marker2D" parent="Mux"]
 position = Vector2(0, 25)

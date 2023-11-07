@@ -1,4 +1,4 @@
-extends ClickableComponent
+extends BaseButton
 class_name MainComponent
 
 # positioning properties

@@ -29,7 +29,7 @@ func _ready():
 		
 	position.x = clamp(parent.global_position.x + parent.size.x/2 - size.x/2, 0, DisplayServer.window_get_size().x - size.x -10) # -10 window border default theme
 	position.y = clamp(parent.global_position.y + parent.size.y/2 - size.y/2, 40, DisplayServer.window_get_size().y - size.y -10)
-	title = parent.window_title
+	title = "Registers Bank"
 	
 	base_window_scale = Globals.base_viewport_size / Vector2(min_size)
 	super._ready()

@@ -17,8 +17,9 @@ func get_info():
 	return sources_info
 
 func show_info_window():
-	if is_window_active:
-		return
-	var window = WINDOW.instantiate()
-	add_child(window)
-	window.show_info()
+	return
+	#if is_window_active:
+		#return
+	#var window = WINDOW.instantiate()
+	#add_child(window)
+	#window.show_info()

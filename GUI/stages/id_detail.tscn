@@ -1,10 +1,9 @@
-[gd_scene load_steps=31 format=3 uid="uid://6fdooui4ml0w"]
+[gd_scene load_steps=30 format=3 uid="uid://6fdooui4ml0w"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_2edk6"]
 [ext_resource type="Script" path="res://stages/id_detail.gd" id="2_5718r"]
 [ext_resource type="Script" path="res://stages/marker.gd" id="4_gw1uy"]
 [ext_resource type="Script" path="res://stages/components/main_component.gd" id="5_dp4n3"]
-[ext_resource type="Script" path="res://stages/components/adder.gd" id="5_w7qfm"]
 [ext_resource type="Script" path="res://stages/components/complex_line.gd" id="6_4vcia"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_21ql4"]
 [ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="6_a6ygu"]
@@ -139,7 +138,6 @@ expanded_position_percent = Vector2(0.5, 0.75)
 stage_number = 1
 alignment_mode = 1
 component_tooltip = NodePath("ComponentTooltip")
-window_title = "Registers Bank"
 
 [node name="Input1" type="Marker2D" parent="RegistersBank"]
 position = Vector2(0, 25)
@@ -382,7 +380,7 @@ offset_bottom = 23.0
 text = "[25-21]"
 script = ExtResource("7_ngrk1")
 label_line_vertex = 2
-label_padding = Vector2(0, 5)
+label_padding = Vector2(0, 0)
 line = NodePath("../RegBank_RTData")
 stage = 1
 map_key = "RT_VALUE"
@@ -406,7 +404,6 @@ offset_bottom = 23.0
 text = "[25-21]"
 script = ExtResource("7_ngrk1")
 label_line_vertex = 2
-label_padding = Vector2(0, 5)
 line = NodePath("../RegBank_RSData")
 stage = 1
 map_key = "RS_VALUE"
@@ -455,7 +452,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Add" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
+[node name="Add" type="Button" parent="DetailedControl"]
 visible = false
 layout_mode = 0
 offset_right = 50.0
@@ -463,15 +460,12 @@ offset_bottom = 70.0
 theme_type_variation = &"WindowlessComponent"
 disabled = true
 text = "Add"
-script = ExtResource("5_w7qfm")
-inputs_number = 2
-reference_node = NodePath("../..")
+script = ExtResource("5_dp4n3")
 position_percent = Vector2(0.5, 0.4)
 expanded_position_percent = Vector2(0.5, 0.4)
 stage_number = 1
 alignment_mode = 1
 visibility = 1
-window_title = "Add"
 
 [node name="Input1" type="Marker2D" parent="DetailedControl/Add"]
 position = Vector2(0, 20)

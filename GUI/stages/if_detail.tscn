@@ -1,12 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://ca820xflmqb5b"]
+[gd_scene load_steps=25 format=3 uid="uid://ca820xflmqb5b"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_0r720"]
 [ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
 [ext_resource type="Script" path="res://stages/components/InstructionsMemory.gd" id="3_klmf8"]
+[ext_resource type="Script" path="res://stages/components/main_component.gd" id="3_ttkm7"]
 [ext_resource type="Script" path="res://stages/marker.gd" id="4_7m7bq"]
-[ext_resource type="Script" path="res://stages/components/adder.gd" id="4_y1by5"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_4gygt"]
-[ext_resource type="Script" path="res://stages/PC.gd" id="6_k6uw2"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="7_hmr7u"]
 [ext_resource type="PackedScene" uid="uid://d6u211en2mj3" path="res://stages/components/windows/InstructionMemory_info_window.tscn" id="7_qtsac"]
 [ext_resource type="Script" path="res://stages/components/complex_line.gd" id="8_0k470"]
@@ -85,7 +84,7 @@ size_flags_vertical = 3
 theme = ExtResource("1_0r720")
 script = ExtResource("2_varat")
 
-[node name="InstructionsMemoryButton" type="Button" parent="." node_paths=PackedStringArray("inputs", "outputs")]
+[node name="InstructionsMemoryButton" type="Button" parent="."]
 custom_minimum_size = Vector2(90, 150)
 layout_mode = 1
 anchors_preset = 8
@@ -106,9 +105,6 @@ Memory"
 script = ExtResource("3_klmf8")
 position_percent = Vector2(0.5, 0.75)
 expanded_position_percent = Vector2(0.825, 0.75)
-window_title = "Instructions Memory"
-inputs = [null]
-outputs = [null]
 
 [node name="Output" type="Marker2D" parent="InstructionsMemoryButton"]
 position = Vector2(90, 75)
@@ -133,7 +129,7 @@ steps = 4
 [node name="InstructionMemoryInfoWindow" parent="InstructionsMemoryButton" instance=ExtResource("7_qtsac")]
 visible = false
 
-[node name="Add" type="Button" parent="." node_paths=PackedStringArray("reference_node", "inputs", "outputs")]
+[node name="Add" type="Button" parent="."]
 layout_mode = 2
 offset_left = 545.0
 offset_top = 31.0
@@ -142,14 +138,9 @@ offset_bottom = 101.0
 theme_type_variation = &"WindowlessComponent"
 disabled = true
 text = "Add"
-script = ExtResource("4_y1by5")
-sources = Array[NodePath]([NodePath("4"), NodePath("../PC")])
-reference_node = NodePath("../DetailedControl")
+script = ExtResource("3_ttkm7")
 position_percent = Vector2(0.7, 0.25)
 expanded_position_percent = Vector2(0.75, 0.25)
-window_title = "Add"
-inputs = [null]
-outputs = [null]
 
 [node name="4" type="Label" parent="Add"]
 custom_minimum_size = Vector2(10, 24)
@@ -230,7 +221,7 @@ label_to_substitute = NodePath("../Add_IFID_Label")
 position = Vector2(50, 35)
 script = ExtResource("4_7m7bq")
 
-[node name="PC" type="Button" parent="." node_paths=PackedStringArray("reference_node", "inputs", "outputs")]
+[node name="PC" type="Button" parent="."]
 custom_minimum_size = Vector2(50, 70)
 layout_mode = 2
 offset_left = 469.0
@@ -242,13 +233,9 @@ size_flags_vertical = 0
 theme_type_variation = &"WindowlessComponent"
 disabled = true
 text = "PC"
-script = ExtResource("6_k6uw2")
-reference_node = NodePath("../DetailedControl")
+script = ExtResource("3_ttkm7")
 position_percent = Vector2(0.4, 0.45)
 expanded_position_percent = Vector2(0.4, 0.45)
-window_title = "PC"
-inputs = [null, null]
-outputs = [null]
 
 [node name="Output" type="Marker2D" parent="PC"]
 position = Vector2(50, 35)

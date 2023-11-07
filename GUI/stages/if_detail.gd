@@ -2,8 +2,8 @@ extends Panel
 
 var expanded: bool = false
 @onready var detailed_control: Control = $DetailedControl
-@onready var add: ClickableComponent = $Add
-@onready var pc: ClickableComponent = $PC
+@onready var add: MainComponent = $Add
+@onready var pc: MainComponent = $PC
 @onready var instructions_memory_button: MainComponent = $InstructionsMemoryButton
 @onready var instruction_memory_info_window = $InstructionsMemoryButton/InstructionMemoryInfoWindow
 

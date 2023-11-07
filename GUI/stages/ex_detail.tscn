@@ -164,7 +164,6 @@ position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.5, 0.5)
 stage_number = 2
 alignment_mode = 1
-window_title = "ALU"
 
 [node name="UpperInput" type="Marker2D" parent="ALU"]
 position = Vector2(0, 40)
@@ -373,7 +372,6 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 20.0
 script = ExtResource("5_gmc7d")
-label_padding = Vector2(5, 5)
 line = NodePath("../RsData_ALU")
 stage = 2
 map_key = "ALU_A"

@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://bqqsns53ftp6y"]
 
 [ext_resource type="Script" path="res://stages/wb_detail.gd" id="1_2fahh"]
-[ext_resource type="Script" path="res://stages/components/mux.gd" id="2_0tqhl"]
+[ext_resource type="Script" path="res://stages/components/main_component.gd" id="2_nbwkm"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="3_qap6j"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="3_shipb"]
 [ext_resource type="Script" path="res://stages/marker.gd" id="3_t4ulf"]
@@ -112,7 +112,7 @@ disabled = true
 text = "M
 U
 X"
-script = ExtResource("2_0tqhl")
+script = ExtResource("2_nbwkm")
 position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.5, 0.5)
 stage_number = 4

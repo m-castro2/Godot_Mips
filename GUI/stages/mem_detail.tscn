@@ -1,7 +1,7 @@
 [gd_scene load_steps=32 format=3 uid="uid://cqvkpfjkhblkw"]
 
 [ext_resource type="Script" path="res://stages/mem_detail.gd" id="1_cnata"]
-[ext_resource type="Script" path="res://stages/components/DataMemory.gd" id="2_u200c"]
+[ext_resource type="Script" path="res://stages/components/main_component.gd" id="2_bhhy1"]
 [ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="3_18s6u"]
 [ext_resource type="Script" path="res://stages/marker.gd" id="3_qoe48"]
 [ext_resource type="Script" path="res://stages/components/line2d.gd" id="4_hqwpj"]
@@ -135,13 +135,12 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Data
 Memory"
-script = ExtResource("2_u200c")
+script = ExtResource("2_bhhy1")
 position_percent = Vector2(0.5, 0.5)
 expanded_position_percent = Vector2(0.5, 0.5)
 stage_number = 3
 alignment_mode = 1
 component_tooltip = NodePath("ComponentTooltip")
-window_title = "Data Memory"
 
 [node name="UpperInput" type="Marker2D" parent="DataMemory"]
 position = Vector2(0, 50)

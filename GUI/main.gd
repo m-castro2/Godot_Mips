@@ -279,14 +279,16 @@ func _on_resized():
 
 
 func _resize_ui(viewport_size: Vector2) -> void:
-	var font_size: int = max(12, 1.6 * viewport_size.y / 72)
-	theme.set_font_size("font_size", "Label", font_size)
-	theme.set_font_size("font_size", "Button", font_size)
-	theme.set_font_size("font_size", "PopupMenu", font_size)
-	theme.set_font_size("font_size", "TabContainer", font_size)
-	theme.set_font_size("font_size", "CodeEdit", font_size)
-	theme.set_font_size("normal_font_size", "RichTextLabel", font_size)
-	theme.set_font_size("title_font_size", "Window", font_size)
+	if (viewport_size.x / viewport_size.y >= (Globals.base_viewport_size.x / Globals.base_viewport_size.y)):
+		#only update font size if viewport is at least as wide as original aspect ratio
+		var font_size: int = max(12, 1.6 * viewport_size.y / 72)
+		theme.set_font_size("font_size", "Label", font_size)
+		theme.set_font_size("font_size", "Button", font_size)
+		theme.set_font_size("font_size", "PopupMenu", font_size)
+		theme.set_font_size("font_size", "TabContainer", font_size)
+		theme.set_font_size("font_size", "CodeEdit", font_size)
+		theme.set_font_size("normal_font_size", "RichTextLabel", font_size)
+		theme.set_font_size("title_font_size", "Window", font_size)
 	
 	var mux_button_stylebox: StyleBoxFlat = theme.get_stylebox("disabled", "MuxButton")
 	mux_button_stylebox.set_corner_radius_all(15 * min(viewport_size.x / Globals.base_viewport_size.x, viewport_size.y / Globals.base_viewport_size.y))

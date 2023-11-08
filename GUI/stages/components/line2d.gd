@@ -74,6 +74,7 @@ func add_points():
 	
 	#check_visibility()
 	
+	
 	global_position = Vector2.ZERO
 	add_point(origin.global_position)
 	
@@ -111,7 +112,7 @@ func add_points():
 			add_point(point)
 			return
 	
-	if (target.global_position.x - min_finish_length * scaling) < (origin.global_position.x + min_finish_length * scaling): 
+	if (target.global_position.x - min_finish_length * scaling) < (origin.global_position.x + min_initial_length * scaling): 
 		# origin is further right than target
 		var point: Vector2 = origin.global_position + Vector2(max(\
 							max(min_initial_length * scaling, target.global_position.x - origin.global_position.x),\
@@ -145,8 +146,6 @@ func add_points():
 		else:
 			var expanded:= (Globals.current_expanded_stage == stage)
 			var offset:= middle_offset * scaling if expanded else 0
-			if name == "AluOut_MEMWB":
-				pass
 			add_point(Vector2(origin.global_position.x + \
 					(target.global_position.x - origin.global_position.x)/2 - offset,\
 					origin.global_position.y))

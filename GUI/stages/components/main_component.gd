@@ -104,7 +104,15 @@ func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
 #	size = viewport_size / base_scale
 	#var font_size: int = max(12, 1.6 * viewport_size.y / 72)
 	#add_theme_font_size_override("font_size",font_size)
-	size = viewport_size / base_scale
+	var minimum_size_rate:= custom_minimum_size.x / custom_minimum_size.y
+	var scaled_size:= viewport_size / base_scale
+	var scaled_size_rate:= scaled_size.x / scaled_size.y
+	
+	if scaled_size_rate >= minimum_size_rate:
+		scaled_size.x = scaled_size.y * minimum_size_rate
+	else:
+		scaled_size.y = scaled_size.x / minimum_size_rate
+	size = scaled_size
 
 
 func _on_mouse_entered():

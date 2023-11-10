@@ -29,9 +29,7 @@ func test_double_precision() -> void:
 	LineManager.stage_detail_path.clear()
 	LineManager.stage_register_path.clear()
 	var runner := scene_runner("res://main.tscn")
-	await runner.simulate_frames(10)
 	runner.invoke("_on_load_program_pressed", "testdata/testFPU2.s")
-	await runner.simulate_frames(10)
 	runner.invoke("_on_run_program_pressed")
 	var fp_as_double = PipelinedWrapper.get_fp_register_values_d() # d registers return 16 values
 	# double

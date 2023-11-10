@@ -115,6 +115,7 @@ func _on_next_cycle_pressed() -> void:
 
 
 func _on_run_program_pressed() -> void:
+	var fp_as_double = PipelinedWrapper.get_fp_register_values_d()
 	while pipelinedWrapper.is_ready() and pipelinedWrapper.exception_info.is_empty():
 		_on_next_cycle_pressed()
 		#pipelinedWrapper.next_cycle()

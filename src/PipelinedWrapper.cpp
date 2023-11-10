@@ -38,6 +38,9 @@ void PipelinedWrapper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_register_names"), &PipelinedWrapper::get_register_names);
     ClassDB::bind_method(D_METHOD("to_hex32"), &PipelinedWrapper::to_hex32);
     ClassDB::bind_method(D_METHOD("get_memory_data"), &PipelinedWrapper::get_memory_data);
+    ClassDB::bind_method(D_METHOD("get_register_values"), &PipelinedWrapper::get_register_values);
+    ClassDB::bind_method(D_METHOD("get_fp_register_values_f"), &PipelinedWrapper::get_fp_register_values_f);
+    ClassDB::bind_method(D_METHOD("get_fp_register_values_d"), &PipelinedWrapper::get_fp_register_values_d);
 
 
     //bind properties
@@ -413,6 +416,27 @@ godot::Array PipelinedWrapper::get_memory_data() {
     }
 
     return data_array;
+}
+
+godot::Array PipelinedWrapper::get_register_values() {
+    godot::Array array {};
+    for (int i = 0; i < 31; ++i)
+        array.push_back(cpu->read_register(i));
+    return array;
+}
+
+godot::Array PipelinedWrapper::get_fp_register_values_f() {
+    godot::Array array {};
+    for (int i = 0; i < 31; ++i)
+        array.push_back(cpu->read_register_f(i));
+    return array;
+}
+
+godot::Array PipelinedWrapper::get_fp_register_values_d() {
+    godot::Array array {};
+    for (int i = 0; i < 31; i+=2)
+        array.push_back(cpu->read_register_d(i));
+    return array;
 }
 
 

@@ -81,5 +81,11 @@ public:
     godot::String to_hex32(uint32_t value);
 
     godot::Array get_memory_data();
+
+    godot::Array get_register_values();
+
+    godot::Array get_fp_register_values_f();
+
+    godot::Array get_fp_register_values_d();
 };
 #endif //TFG_PIPELINED_WRAPPER_H

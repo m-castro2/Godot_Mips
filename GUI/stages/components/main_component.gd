@@ -101,9 +101,6 @@ func _on_globals_cycle_changed():
 
 func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
 	var base_scale:= Globals.base_viewport_size / custom_minimum_size
-#	size = viewport_size / base_scale
-	#var font_size: int = max(12, 1.6 * viewport_size.y / 72)
-	#add_theme_font_size_override("font_size",font_size)
 	var minimum_size_rate:= custom_minimum_size.x / custom_minimum_size.y
 	var scaled_size:= viewport_size / base_scale
 	var scaled_size_rate:= scaled_size.x / scaled_size.y

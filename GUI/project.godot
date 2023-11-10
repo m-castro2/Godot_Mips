@@ -26,6 +26,10 @@ LineManager="*res://LineManager.gd"
 
 window/stretch/aspect="ignore"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
+
 [filesystem]
 
 import/blender/enabled=false

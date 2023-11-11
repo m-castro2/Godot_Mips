@@ -38,3 +38,17 @@ func test_double_precision() -> void:
 	assert_float(fp_as_double[4 / 2]).is_equal(40.5)
 	assert_float(fp_as_double[6 / 2]).is_equal(9.)
 	assert_float(fp_as_double[8 / 2]).is_equal(4.5)
+
+
+func test_bc1_stall() -> void:
+	LineManager.stage_detail_path.clear()
+	LineManager.stage_register_path.clear()
+	var runner := scene_runner("res://main.tscn")
+	runner.invoke("_on_load_program_pressed", "testdata/testFPUCompareAndBranch.s")
+	var stall_count:= 0
+	while PipelinedWrapper.is_ready():
+		runner.invoke("_on_next_cycle_pressed")
+		var id_inst: int = StageControl.instruction_map[1]
+		if id_inst == 10:
+			stall_count += 1
+	assert_int(stall_count).is_equal(6) # (first cycle + 2 stall cycles) * 2 bc1t instructions

@@ -195,6 +195,11 @@ godot::String PipelinedWrapper::next_cycle() {
     catch (int e) {
         handle_exception(e, err_msg, err_v);
     }
+
+    if (cpu->syscall_info.id != 0){
+        handle_exception(cpu->syscall_info.id, cpu->syscall_info.message, cpu->syscall_info.value);
+    }
+
     std::stringstream ss;
     ss << out.rdbuf();
     godot::String str = ss.str().c_str();
@@ -451,6 +456,7 @@ void PipelinedWrapper::handle_exception(int exception, std::string message, uint
     exception_info["err_no"] = exception;
     exception_info["err_msg"] = godot::String(message.c_str());
     exception_info["err_v"] = godot::String(Utils::hex32(value).c_str());
+    cpu->syscall_info = {0, "", 0};
 }
 
 void PipelinedWrapper::set_exception_info(godot::Dictionary value) {

@@ -250,6 +250,7 @@ func _on_Globals_branch_stage_changed(value: int) -> void:
 
 func _on_Globals_branch_type_changed(value: int) -> void:
 	if program_loaded:
+		value += 1 # flush was removed so now non taken is 0 instead of 1
 		pipelinedWrapper.change_branch_type(value)
 		_on_reset_pressed()
 		Globals.branch_type = value

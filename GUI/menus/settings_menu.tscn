@@ -82,14 +82,12 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 31)
 layout_mode = 2
 alignment = 1
-item_count = 3
+item_count = 2
 selected = 1
-popup/item_0/text = "FLUSH"
-popup/item_0/id = 0
-popup/item_1/text = "NON TAKEN"
-popup/item_1/id = 1
-popup/item_2/text = "DELAYED"
-popup/item_2/id = 2
+popup/item_0/text = "NON TAKEN"
+popup/item_0/id = 1
+popup/item_1/text = "DELAYED"
+popup/item_1/id = 2
 
 [node name="HDUCheckBox" type="CheckBox" parent="MarginContainer/TabContainer/CPU Sim/MarginContainer/HBoxContainer/VBoxContainer2"]
 unique_name_in_owner = true

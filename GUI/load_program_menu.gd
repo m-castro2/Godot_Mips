@@ -5,6 +5,7 @@ extends PanelContainer
 @onready var load_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/CodeVBoxContainer/LoadButton
 @onready var description_label = $MarginContainer/VBoxContainer/HBoxContainer/CodeVBoxContainer/DescriptionLabel
 @onready var code_label = $MarginContainer/VBoxContainer/HBoxContainer/CodeVBoxContainer/PanelContainer/ScrollContainer/CodeLabel
+@onready var open_local_folder = %OpenLocalFolder
 
 var file_path: String = ""
 
@@ -12,6 +13,8 @@ func _ready() -> void:
 	Globals.can_instantiate_load_menu = false
 	Globals.active_menu = "load_program"
 	check_files()
+	if OS.has_feature("android") or OS.has_feature("web"):
+		open_local_folder.hide()
 
 
 func check_files() -> void:
@@ -71,3 +74,9 @@ func _on_close_pressed():
 func _on_load_button_pressed():
 	Globals.load_program_pressed.emit(file_path)
 	#queue_free()
+
+
+func _on_open_local_folder_pressed():
+	if OS.has_feature("android") or OS.has_feature("web"):
+		return
+	OS.shell_open(str("file://", ProjectSettings.globalize_path("user://testdata")))

@@ -102,6 +102,7 @@ func _on_load_program_pressed(file_path: String) -> void:
 		Globals.program_loaded.emit()
 	
 	else:
+		exception_dialog.add_info({"err_no": -1, "err_v": file_path})
 		print("Error loading program")
 
 

@@ -10,7 +10,7 @@ enum ComponentTypes {REGBANK, DATAMEM}
 
 func _ready() -> void:
 	if component_type == ComponentTypes.REGBANK:
-		Globals.wb_to_regbank_line_activated.connect(_on_Globals_wb_to_regbank_line_activated)
+		Globals.wb_to_regbank_line_created.connect(_on_Globals_wb_to_regbank_line_created)
 	Globals.cycle_changed.connect(_on_Globals_cycle_changed)
 	for i in range(0, line_labels.size()):
 		line_labels[i].visibility_changed.connect(_on_line_label_visibility_changed.bind(i))
@@ -43,9 +43,9 @@ func _on_line_label_visibility_changed(index: int) -> void:
 	panels[index].visible = line_labels[index].visible
 
 
-func _on_Globals_wb_to_regbank_line_activated() -> void:
-	panels[5].visible = true
-	panels[6].visible = true
+func _on_Globals_wb_to_regbank_line_created(line_label: LineLabel, index: int) -> void:
+	line_labels.push_back(line_label)
+	line_label.visibility_changed.connect(_on_line_label_visibility_changed.bind(index))
 
 
 func _on_Globals_cycle_changed() -> void:

@@ -33,6 +33,11 @@ func _ready():
 	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
 	visible = false
 	size = custom_minimum_size
+	
+	if name == "Mux_RegBank_TargetLabel":
+		Globals.wb_to_regbank_line_created.emit(self, 5)
+	if name == "RegDst_RegBank_TargetLabel":
+		Globals.wb_to_regbank_line_created.emit(self, 6)
 
 
 func _on_line_drawn():

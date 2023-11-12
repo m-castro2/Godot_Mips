@@ -81,10 +81,10 @@ func _on_load_program_pressed(file_path: String) -> void:
 		resource.set_memory(resource.memory_string)
 		program_loaded = pipelinedWrapper.load_program(file_path, false, resource.memory)
 	else:
-		var resource: ProgramMemory = load("res://testdata/" + file_path.get_file().left(-2) + ".tres")
-		resource.set_memory(resource.memory_string)
-		program_loaded = pipelinedWrapper.load_program(file_path, false, resource.memory)
-		#program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path), true, {})
+		#var resource: ProgramMemory = load("res://testdata/" + file_path.get_file().left(-2) + ".tres")
+		#resource.set_memory(resource.memory_string)
+		#program_loaded = pipelinedWrapper.load_program(file_path, false, resource.memory)
+		program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path), true, {})
 	#set up cpu options
 	configure_cpu()
 	

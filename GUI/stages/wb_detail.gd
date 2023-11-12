@@ -79,7 +79,6 @@ func _on_wb_line_active(line: LineManager.wb_lines, active: bool) -> void:
 			reg_dst_reg_bank.target = LineManager.get_stage_component(1, "registers_bank").get_node("Input3")
 			reg_dst_reg_bank.target_component.request_stage_origin.append(Globals.STAGES.WB)
 			reg_dst_reg_bank.active = true
-			Globals.wb_to_regbank_line_activated.emit()
 		
 		LineManager.wb_lines.REGDST_FORWARDINGUNIT:
 			reg_dst_forwarding_unit.target_component = LineManager.get_stage_component(2, "forwarding_unit")

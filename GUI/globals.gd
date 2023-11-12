@@ -112,4 +112,4 @@ func update_current_stage_sizes(value: float, stage: int):
 
 
 # for RegBank tooltip
-signal wb_to_regbank_line_activated
+signal wb_to_regbank_line_created(line_label: LineLabel, index: int)

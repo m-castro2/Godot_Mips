@@ -55,7 +55,6 @@ func _on_program_name_pressed(file_name: String) -> void:
 	else:
 		file_path = "user://testdata/" + file_name
 	var file: FileAccess = FileAccess.open(file_path, FileAccess.READ)
-	print(FileAccess.get_open_error())
 	var content: String = file.get_as_text()
 	description_label.text = file_name.get_basename() #update files to have description on first line?
 	code_label.text = content

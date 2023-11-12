@@ -102,6 +102,12 @@ func _on_load_program_pressed(file_path: String) -> void:
 		Globals.program_loaded.emit()
 	
 	else:
+		pipeline.add_instructions([], "")
+		next_cycle.disabled = true
+		run_program.disabled = true
+		previous_cycle.disabled = true
+		%ShowMemory.disabled = true
+		reset.disabled = true
 		exception_dialog.add_info({"err_no": -1, "err_v": file_path})
 		print("Error loading program")
 

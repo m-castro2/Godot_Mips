@@ -16,7 +16,7 @@ func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
 func add_info(exception_info: Dictionary):
 	if exception_info["err_no"] == -1:
 		title = "Error loading program"
-		dialog_text = "Can't load program" + exception_info["err_v"]
+		dialog_text = "Can't load program " + ProjectSettings.globalize_path(exception_info["err_v"])
 		
 	elif exception_info["err_no"] == 259:
 		# syscall exception

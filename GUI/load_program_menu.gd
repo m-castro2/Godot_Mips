@@ -25,28 +25,25 @@ func check_files() -> void:
 	if !dir:
 		print("An error occurred when trying to access the path.")
 		return
+	
+	var files:= dir.get_files()
+	for file in files:
+		if !file.get_extension() == "s":
+			continue
+		var file_name:= file.left(-2)
+		var exists:= (file_name + ".tres") in files
+		if (OS.has_feature("android") or OS.has_feature("web")) and \
+				!(file_name + ".tres") in files:
+			continue
 		
-	dir.list_dir_begin()
-	var file_name: String = dir.get_next()
-	while file_name != "":
-		if dir.current_is_dir():
-			print("Found dir: " + file_name)
-			file_name = dir.get_next()
-			continue
-		if !file_name.get_extension() == "s":
-			print("Skipping " + file_name + ": not a source file")
-			file_name = dir.get_next()
-			continue
-			
 		var button: Button = Button.new()
-		button.text = file_name
-		button.pressed.connect(_on_program_name_pressed.bind(file_name))
+		button.text = file
+		button.pressed.connect(_on_program_name_pressed.bind(file))
 		button.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		button.clip_text = true
 		button.size_flags_horizontal =Control.SIZE_EXPAND_FILL
 		button.theme_type_variation = "ButtonMenu"
 		name_container.add_child(button)
-		file_name = dir.get_next()
 
 
 func _on_program_name_pressed(file_name: String) -> void:

@@ -8,7 +8,7 @@ extends PanelContainer
 
 var file_path: String = ""
 
-func _ready() -> void: 
+func _ready() -> void:
 	Globals.can_instantiate_load_menu = false
 	Globals.active_menu = "load_program"
 	check_files()
@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func check_files() -> void:
 	var dir: DirAccess = null
-	if OS.has_feature("editor") or OS.has_feature("web"):
+	if OS.has_feature("editor") or OS.has_feature("web") or OS.has_feature("android"):
 		# Running from editor or web
 		dir = DirAccess.open("res://testdata")
 	else:
@@ -50,7 +50,10 @@ func check_files() -> void:
 
 
 func _on_program_name_pressed(file_name: String) -> void:
-	file_path = "user://testdata/" + file_name
+	if OS.has_feature("android") or OS.has_feature("web"):
+		file_path = "res://testdata/" + file_name
+	else:
+		file_path = "user://testdata/" + file_name
 	var file: FileAccess = FileAccess.open(file_path, FileAccess.READ)
 	var content: String = file.get_as_text()
 	description_label.text = file_name.get_basename() #update files to have description on first line?

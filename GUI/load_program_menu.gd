@@ -16,12 +16,12 @@ func _ready() -> void:
 
 func check_files() -> void:
 	var dir: DirAccess = null
-	if OS.has_feature("editor"):
-		# Running from editor
+	if OS.has_feature("editor") or OS.has_feature("web"):
+		# Running from editor or web
 		dir = DirAccess.open("res://testdata")
 	else:
 		# Running from export
-		dir = DirAccess.open(OS.get_executable_path().get_base_dir().path_join("testdata"))
+		dir = DirAccess.open("user://testdata")
 	if !dir:
 		print("An error occurred when trying to access the path.")
 		return
@@ -50,8 +50,8 @@ func check_files() -> void:
 
 
 func _on_program_name_pressed(file_name: String) -> void:
-	file_path = "testdata/" + file_name
-	var file: FileAccess = FileAccess.open("user://" + file_path, FileAccess.READ)
+	file_path = "user://testdata/" + file_name
+	var file: FileAccess = FileAccess.open(file_path, FileAccess.READ)
 	var content: String = file.get_as_text()
 	description_label.text = file_name.get_basename() #update files to have description on first line?
 	code_label.text = content

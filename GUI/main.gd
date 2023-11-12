@@ -50,7 +50,7 @@ func copy_test_files():
 			target.remove(filename)
 			filename = target.get_next()
 	DirAccess.open("user://").make_dir("user://testdata")
-	
+	print(path)
 	var source: DirAccess = DirAccess.open("res://testdata")
 	source.list_dir_begin()
 	filename = source.get_next()
@@ -67,7 +67,18 @@ func _on_load_program_pressed(file_path: String) -> void:
 	if program_loaded:
 		_on_reset_pressed()
 	
-	program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path))
+	print("res://" + file_path.get_file().left(-2) + ".tres")
+	
+	var resource: ProgramMemory = load("res://testdata/" + file_path.get_file().left(-2) + ".tres")
+	resource.set_memory(resource.memory_string)
+	print(resource.memory)
+	if OS.has_feature("web") or OS.has_feature("android"):
+		var resource1: ProgramMemory = load("res://" + file_path.get_file().left(-2) + ".tres")
+		resource.set_memory(resource.memory_string)
+		print(resource.memory)
+		program_loaded = pipelinedWrapper.load_program(file_path, false, resource.memory)
+	else:
+		program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path), false, resource.memory)
 	#set up cpu options
 	configure_cpu()
 	

@@ -8,10 +8,12 @@ func _ready():
 	if !FileAccess.file_exists("user://user_settings.cfg"):
 		_err = user_settings.load("res://cfg/default_config.cfg")
 		user_settings.save("user://user_settings.cfg")
-		return
 	else:
 		_err = user_settings.load("user://user_settings.cfg")
 		_err = default_settings.load("res://cfg/default_config.cfg")
+	
+	if OS.has_feature("android"):
+		default_settings.set_value("Settings/UI", "scaling", 1)
 
 
 func update_value(section: String, param_name: String, value) -> void:

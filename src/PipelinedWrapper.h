@@ -49,7 +49,7 @@ public:
     godot::String init();
     godot::String show_memory();
     bool is_ready();
-    bool load_program(godot::String filename);
+    bool load_program(godot::String filename, bool is_file, godot::Dictionary memory_data);
 
     godot::Dictionary get_cpu_info();
     void set_cpu_info(godot::Dictionary p_cpu_info);

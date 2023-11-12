@@ -229,29 +229,94 @@ bool PipelinedWrapper::is_ready() {
     return cpu->is_ready();
 }
 
-bool PipelinedWrapper::load_program(godot::String filename) {
-    if (mips_sim::assemble_file(filename.ascii().get_data(), mem) != 0) {
-        return false;
-    }
-    mem->snapshot(0);
-    mem->snapshot(1);
+bool PipelinedWrapper::load_program(godot::String filename, bool is_file, godot::Dictionary memory_data) {
 
-    instructions.clear();
-    int cont = 0;
-    for (uint32_t mem_addr=0x00400000, instr_index=1; mem_addr<0x00400000+0x00100000; mem_addr+=4, instr_index++)
-    {   
-        try {
-            uint32_t word = mem->mem_read_32(mem_addr);
-            cont++;
-            godot::Array instruction_info;
-            instruction_info.push_back(mem_addr);
-            godot::String instruction_text = std::string("[" + Utils::hex32(mem_addr) + "] " + Utils::decode_instruction(word)).c_str();
-            instruction_info.push_back(instruction_text);
-            instructions.push_back(instruction_info);
+    if (is_file){ // path to local file
+        if (mips_sim::assemble_file(filename.ascii().get_data(), mem) != 0) {
+            return false;
         }
-        catch (int e) {}
+
+            
+        mem->snapshot(0);
+        mem->snapshot(1);
+
+        instructions.clear();
+        int cont = 0;
+
+        for (uint32_t mem_addr=0x00400000, instr_index=1; mem_addr<0x00400000+0x00100000; mem_addr+=4, instr_index++)
+        {   
+            try {
+                uint32_t word = mem->mem_read_32(mem_addr);
+                cont++;
+                godot::Array instruction_info;
+                instruction_info.push_back(mem_addr);
+                godot::String instruction_text = std::string("[" + Utils::hex32(mem_addr) + "] " + Utils::decode_instruction(word)).c_str();
+                instruction_info.push_back(instruction_text);
+                instructions.push_back(instruction_info);
+            }
+            catch (int e) {}
+        }
+        return true;
     }
-    return true;
+
+    else { // use memory backup for platforms like android and web
+        std::map<uint32_t, std::vector<uint32_t>> memory_map {};
+        godot::Array keys = memory_data.keys();
+        for (int i = 0; i < keys.size(); ++i) {
+            godot::Array data = static_cast<godot::Array>(memory_data[keys[i]]);
+            std::vector<uint32_t> v {};
+            int v_length = data.size();
+            if (v_length > 0) {
+                std::string data0 = static_cast<godot::String>(data[0]).utf8().get_data();
+                uint32_t hex = static_cast<uint32_t>(std::stoul(data0, nullptr, 16));
+                v.push_back(hex);
+            }
+            if (v_length > 1) {
+                std::string data0 = static_cast<godot::String>(data[1]).utf8().get_data();
+                uint32_t hex = static_cast<uint32_t>(std::stoul(data0, nullptr, 16));
+                v.push_back(hex);
+            }
+            if (v_length > 2) {
+                std::string data0 = static_cast<godot::String>(data[2]).utf8().get_data();
+                uint32_t hex = static_cast<uint32_t>(std::stoul(data0, nullptr, 16));
+                v.push_back(hex);
+            }
+            if (v_length > 3) {
+                const char* data0 = static_cast<godot::String>(data[3]).ascii().get_data();
+                uint32_t hex = static_cast<uint32_t>(std::stoul(data0, nullptr, 16));
+                v.push_back(hex);
+            }
+            std::string key = static_cast<godot::String>(keys[i]).utf8().get_data();
+            uint32_t hex = static_cast<uint32_t>(std::stoul(key, nullptr, 16));
+            memory_map[hex] = v;
+        }
+
+        mem->set_memory_values(0x00400000, 0x00100000, memory_map); // text
+        mem->set_memory_values(0x10010000, 0x00100000, memory_map); // data
+
+        mem->snapshot(0);
+        mem->snapshot(1);
+
+        instructions.clear();
+
+        for (auto memory_address: memory_map){
+            if (memory_address.first > 0x00400000 + 0x00100000)
+                continue;
+            try {
+                for (int i = 0; i < memory_address.second.size(); ++i) {
+                    uint32_t mem_addr = memory_address.first + 4*i;
+                    uint32_t word = mem->mem_read_32(mem_addr); //memory_address.second[i];
+                    godot::Array instruction_info;
+                    instruction_info.push_back(mem_addr);
+                    godot::String instruction_text = std::string("[" + Utils::hex32(mem_addr) + "] " + Utils::decode_instruction(word)).c_str();
+                    instruction_info.push_back(instruction_text);
+                    instructions.push_back(instruction_info);
+                }
+            }
+            catch (int e) {}
+        }
+    return true;    
+    }
 }
 
 godot::Dictionary PipelinedWrapper::get_cpu_info() {

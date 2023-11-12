@@ -26,6 +26,10 @@ LineManager="*res://LineManager.gd"
 
 window/stretch/aspect="ignore"
 
+[editor]
+
+export/convert_text_resources_to_binary=false
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")

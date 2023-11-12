@@ -260,7 +260,7 @@ bool PipelinedWrapper::load_program(godot::String filename, bool is_file, godot:
     }
 
     else { // use memory backup for platforms like android and web
-        std::map<uint32_t, std::vector<uint32_t>> memory_map {};
+        memory_map.clear();
         godot::Array keys = memory_data.keys();
         for (int i = 0; i < keys.size(); ++i) {
             godot::Array data = static_cast<godot::Array>(memory_data[keys[i]]);
@@ -473,13 +473,30 @@ godot::String PipelinedWrapper::to_hex32(uint32_t value){
     return Utils::hex32(value).c_str();
 }
 
-godot::Array PipelinedWrapper::get_memory_data() {
+godot::Array PipelinedWrapper::get_memory_data(bool from_backup) {
     godot::Array data_array {};
 
-    for (auto value: cpu->get_memory_data()) {
-        data_array.push_back(godot::String(value.c_str()));
+    if (from_backup) {
+        for (auto memory_address: memory_map){
+            if (memory_address.first < 0x10010000)
+                continue;
+            try {
+                for (int i = 0; i < memory_address.second.size(); ++i) {
+                    uint32_t mem_addr = memory_address.first + 4*i;
+                    uint32_t word = mem->mem_read_32(mem_addr); //memory_address.second[i];
+                    data_array.push_back(godot::String(Utils::hex32(word).c_str()));
+                }
+            }
+            catch (int e) {}
+        }
     }
 
+    else {
+        for (auto value: cpu->get_memory_data()) {
+            data_array.push_back(godot::String(value.c_str()));
+        }
+    }
+    
     return data_array;
 }
 

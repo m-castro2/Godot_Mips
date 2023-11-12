@@ -21,7 +21,9 @@ func add_info():
 	if !Globals.is_program_loaded:
 		return
 	
-	var memory_data:= PipelinedWrapper.get_memory_data()
+	var from_backup:= OS.has_feature("web") or OS.has_feature("android")
+	
+	var memory_data:= PipelinedWrapper.get_memory_data(from_backup)
 	if labels.size() < memory_data.size():
 		while labels.size() != memory_data.size():
 			var label:= Label.new()

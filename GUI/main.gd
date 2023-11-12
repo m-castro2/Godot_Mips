@@ -6,9 +6,10 @@ extends Control
 @onready var exception_dialog = $ExceptionDialog
 var program_loaded: bool = false
 
-const load_program_menu: PackedScene = preload("res://MenuInfo.tscn")
-const settings_menu: PackedScene = preload("res://settings.tscn")
-const component_info_window: PackedScene = preload("res://component_info_window.tscn")
+#const load_program_menu: PackedScene = preload("res://MenuInfo.tscn")
+#const settings_menu: PackedScene = preload("res://settings.tscn")
+#const component_info_window: PackedScene = preload("res://component_info_window.tscn")
+
 
 @onready var control_buttons_h_box_container = $VBoxContainer/ControlButtonsHBoxContainer
 @onready var cycle_label: Label = $VBoxContainer/ControlButtonsHBoxContainer/CycleLabel
@@ -19,6 +20,10 @@ const component_info_window: PackedScene = preload("res://component_info_window.
 
 enum WindowScaling {IGNORE, SCALE}
 var window_scaling: WindowScaling
+
+const base_control_size:= 50
+const base_button_size:= Vector2(150, 40)
+
 
 func _ready() -> void:
 	Globals.show_load_program_menu.connect(_on_show_load_program_menu)
@@ -40,6 +45,10 @@ func _ready() -> void:
 
 
 func copy_test_files():
+	return
+	if OS.has_feature("web") or OS.has_feature("android"):
+		return
+	
 	var path: String = OS.get_user_data_dir() + "testdata"
 	var target: DirAccess = DirAccess.open(path)
 	var filename:String
@@ -67,18 +76,15 @@ func _on_load_program_pressed(file_path: String) -> void:
 	if program_loaded:
 		_on_reset_pressed()
 	
-	print("res://" + file_path.get_file().left(-2) + ".tres")
-	
-	var resource: ProgramMemory = load("res://testdata/" + file_path.get_file().left(-2) + ".tres")
-	resource.set_memory(resource.memory_string)
-	print(resource.memory)
 	if OS.has_feature("web") or OS.has_feature("android"):
-		var resource1: ProgramMemory = load("res://" + file_path.get_file().left(-2) + ".tres")
+		var resource: ProgramMemory = load("res://testdata/" + file_path.get_file().left(-2) + ".tres")
 		resource.set_memory(resource.memory_string)
-		print(resource.memory)
 		program_loaded = pipelinedWrapper.load_program(file_path, false, resource.memory)
 	else:
-		program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path), false, resource.memory)
+		var resource: ProgramMemory = load("res://testdata/" + file_path.get_file().left(-2) + ".tres")
+		resource.set_memory(resource.memory_string)
+		program_loaded = pipelinedWrapper.load_program(file_path, false, resource.memory)
+		#program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path), true, {})
 	#set up cpu options
 	configure_cpu()
 	
@@ -206,22 +212,22 @@ func _on_show_load_program_menu() -> void:
 	$BaseMenu.instantiate_load_program_menu()
 	$BaseMenu.visible = true
 	return
-	if Globals.active_menu != "load_program":
-		add_child(load_program_menu.instantiate())
-		var settings = get_node_or_null("/root/Control/Settings")
-		if settings:
-			remove_child(settings)
+	#if Globals.active_menu != "load_program":
+		#add_child(load_program_menu.instantiate())
+		#var settings = get_node_or_null("/root/Control/Settings")
+		#if settings:
+			#remove_child(settings)
 
 
 func _on_show_settings_menu() -> void:
 	$BaseMenu.instantiate_settings_menu()
 	$BaseMenu.visible = true
 	return
-	if Globals.active_menu != "settings":
-		add_child(settings_menu.instantiate())
-		var load_program = get_node_or_null("/root/Control/MenuInfo")
-		if load_program:
-			remove_child(load_program)
+	#if Globals.active_menu != "settings":
+		#add_child(settings_menu.instantiate())
+		#var load_program = get_node_or_null("/root/Control/MenuInfo")
+		#if load_program:
+			#remove_child(load_program)
 
 
 func _on_Globals_fu_available_changed(value: int) -> void:
@@ -310,8 +316,7 @@ func _resize_ui(viewport_size: Vector2) -> void:
 	
 	resize_control_buttons(viewport_size)
 
-const base_control_size:= 50
-const base_button_size:= Vector2(150, 40)
+
 func resize_control_buttons(viewport_size: Vector2) -> void:
 	var new_scale:= viewport_size / Globals.base_viewport_size
 	control_buttons_h_box_container.custom_minimum_size.y = base_control_size * new_scale.y
@@ -319,7 +324,6 @@ func resize_control_buttons(viewport_size: Vector2) -> void:
 	previous_cycle.custom_minimum_size = base_button_size * new_scale
 	next_cycle.custom_minimum_size = base_button_size * new_scale
 	run_program.custom_minimum_size = base_button_size * new_scale
-	
 
 
 func _on_load_program_button_pressed():

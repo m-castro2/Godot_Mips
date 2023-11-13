@@ -348,15 +348,15 @@ func create_memory_backup(file_path: String):
 		return
 	
 	var memory_string:= PipelinedWrapper.create_memory_backup()
-	var fields:= memory_string.split(" ")
+	var rows:= memory_string.split("\n")
 	var output_string: String = ""
 	
-	for i in range(fields.size()):
-		if i and i % 4 == 0:
-			var inner:= fields[i].right(8)
-			output_string += fields[i].left((10)) + "," + inner + " "
-		else:
-			output_string += fields[i] + " "
+	for row in rows:
+		if row == "":
+			continue
+		output_string += row + ","
+	
+	output_string = output_string.left(-1) #remove last ,
 	
 	var program_memory:= ProgramMemory.new()
 	program_memory.memory_string = output_string

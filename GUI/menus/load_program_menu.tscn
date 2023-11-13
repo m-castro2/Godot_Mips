@@ -66,6 +66,7 @@ size_flags_stretch_ratio = 5.0
 [node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/CodeVBoxContainer"]
 layout_mode = 2
 horizontal_alignment = 1
+autowrap_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/CodeVBoxContainer"]
 layout_mode = 2

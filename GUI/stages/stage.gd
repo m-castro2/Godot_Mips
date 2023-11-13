@@ -77,16 +77,19 @@ func _on_update_stage_colors(colors_map: Dictionary, instructions):
 	if StageControl.color_system:
 		# fixed instruction color
 		if instructions.size() > stage_number and instructions[stage_number] != -1:
-			var styleBox: StyleBoxFlat = StyleBoxFlat.new()
 			if colors_map.has(instructions[stage_number]):
+				var styleBox: StyleBoxFlat = StyleBoxFlat.new()
 				detail.stage_color = colors_map[instructions[stage_number]]
+				styleBox.bg_color = detail.stage_color
+				stage_button.add_theme_stylebox_override("normal", styleBox)
+				stage_button.add_theme_stylebox_override("hover", styleBox)
+				stage_button.add_theme_stylebox_override("pressed", styleBox)
+				styleBox.set_corner_radius_all(3)
 			else:
+				stage_button.remove_theme_stylebox_override("normal")
+				stage_button.remove_theme_stylebox_override("hover")
+				stage_button.remove_theme_stylebox_override("pressed")
 				detail.stage_color = Color.TRANSPARENT
-			styleBox.bg_color = detail.stage_color
-			styleBox.set_corner_radius_all(3)
-			stage_button.add_theme_stylebox_override("normal", styleBox)
-			stage_button.add_theme_stylebox_override("hover", styleBox)
-			stage_button.add_theme_stylebox_override("pressed", styleBox)
 			return
 		else:#if colors_map.size() == 0:
 			stage_button.remove_theme_stylebox_override("normal")

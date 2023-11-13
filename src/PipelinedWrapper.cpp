@@ -36,11 +36,13 @@ void PipelinedWrapper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("change_branch_stage"), &PipelinedWrapper::change_branch_stage);
     ClassDB::bind_method(D_METHOD("change_branch_type"), &PipelinedWrapper::change_branch_type);
     ClassDB::bind_method(D_METHOD("get_register_names"), &PipelinedWrapper::get_register_names);
+    ClassDB::bind_method(D_METHOD("get_fp_register_names"), &PipelinedWrapper::get_fp_register_names);
     ClassDB::bind_method(D_METHOD("to_hex32"), &PipelinedWrapper::to_hex32);
     ClassDB::bind_method(D_METHOD("get_memory_data"), &PipelinedWrapper::get_memory_data);
     ClassDB::bind_method(D_METHOD("get_register_values"), &PipelinedWrapper::get_register_values);
     ClassDB::bind_method(D_METHOD("get_fp_register_values_f"), &PipelinedWrapper::get_fp_register_values_f);
     ClassDB::bind_method(D_METHOD("get_fp_register_values_d"), &PipelinedWrapper::get_fp_register_values_d);
+    ClassDB::bind_method(D_METHOD("create_memory_backup"), &PipelinedWrapper::create_memory_backup);
 
 
     //bind properties
@@ -475,6 +477,14 @@ godot::Array PipelinedWrapper::get_register_names() {
     return name_array;
 }
 
+godot::Array PipelinedWrapper::get_fp_register_names() {
+    godot::Array name_array {};
+    for (int i = 0; i < 32; ++i) {
+        name_array.append(Utils::get_fp_register_name(i).c_str());
+    }
+    return name_array;
+}
+
 godot::String PipelinedWrapper::to_hex32(uint32_t value){
     return Utils::hex32(value).c_str();
 }
@@ -525,6 +535,17 @@ godot::Array PipelinedWrapper::get_fp_register_values_d() {
     for (int i = 0; i < 31; i+=2)
         array.push_back(cpu->read_register_d(i));
     return array;
+}
+
+godot::String PipelinedWrapper::create_memory_backup() {
+    std::stringbuf strbuf;
+    std::ostream out(&strbuf);
+    mem->print_memory(0x00400000, 0x00100000, out);
+    mem->print_memory(0x10010000, 0x00100000, out);
+    std::stringstream ss;
+    ss << out.rdbuf();
+    godot::String str = ss.str().c_str();
+    return str;
 }
 
 

@@ -78,6 +78,8 @@ public:
 
     godot::Array get_register_names();
 
+    godot::Array get_fp_register_names();
+
     godot::String to_hex32(uint32_t value);
 
     godot::Array get_memory_data(bool from_backup);
@@ -89,5 +91,7 @@ public:
     godot::Array get_fp_register_values_d();
 
     std::map<uint32_t, std::vector<uint32_t>> memory_map {}; //memory backup
+
+    godot::String create_memory_backup();
 };
 #endif //TFG_PIPELINED_WRAPPER_H

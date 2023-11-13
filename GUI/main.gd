@@ -81,6 +81,8 @@ func _on_load_program_pressed(file_path: String) -> void:
 		program_loaded = pipelinedWrapper.load_program(file_path, false, resource.memory)
 	else:
 		program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path), true, {})
+		if OS.has_feature("editor"): #if run from the editor
+			create_memory_backup(file_path)
 	
 	#set up cpu options
 	configure_cpu()
@@ -136,7 +138,6 @@ func _on_next_cycle_pressed() -> void:
 
 
 func _on_run_program_pressed() -> void:
-	var fp_as_double = PipelinedWrapper.get_fp_register_values_d()
 	while pipelinedWrapper.is_ready() and pipelinedWrapper.exception_info.is_empty():
 		_on_next_cycle_pressed()
 		#pipelinedWrapper.next_cycle()
@@ -341,3 +342,23 @@ func _on_load_program_button_pressed():
 
 func _on_settings_button_pressed():
 	Globals.show_settings_menu.emit()
+
+func create_memory_backup(file_path: String):
+	if !Globals.program_loaded:
+		return
+	
+	var memory_string:= PipelinedWrapper.create_memory_backup()
+	var fields:= memory_string.split(" ")
+	var output_string: String = ""
+	
+	for i in range(fields.size()):
+		if i and i % 4 == 0:
+			var inner:= fields[i].right(8)
+			output_string += fields[i].left((10)) + "," + inner + " "
+		else:
+			output_string += fields[i] + " "
+	
+	var program_memory:= ProgramMemory.new()
+	program_memory.memory_string = output_string
+	program_memory.resource_path = "res://testdata/" + file_path.get_file().left(-2) + ".tres"
+	var err = ResourceSaver.save(program_memory, program_memory.resource_path)

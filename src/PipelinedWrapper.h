@@ -74,7 +74,7 @@ public:
     godot::Dictionary exception_info;
     void set_exception_info(godot::Dictionary value);
     godot::Dictionary get_exception_info();
-    void handle_exception(int exception, std::string message, uint32_t value);
+    void handle_exception(int exception, std::string message, uint32_t value, int syscall_id);
 
     godot::Array get_register_names();
 
@@ -93,5 +93,7 @@ public:
     std::map<uint32_t, std::vector<uint32_t>> memory_map {}; //memory backup
 
     godot::String create_memory_backup();
+
+    void execute_syscall_callback(godot::Dictionary values);
 };
 #endif //TFG_PIPELINED_WRAPPER_H

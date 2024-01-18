@@ -72,8 +72,6 @@ func add_fixed_stage_color():
 
 
 func _on_update_stage_colors(colors_map: Dictionary, instructions):
-	if stage_number == 4:
-		var i = 0
 	if StageControl.color_system:
 		# fixed instruction color
 		if instructions.size() > stage_number and instructions[stage_number] != -1:

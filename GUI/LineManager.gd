@@ -36,6 +36,7 @@ var stage_detail_path: Array = []
 var stage_register_path: Array = []
 
 @onready var register_names: Array = PipelinedWrapper.get_register_names()
+@onready var fp_register_names: Array = PipelinedWrapper.get_fp_register_names()
 
 var seg_reg_values:Array[Dictionary] = [{}, {}, {}, {}]
 
@@ -249,7 +250,6 @@ func activate_lines(_stage_signals_map: Array):
 			seg_reg_values[2]["REG_DEST_R"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REG_DEST_REGISTER"])
 			if stage_signals_map[3]["MEM_READ"]:
 				mem_line_active.emit(mem_lines.ALUOUT_DATAMEM, true)
-				mem_line_active.emit(mem_lines.PC, true)
 				mem_line_active.emit(mem_lines.DATAMEM_MEMWB, true)
 				mem_line_active.emit(mem_lines.RegDst, true)
 				seg_reg_values[3]["PC_W"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["PC"])
@@ -274,9 +274,11 @@ func activate_lines(_stage_signals_map: Array):
 				seg_reg_values[3]["REG_DEST_W"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REG_DEST_REGISTER"])
 				seg_reg_values[3]["ALU_OUT_W"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REG_VALUE"])
 			
-			seg_reg_values[3]["PC_W"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["PC"])
+			if stage_signals_map[4]["MEM_2_REG"] == 2:
+				mem_line_active.emit(mem_lines.PC, true)
+				seg_reg_values[3]["PC_W"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["PC"])
 		
-		seg_reg_values[2]["PC_R"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["PC"])
+				seg_reg_values[2]["PC_R"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["PC"])
 	
 	# STAGE WB
 	if StageControl.instruction_map[4] != -1:

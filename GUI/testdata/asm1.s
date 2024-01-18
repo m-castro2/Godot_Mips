@@ -14,4 +14,4 @@ Loop:
     
 .data
 
-Mem: .space 100
+Mem: .space 150

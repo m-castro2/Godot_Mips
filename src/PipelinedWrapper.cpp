@@ -43,7 +43,7 @@ void PipelinedWrapper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_fp_register_values_f"), &PipelinedWrapper::get_fp_register_values_f);
     ClassDB::bind_method(D_METHOD("get_fp_register_values_d"), &PipelinedWrapper::get_fp_register_values_d);
     ClassDB::bind_method(D_METHOD("create_memory_backup"), &PipelinedWrapper::create_memory_backup);
-
+    ClassDB::bind_method(D_METHOD("execute_syscall_callback"), &PipelinedWrapper::execute_syscall_callback);
 
     //bind properties
     ClassDB::bind_method(D_METHOD("set_cpu_info"), &PipelinedWrapper::set_cpu_info);
@@ -166,7 +166,7 @@ godot::String PipelinedWrapper::previous_cycle(){
         retval = cpu->run_to_cycle(cpu->get_cycle()-1, out);
     }
     catch (int e) {
-        handle_exception(e, err_msg, err_v);
+        handle_exception(e, err_msg, err_v, 0);
     }
     std::stringstream ss;
     ss << out.rdbuf();
@@ -195,11 +195,11 @@ godot::String PipelinedWrapper::next_cycle() {
         retval = cpu->next_cycle(out);
     }
     catch (int e) {
-        handle_exception(e, err_msg, err_v);
+        handle_exception(e, err_msg, err_v, 0);
     }
 
     if (cpu->syscall_info.id != 0){
-        handle_exception(cpu->syscall_info.id, cpu->syscall_info.message, cpu->syscall_info.value);
+        handle_exception(cpu->syscall_info.id, cpu->syscall_info.message, cpu->syscall_info.value, cpu->syscall_info.syscall_id);
     }
 
     std::stringstream ss;
@@ -454,11 +454,12 @@ void PipelinedWrapper::enable_forwarding_unit(bool value) {
     cpu->enable_forwarding_unit(value);
 }
 
-void PipelinedWrapper::handle_exception(int exception, std::string message, uint32_t value) {
+void PipelinedWrapper::handle_exception(int exception, std::string message, uint32_t value, int syscall_id) {
     exception_info["err_no"] = exception;
     exception_info["err_msg"] = godot::String(message.c_str());
     exception_info["err_v"] = godot::String(Utils::hex32(value).c_str());
-    cpu->syscall_info = {0, "", 0};
+    exception_info["syscall_id"] = syscall_id;
+    cpu->syscall_info = {0, "", 0, 0};
 }
 
 void PipelinedWrapper::set_exception_info(godot::Dictionary value) {
@@ -541,11 +542,22 @@ godot::String PipelinedWrapper::create_memory_backup() {
     std::stringbuf strbuf;
     std::ostream out(&strbuf);
     mem->print_memory(0x00400000, 0x00100000, out);
+
     mem->print_memory(0x10010000, 0x00100000, out);
     std::stringstream ss;
     ss << out.rdbuf();
     godot::String str = ss.str().c_str();
     return str;
+}
+
+
+void PipelinedWrapper::execute_syscall_callback(godot::Dictionary values){
+    syscall_struct_t syscall_struct {};
+    syscall_struct.id = values["err_no"];
+    syscall_struct.message = static_cast<godot::String>(values["err_msg"]).ascii().get_data();
+    syscall_struct.value = std::stol(static_cast<godot::String>(values["err_v"]).ascii().get_data());
+    syscall_struct.syscall_id = values["syscall_id"];
+    cpu->execute_syscall_callback(syscall_struct);
 }
 
 

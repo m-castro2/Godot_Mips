@@ -278,7 +278,9 @@ func _on_Globals_window_scaling_changed(value: int) -> void:
 
 
 func handle_exception() -> void:
-	exception_dialog.add_info(pipelinedWrapper.exception_info)
+	#exception_dialog.add_info(pipelinedWrapper.exception_info)
+	
+	$AcceptDialog.add_info(pipelinedWrapper.exception_info)
 	next_cycle.disabled = true
 	run_program.disabled = true
 

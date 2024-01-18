@@ -1,0 +1,1 @@
+Processes an array "Array" by doubling each value and squaring it "Count" times, and storing the result in another array "Array2" .

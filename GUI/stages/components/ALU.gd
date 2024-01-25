@@ -24,4 +24,5 @@ func _on_Globals_alu_update_svg(viewport_size: Vector2) -> void:
 	image.load_svg_from_string(alu_svg, min(new_scale.x, new_scale.y))
 	var image_tex:= ImageTexture.create_from_image(image)
 	set("texture_normal", image_tex)
+	set("texture_hover", image_tex)
 	size = image_tex.get_size()

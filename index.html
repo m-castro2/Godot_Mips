@@ -109,8 +109,8 @@ body {
 	visibility: visible;
 }
 		</style>
-		<link id='-gd-engine-icon' rel='icon' type='image/png' href='Mips_Sim.icon.png' />
-<link rel='apple-touch-icon' href='Mips_Sim.apple-touch-icon.png'/>
+		<link id='-gd-engine-icon' rel='icon' type='image/png' href='index.icon.png' />
+<link rel='apple-touch-icon' href='index.apple-touch-icon.png'/>
 
 	</head>
 	<body>
@@ -135,9 +135,16 @@ body {
 			<div id="status-notice" class="godot" style="display: none;"></div>
 		</div>
 
-		<script src="Mips_Sim.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"executable":"Mips_Sim","experimentalVK":false,"fileSizes":{"Mips_Sim.pck":2131904,"Mips_Sim.wasm":1758196},"focusCanvas":true,"gdextensionLibs":["libgdexample.web.template_release.wasm32.wasm"]};
+if (!window.SharedArrayBuffer) {
+	document.getElementById('status').style.display = 'none';
+	setTimeout(() => document.getElementById('status').style.display = '', 1500);
+}
+</script>
+<script src="coi-serviceworker.min.js"></script>
+<script src="index.js"></script>
+		<script>
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":2150976,"index.wasm":1758196},"focusCanvas":true,"gdextensionLibs":["libgdexample.web.template_release.wasm32.wasm"]};
 const engine = new Engine(GODOT_CONFIG);
 
 (function () {

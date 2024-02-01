@@ -3,7 +3,7 @@ extends Control
 @onready var pipelinedWrapper = PipelinedWrapper
 @onready var pipeline: Control = %Pipeline
 @onready var menu: Control = $Menu
-@onready var exception_dialog = $ExceptionDialog
+@onready var exception_dialog = $AcceptDialog
 var program_loaded: bool = false
 
 #const load_program_menu: PackedScene = preload("res://MenuInfo.tscn")
@@ -81,7 +81,7 @@ func _on_load_program_pressed(file_path: String) -> void:
 		program_loaded = pipelinedWrapper.load_program(file_path, false, resource.memory)
 	else:
 		program_loaded = pipelinedWrapper.load_program(ProjectSettings.globalize_path(file_path), true, {})
-		if OS.has_feature("editor"): #if run from the editor
+		if program_loaded and OS.has_feature("editor"): #if run from editor
 			create_memory_backup(file_path)
 	
 	#set up cpu options

@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://d0al4th2j6glm"]
+[gd_scene load_steps=11 format=3 uid="uid://d0al4th2j6glm"]
 
 [ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_gn6x2"]
 [ext_resource type="Script" path="res://main.gd" id="1_vjp27"]
 [ext_resource type="Script" path="res://FileMenuButton.gd" id="2_1lfc7"]
 [ext_resource type="PackedScene" uid="uid://bq87ftt0kkfav" path="res://Pipeline.tscn" id="4_cpm5c"]
 [ext_resource type="PackedScene" uid="uid://2p7a1aqmjtea" path="res://menu.tscn" id="4_mvihx"]
-[ext_resource type="Script" path="res://ExceptionDialog.gd" id="6_0ickj"]
 [ext_resource type="PackedScene" uid="uid://yw5eij8fbkn2" path="res://stages/components/windows/exception_dialog.tscn" id="6_bctjq"]
 [ext_resource type="PackedScene" uid="uid://6j13cfdbp020" path="res://menus/base_menu.tscn" id="7_iljpq"]
 
@@ -145,19 +144,6 @@ offset_right = -145.142
 
 [node name="AcceptDialog" parent="." instance=ExtResource("6_bctjq")]
 visible = false
-
-[node name="ExceptionDialog" type="AcceptDialog" parent="."]
-disable_3d = true
-title = "Exception caught"
-initial_position = 1
-size = Vector2i(300, 150)
-popup_window = true
-min_size = Vector2i(300, 150)
-theme = ExtResource("1_gn6x2")
-ok_button_text = "Close"
-dialog_text = "asaaaa"
-dialog_autowrap = true
-script = ExtResource("6_0ickj")
 
 [node name="BaseMenu" parent="." instance=ExtResource("7_iljpq")]
 visible = false

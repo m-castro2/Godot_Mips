@@ -31,6 +31,8 @@ extends Panel
 @onready var add_pc = $OutsideLines/Add_PC
 @onready var rs_data_pc = $OutsideLines/RsData_PC
 @onready var pc_inst_pc = $DetailedControl/PC_InstPC
+@onready var rdreg_1_hdu = $HazardDetectionUnit/RDREG1_HDU
+@onready var rdreg_2_hdu = $HazardDetectionUnit/RDREG2_HDU
 
 
 @onready var lines: Array[Node] = [ inst_25_21,
@@ -46,7 +48,7 @@ extends Panel
 									pc_add, hdu_pc, inst_pc, rs_pc,
 									inst_base, inst_15_11_reg_dst,
 									add_pc, inst_15_0_add, rs_data_pc,
-									pc_inst_pc]
+									pc_inst_pc, rdreg_1_hdu, rdreg_2_hdu]
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color:
 	set(value):
@@ -244,4 +246,12 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines, active: bool, la
 			inst_pc.target = inst_pc.target_component.get_node("Input")
 			inst_pc.active = true
 			pc_inst_pc.active = true
+		
+		LineManager.id_lines.RDREG1_HDU:
+			rdreg_1_hdu.active = true
+			rdreg_1_hdu.target.get_parent().request_stage_origin.append(Globals.STAGES.ID)
+		
+		LineManager.id_lines.RDREG2_HDU:
+			rdreg_2_hdu.active = true
+			rdreg_2_hdu.target.get_parent().request_stage_origin.append(Globals.STAGES.ID)
 

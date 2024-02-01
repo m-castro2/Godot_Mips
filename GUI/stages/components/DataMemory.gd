@@ -7,8 +7,8 @@ func get_info():
 	if !Globals.is_program_loaded:
 		return
 	
-	var info: Array = PipelinedWrapper.get_memory_data()
-	return info
+	#var info: Array = PipelinedWrapper.get_memory_data()
+	#return info
 
 
 func show_info_window():

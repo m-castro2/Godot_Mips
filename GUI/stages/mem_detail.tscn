@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cqvkpfjkhblkw"]
+[gd_scene load_steps=34 format=3 uid="uid://cqvkpfjkhblkw"]
 
 [ext_resource type="Script" path="res://stages/mem_detail.gd" id="1_cnata"]
 [ext_resource type="Script" path="res://stages/components/main_component.gd" id="2_bhhy1"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://stages/components/line_label.gd" id="5_kju10"]
 [ext_resource type="PackedScene" uid="uid://d13m8ihmc3sue" path="res://stages/components/windows/DataMemory_info_window.tscn" id="6_srity"]
 [ext_resource type="PackedScene" uid="uid://dc0rok8wdnp1q" path="res://stages/components/tooltips/ComponentTooltip.tscn" id="8_rumpy"]
+[ext_resource type="Material" uid="uid://dwffi7w6tda4c" path="res://stages/shaders/line_shader_material.tres" id="10_1omtl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lham1"]
 shader = ExtResource("3_18s6u")
@@ -108,6 +109,8 @@ shader_parameter/draw_feather = 0.0
 shader_parameter/color = null
 
 [sub_resource type="Gradient" id="Gradient_meljp"]
+
+[sub_resource type="Gradient" id="Gradient_ygk7i"]
 
 [node name="MEMDetail" type="Panel"]
 anchors_preset = 15
@@ -404,6 +407,44 @@ line = NodePath("../RelBranch_PC")
 map_key = "REL_BRANCH"
 map_stage = 3
 is_register_name = false
+
+[node name="RegDest_HDU" type="Line2D" parent="OutsideLines"]
+material = ExtResource("10_1omtl")
+width = 1.0
+gradient = SubResource("Gradient_ygk7i")
+script = ExtResource("5_23qcg")
+height_percent = 0.02
+left_right_input = true
+min_initial_length = 115
+expanded_min_initial_length = 300
+expanded_min_finish_length = 40
+origin_stage = 3
+target_stage = 1
+use_length_percent = true
+length_percent = 0.9
+
+[node name="RegDest_HDU_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line", "label_to_substitute")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_kju10")
+line = NodePath("../RegDest_HDU")
+stage = 3
+map_key = "REG_DEST_REGISTER"
+map_stage = 3
+label_to_substitute = NodePath("../../DetailedControl/RegDst_Label")
+
+[node name="RegDest_HDU_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line", "label_to_substitute")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_kju10")
+label_line_vertex = 5
+line = NodePath("../RegDest_HDU")
+stage = 1
+map_key = "REG_DEST_REGISTER"
+map_stage = 3
+label_to_substitute = NodePath("../RegDest_HDU_Label")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="DataMemory" to="DataMemory" method="_on_mouse_entered"]

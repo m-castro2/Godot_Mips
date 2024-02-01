@@ -14,6 +14,7 @@ extends Panel
 @onready var rt_data_data_mem = $DataMemory/RtData_DataMem
 @onready var alu_out_rt_data = $OutsideLines/AluOut_RTData
 @onready var rel_branch_pc = $OutsideLines/RelBranch_PC
+@onready var reg_dest_hdu = $OutsideLines/RegDest_HDU
 
 @onready var lines: Array[Line2D] = [ pc,
 									reg_dst,
@@ -25,7 +26,8 @@ extends Panel
 									alu_out_memwb,
 									rt_data_data_mem,
 									alu_out_rt_data,
-									rel_branch_pc]
+									rel_branch_pc,
+									reg_dest_hdu]
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color:
 	set(value):
@@ -96,6 +98,13 @@ func _on_LineManager_mem_line_active(line: LineManager.mem_lines, active: bool) 
 			rel_branch_pc.target_component = LineManager.get_stage_component(0, "pc")
 			rel_branch_pc.target = rel_branch_pc.target_component.get_node("Input")
 			rel_branch_pc.active = true
+		
+		LineManager.mem_lines.REGDEST_HDU:
+			reg_dest_hdu.origin = get_node(LineManager.stage_register_path[2]).get("reg_dst_2")
+			reg_dest_hdu.target_component = LineManager.get_stage_component(1, "hazard_detection_unit")
+			reg_dest_hdu.target = reg_dest_hdu.target_component.get_node("MEM_RegDst")
+			reg_dest_hdu.target_component.request_stage_origin.append(Globals.STAGES.MEM)
+			reg_dest_hdu.active = true
 
 
 func show_lines() -> void:

@@ -36,6 +36,8 @@ func _ready():
 	
 	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
 	custom_minimum_size = size
+	
+	StageControl.instruction_map_updated.connect(_on_StageControl_instruction_map_updated)
 
 
 signal position_updated
@@ -118,3 +120,10 @@ func _on_mouse_entered():
 
 func _on_mouse_exited():
 	component_tooltip.hide()
+
+
+func _on_StageControl_instruction_map_updated():
+	var node:= get_node_or_null("ChangeColor")
+	if node:
+		node.check_state()
+		node.change_color()

@@ -22,6 +22,10 @@ enum visibility_type { ALWAYS, EXPANDED}
 # force visible even if not active
 @export var force_visible:= false
 
+@export_category("HDU Lines")
+@export var is_hdu_line:= false
+
+
 
 var stage: Globals.STAGES
 
@@ -71,7 +75,8 @@ func add_points():
 		start = origin.get_point_position(0)
 		end = origin.get_point_position(1)
 	
-	add_point(start)
+	if !is_hdu_line:
+		add_point(start)
 	
 	var first_point = Vector2(start.x + (end.x - start.x)*intersect_point, start.y) 
 	add_point(first_point)

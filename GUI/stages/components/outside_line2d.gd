@@ -52,6 +52,13 @@ var target_component: MainComponent:
 # force visible even if not active
 @export var force_visible:= false
 
+# for HDU lines
+@export_category("HDU Line")
+@export var use_length_percent:= false
+@export var length_percent: float
+@export var start_vertical:= false
+@export var vertical_initial_length:= 0
+
 var active: bool :
 	set(value):
 		active = value
@@ -74,6 +81,14 @@ func add_points():
 	global_position = Vector2(0, 0)
 	clear_points()
 	add_point(origin.global_position)
+	
+	if start_vertical:
+		add_point(origin.global_position - Vector2(0, vertical_initial_length))
+		add_point(Vector2(target.global_position.x - offset, origin.global_position.y - vertical_initial_length))
+		add_point(Vector2(target.global_position.x - offset, target.global_position.y))
+		add_point(target.global_position)
+		return
+	
 	if flag:
 		add_point(Vector2(target.global_position.x - offset, origin.global_position.y))
 		add_point(Vector2(target.global_position.x - offset, target.global_position.y))
@@ -83,6 +98,9 @@ func add_points():
 				if Globals.current_expanded_stage == origin_stage else min_initial_length * scaling
 		var actual_min_finish_length: int = expanded_min_finish_length * scaling \
 				if Globals.current_expanded_stage == target_stage else min_finish_length * scaling
+		
+		if use_length_percent:
+			actual_min_initial_length = get_parent().size.x * length_percent
 		
 		var parent_position: float = get_parent().global_position.y
 		var parent_height: float = get_parent().size.y

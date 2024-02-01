@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cyfy0tcp481of"]
+[gd_scene load_steps=38 format=3 uid="uid://cyfy0tcp481of"]
 
 [ext_resource type="Script" path="res://stages/ex_detail.gd" id="1_qp051"]
 [ext_resource type="Texture2D" uid="uid://b72vxstxeo2tx" path="res://80x150_negro-default.svg" id="2_er7vb"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://stages/components/line_label.gd" id="5_gmc7d"]
 [ext_resource type="PackedScene" uid="uid://0w0nhveoj2tb" path="res://stages/components/windows/FordwardingUnit_info_window.tscn" id="6_75j1o"]
 [ext_resource type="Script" path="res://stages/components/complex_line.gd" id="6_bibc7"]
+[ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="11_fnw7f"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j11ls"]
 shader = ExtResource("4_2lcnv")
@@ -128,6 +129,15 @@ shader_parameter/draw_min = 0.0
 shader_parameter/draw_max = 0.0
 shader_parameter/draw_feather = 0.0
 shader_parameter/color = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cd7jm"]
+shader = ExtResource("4_2lcnv")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = Color(0, 1, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_wbixw"]
 
 [node name="EXDetail" type="Panel"]
 anchors_preset = 15
@@ -612,6 +622,50 @@ stage = 2
 map_key = "ALU_B"
 map_stage = 2
 is_register_name = false
+
+[node name="OutsideLines" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="RegDest_HDU" type="Line2D" parent="OutsideLines"]
+material = SubResource("ShaderMaterial_cd7jm")
+width = 1.0
+gradient = SubResource("Gradient_wbixw")
+script = ExtResource("11_fnw7f")
+height_percent = 0.05
+left_right_input = true
+origin_stage = 2
+target_stage = 1
+use_length_percent = true
+length_percent = 0.9
+
+[node name="RegDest_HDU_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line", "label_to_substitute")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+line = NodePath("../RegDest_HDU")
+stage = 2
+map_key = "REG_DEST_REGISTER"
+map_stage = 2
+label_to_substitute = NodePath("../../DetailedControl/RegDest_Label")
+
+[node name="RegDest_HDU_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line", "label_to_substitute")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+label_line_vertex = 5
+line = NodePath("../RegDest_HDU")
+stage = 1
+map_key = "REG_DEST_REGISTER"
+map_stage = 2
+label_to_substitute = NodePath("../RegDest_HDU_Label")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="ALU" to="." method="_on_alu_pressed"]

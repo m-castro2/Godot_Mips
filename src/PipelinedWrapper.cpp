@@ -44,6 +44,8 @@ void PipelinedWrapper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_fp_register_values_d"), &PipelinedWrapper::get_fp_register_values_d);
     ClassDB::bind_method(D_METHOD("create_memory_backup"), &PipelinedWrapper::create_memory_backup);
     ClassDB::bind_method(D_METHOD("execute_syscall_callback"), &PipelinedWrapper::execute_syscall_callback);
+    ClassDB::bind_method(D_METHOD("is_fu_enabled"), &PipelinedWrapper::is_fu_enabled);
+    ClassDB::bind_method(D_METHOD("is_hdu_enabled"), &PipelinedWrapper::is_hdu_enabled);
 
     //bind properties
     ClassDB::bind_method(D_METHOD("set_cpu_info"), &PipelinedWrapper::set_cpu_info);
@@ -558,6 +560,14 @@ void PipelinedWrapper::execute_syscall_callback(godot::Dictionary values){
     syscall_struct.value = std::stol(static_cast<godot::String>(values["err_v"]).ascii().get_data());
     syscall_struct.syscall_id = values["syscall_id"];
     cpu->execute_syscall_callback(syscall_struct);
+}
+
+bool PipelinedWrapper::is_fu_enabled(){
+    return cpu->is_fu_enabled();
+}
+
+bool PipelinedWrapper::is_hdu_enabled(){
+    return cpu->is_hdu_enabled();
 }
 
 

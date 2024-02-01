@@ -95,5 +95,9 @@ public:
     godot::String create_memory_backup();
 
     void execute_syscall_callback(godot::Dictionary values);
+
+    bool is_fu_enabled();
+
+    bool is_hdu_enabled();
 };
 #endif //TFG_PIPELINED_WRAPPER_H

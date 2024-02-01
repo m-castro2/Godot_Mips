@@ -45,6 +45,7 @@ func change_color():
 	var tween:= create_tween()
 	tween.tween_property(parent, "theme_override_styles/disabled:bg_color", color, 0.25)
 
+
 func _ready():
 	Globals.reset_button_pressed.connect(_on_Globals_reset_pressed)
 	var stylebox:= StyleBoxFlat.new()

@@ -212,7 +212,9 @@ func activate_lines(_stage_signals_map: Array):
 					ex_line_active.emit(ex_lines.FU_ALU1, true)
 					mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT, true)
 				2:
-					pass
+					# from MEM/WB wordread
+					ex_line_active.emit(ex_lines.FU_ALU1, true)
+					wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT, true)
 				3:
 					ex_line_active.emit(ex_lines.FU_ALU1, true)
 					wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT, true)
@@ -237,7 +239,13 @@ func activate_lines(_stage_signals_map: Array):
 						ex_line_active.emit(ex_lines.FU_RTDATA, true)
 						seg_reg_values[2]["RT_DATA_W"] = PipelinedWrapper.to_hex32(stage_signals_map[2]["RT_VALUE"])
 				2:
-					pass
+					if !stage_signals_map[2]["ALU_SRC"]:
+						wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT, true)
+						ex_line_active.emit(ex_lines.FU_ALU2, true)
+					elif stage_signals_map[2]["MEM_WRITE"]:
+						wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT, true)
+						ex_line_active.emit(ex_lines.FU_RTDATA, true)
+						seg_reg_values[2]["RT_DATA_W"] = PipelinedWrapper.to_hex32(stage_signals_map[2]["RT_VALUE"])
 				3:
 					if !stage_signals_map[2]["ALU_SRC"]:
 						ex_line_active.emit(ex_lines.FU_ALU2, true)

@@ -21,11 +21,13 @@ func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
 
 func add_info(exception_info: Dictionary):
 	line_edit.hide()
+	button.hide()
 	if exception_info["err_no"] == 259 and \
 			exception_info["syscall_id"] > 5 and exception_info["syscall_id"] < 9:
 		title = "Syscall"
 		label.text = exception_info["err_msg"]
 		line_edit.show()
+		button.show()
 		exception_dict = exception_info
 		visible = true
 		return

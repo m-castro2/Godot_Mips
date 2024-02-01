@@ -45,7 +45,6 @@ func _ready() -> void:
 
 
 func copy_test_files():
-	return
 	if OS.has_feature("web") or OS.has_feature("android"):
 		return
 	

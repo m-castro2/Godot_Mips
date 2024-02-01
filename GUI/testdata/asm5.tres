@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="ProgramMemory" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://ProgramMemory.gd" id="1_qx48n"]
+[ext_resource type="Script" path="res://ProgramMemory.gd" id="1_1on1f"]
 
 [resource]
-script = ExtResource("1_qx48n")
+script = ExtResource("1_1on1f")
 memory_string = "00400000 [3c041001] [34840010] [3c061001] [34c60030],00400010 [3c051001] [34a50000] [8ca50000] [c4800000],00400020 [e4c20000] [20840004] [20c60004] [20a5ffff],00400030 [14a0fffa] [2002000a] [0000000c] [00000000],00400040 [00000000],10010000 [00000008] [00000000] [00000000] [00000000],10010010 [40900000] [3f000000] [40d00000] [40000000],10010020 [40c66666] [3f800000] [40c66666] [40900000],10010030 [00000000] [00000000] [00000000] [00000000],10010040 [00000000] [00000000] [00000000] [00000000]"
 memory = {}

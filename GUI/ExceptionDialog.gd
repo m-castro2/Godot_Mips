@@ -4,6 +4,7 @@ var base_window_scale:= Vector2.ZERO
 
 @onready var label = $MarginContainer/VBoxContainer/Label
 @onready var line_edit = $MarginContainer/VBoxContainer/LineEdit
+@onready var button = $MarginContainer/VBoxContainer/Button
 
 var exception_dict: Dictionary
 
@@ -61,3 +62,7 @@ func _on_line_edit_text_submitted(new_text):
 
 func _on_close_requested():
 	hide()
+
+
+func _on_button_pressed():
+	_on_line_edit_text_submitted(line_edit.text)

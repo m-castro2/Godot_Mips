@@ -11,8 +11,11 @@ theme = ExtResource("1_76ay0")
 script = ExtResource("1_b85y5")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-offset_right = 400.0
-offset_bottom = 162.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -30,8 +33,15 @@ autowrap_mode = 1
 text_overrun_behavior = 1
 
 [node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+text = "Send"
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

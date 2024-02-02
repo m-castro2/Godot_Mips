@@ -220,11 +220,11 @@ func _on_LineManager_id_line_active(line: LineManager.id_lines, active: bool, la
 			
 		LineManager.id_lines.RDDATA_RSDATA:
 			reg_bank_rs_data.target = get_node(LineManager.stage_register_path[1]).get("rs_data")
-			reg_bank_rs_data.active = true
+			reg_bank_rs_data.active = active
 			
 		LineManager.id_lines.RDDATA2_RTDATA:
 			reg_bank_rt_data.target = get_node(LineManager.stage_register_path[1]).get("rt_data")
-			reg_bank_rt_data.active = true
+			reg_bank_rt_data.active = active
 			
 		LineManager.id_lines.ADD_PC:
 			add_pc.target_component = LineManager.get_stage_component(0, "pc")

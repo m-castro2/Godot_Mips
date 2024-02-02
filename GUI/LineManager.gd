@@ -117,7 +117,7 @@ func activate_lines(_stage_signals_map: Array):
 			id_line_active.emit(id_lines.INST_RDREG1, true)
 			if PipelinedWrapper.is_hdu_enabled():
 				id_line_active.emit(id_lines.RDREG1_HDU, true)
-			id_line_active.emit(id_lines.RDDATA_RSDATA, true)
+			id_line_active.emit(id_lines.RDDATA_RSDATA, !is_rs_forwarded())
 			seg_reg_values[1]["RS_DATA_W"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["RS_VALUE"])
 			if !stage_signals_map[1]["USE_RT"]:
 				id_line_active.emit(id_lines.INST_IMMVAL, true, "ADDR_I32")
@@ -127,7 +127,7 @@ func activate_lines(_stage_signals_map: Array):
 				id_line_active.emit(id_lines.INST_RDREG2, true)
 				if PipelinedWrapper.is_hdu_enabled():
 					id_line_active.emit(id_lines.RDREG2_HDU, true)
-				id_line_active.emit(id_lines.RDDATA2_RTDATA, true)
+				id_line_active.emit(id_lines.RDDATA2_RTDATA, !is_rt_forwarded())
 				seg_reg_values[1]["RT_DATA_W"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["RT_VALUE"])
 			if stage_signals_map[1]["REG_WRITE"]:
 				if stage_signals_map[1]["REG_DEST"] == 0:
@@ -342,3 +342,35 @@ func activate_lines(_stage_signals_map: Array):
 func _on_Globals_reset_button_pressed():
 	seg_reg_values = [{}, {}, {}, {}] #clear
 	seg_regs_updated.emit()
+
+
+func is_rs_forwarded() -> bool:
+	if !PipelinedWrapper.is_fu_enabled():
+		return false
+	
+	var rs_reg: int = PipelinedWrapper.stage_signals_map[1]["RS_REG"]
+	var ex_mem_reg_dest: int = PipelinedWrapper.stage_signals_map[2]["REG_DEST_REGISTER"]
+	var mem_wb_reg_dest: int = PipelinedWrapper.stage_signals_map[3]["REG_DEST_REGISTER"]
+	var is_ex_empty: bool = StageControl.instruction_map[2] == -1
+	var is_mem_empty: bool = StageControl.instruction_map[3] == -1
+	
+	return (rs_reg == ex_mem_reg_dest and !is_ex_empty) \
+			or (rs_reg == mem_wb_reg_dest and !is_mem_empty)
+
+
+func is_rt_forwarded() -> bool:
+	if !PipelinedWrapper.is_fu_enabled():
+		return false
+	
+	var use_rt: bool = PipelinedWrapper.stage_signals_map[1]["USE_RT"]
+	if !use_rt:
+		return false
+	
+	var rt_reg: int = PipelinedWrapper.stage_signals_map[1]["RT_REG"]
+	var ex_mem_reg_dest: int = PipelinedWrapper.stage_signals_map[2]["REG_DEST_REGISTER"]
+	var mem_wb_reg_dest: int = PipelinedWrapper.stage_signals_map[3]["REG_DEST_REGISTER"]
+	var is_ex_empty: bool = StageControl.instruction_map[2] == -1
+	var is_mem_empty: bool = StageControl.instruction_map[3] == -1
+	
+	return (rt_reg == ex_mem_reg_dest and !is_ex_empty) \
+			or (rt_reg == mem_wb_reg_dest and !is_mem_empty)

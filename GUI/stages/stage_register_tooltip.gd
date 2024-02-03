@@ -7,6 +7,7 @@ var seg_reg_index: int
 
 func _ready():
 	seg_reg_index = get_parent().owner.get("register_type")
+	Globals.viewport_resized.connect(_on_Globals_viewport_resized)
 
 
 func configure(field_positions: Array) -> void:
@@ -47,3 +48,11 @@ func hide_panels():
 	for child in write_group.get_children():
 		child.hide()
 
+
+func _on_Globals_viewport_resized(viewport_size: Vector2) -> void:
+	for child in read_group.get_children():
+		child.get_child(0).size = custom_minimum_size
+		size = custom_minimum_size
+	for child in write_group.get_children():
+		child.get_child(0).size = custom_minimum_size
+		size = custom_minimum_size

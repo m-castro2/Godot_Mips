@@ -66,6 +66,8 @@ EX"
 
 [node name="RsData" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 
+[node name="MemOut" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
+
 [node name="RtData" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 
 [node name="ImmValue" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
@@ -81,6 +83,8 @@ EX"
 [node name="RelBranch2" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 
 [node name="RsData2" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
+
+[node name="MemOut2" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 
 [node name="RtData2" type="Marker2D" parent="StageRegister/VBoxContainer/Register"]
 

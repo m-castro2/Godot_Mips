@@ -11,6 +11,7 @@ class_name StageRegister
 #Input markers
 @onready var pc = $StageRegister/VBoxContainer/Register/PC
 @onready var rs_data = $StageRegister/VBoxContainer/Register/RsData
+@onready var mem_out = $StageRegister/VBoxContainer/Register/MemOut
 @onready var rt_data = $StageRegister/VBoxContainer/Register/RtData
 @onready var imm_value = $StageRegister/VBoxContainer/Register/ImmValue
 @onready var rs = $StageRegister/VBoxContainer/Register/Rs
@@ -20,6 +21,7 @@ class_name StageRegister
 #Output markers
 @onready var pc_2 = $StageRegister/VBoxContainer/Register/PC2
 @onready var rs_data_2 = $StageRegister/VBoxContainer/Register/RsData2
+@onready var mem_out_2 = $StageRegister/VBoxContainer/Register/MemOut2
 @onready var rt_data_2 = $StageRegister/VBoxContainer/Register/RtData2
 @onready var imm_value_2 = $StageRegister/VBoxContainer/Register/ImmValue2
 @onready var rs_2 = $StageRegister/VBoxContainer/Register/Rs2
@@ -79,6 +81,9 @@ func _on_resized():
 	rs_data.global_position.y = register.global_position.y + register.size.y * 0.25
 	rs_data_2.global_position = rs_data.global_position + Vector2(register.size.x, 0)
 	
+	mem_out.global_position.y = register.global_position.y + register.size.y * 0.41
+	mem_out_2.global_position = mem_out.global_position + Vector2(register.size.x, 0)
+	
 	rt_data.global_position.y = register.global_position.y + register.size.y * 0.5
 	rt_data_2.global_position = rt_data.global_position + Vector2(register.size.x, 0)
 	
@@ -137,8 +142,6 @@ func match_names(field_name: String) -> String:
 			return "rt_data"
 		"ALUOut":
 			return "rt_data" if register_type == 2 else "rt"
-		"MemOut":
-			return "rt_data"
 		"RegDest":
 			return "reg_dst"
 		_:

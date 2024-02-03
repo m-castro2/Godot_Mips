@@ -190,16 +190,16 @@ func add_info():
 
 func get_active_fields():
 	var active_field_index:= [[], []]
-	for child in v_box_container_write.get_children():
-		if !child.get_index():
-			continue
-		if (child as Label).text != empty_value:
-			active_field_index[0].append(child.name)
 	for child in v_box_container_read.get_children():
 		if !child.get_index():
 			continue
 		if (child as Label).text != empty_value:
 			active_field_index[1].append(child.name)
+	for child in v_box_container_write.get_children():
+		if !child.get_index():
+			continue
+		if (child as Label).text != empty_value:
+			active_field_index[0].append(child.name)
 	return active_field_index
 
 

@@ -521,21 +521,21 @@ godot::Array PipelinedWrapper::get_memory_data(bool from_backup) {
 
 godot::Array PipelinedWrapper::get_register_values() {
     godot::Array array {};
-    for (int i = 0; i < 31; ++i)
+    for (int i = 0; i < 32; ++i)
         array.push_back(cpu->read_register(i));
     return array;
 }
 
 godot::Array PipelinedWrapper::get_fp_register_values_f() {
     godot::Array array {};
-    for (int i = 0; i < 31; ++i)
+    for (int i = 0; i < 32; ++i)
         array.push_back(cpu->read_register_f(i));
     return array;
 }
 
 godot::Array PipelinedWrapper::get_fp_register_values_d() {
     godot::Array array {};
-    for (int i = 0; i < 31; i+=2)
+    for (int i = 0; i < 32; i+=2)
         array.push_back(cpu->read_register_d(i));
     return array;
 }

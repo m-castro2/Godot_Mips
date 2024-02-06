@@ -284,7 +284,7 @@ func activate_lines(_stage_signals_map: Array):
 			if stage_signals_map[3]["MEM_WRITE"]:
 				mem_line_active.emit(mem_lines.ALUOUT_DATAMEM, true)
 				mem_line_active.emit(mem_lines.RTDATA_DATAMEM, true)
-				seg_reg_values[3]["ALU_OUT_W"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REG_VALUE"])
+				#seg_reg_values[3]["ALU_OUT_W"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REG_VALUE"])
 				seg_reg_values[2]["RT_DATA_R"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["RT_VALUE"])
 				seg_reg_values[2]["ALU_OUT_R"] = PipelinedWrapper.to_hex32(stage_signals_map[3]["REG_VALUE"])
 			if stage_signals_map[3]["REG_WRITE"]:

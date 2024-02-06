@@ -144,6 +144,8 @@ func match_names(field_name: String) -> String:
 			return "rt_data" if register_type == 2 else "rt"
 		"RegDest":
 			return "reg_dst"
+		"RtData":
+			return "imm_value" if register_type == 2 else "rt_data"
 		_:
 			return field_name.to_snake_case()
 

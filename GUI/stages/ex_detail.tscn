@@ -549,7 +549,7 @@ map_key = "REL_BRANCH"
 map_stage = 2
 is_register_name = false
 
-[node name="FU_ALU1" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+[node name="FU_WB_ALU1" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_xt3cd")
 width = 1.0
 gradient = SubResource("Gradient_oof2p")
@@ -561,20 +561,93 @@ middle_offset = -50
 visibility = 1
 force_backwards = true
 
-[node name="FU_ALU1_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+[node name="FU_WB_ALU1_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 20.0
 script = ExtResource("5_gmc7d")
 label_line_vertex = 2
 label_padding = Vector2(-10, 0)
-line = NodePath("../FU_ALU1")
+line = NodePath("../FU_WB_ALU1")
 stage = 2
 map_key = "ALU_A"
 map_stage = 2
 is_register_name = false
 
-[node name="FU_ALU2" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+[node name="FU_WB_ALU2" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_7kcpw")
+width = 1.0
+gradient = SubResource("Gradient_oof2p")
+script = ExtResource("4_q4wkr")
+origin = NodePath("../ForwardingUnit/Output2")
+target = NodePath("../../ALU/LowerInput")
+steps = 4
+middle_offset = -50
+visibility = 1
+force_backwards = true
+
+[node name="FU_WB_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+label_line_vertex = 2
+label_padding = Vector2(-10, 0)
+line = NodePath("../FU_WB_ALU2")
+stage = 2
+map_key = "RT_VALUE"
+map_stage = 2
+is_register_name = false
+
+[node name="FU_WB_RTData" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_ju8wm")
+width = 1.0
+gradient = SubResource("Gradient_oof2p")
+script = ExtResource("4_q4wkr")
+origin = NodePath("../ForwardingUnit/Output2")
+steps = 6
+middle_offset = -35
+visibility = 1
+force_backwards = true
+
+[node name="FU_WB_RTData_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+label_line_vertex = 5
+label_padding = Vector2(-75, 0)
+line = NodePath("../FU_WB_RTData")
+stage = 2
+map_key = "ALU_B"
+map_stage = 2
+is_register_name = false
+
+[node name="FU_MEM_ALU1" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_xt3cd")
+width = 1.0
+gradient = SubResource("Gradient_oof2p")
+script = ExtResource("4_q4wkr")
+origin = NodePath("../ForwardingUnit/Output1")
+target = NodePath("../../ALU/UpperInput")
+steps = 4
+middle_offset = -50
+visibility = 1
+force_backwards = true
+
+[node name="FU_MEM_ALU1_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+label_line_vertex = 2
+label_padding = Vector2(-10, 0)
+line = NodePath("../FU_MEM_ALU1")
+stage = 2
+map_key = "ALU_A"
+map_stage = 2
+is_register_name = false
+
+[node name="FU_MEM_ALU2" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
 material = SubResource("ShaderMaterial_7kcpw")
 width = 1.0
 gradient = SubResource("Gradient_oof2p")
@@ -586,20 +659,19 @@ middle_offset = -50
 visibility = 1
 force_backwards = true
 
-[node name="FU_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
-layout_mode = 0
+[node name="FU_MEM_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
 offset_right = 40.0
 offset_bottom = 20.0
 script = ExtResource("5_gmc7d")
 label_line_vertex = 2
 label_padding = Vector2(-10, 0)
-line = NodePath("../FU_ALU2")
+line = NodePath("../FU_MEM_ALU2")
 stage = 2
 map_key = "RT_VALUE"
 map_stage = 2
 is_register_name = false
 
-[node name="FU_RTData" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin")]
+[node name="FU_MEM_RTData" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin")]
 material = SubResource("ShaderMaterial_ju8wm")
 width = 1.0
 gradient = SubResource("Gradient_oof2p")
@@ -610,14 +682,13 @@ middle_offset = -35
 visibility = 1
 force_backwards = true
 
-[node name="FU_RTData_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
-layout_mode = 0
+[node name="FU_MEM_RTData_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
 offset_right = 40.0
 offset_bottom = 20.0
 script = ExtResource("5_gmc7d")
 label_line_vertex = 5
 label_padding = Vector2(-75, 0)
-line = NodePath("../FU_RTData")
+line = NodePath("../FU_MEM_RTData")
 stage = 2
 map_key = "ALU_B"
 map_stage = 2

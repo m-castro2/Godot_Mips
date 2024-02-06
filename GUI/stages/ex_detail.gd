@@ -18,12 +18,15 @@ extends Panel
 @onready var rt_data_exmem = $DetailedControl/Rt_Data_EXMEM
 @onready var pc_add = $DetailedControl/PC_Add
 @onready var imm_val_add = $DetailedControl/ImmVal_Add
-@onready var fu_alu_1 = $DetailedControl/FU_ALU1
-@onready var fu_alu_2 = $DetailedControl/FU_ALU2
-@onready var fu_rt_data = $DetailedControl/FU_RTData
+@onready var fu_wb_alu_1 = $DetailedControl/FU_WB_ALU1
+@onready var fu_wb_alu_2 = $DetailedControl/FU_WB_ALU2
+@onready var fu_wb_rt_data = $DetailedControl/FU_WB_RTData
 @onready var rt_data_exmem_base = $DetailedControl/Rt_Data_EXMEM_Base
 @onready var add_rel_branch = $DetailedControl/Add_RelBranch
 @onready var reg_dest_hdu = $OutsideLines/RegDest_HDU
+@onready var fu_mem_alu_1 = $DetailedControl/FU_MEM_ALU1
+@onready var fu_mem_alu_2 = $DetailedControl/FU_MEM_ALU2
+@onready var fu_mem_rt_data = $DetailedControl/FU_MEM_RTData
 
 @onready var fake_target = $DetailedControl/Fake_Target
 
@@ -42,11 +45,14 @@ extends Panel
 									rt_data_exmem,
 									pc_add,
 									imm_val_add,
-									fu_alu_1,
-									fu_alu_2,
-									fu_rt_data,
+									fu_wb_alu_1,
+									fu_wb_alu_2,
+									fu_wb_rt_data,
 									add_rel_branch,
-									reg_dest_hdu]
+									reg_dest_hdu,
+									fu_mem_alu_1,
+									fu_mem_alu_2,
+									fu_mem_rt_data]
 
 @onready var stage_color: Color = get_parent().get_parent().stage_color:
 	set(value):
@@ -181,33 +187,18 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines, active: bool) ->
 			imm_val_add.origin = get_node(LineManager.stage_register_path[1]).get("imm_value_2")
 			imm_val_add.active = true
 		
-		LineManager.ex_lines.FU_ALU1:
-			match PipelinedWrapper.stage_signals_map[2]["RS_FU"]:
-				1:
-					fu_alu_1.line_color = StageControl.colors_map[StageControl.instruction_map[3]]
-				3:
-					fu_alu_1.line_color = StageControl.colors_map[StageControl.instruction_map[4]]
-			
-			fu_alu_1.active = true
+		LineManager.ex_lines.FU_WB_ALU1:
+			fu_wb_alu_1.line_color = StageControl.colors_map[StageControl.instruction_map[4]]
+			fu_wb_alu_1.active = true
 		
-		LineManager.ex_lines.FU_ALU2:
-			match PipelinedWrapper.stage_signals_map[2]["RT_FU"]:
-				1:
-					fu_alu_2.line_color = StageControl.colors_map[StageControl.instruction_map[3]]
-				3:
-					fu_alu_2.line_color = StageControl.colors_map[StageControl.instruction_map[4]]
-			
-			fu_alu_2.active = true
+		LineManager.ex_lines.FU_WB_ALU2:
+			fu_wb_alu_2.line_color = StageControl.colors_map[StageControl.instruction_map[4]]
+			fu_wb_alu_2.active = true
 		
-		LineManager.ex_lines.FU_RTDATA:
-			match PipelinedWrapper.stage_signals_map[2]["RT_FU"]:
-				1:
-					fu_rt_data.line_color = StageControl.colors_map[StageControl.instruction_map[3]]
-				3:
-					fu_rt_data.line_color = StageControl.colors_map[StageControl.instruction_map[4]]
-			
-			fu_rt_data.target = get_node(LineManager.stage_register_path[2]).get("imm_value")
-			fu_rt_data.active = true
+		LineManager.ex_lines.FU_WB_RTDATA:
+			fu_wb_rt_data.line_color = StageControl.colors_map[StageControl.instruction_map[4]]
+			fu_wb_rt_data.target = get_node(LineManager.stage_register_path[2]).get("imm_value")
+			fu_wb_rt_data.active = true
 		
 		LineManager.ex_lines.ADD_RELBRANCH:
 			add_rel_branch.target = get_node(LineManager.stage_register_path[2]).get("rel_branch")
@@ -219,6 +210,19 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines, active: bool) ->
 			reg_dest_hdu.target = reg_dest_hdu.target_component.get_node("EX_RegDst")
 			reg_dest_hdu.target_component.request_stage_origin.append(Globals.STAGES.EX)
 			reg_dest_hdu.active = true
+		
+		LineManager.ex_lines.FU_MEM_ALU1:
+			fu_mem_alu_1.line_color = StageControl.colors_map[StageControl.instruction_map[3]]
+			fu_mem_alu_1.active = true
+		
+		LineManager.ex_lines.FU_MEM_ALU2:
+			fu_mem_alu_2.line_color = StageControl.colors_map[StageControl.instruction_map[3]]
+			fu_mem_alu_2.active = true
+		
+		LineManager.ex_lines.FU_MEM_RTDATA:
+			fu_mem_rt_data.line_color = StageControl.colors_map[StageControl.instruction_map[3]]
+			fu_mem_rt_data.target = get_node(LineManager.stage_register_path[2]).get("imm_value")
+			fu_mem_rt_data.active = true
 
 
 func _on_forwarding_unit_pressed():

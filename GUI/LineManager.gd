@@ -10,7 +10,8 @@ enum id_lines {HDU_PC, PC, ImmValue, INST_RDREG1, INST_RDREG2, INST_IMMVAL,\
 
 enum ex_lines {PC, RegDst, ALUEXMEM, RSDATA_ALU, RTDATA_ALU2, IMMVAL_ALU2, \
 	RS_FU, RT_FU, ALUCONTROL_ALU, RTDATA_EXMEM, PC_ADD, IMMVAL_ADD, \
-	FU_ALU1, FU_ALU2, FU_RTDATA, ADD_RELBRANCH, REGDEST_HDU}
+	FU_WB_ALU1, FU_WB_ALU2, FU_WB_RTDATA, ADD_RELBRANCH, REGDEST_HDU, \
+	FU_MEM_ALU1, FU_MEM_ALU2, FU_MEM_RTDATA}
 
 enum mem_lines {PC, RegDst, ALUOUT_DATAMEM, ALUOUT_ALU1, ALUOUT_ALU2, \
 	REGDST_FORWARDINGUNIT, DATAMEM_MEMWB, ALUOUT_MEMWB, RTDATA_DATAMEM, ALUOUT_RT, \
@@ -210,11 +211,11 @@ func activate_lines(_stage_signals_map: Array):
 					seg_reg_values[1]["RS_DATA_R"] = PipelinedWrapper.to_hex32(stage_signals_map[2]["ALU_A"])
 					alu_input_lines_active[0] = true
 				1:
-					ex_line_active.emit(ex_lines.FU_ALU1, true)
+					ex_line_active.emit(ex_lines.FU_MEM_ALU1, true)
 					mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT, true)
 				2,3,4:
 					# from MEM/WB wordread
-					ex_line_active.emit(ex_lines.FU_ALU1, true)
+					ex_line_active.emit(ex_lines.FU_WB_ALU1, true)
 					wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT, true)
 			
 			match stage_signals_map[2]["RT_FU"]:
@@ -229,18 +230,18 @@ func activate_lines(_stage_signals_map: Array):
 				1:
 					if !stage_signals_map[2]["ALU_SRC"]:
 						mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT, true)
-						ex_line_active.emit(ex_lines.FU_ALU2, true)
+						ex_line_active.emit(ex_lines.FU_MEM_ALU2, true)
 					elif stage_signals_map[2]["MEM_WRITE"]:
 						mem_line_active.emit(mem_lines.REGDST_FORWARDINGUNIT, true)
-						ex_line_active.emit(ex_lines.FU_RTDATA, true)
+						ex_line_active.emit(ex_lines.FU_MEM_RTDATA, true)
 						seg_reg_values[2]["RT_DATA_W"] = PipelinedWrapper.to_hex32(stage_signals_map[2]["RT_VALUE"])
 				2,3,4:
 					if !stage_signals_map[2]["ALU_SRC"]:
 						wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT, true)
-						ex_line_active.emit(ex_lines.FU_ALU2, true)
+						ex_line_active.emit(ex_lines.FU_WB_ALU2, true)
 					elif stage_signals_map[2]["MEM_WRITE"]:
 						wb_line_active.emit(wb_lines.REGDST_FORWARDINGUNIT, true)
-						ex_line_active.emit(ex_lines.FU_RTDATA, true)
+						ex_line_active.emit(ex_lines.FU_WB_RTDATA, true)
 						seg_reg_values[2]["RT_DATA_W"] = PipelinedWrapper.to_hex32(stage_signals_map[2]["RT_VALUE"])
 			
 			if stage_signals_map[2]["MEM_WRITE"]:

@@ -8,6 +8,7 @@ func _ready():
 	if !FileAccess.file_exists("user://user_settings.cfg"):
 		_err = user_settings.load("res://cfg/default_config.cfg")
 		user_settings.save("user://user_settings.cfg")
+		default_settings = user_settings
 	else:
 		_err = user_settings.load("user://user_settings.cfg")
 		_err = default_settings.load("res://cfg/default_config.cfg")

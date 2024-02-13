@@ -30,7 +30,10 @@ func _ready() -> void:
 	Globals.show_settings_menu.connect(_on_show_settings_menu)
 	Globals.load_program_pressed.connect(_on_load_program_pressed)
 	DisplayServer.window_set_min_size(Vector2(1152, 648))
-	copy_test_files()
+	
+	if !OS.has_feature("web") and !OS.has_feature("android"):
+		restore_window_settings()
+		copy_test_files()
 	
 	Globals.fu_available_changed.connect(_on_Globals_fu_available_changed)
 	Globals.hdu_available_changed.connect(_on_Globals_hdu_available_changed)
@@ -45,9 +48,6 @@ func _ready() -> void:
 
 
 func copy_test_files():
-	if OS.has_feature("web") or OS.has_feature("android"):
-		return
-	
 	var path: String = OS.get_user_data_dir() + "testdata"
 	var target: DirAccess = DirAccess.open(path)
 	var filename:String
@@ -367,3 +367,28 @@ func create_memory_backup(file_path: String):
 	program_memory.memory_string = output_string
 	program_memory.resource_path = "res://testdata/" + file_path.get_file().left(-2) + ".tres"
 	var err = ResourceSaver.save(program_memory, program_memory.resource_path)
+
+
+func _notification(what):
+	if OS.has_feature("web") or OS.has_feature("android"):
+		return
+	
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		ConfigManager.update_value("Window", "screen_count", DisplayServer.get_screen_count())
+		ConfigManager.update_value("Window", "screen", DisplayServer.window_get_current_screen())
+		ConfigManager.update_value("Window", "size", DisplayServer.window_get_size())
+		ConfigManager.update_value("Window", "position", DisplayServer.window_get_position())
+
+
+func restore_window_settings():
+	var screen_count: int = ConfigManager.get_value("Window", "screen_count")
+	var screen: int = ConfigManager.get_value("Window", "screen")
+	var win_size: Vector2i = ConfigManager.get_value("Window", "size")
+	var win_position: Vector2i = ConfigManager.get_value("Window", "position")
+	if screen_count == DisplayServer.get_screen_count():
+		# if there is a different number of screens ignore settings
+		DisplayServer.window_set_current_screen(screen)
+		if win_size != Vector2i.ZERO:
+			DisplayServer.window_set_size(ConfigManager.get_value("Window", "size"))
+		if win_position != Vector2i.ZERO:
+			DisplayServer.window_set_position(ConfigManager.get_value("Window", "position"))

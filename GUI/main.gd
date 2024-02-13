@@ -62,6 +62,9 @@ func copy_test_files():
 	source.list_dir_begin()
 	filename = source.get_next()
 	while filename != "":
+		if filename.get_extension() not in ["s", "desc"]:
+			filename = source.get_next()
+			continue
 		source.copy("res://testdata/" + filename, "user://testdata/" + filename)
 		filename = source.get_next()
 

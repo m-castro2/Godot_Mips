@@ -96,6 +96,7 @@ func _on_component_requested(stage: int, component_name: String):
 
 
 func _on_globals_cycle_changed():
+	request_stage_origin.clear()
 	if visibility != visibility_type.ALWAYS:
 		visible = false
 	requested = false

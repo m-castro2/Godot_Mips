@@ -636,6 +636,7 @@ visibility = 1
 force_backwards = true
 
 [node name="FU_MEM_ALU1_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 20.0
 script = ExtResource("5_gmc7d")
@@ -660,6 +661,7 @@ visibility = 1
 force_backwards = true
 
 [node name="FU_MEM_ALU2_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 20.0
 script = ExtResource("5_gmc7d")
@@ -683,6 +685,7 @@ visibility = 1
 force_backwards = true
 
 [node name="FU_MEM_RTData_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 20.0
 script = ExtResource("5_gmc7d")

@@ -160,7 +160,7 @@ func activate_lines(_stage_signals_map: Array):
 		seg_reg_values[0]["INSTRUCTION_R"] = PipelinedWrapper.to_hex32(stage_signals_map[1]["INSTRUCTION"])
 		
 		seg_reg_values[1]["PC_W"] = seg_reg_values[0]["PC_R"]
-	else:
+	elif stage_signals_map[1]["INSTRUCTION"] != 0:
 		if !stage_signals_map[1]["SYSCALL"]:
 			id_line_active.emit(id_lines.INST_RDREG1, true)
 			if PipelinedWrapper.is_hdu_enabled():
@@ -181,7 +181,8 @@ func activate_lines(_stage_signals_map: Array):
 		
 	# STAGE EX
 	if StageControl.instruction_map[2] != -1:
-		if PipelinedWrapper.is_hdu_enabled():
+		if PipelinedWrapper.is_hdu_enabled() and stage_signals_map[1]["INSTRUCTION"] != 0:
+			#only send reg to hdu is id is not nop
 			ex_line_active.emit(ex_lines.REGDEST_HDU, true)
 		var alu_input_lines_active:= [false, false, false]
 		if stage_signals_map[2]["BRANCH"]:
@@ -264,7 +265,8 @@ func activate_lines(_stage_signals_map: Array):
 	
 	# STAGE MEM
 	if StageControl.instruction_map[3] != -1:
-		if PipelinedWrapper.is_hdu_enabled():
+		if PipelinedWrapper.is_hdu_enabled() and stage_signals_map[1]["INSTRUCTION"] != 0:
+			#only send reg to hdu is id is not nop
 			mem_line_active.emit(mem_lines.REGDEST_HDU, true)
 		mem_line_active.emit(mem_lines.ALUOUT_DATAMEM, false)
 		mem_line_active.emit(mem_lines.DATAMEM_MEMWB, false)

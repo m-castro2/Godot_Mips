@@ -181,6 +181,7 @@ func _on_LineManager_ex_line_active(line: LineManager.ex_lines, active: bool) ->
 			rt_data_exmem.active = true
 			
 		LineManager.ex_lines.PC_ADD:
+			pc_add.origin = get_node(LineManager.stage_register_path[1]).get("pc_2")
 			pc_add.active = true
 			
 		LineManager.ex_lines.IMMVAL_ADD:

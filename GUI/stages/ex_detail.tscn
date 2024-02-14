@@ -492,16 +492,27 @@ target = NodePath("../../ALU/UpInput")
 steps = 3
 visibility = 1
 
-[node name="PC_Add" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+[node name="PC_Add" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("target")]
 visible = false
 material = SubResource("ShaderMaterial_o4fdy")
 width = 1.0
 gradient = SubResource("Gradient_28mbj")
-script = ExtResource("6_bibc7")
-origin = NodePath("../PC")
+script = ExtResource("4_q4wkr")
 target = NodePath("../Add/Input")
-intersect_point = 0.55
+steps = 4
 visibility = 1
+
+[node name="PC_Add_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line", "label_to_substitute")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_gmc7d")
+line = NodePath("../PC_Add")
+stage = 2
+map_key = "PC"
+map_stage = 2
+is_register_name = false
+label_to_substitute = NodePath("../PC_Label")
 
 [node name="ImmVal_Add" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("target")]
 visible = false

@@ -246,6 +246,17 @@ gradient = SubResource("Gradient_ulw28")
 script = ExtResource("4_hqwpj")
 visibility = 1
 
+[node name="PC_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_kju10")
+line = NodePath("../PC")
+stage = 3
+map_key = "PC"
+map_stage = 3
+is_register_name = false
+
 [node name="RegDst" type="Line2D" parent="DetailedControl"]
 material = SubResource("ShaderMaterial_5a58p")
 width = 1.0

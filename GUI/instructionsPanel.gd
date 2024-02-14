@@ -46,10 +46,9 @@ func _on_update_stage_colors(colors_map: Dictionary, _instructions: Array) -> vo
 
 func add_description(description: String) -> void:
 	if description == "":
-		description_label.hide()
-		v_split_container.split_offset = 32000 # max offset to force it to use minimum space, hide?
+		%DescriptionVBoxContainer.hide()
 	else:
-		description_label.show()
+		%DescriptionVBoxContainer.show()
 		v_split_container.split_offset = 0
 		description_label.text = description
 

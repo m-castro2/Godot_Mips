@@ -80,8 +80,8 @@ func _on_LineManager_seg_regs_updated():
 			rt_data_w.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_W"] if "RT_DATA_W" in keys else empty_value
 			rt_data_r.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_R"] if "RT_DATA_R" in keys else empty_value
 			
-			reg_dest_w.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_W"] if "REG_DEST_W" in keys else empty_value
-			reg_dest_r.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_R"] if "REG_DEST_R" in keys else empty_value
+			reg_dest_w.text = get_register_name("REG_DEST_W") if "REG_DEST_W" in keys else empty_value
+			reg_dest_r.text = get_register_name("REG_DEST_R") if "REG_DEST_R" in keys else empty_value
 			
 			imm_value_w.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_W"]) if "IMM_VALUE_W" in keys else empty_value
 			imm_value_r.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_R"]) if "IMM_VALUE_R" in keys else empty_value
@@ -99,8 +99,8 @@ func _on_LineManager_seg_regs_updated():
 			rt_data_w.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_W"] if "RT_DATA_W" in keys else empty_value
 			rt_data_r.text = LineManager.seg_reg_values[seg_reg_index]["RT_DATA_R"] if "RT_DATA_R" in keys else empty_value
 			
-			reg_dest_w.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_W"] if "REG_DEST_W" in keys else empty_value
-			reg_dest_r.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_R"] if "REG_DEST_R" in keys else empty_value
+			reg_dest_w.text = get_register_name("REG_DEST_W") if "REG_DEST_W" in keys else empty_value
+			reg_dest_r.text = get_register_name("REG_DEST_R") if "REG_DEST_R" in keys else empty_value
 			
 			imm_value_w.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_W"]) if "IMM_VALUE_W" in keys else empty_value
 			imm_value_r.text = str(LineManager.seg_reg_values[seg_reg_index]["IMM_VALUE_R"]) if "IMM_VALUE_R" in keys else empty_value
@@ -112,8 +112,8 @@ func _on_LineManager_seg_regs_updated():
 			pc_w.text = LineManager.seg_reg_values[seg_reg_index]["PC_W"] if "PC_W" in keys else empty_value
 			pc_r.text =  LineManager.seg_reg_values[seg_reg_index]["PC_R"] if "PC_R" in keys else empty_value
 			
-			reg_dest_w.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_W"] if "REG_DEST_W" in keys else empty_value
-			reg_dest_r.text = LineManager.seg_reg_values[seg_reg_index]["REG_DEST_R"] if "REG_DEST_R" in keys else empty_value
+			reg_dest_w.text = get_register_name("REG_DEST_W") if "REG_DEST_W" in keys else empty_value
+			reg_dest_r.text = get_register_name("REG_DEST_R") if "REG_DEST_R" in keys else empty_value
 			
 			mem_out_w.text = str(LineManager.seg_reg_values[seg_reg_index]["MEM_OUT_W"]) if "MEM_OUT_W" in keys else empty_value
 			mem_out_r.text = str(LineManager.seg_reg_values[seg_reg_index]["MEM_OUT_R"]) if "MEM_OUT_R" in keys else empty_value
@@ -207,3 +207,7 @@ func _on_Globals_branch_stage_changed(value: int) -> void:
 	rel_branch.visible = value
 	rel_branch_w.visible = value
 	rel_branch_r.visible = value
+
+
+func get_register_name(key: String) -> String:
+	return LineManager.register_names[int(LineManager.seg_reg_values[seg_reg_index][key])]

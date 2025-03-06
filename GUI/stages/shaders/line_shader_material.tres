@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dwffi7w6tda4c"]
+
+[ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="1_8ptp0"]
+
+[resource]
+shader = ExtResource("1_8ptp0")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = Color(0, 1, 0, 1)

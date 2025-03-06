@@ -1,0 +1,834 @@
+[gd_scene load_steps=32 format=3 uid="uid://6fdooui4ml0w"]
+
+[ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_2edk6"]
+[ext_resource type="Script" path="res://stages/id_detail.gd" id="2_5718r"]
+[ext_resource type="Script" path="res://stages/marker.gd" id="4_gw1uy"]
+[ext_resource type="Script" path="res://stages/components/main_component.gd" id="5_dp4n3"]
+[ext_resource type="Script" path="res://stages/components/complex_line.gd" id="6_4vcia"]
+[ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_21ql4"]
+[ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="6_a6ygu"]
+[ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="6_vaybo"]
+[ext_resource type="Script" path="res://stages/components/line_label.gd" id="7_ngrk1"]
+[ext_resource type="PackedScene" uid="uid://dynh0mgy042yp" path="res://stages/components/windows/RegBank_info_window.tscn" id="8_3k5xc"]
+[ext_resource type="PackedScene" uid="uid://dc0rok8wdnp1q" path="res://stages/components/tooltips/ComponentTooltip.tscn" id="10_ofbfw"]
+[ext_resource type="Script" path="res://stages/HDUChangeColor.gd" id="11_eo7fe"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t25jr"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_or8kb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f8aeo"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_c0h55"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ir0tk"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s2nlp"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78d1y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dptm5"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_qvx7r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t0qqh"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_yvr7y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_03r67"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_ao21u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2fc84"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = Color(0, 1, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_sqqqc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5q0q3"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_st5f1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37tcj"]
+shader = ExtResource("6_vaybo")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_y2urq"]
+
+[node name="IDDetail" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_2edk6")
+script = ExtResource("2_5718r")
+
+[node name="IFIDOutput" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 324)
+
+[node name="Target" type="Marker2D" parent="IFIDOutput"]
+position = Vector2(10, 0)
+
+[node name="RegistersBank" type="Button" parent="." node_paths=PackedStringArray("component_tooltip")]
+custom_minimum_size = Vector2(90, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -75.0
+offset_right = 45.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Registers
+Bank"
+script = ExtResource("5_dp4n3")
+position_percent = Vector2(0.5, 0.75)
+expanded_position_percent = Vector2(0.5, 0.75)
+stage_number = 1
+alignment_mode = 1
+component_tooltip = NodePath("ComponentTooltip")
+
+[node name="Input1" type="Marker2D" parent="RegistersBank"]
+position = Vector2(0, 25)
+script = ExtResource("4_gw1uy")
+
+[node name="RDreg1" type="Label" parent="RegistersBank/Input1"]
+visible = false
+offset_left = 1.0
+offset_top = -10.0
+offset_right = 44.0
+offset_bottom = 10.0
+theme_type_variation = &"InputOutputLabel"
+theme_override_font_sizes/font_size = 12
+text = "RDreg1"
+
+[node name="Input2" type="Marker2D" parent="RegistersBank"]
+position = Vector2(0, 50)
+script = ExtResource("4_gw1uy")
+
+[node name="RDreg2" type="Label" parent="RegistersBank/Input2"]
+visible = false
+offset_left = 1.0
+offset_top = -10.0
+offset_right = 44.0
+offset_bottom = 10.0
+theme_type_variation = &"InputOutputLabel"
+theme_override_font_sizes/font_size = 12
+text = "RDreg2"
+
+[node name="Input3" type="Marker2D" parent="RegistersBank"]
+position = Vector2(0, 110)
+script = ExtResource("4_gw1uy")
+
+[node name="RDreg3" type="Label" parent="RegistersBank/Input3"]
+visible = false
+offset_left = 1.0
+offset_top = -10.0
+offset_right = 44.0
+offset_bottom = 10.0
+theme_type_variation = &"InputOutputLabel"
+theme_override_font_sizes/font_size = 12
+text = "WRreg"
+
+[node name="Input4" type="Marker2D" parent="RegistersBank"]
+position = Vector2(0, 135)
+script = ExtResource("4_gw1uy")
+
+[node name="RDreg4" type="Label" parent="RegistersBank/Input4"]
+visible = false
+offset_left = 1.0
+offset_top = -10.0
+offset_right = 47.0
+offset_bottom = 10.0
+theme_type_variation = &"InputOutputLabel"
+theme_override_font_sizes/font_size = 12
+text = "WRdata"
+
+[node name="Output1" type="Marker2D" parent="RegistersBank"]
+position = Vector2(90, 20)
+script = ExtResource("4_gw1uy")
+
+[node name="Output2" type="Marker2D" parent="RegistersBank"]
+position = Vector2(90, 110)
+script = ExtResource("4_gw1uy")
+
+[node name="InstBase" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_t25jr")
+width = 1.0
+gradient = SubResource("Gradient_or8kb")
+script = ExtResource("6_21ql4")
+origin = NodePath("../../IFIDOutput")
+target = NodePath("../../IFIDOutput/Target")
+visibility = 1
+force_visible = true
+
+[node name="Inst_25-21" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_f8aeo")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_4vcia")
+origin = NodePath("../InstBase")
+target = NodePath("../Input1")
+intersect_point = 1.0
+force_visible = true
+
+[node name="Inst_25_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+line = NodePath("../Inst_25-21")
+stage = 1
+map_key = "RS_REG"
+map_stage = 1
+
+[node name="Inst_20-16_RDReg2" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_ir0tk")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_4vcia")
+origin = NodePath("../InstBase")
+target = NodePath("../Input2")
+intersect_point = 1.0
+force_visible = true
+
+[node name="Inst_20_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+line = NodePath("../Inst_20-16_RDReg2")
+stage = 1
+map_key = "RT_REG"
+map_stage = 1
+
+[node name="Inst_15-0_Imm" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_4vcia")
+origin = NodePath("../InstBase")
+intersect_point = 1.0
+visibility = 1
+
+[node name="Inst_Imm_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+line = NodePath("../Inst_15-0_Imm")
+stage = 1
+map_key = "ADDR_I32"
+map_stage = 1
+is_register_name = false
+to_hex = false
+
+[node name="Inst_15-0_Add" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_4vcia")
+origin = NodePath("../InstBase")
+target = NodePath("../../DetailedControl/Add/Input2")
+intersect_point = 1.0
+visibility = 1
+
+[node name="Inst_Add_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_padding = Vector2(0, 0)
+line = NodePath("../Inst_15-0_Add")
+stage = 1
+map_key = "C_BRANCH"
+map_stage = 1
+is_register_name = false
+
+[node name="Inst_20-16_RegDst" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "node_to_avoid")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_4vcia")
+origin = NodePath("../InstBase")
+intersect_point = 1.0
+visibility = 1
+node_to_avoid = NodePath("..")
+avoid_offset = Vector2(0, 10)
+
+[node name="Inst_20_RegDest_label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 3
+line = NodePath("../Inst_20-16_RegDst")
+stage = 1
+map_key = "REG_DEST_REGISTER"
+map_stage = 1
+
+[node name="Inst_15-11_RegDst" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "node_to_avoid")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_4vcia")
+origin = NodePath("../InstBase")
+intersect_point = 1.0
+visibility = 1
+node_to_avoid = NodePath("..")
+avoid_offset = Vector2(0, 5)
+
+[node name="Inst_15_RegDest_label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 3
+line = NodePath("../Inst_15-11_RegDst")
+stage = 1
+map_key = "REG_DEST_REGISTER"
+map_stage = 1
+
+[node name="Inst_Control" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_21ql4")
+origin = NodePath("../../IFIDOutput")
+target = NodePath("../../DetailedControl/Control/Input")
+steps = 4
+visibility = 1
+
+[node name="RegBank_RTData" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_21ql4")
+origin = NodePath("../Output2")
+steps = 4
+
+[node name="RegBank_RTData_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_padding = Vector2(0, 0)
+line = NodePath("../RegBank_RTData")
+stage = 1
+map_key = "RT_VALUE"
+map_stage = 1
+is_register_name = false
+
+[node name="RegBank_RSData" type="Line2D" parent="RegistersBank" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_21ql4")
+origin = NodePath("../Output1")
+steps = 4
+middle_offset = 10
+
+[node name="RegBank_RSData_Label" type="Label" parent="RegistersBank" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+text = "[25-21]"
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+line = NodePath("../RegBank_RSData")
+stage = 1
+map_key = "RS_VALUE"
+map_stage = 1
+is_register_name = false
+
+[node name="RegBankWindow" parent="RegistersBank" instance=ExtResource("8_3k5xc")]
+visible = false
+
+[node name="ComponentTooltip" parent="RegistersBank" node_paths=PackedStringArray("line_labels", "positions") instance=ExtResource("10_ofbfw")]
+layout_mode = 1
+line_labels = [NodePath("../Inst_25_Label"), NodePath("../Inst_20_Label"), NodePath("../RegBank_RTData_Label"), NodePath("../RegBank_RSData_Label"), NodePath("../../OutsideLines/RsData_PC_Label")]
+positions = [NodePath("../Input1"), NodePath("../Input2"), NodePath("../Output2"), NodePath("../Output1"), NodePath("../Output1"), NodePath("../Input3"), NodePath("../Input4")]
+names = Array[String](["RDreg1", "RDreg2", "RDdata2", "RDdata1", "RDdata1", "WRreg", "WRdata"])
+
+[node name="HazardDetectionUnit" type="Button" parent="." node_paths=PackedStringArray("reference_node")]
+visible = false
+layout_mode = 0
+offset_right = 73.0
+offset_bottom = 68.0
+focus_mode = 0
+theme_type_variation = &"WindowlessComponent"
+theme_override_styles/disabled = SubResource("StyleBoxFlat_78d1y")
+disabled = true
+text = "Hazard
+Detection
+Unit"
+script = ExtResource("5_dp4n3")
+reference_node = NodePath("..")
+position_percent = Vector2(0.5, 0.1)
+expanded_position_percent = Vector2(0.4, 0.1)
+stage_number = 1
+alignment_mode = 1
+visibility = 1
+
+[node name="HDU_PC" type="Marker2D" parent="HazardDetectionUnit"]
+position = Vector2(0, 15)
+script = ExtResource("4_gw1uy")
+position_percent = Vector2(0.5, 0)
+
+[node name="MEM_RegDst" type="Marker2D" parent="HazardDetectionUnit"]
+script = ExtResource("4_gw1uy")
+position_percent = Vector2(1, 0.25)
+
+[node name="EX_RegDst" type="Marker2D" parent="HazardDetectionUnit"]
+script = ExtResource("4_gw1uy")
+position_percent = Vector2(1, 0.75)
+
+[node name="RDReg1" type="Marker2D" parent="HazardDetectionUnit"]
+script = ExtResource("4_gw1uy")
+position_percent = Vector2(0, 0.25)
+
+[node name="RDReg2" type="Marker2D" parent="HazardDetectionUnit"]
+script = ExtResource("4_gw1uy")
+position_percent = Vector2(0, 0.75)
+
+[node name="RDREG1_HDU" type="Line2D" parent="HazardDetectionUnit" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_f8aeo")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_4vcia")
+origin = NodePath("../../RegistersBank/Inst_25-21")
+target = NodePath("../RDReg1")
+intersect_point = 0.55
+visibility = 1
+is_hdu_line = true
+
+[node name="RDREG1_HDU_Label" type="Label" parent="HazardDetectionUnit" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_padding = Vector2(-27, 0)
+line = NodePath("../RDREG1_HDU")
+stage = 1
+map_key = "RS_REG"
+map_stage = 1
+
+[node name="RDREG2_HDU" type="Line2D" parent="HazardDetectionUnit" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_ir0tk")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_4vcia")
+origin = NodePath("../../RegistersBank/Inst_20-16_RDReg2")
+target = NodePath("../RDReg2")
+intersect_point = 0.65
+visibility = 1
+is_hdu_line = true
+
+[node name="RDREG2_HDU_Label" type="Label" parent="HazardDetectionUnit" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 23.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_padding = Vector2(-25, 0)
+line = NodePath("../RDREG2_HDU")
+stage = 1
+map_key = "RT_REG"
+map_stage = 1
+
+[node name="ChangeColor" type="Node" parent="HazardDetectionUnit"]
+script = ExtResource("11_eo7fe")
+
+[node name="DetailedControl" type="Control" parent="."]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Add" type="Button" parent="DetailedControl"]
+visible = false
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 70.0
+theme_type_variation = &"WindowlessComponent"
+disabled = true
+text = "Add"
+script = ExtResource("5_dp4n3")
+position_percent = Vector2(0.5, 0.4)
+expanded_position_percent = Vector2(0.5, 0.4)
+stage_number = 1
+alignment_mode = 1
+visibility = 1
+
+[node name="Input1" type="Marker2D" parent="DetailedControl/Add"]
+position = Vector2(0, 20)
+script = ExtResource("4_gw1uy")
+
+[node name="Input2" type="Marker2D" parent="DetailedControl/Add"]
+position = Vector2(0, 50)
+script = ExtResource("4_gw1uy")
+
+[node name="Output" type="Marker2D" parent="DetailedControl/Add"]
+position = Vector2(50, 35)
+script = ExtResource("4_gw1uy")
+
+[node name="Control" type="Button" parent="DetailedControl" node_paths=PackedStringArray("reference_node")]
+visible = false
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Control
+"
+script = ExtResource("5_dp4n3")
+reference_node = NodePath("../..")
+expanded_position_percent = Vector2(0.4, 0.3)
+stage_number = 1
+alignment_mode = 1
+visibility = 1
+
+[node name="Input" type="Marker2D" parent="DetailedControl/Control"]
+script = ExtResource("4_gw1uy")
+
+[node name="PC" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="PC_Label" type="Label" parent="DetailedControl" node_paths=PackedStringArray("line")]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+line = NodePath("../PC")
+stage = 1
+map_key = "PC"
+map_stage = 1
+is_register_name = false
+
+[node name="RsData" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="RtData" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="ImmValue" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="Rs" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "node_to_avoid")]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
+script = ExtResource("6_4vcia")
+origin = NodePath("../../RegistersBank/Inst_25-21")
+intersect_point = 0.5
+visibility = 1
+node_to_avoid = NodePath("../../RegistersBank")
+avoid_offset = Vector2(10, 20)
+
+[node name="Rt" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "node_to_avoid")]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
+script = ExtResource("6_4vcia")
+origin = NodePath("../../RegistersBank/Inst_20-16_RDReg2")
+intersect_point = 0.5
+visibility = 1
+node_to_avoid = NodePath("../../RegistersBank")
+avoid_offset = Vector2(20, 15)
+
+[node name="RegDst" type="Line2D" parent="DetailedControl"]
+material = SubResource("ShaderMaterial_dptm5")
+width = 1.0
+gradient = SubResource("Gradient_qvx7r")
+script = ExtResource("6_21ql4")
+visibility = 1
+
+[node name="PC_Add" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_t0qqh")
+width = 1.0
+gradient = SubResource("Gradient_yvr7y")
+script = ExtResource("6_4vcia")
+origin = NodePath("../PC")
+target = NodePath("../Add/Input1")
+intersect_point = 0.35
+visibility = 1
+
+[node name="PC_InstPC" type="Line2D" parent="DetailedControl" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_03r67")
+width = 1.0
+gradient = SubResource("Gradient_ao21u")
+script = ExtResource("6_4vcia")
+origin = NodePath("../PC")
+target = NodePath("../PC_InstPC_Target")
+intersect_point = 0.12
+visibility = 1
+
+[node name="PC_InstPC_Target" type="Marker2D" parent="DetailedControl"]
+unique_name_in_owner = true
+
+[node name="OutsideLines" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HDU_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
+visible = false
+material = SubResource("ShaderMaterial_2fc84")
+width = 1.0
+gradient = SubResource("Gradient_sqqqc")
+script = ExtResource("6_a6ygu")
+origin_component = NodePath("../../HazardDetectionUnit")
+origin = NodePath("../../HazardDetectionUnit/HDU_PC")
+flag = true
+origin_stage = 1
+start_vertical = true
+vertical_initial_length = 10
+
+[node name="HDU_PC_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_padding = Vector2(-125, 15)
+line = NodePath("../HDU_PC")
+stage = 1
+map_key = "STALL"
+map_stage = 1
+is_register_name = false
+to_hex = false
+use_special_text = true
+
+[node name="HDU_PC_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 3
+label_padding = Vector2(5, -5)
+line = NodePath("../HDU_PC")
+map_key = "STALL"
+map_stage = 1
+is_register_name = false
+to_hex = false
+use_special_text = true
+
+[node name="Inst_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
+visible = false
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_a6ygu")
+origin = NodePath("../../IFIDOutput")
+height_percent = 0.98
+origin_stage = 1
+
+[node name="RS_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
+visible = false
+material = SubResource("ShaderMaterial_s2nlp")
+width = 1.0
+gradient = SubResource("Gradient_c0h55")
+script = ExtResource("6_a6ygu")
+origin_component = NodePath("../../HazardDetectionUnit")
+origin = NodePath("../../HazardDetectionUnit/HDU_PC")
+flag = true
+origin_stage = 1
+
+[node name="RS_PC_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 2
+label_padding = Vector2(-100, 0)
+line = NodePath("../Inst_PC")
+stage = 1
+map_key = "J_BRANCH"
+map_stage = 1
+is_register_name = false
+
+[node name="RS_PC_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 4
+label_padding = Vector2(-10, 0)
+line = NodePath("../Inst_PC")
+map_key = "J_BRANCH"
+map_stage = 1
+is_register_name = false
+
+[node name="Add_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
+visible = false
+material = SubResource("ShaderMaterial_5q0q3")
+width = 1.0
+gradient = SubResource("Gradient_st5f1")
+script = ExtResource("6_a6ygu")
+origin_component = NodePath("../../DetailedControl/Add")
+origin = NodePath("../../DetailedControl/Add/Output")
+height_percent = 0.01
+origin_stage = 1
+
+[node name="Add_PC_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_padding = Vector2(5, 20)
+line = NodePath("../Add_PC")
+stage = 1
+map_key = "C_BRANCH"
+map_stage = 1
+is_register_name = false
+
+[node name="Add_PC_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 4
+label_padding = Vector2(-15, 25)
+line = NodePath("../Add_PC")
+map_key = "C_BRANCH"
+map_stage = 1
+is_register_name = false
+
+[node name="RsData_PC" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
+visible = false
+material = SubResource("ShaderMaterial_37tcj")
+width = 1.0
+gradient = SubResource("Gradient_y2urq")
+script = ExtResource("6_a6ygu")
+origin_component = NodePath("../../RegistersBank")
+origin = NodePath("../../RegistersBank/Output1")
+height_percent = 0.99
+origin_stage = 1
+
+[node name="RsData_PC_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_padding = Vector2(15, 0)
+line = NodePath("../RsData_PC")
+stage = 1
+map_key = "R_BRANCH"
+map_stage = 1
+is_register_name = false
+
+[node name="RsData_PC_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("7_ngrk1")
+label_line_vertex = 4
+label_padding = Vector2(-10, 0)
+line = NodePath("../RsData_PC")
+map_key = "R_BRANCH"
+map_stage = 1
+is_register_name = false
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="resized" from="." to="." method="_on_resized"]
+[connection signal="mouse_entered" from="RegistersBank" to="RegistersBank" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="RegistersBank" to="RegistersBank" method="_on_mouse_exited"]
+[connection signal="pressed" from="RegistersBank" to="." method="_on_registers_bank_pressed"]

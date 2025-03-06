@@ -1,11 +1,18 @@
 [configuration]
 
-entry_symbol = "example_library_init"
+entry_symbol = "pipelined_wrapper_init"
+compatibility_minimum = 4.1
 
 [libraries]
 
-linux.64="res://bin/libgdexample.linux.template_debug.dev.x86_64.so"
+linux.release.x86_64="res://bin/libgdexample.linux.template_debug.dev.x86_64.so"
 windows.x86_64="libgdexample.windows.template_debug.dev.x86_64.dll"
 macos="res://demo/bin/libgdexample.macos.framework"
 windows.debug.x86_64="libgdexample.windows.template_debug.dev.x86_64.dll"
 linux.debug.64="res://bin/libgdexample.linux.template_debug.dev.x86_64.so"
+web.debug.wasm32 = "res://bin/libgdexample.web.template_debug.wasm32.wasm"
+web.release.wasm32 = "res://bin/libgdexample.web.template_release.wasm32.wasm"
+android.debug.x86_64 = "res://bin/libgdexample.android.template_debug.x86_64.so"
+android.release.x86_64 = "res://bin/libgdexample.android.template_release.x86_64.so"
+android.debug.arm64 = "res://bin/libgdexample.android.template_debug.arm64.so"
+android.release.arm64 = "res://bin/libgdexample.android.template_release.arm64.so"

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://6j13cfdbp020"]
+
+[ext_resource type="Script" path="res://menus/base_menu.gd" id="1_4y50j"]
+
+[node name="BaseMenu" type="Window"]
+initial_position = 2
+size = Vector2i(800, 550)
+min_size = Vector2i(700, 550)
+script = ExtResource("1_4y50j")

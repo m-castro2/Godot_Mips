@@ -1,0 +1,141 @@
+[gd_scene load_steps=2 format=3 uid="uid://2kbv4ig23x7j"]
+
+[ext_resource type="Script" path="res://stages/stage_register_tooltip.gd" id="1_k556x"]
+
+[node name="TooltipGroup" type="Control"]
+visible = false
+z_index = 4
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_k556x")
+
+[node name="ReadGroup" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Read0" type="PanelContainer" parent="ReadGroup"]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 33.0
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Label" type="Label" parent="ReadGroup/Read0"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+
+[node name="Read1" type="PanelContainer" parent="ReadGroup"]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 33.0
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Label" type="Label" parent="ReadGroup/Read1"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Read2" type="PanelContainer" parent="ReadGroup"]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 33.0
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Label" type="Label" parent="ReadGroup/Read2"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+
+[node name="Read3" type="PanelContainer" parent="ReadGroup"]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 33.0
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Label" type="Label" parent="ReadGroup/Read3"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+
+[node name="Read4" type="PanelContainer" parent="ReadGroup"]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 33.0
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Label" type="Label" parent="ReadGroup/Read4"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+
+[node name="WriteGroup" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Write0" type="PanelContainer" parent="WriteGroup"]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 33.0
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Label" type="Label" parent="WriteGroup/Write0"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+
+[node name="Write1" type="PanelContainer" parent="WriteGroup"]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 33.0
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Label" type="Label" parent="WriteGroup/Write1"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+
+[node name="Write2" type="PanelContainer" parent="WriteGroup"]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 33.0
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Label" type="Label" parent="WriteGroup/Write2"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+
+[node name="Write3" type="PanelContainer" parent="WriteGroup"]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 33.0
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Label" type="Label" parent="WriteGroup/Write3"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+
+[node name="Write4" type="PanelContainer" parent="WriteGroup"]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 33.0
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Label" type="Label" parent="WriteGroup/Write4"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1

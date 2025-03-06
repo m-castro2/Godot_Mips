@@ -1,0 +1,380 @@
+[gd_scene load_steps=23 format=3 uid="uid://bqqsns53ftp6y"]
+
+[ext_resource type="Script" path="res://stages/wb_detail.gd" id="1_2fahh"]
+[ext_resource type="Script" path="res://stages/components/main_component.gd" id="2_nbwkm"]
+[ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="3_qap6j"]
+[ext_resource type="Script" path="res://stages/components/line2d.gd" id="3_shipb"]
+[ext_resource type="Script" path="res://stages/marker.gd" id="3_t4ulf"]
+[ext_resource type="Script" path="res://stages/components/line_label.gd" id="5_i7od7"]
+[ext_resource type="Script" path="res://stages/components/outside_line2d.gd" id="5_pp8xc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5kbth"]
+shader = ExtResource("3_qap6j")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_fvoid"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_buoiq"]
+shader = ExtResource("3_qap6j")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_shhqt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u8fwp"]
+shader = ExtResource("3_qap6j")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_4lgk8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_whqn6"]
+shader = ExtResource("3_qap6j")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_4u7em"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8h2lb"]
+shader = ExtResource("3_qap6j")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_huiv1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xnajg"]
+shader = ExtResource("3_qap6j")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qyls5"]
+shader = ExtResource("3_qap6j")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h2jch"]
+shader = ExtResource("3_qap6j")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gr26p"]
+shader = ExtResource("3_qap6j")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_yahud"]
+
+[node name="WBDetail" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_2fahh")
+
+[node name="Mux" type="Button" parent="."]
+custom_minimum_size = Vector2(30, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -50.0
+offset_right = 15.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MuxButton"
+disabled = true
+text = "M
+U
+X"
+script = ExtResource("2_nbwkm")
+position_percent = Vector2(0.5, 0.5)
+expanded_position_percent = Vector2(0.5, 0.5)
+stage_number = 4
+alignment_mode = 1
+
+[node name="Input0" type="Marker2D" parent="Mux"]
+position = Vector2(0, 25)
+script = ExtResource("3_t4ulf")
+
+[node name="Input1" type="Marker2D" parent="Mux"]
+position = Vector2(0, 50)
+script = ExtResource("3_t4ulf")
+
+[node name="Input2" type="Marker2D" parent="Mux"]
+position = Vector2(0, 75)
+script = ExtResource("3_t4ulf")
+
+[node name="PC_Mux" type="Line2D" parent="Mux" node_paths=PackedStringArray("target")]
+material = SubResource("ShaderMaterial_5kbth")
+position = Vector2(-561, -274)
+width = 1.0
+gradient = SubResource("Gradient_fvoid")
+script = ExtResource("3_shipb")
+target = NodePath("../Input0")
+steps = 4
+
+[node name="PC_Mux_Label" type="Label" parent="Mux" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 3
+label_padding = Vector2(-70, 25)
+line = NodePath("../PC_Mux")
+stage = 4
+map_key = "PC"
+map_stage = 4
+is_register_name = false
+
+[node name="MemOut_Mux" type="Line2D" parent="Mux" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_buoiq")
+position = Vector2(-561, -274)
+width = 1.0
+gradient = SubResource("Gradient_shhqt")
+script = ExtResource("3_shipb")
+origin = NodePath("../../DetailedControl/MemOut")
+target = NodePath("../Input1")
+steps = 4
+
+[node name="MemOut_Mux_Label" type="Label" parent="Mux" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 3
+label_padding = Vector2(-70, 25)
+line = NodePath("../MemOut_Mux")
+stage = 4
+map_key = "REG_VALUE"
+map_stage = 4
+is_register_name = false
+
+[node name="ALUOut_Mux" type="Line2D" parent="Mux" node_paths=PackedStringArray("target")]
+material = SubResource("ShaderMaterial_u8fwp")
+position = Vector2(-561, -274)
+width = 1.0
+gradient = SubResource("Gradient_4lgk8")
+script = ExtResource("3_shipb")
+target = NodePath("../Input2")
+steps = 4
+
+[node name="ALUOut_Mux_Label" type="Label" parent="Mux" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 3
+label_padding = Vector2(-70, 0)
+line = NodePath("../ALUOut_Mux")
+stage = 4
+map_key = "REG_VALUE"
+map_stage = 4
+is_register_name = false
+
+[node name="Output" type="Marker2D" parent="Mux"]
+position = Vector2(30, 50)
+script = ExtResource("3_t4ulf")
+
+[node name="DetailedControl" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="AluOut" type="Marker2D" parent="DetailedControl"]
+position = Vector2(561, 274)
+
+[node name="MemOut" type="Marker2D" parent="DetailedControl"]
+
+[node name="RegDst" type="Marker2D" parent="DetailedControl"]
+
+[node name="OutsideLines" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Mux_RegBank" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin_component", "origin")]
+material = SubResource("ShaderMaterial_whqn6")
+width = 1.0
+gradient = SubResource("Gradient_4u7em")
+script = ExtResource("5_pp8xc")
+origin_component = NodePath("../../Mux")
+origin = NodePath("../../Mux/Output")
+intersect_point = 1.0
+height_percent = 0.97
+min_finish_length = 15
+expanded_min_initial_length = 10
+expanded_min_finish_length = 70
+origin_stage = 4
+target_stage = 1
+
+[node name="Mux_RegBank_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 274.0
+offset_right = 601.0
+offset_bottom = 294.0
+script = ExtResource("5_i7od7")
+line = NodePath("../Mux_RegBank")
+stage = 4
+map_key = "REG_VALUE"
+map_stage = 4
+is_register_name = false
+
+[node name="Mux_RegBank_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 274.0
+offset_right = 601.0
+offset_bottom = 294.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 4
+label_padding = Vector2(-33, 0)
+line = NodePath("../Mux_RegBank")
+stage = 1
+map_key = "REG_VALUE"
+map_stage = 4
+is_register_name = false
+
+[node name="ALUOut_ALU1" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_8h2lb")
+width = 1.0
+gradient = SubResource("Gradient_huiv1")
+script = ExtResource("5_pp8xc")
+origin = NodePath("../../DetailedControl/AluOut")
+height_percent = 0.97
+min_initial_length = 15
+min_finish_length = 8
+origin_stage = 4
+target_stage = 2
+
+[node name="ALUOut_ALU2" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_xnajg")
+width = 1.0
+gradient = SubResource("Gradient_huiv1")
+script = ExtResource("5_pp8xc")
+origin = NodePath("../../DetailedControl/AluOut")
+height_percent = 0.97
+min_initial_length = 15
+min_finish_length = 13
+origin_stage = 4
+target_stage = 2
+
+[node name="RegDst_RegBank" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_qyls5")
+width = 1.0
+gradient = SubResource("Gradient_huiv1")
+script = ExtResource("5_pp8xc")
+origin = NodePath("../../DetailedControl/RegDst")
+height_percent = 0.95
+expanded_min_initial_length = 35
+expanded_min_finish_length = 30
+origin_stage = 4
+target_stage = 1
+
+[node name="RegDst_RegBank_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 274.0
+offset_right = 601.0
+offset_bottom = 294.0
+script = ExtResource("5_i7od7")
+line = NodePath("../RegDst_RegBank")
+stage = 4
+map_key = "REG_DEST_REGISTER"
+map_stage = 4
+
+[node name="RegDst_RegBank_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 4
+label_padding = Vector2(0, 0)
+line = NodePath("../RegDst_RegBank")
+stage = 1
+map_key = "REG_DEST_REGISTER"
+map_stage = 4
+
+[node name="RegDst_ForwardingUnit" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_h2jch")
+width = 1.0
+gradient = SubResource("Gradient_huiv1")
+script = ExtResource("5_pp8xc")
+origin = NodePath("../../DetailedControl/RegDst")
+height_percent = 0.95
+left_right_input = true
+expanded_min_initial_length = 35
+origin_stage = 4
+target_stage = 2
+
+[node name="RegDst_ForwardingUnit_Label" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line", "label_to_substitute")]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 274.0
+offset_right = 601.0
+offset_bottom = 294.0
+script = ExtResource("5_i7od7")
+line = NodePath("../RegDst_ForwardingUnit")
+stage = 4
+map_key = "REG_DEST_REGISTER"
+map_stage = 4
+label_to_substitute = NodePath("../RegDst_RegBank_Label")
+
+[node name="RegDst_ForwardingUnit_TargetLabel" type="Label" parent="OutsideLines" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 274.0
+offset_right = 601.0
+offset_bottom = 294.0
+script = ExtResource("5_i7od7")
+label_line_vertex = 4
+label_padding = Vector2(5, 15)
+line = NodePath("../RegDst_ForwardingUnit")
+stage = 2
+map_key = "REG_DEST_REGISTER"
+map_stage = 4
+
+[node name="ALUOut_RTData" type="Line2D" parent="OutsideLines" node_paths=PackedStringArray("origin")]
+material = SubResource("ShaderMaterial_gr26p")
+width = 1.0
+gradient = SubResource("Gradient_yahud")
+script = ExtResource("5_pp8xc")
+origin = NodePath("../../DetailedControl/AluOut")
+height_percent = 0.97
+min_initial_length = 15
+origin_stage = 4
+target_stage = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="pressed" from="Mux" to="." method="_on_mux_pressed"]

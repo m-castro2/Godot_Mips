@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ProgramMemory" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ProgramMemory.gd" id="1_1qa4o"]
+
+[resource]
+script = ExtResource("1_1qa4o")
+memory_string = "00400000 [3c041001] [34840000] [20080019] [ac880000],00400010 [2108ffff] [20840004] [20840004] [ac840000],00400020 [2002000a] [0000000c] [00000000] [00000000],10010000 [00000000] [00000000] [00000000] [00000000],10010010 [00000000]"
+memory = {}

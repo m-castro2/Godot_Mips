@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://dynh0mgy042yp"]
+
+[ext_resource type="Script" path="res://stages/components/windows/RegBank_info_window.gd" id="1_iyucb"]
+[ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="2_h6o41"]
+
+[node name="Window" type="Window"]
+title = "Registers Bank"
+initial_position = 1
+size = Vector2i(300, 400)
+transient = true
+min_size = Vector2i(300, 400)
+script = ExtResource("1_iyucb")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="NameLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Name"
+horizontal_alignment = 1
+
+[node name="ValueLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+theme = ExtResource("2_h6o41")
+text = "Value"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="NameVBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ValueVBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[connection signal="size_changed" from="." to="." method="_on_size_changed"]

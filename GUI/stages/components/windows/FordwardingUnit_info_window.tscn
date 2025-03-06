@@ -1,0 +1,126 @@
+[gd_scene load_steps=2 format=3 uid="uid://0w0nhveoj2tb"]
+
+[ext_resource type="Script" path="res://stages/components/windows/FordwardingUnit_info_window.gd" id="1_e83gj"]
+
+[node name="FordwardingUnit_info_window" type="Window"]
+initial_position = 1
+size = Vector2i(300, 400)
+transient = true
+min_size = Vector2i(300, 400)
+script = ExtResource("1_e83gj")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="EX" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+text = "EX"
+horizontal_alignment = 1
+
+[node name="MEM" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "MEM"
+horizontal_alignment = 1
+
+[node name="WB" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "WB"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ALU1" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ALU1"
+horizontal_alignment = 1
+
+[node name="ALU2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ALU2"
+horizontal_alignment = 1
+
+[node name="RTData" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "RTData"
+horizontal_alignment = 1
+
+[node name="MEM_RegDest" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "RegDest"
+horizontal_alignment = 1
+
+[node name="WB_RegDest" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "RegDest"
+horizontal_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ALU1" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ALU1"
+horizontal_alignment = 1
+
+[node name="ALU2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 1
+
+[node name="RTData" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "RTData"
+horizontal_alignment = 1
+
+[node name="MEM_RegDest" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "RegDest"
+horizontal_alignment = 1
+
+[node name="WB_RegDest" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "RegDest"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+
+[node name="Summary" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "aaaa"

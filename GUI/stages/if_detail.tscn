@@ -1,0 +1,317 @@
+[gd_scene load_steps=25 format=3 uid="uid://ca820xflmqb5b"]
+
+[ext_resource type="Theme" uid="uid://6yt0638i1ha2" path="res://default_theme.tres" id="1_0r720"]
+[ext_resource type="Script" path="res://stages/if_detail.gd" id="2_varat"]
+[ext_resource type="Script" path="res://stages/components/InstructionsMemory.gd" id="3_klmf8"]
+[ext_resource type="Script" path="res://stages/components/main_component.gd" id="3_ttkm7"]
+[ext_resource type="Script" path="res://stages/marker.gd" id="4_7m7bq"]
+[ext_resource type="Script" path="res://stages/components/line2d.gd" id="6_4gygt"]
+[ext_resource type="Shader" path="res://stages/shaders/fill_line.gdshader" id="7_hmr7u"]
+[ext_resource type="PackedScene" uid="uid://d6u211en2mj3" path="res://stages/components/windows/InstructionMemory_info_window.tscn" id="7_qtsac"]
+[ext_resource type="Script" path="res://stages/components/complex_line.gd" id="8_0k470"]
+[ext_resource type="Script" path="res://stages/4Label.gd" id="8_1h1m3"]
+[ext_resource type="Script" path="res://stages/components/line_label.gd" id="9_vv8pe"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tkr3u"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_dmccv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_khh1q"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_31u0x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3y5of"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_bg0dw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ylsuh"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_mdblk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_omrfj"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_183sx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nfdqc"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sudxr"]
+shader = ExtResource("7_hmr7u")
+shader_parameter/draw_min = 0.0
+shader_parameter/draw_max = 0.0
+shader_parameter/draw_feather = 0.0
+shader_parameter/color = null
+
+[sub_resource type="Gradient" id="Gradient_lbsf3"]
+
+[node name="IFDetail" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_0r720")
+script = ExtResource("2_varat")
+
+[node name="InstructionsMemoryButton" type="Button" parent="."]
+custom_minimum_size = Vector2(90, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -75.0
+offset_right = 45.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Instruction
+Memory"
+script = ExtResource("3_klmf8")
+position_percent = Vector2(0.5, 0.75)
+expanded_position_percent = Vector2(0.825, 0.75)
+
+[node name="Output" type="Marker2D" parent="InstructionsMemoryButton"]
+position = Vector2(90, 75)
+script = ExtResource("4_7m7bq")
+position_percent = Vector2(1, 0.5)
+
+[node name="Input" type="Marker2D" parent="InstructionsMemoryButton"]
+position = Vector2(0, 75)
+script = ExtResource("4_7m7bq")
+position_percent = Vector2(0, 0.5)
+
+[node name="InstMem_IFID" type="Line2D" parent="InstructionsMemoryButton" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_tkr3u")
+position = Vector2(-531, -249)
+width = 1.0
+gradient = SubResource("Gradient_dmccv")
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../../DetailedControl/IFID_MiddleInput")
+steps = 4
+
+[node name="InstructionMemoryInfoWindow" parent="InstructionsMemoryButton" instance=ExtResource("7_qtsac")]
+visible = false
+
+[node name="Add" type="Button" parent="."]
+layout_mode = 2
+offset_left = 545.0
+offset_top = 31.0
+offset_right = 595.0
+offset_bottom = 101.0
+theme_type_variation = &"WindowlessComponent"
+disabled = true
+text = "Add"
+script = ExtResource("3_ttkm7")
+position_percent = Vector2(0.7, 0.25)
+expanded_position_percent = Vector2(0.75, 0.25)
+
+[node name="4" type="Label" parent="Add"]
+custom_minimum_size = Vector2(10, 24)
+layout_mode = 0
+offset_left = -40.0
+offset_top = 10.0
+offset_right = -30.0
+offset_bottom = 33.0
+text = "4"
+script = ExtResource("8_1h1m3")
+
+[node name="Output" type="Marker2D" parent="Add/4"]
+position = Vector2(15, 13)
+
+[node name="4_Add" type="Line2D" parent="Add" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_khh1q")
+position = Vector2(-24, 23)
+points = PackedVector2Array(-4, 0, 24, 0)
+width = 1.0
+gradient = SubResource("Gradient_31u0x")
+antialiased = true
+script = ExtResource("6_4gygt")
+origin = NodePath("../4/Output")
+target = NodePath("../UpperInput")
+
+[node name="UpperInput" type="Marker2D" parent="Add"]
+script = ExtResource("4_7m7bq")
+position_percent = Vector2(0, 0.328571)
+
+[node name="LowerInput" type="Marker2D" parent="Add"]
+position = Vector2(0, 44)
+script = ExtResource("4_7m7bq")
+position_percent = Vector2(0, 0.628571)
+
+[node name="Add_IFID" type="Line2D" parent="Add" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_3y5of")
+width = 1.0
+gradient = SubResource("Gradient_bg0dw")
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../../PC/IFID_UpperInput")
+
+[node name="Add_IFID_Label" type="Label" parent="Add" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("9_vv8pe")
+label_padding = Vector2(15, 25)
+line = NodePath("../Add_IFID")
+map_key = "PC"
+is_register_name = false
+
+[node name="Add_PC" type="Line2D" parent="Add" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_ylsuh")
+width = 1.0
+gradient = SubResource("Gradient_mdblk")
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../../PC/Input")
+steps = 6
+force_up = true
+
+[node name="Add_PC_Label" type="Label" parent="Add" node_paths=PackedStringArray("line", "label_to_substitute")]
+layout_mode = 0
+offset_left = -76.0
+offset_top = 93.0
+offset_right = -36.0
+offset_bottom = 113.0
+script = ExtResource("9_vv8pe")
+label_line_vertex = 2
+label_padding = Vector2(-65, 0)
+line = NodePath("../Add_PC")
+map_key = "PC"
+is_register_name = false
+label_to_substitute = NodePath("../Add_IFID_Label")
+
+[node name="Output" type="Marker2D" parent="Add"]
+position = Vector2(50, 35)
+script = ExtResource("4_7m7bq")
+
+[node name="PC" type="Button" parent="."]
+custom_minimum_size = Vector2(50, 70)
+layout_mode = 2
+offset_left = 469.0
+offset_top = 124.0
+offset_right = 519.0
+offset_bottom = 194.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_type_variation = &"WindowlessComponent"
+disabled = true
+text = "PC"
+script = ExtResource("3_ttkm7")
+position_percent = Vector2(0.4, 0.45)
+expanded_position_percent = Vector2(0.4, 0.45)
+
+[node name="Output" type="Marker2D" parent="PC"]
+position = Vector2(50, 35)
+script = ExtResource("4_7m7bq")
+
+[node name="Input" type="Marker2D" parent="PC"]
+position = Vector2(0, 35)
+script = ExtResource("4_7m7bq")
+
+[node name="PC_Add" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target", "line_to_match")]
+material = SubResource("ShaderMaterial_omrfj")
+width = 1.0
+gradient = SubResource("Gradient_183sx")
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../../Add/LowerInput")
+steps = 6
+line_to_match = NodePath("../PC_InstMem")
+
+[node name="UpperInput" type="Marker2D" parent="PC"]
+position = Vector2(25, 0)
+script = ExtResource("4_7m7bq")
+
+[node name="PC_InstMem" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target")]
+material = SubResource("ShaderMaterial_nfdqc")
+width = 1.0
+gradient = SubResource("Gradient_183sx")
+antialiased = true
+script = ExtResource("6_4gygt")
+origin = NodePath("../Output")
+target = NodePath("../../InstructionsMemoryButton/Input")
+steps = 4
+
+[node name="PC_InstMem_Label" type="Label" parent="PC" node_paths=PackedStringArray("line")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+script = ExtResource("9_vv8pe")
+label_line_vertex = 1
+label_padding = Vector2(20, 0)
+line = NodePath("../PC_InstMem")
+map_key = "PREV_PC"
+is_register_name = false
+
+[node name="PC_IFID" type="Line2D" parent="PC" node_paths=PackedStringArray("origin", "target", "node_to_avoid")]
+material = SubResource("ShaderMaterial_sudxr")
+width = 1.0
+gradient = SubResource("Gradient_lbsf3")
+script = ExtResource("8_0k470")
+origin = NodePath("../PC_InstMem")
+target = NodePath("../IFID_UpperInput")
+intersect_point = 1.0
+node_to_avoid = NodePath("../../Add")
+avoid_offset = Vector2(0, 68.5)
+
+[node name="IFID_UpperInput" type="Marker2D" parent="PC"]
+unique_name_in_owner = true
+position = Vector2(76, -93)
+
+[node name="DetailedControl" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="IFID_MiddleInput" type="Marker2D" parent="DetailedControl"]
+unique_name_in_owner = true
+
+[node name="InstructionsMemoryDetail" type="Control" parent="DetailedControl"]
+layout_mode = 2
+anchors_preset = 0
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="pressed" from="InstructionsMemoryButton" to="." method="_on_instructions_memory_button_pressed"]
+[connection signal="pressed" from="Add" to="." method="_on_add_pressed"]
+[connection signal="pressed" from="PC" to="." method="_on_pc_pressed"]

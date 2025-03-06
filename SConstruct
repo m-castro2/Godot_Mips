@@ -4,24 +4,13 @@ import sys
 
 env = SConscript("godot-cpp/SConstruct")
 
-# For reference:
-# - CCFLAGS are compilation flags shared between C and C++
-# - CFLAGS are for C-specific compilation flags
-# - CXXFLAGS are for C++-specific compilation flags
-# - CPPFLAGS are for pre-processor flags
-# - CPPDEFINES are for pre-processor defines
-# - LINKFLAGS are for linking flags
-
-# tweak this if you want to use different folders, or more folders, to store your source code in.
 env.Append(CPPPATH=["src/"])
 env.Append(CPPPATH=["mips_sim/src/"])
 env.Append(CPPPATH=["mips_sim/src/assembler/"])
 env.Append(CPPPATH=["mips_sim/src/cpu/"])
 env.Append(CPPPATH=["mips_sim/src/cpu/component/"])
-env.Append(CPPPATH=["mips_sim/src/interface/"])
-env.Append(CPPPATH=["mips_sim/src/interface/cli/"])
-env.Append(CPPPATH=["mips_sim/src/interface/cli/detail/"])
-env.Append(CPPPATH=["mips_sim/src/interface/qt/"])
+env.Append(CPPPATH=["mips_sim/src/cpu_flex/"])
+env.Append(CPPPATH=["mips_sim/src/cpu_flex/stages"])
 
 env.Append(CFLAGS=["-g -O0"])
 
@@ -31,10 +20,11 @@ sources = sources + Glob("mips_sim/src/*.cpp")
 sources = sources + Glob("mips_sim/src/assembler/*.cpp")
 sources = sources + Glob("mips_sim/src/cpu/*.cpp")
 sources = sources + Glob("mips_sim/src/cpu/component/*.cpp")
-sources = sources + Glob("mips_sim/src/interface/*.cpp")
-sources = sources + Glob("mips_sim/src/cpu/interface/cli/*.cpp")
-sources = sources + Glob("mips_sim/src/cpu/interface/cli/detail/*.cpp")
-sources = sources + Glob("mips_sim/src/cpu/interface/qt/*.cpp")
+sources = sources + Glob("mips_sim/src/cpu_flex/*.cpp")
+sources = sources + Glob("mips_sim/src/cpu_flex/stages/*.cpp")
+
+excluded_files = ['mips_sim/src/mips_sim.cpp']
+sources = [x for x in sources if str(x) not in excluded_files]
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(
